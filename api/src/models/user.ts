@@ -26,11 +26,11 @@ class User {
     @prop({lowercase:true,trim:true})
     public probilePic?: string;
 
-    @prop({ ref: () => ToDos })
-    public toDos?: Ref<ToDos>[];
-
     @prop({ required: true })
     public environment: string;
+
+    @prop({ ref: () => ToDos })
+    public toDos: Ref<ToDos>;
     
 }
 
