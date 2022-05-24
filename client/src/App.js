@@ -1,3 +1,6 @@
+
+import React from "react";
+
 function App() {
     return (
         <div className='container mx-auto bg-green-400 rounded-xl shadow border p-8 m-10'>
