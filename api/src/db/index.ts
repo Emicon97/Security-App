@@ -16,8 +16,12 @@ const dbConnection = async () => {
         console.error('Error connecting to mongo', err);
       });
   } catch (error) {
-    throw new Error('Error a la hora de inicializad DB');
+    throwError('Error a la hora de inicializad DB');
   }
+};
+
+const throwError = (msg:string):never => {
+  throw new Error (msg);
 };
 
 export default dbConnection;

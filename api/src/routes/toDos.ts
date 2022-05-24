@@ -1,5 +1,9 @@
 import { Router } from 'express';
+<<<<<<< HEAD
+const {SignIn} = require('../controller/toDosController')
+=======
 const {SignIn} = require('../controller/userController')
+>>>>>>> 9558f6bd4b7acaf3b557941c98d58a4f9a55c649
 const router = Router();
 
 router.get('/', (req,res) => {

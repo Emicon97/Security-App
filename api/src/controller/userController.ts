@@ -5,6 +5,22 @@ async function SignIn(name:string,lastName:string,password:string,dni:number,rol
         dni: dni,
     })
 
+<<<<<<< HEAD
+    try {
+        if(findInDb===null){
+            let createUser = await UserModel.create({
+                name,
+                lastName,
+                password,
+                role,
+                dni
+            }) 
+            createUser.save()
+            return 'Usuario creado correctamente...'
+        }
+    } catch (err) {
+        throw new Error ('El usuario ya existe...')
+=======
     if(findInDb===null){
         let createUser = await UserModel.create({
             name,
@@ -16,8 +32,9 @@ async function SignIn(name:string,lastName:string,password:string,dni:number,rol
         }) 
         createUser.save()
         return 'Usuario creado correctamente...'
+>>>>>>> 9558f6bd4b7acaf3b557941c98d58a4f9a55c649
     }
-    return 'El usuario ya existe...'
+
 }
 
 module.exports = {
