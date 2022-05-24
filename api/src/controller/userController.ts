@@ -1,6 +1,6 @@
 import UserModel from '../models/user';
 
-async function SignIn(name:string,lastName:string,password:string,dni:number,role:string) {
+async function SignIn(name:string,lastName:string,password:string,dni:number,role:string, environment:string) {
     let findInDb = await UserModel.findOne({
         dni: dni,
     })
@@ -11,7 +11,8 @@ async function SignIn(name:string,lastName:string,password:string,dni:number,rol
             lastName,
             password,
             role,
-            dni
+            dni,
+            environment
         }) 
         createUser.save()
         return 'Usuario creado correctamente...'
