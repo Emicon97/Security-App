@@ -8,13 +8,6 @@ router.get('/user', (req,res) => {
 })
 
 router.post('/user', async (req,res) => {
-    // const datos = {
-    //     name: "matias",
-    //     lastName:"rodriguez",
-    //     password: "sdas12sqas",
-    //     dni:21231221312,
-    //     role:"supervisor",
-    // }
     let{name, lastName, password, dni, role} = req.body
     try{
         let data = await SignIn(name, lastName, password, dni, role)

@@ -1,23 +1,14 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-import * as mongoose from 'mongoose';
+import {ToDos} from './toDos';
 
 const USER_ROLES:string[] = ['boss', 'supervisor', 'watcher'];
-const TODO_STATUS:string[] = ['left', 'done'];
-
-class ToDos {
-    @prop()
-    public name: string;
-
-    @prop({ enum: TODO_STATUS })
-    public status: string;
-}
 
 class User {
 
-    @prop({ required: true })
+    @prop({ required: true, lowercase:true,trim:true})
     public name!: string;
 
-    @prop({ required: true })
+    @prop({ required: true, lowercase:true,trim:true})
     public lastName!: string;
 
     @prop({ required: true })
@@ -32,8 +23,8 @@ class User {
     @prop()
     public workingHours?: string;
     
-    @prop()
-    public probilePic?: URL;
+    @prop({lowercase:true,trim:true})
+    public probilePic?: string;
 
     @prop({ ref: () => ToDos })
     public toDos?: Ref<ToDos>[];
