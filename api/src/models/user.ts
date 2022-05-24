@@ -1,40 +1,64 @@
-const  { Schema, model } = require('mongoose');
+import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
+import * as mongoose from 'mongoose';
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    // lastname:{
-    //     type: String,
-    // },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password:{
-        type: String,
-        required: true
-    },
-    // location:{
-    //     type: String,
-    //     trim: true
-    // },
-    // status:{
-    //     type: String,
-    //     enum: ["Jefe", "Supervisor", "Guardia"],
-    // },
-    // image:{
-    //     type: String
-    // },
-    // date: {
-    //     type: Date,
-    //     default: Date.now
-    // }
-}, {
-    versionKey: false,
-    timestamps: false,
-})
+const USER_ROLES:string[] = ['boss', 'supervisor', 'watcher'];
+const TODO_STATUS:string[] = ['left', 'done'];
 
-export default model('User', userSchema)
+class ToDos {
+    @prop()
+    public name: string;
+
+    @prop({ type: String, enum: TODO_STATUS })
+    public status: string;
+}
+
+class User {
+    @prop({ required: true })
+    public name!: string;
+
+    @prop({ required: true })
+    public lastName!: string;
+
+    @prop({ required: true })
+    public password!: string;
+
+    @prop({ type: String, enum: USER_ROLES })
+    public role!: string;
+        
+    @prop({ required: true })
+    public dni!: number;
+        
+    @prop()
+    public workingHours?: string;
+    
+    @prop()
+    public probilePic?: URL;
+
+    @prop({ ref: () => ToDos })
+    public toDos?: Ref<ToDos>[];
+    
+    //     email: {
+    //         type: String,
+    //         required: true,
+    //         unique: true,
+    //     },
+    //     // date: {
+    //     //     type: Date,
+    //     //     default: Date.now
+    //     // }
+    // }, {
+    //     versionKey: false,
+    //     timestamps: false,
+
+}
+
+
+// const userSchema = new Schema({
+// })
+
+const UserModel = getModelForClass(User);
+export default UserModel
+
+
+
+// export default model('User', userSchema)

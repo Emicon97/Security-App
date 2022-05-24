@@ -1,5 +1,5 @@
 import app from './src/app';
-import dbConnection  from './src/db/database';
+import dbConnection  from './src/db/index';
 
 async function main(){
     await dbConnection()
