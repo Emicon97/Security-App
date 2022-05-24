@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import user from '../models/user';
-
+import User from '../models/user';
+const {SignIn} = require('../controller/index')
 const router = Router();
 
 router.get('/user', (req,res) => {
@@ -8,16 +8,17 @@ router.get('/user', (req,res) => {
 })
 
 router.post('/user', async (req,res) => {
-    const datos = {
-        name: "matias",
-        email: "ariel@hotmail.com",
-        password: "sdas12sqas"
-    }
-
+    // const datos = {
+    //     name: "matias",
+    //     lastName:"rodriguez",
+    //     password: "sdas12sqas",
+    //     dni:21231221312,
+    //     role:"supervisor",
+    // }
+    let{name, lastName, password, dni, role} = req.body
     try{
-        const data = await user.create(datos)
-        data.save()
-        res.send("el usuario se creo correctamente")
+        let data = await SignIn(name, lastName, password, dni, role)
+        res.json(data)
     }catch(error){
         console.log(error)
     }
