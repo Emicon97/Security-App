@@ -2,9 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import config from './config/config';
-
-import userRoutes from './routes/user';
-import todosRoutes from './routes/toDos'
+const routes = require('./routes/index');
 
 const app = express();
 
@@ -15,7 +13,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use(userRoutes);
-app.use(todosRoutes);
+app.use('/', routes)
 
 export default app;

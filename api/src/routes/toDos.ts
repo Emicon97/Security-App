@@ -1,12 +1,12 @@
 import { Router } from 'express';
-const {SignIn} = require('../controller/index')
+const {SignIn} = require('../controller/userController')
 const router = Router();
 
-router.get('/todos', (req,res) => {
+router.get('/', (req,res) => {
     res.json("Holis")
 })
 
-router.post('/todos', async (req,res) => {
+router.post('/', async (req,res) => {
     let{name, lastName, password, dni, role} = req.body
     try{
         let data = await SignIn(name, lastName, password, dni, role)
