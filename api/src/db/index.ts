@@ -9,7 +9,7 @@ const dbConnection = async () => {
     //   user: config.MONGO_USER,
     //   pass: config.MONGO_PASSWORD
     })
-      .then((dbCon) => {
+      .then(() => {
         console.log('DB Online');
       })
       .catch((err) => {

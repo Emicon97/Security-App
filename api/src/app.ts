@@ -4,6 +4,7 @@ import cors from 'cors';
 import config from './config/config';
 
 import userRoutes from './routes/user';
+import todosRoutes from './routes/toDos'
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use(userRoutes)
+app.use(userRoutes);
+app.use(todosRoutes);
 
 export default app;

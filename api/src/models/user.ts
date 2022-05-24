@@ -28,6 +28,9 @@ class User {
 
     @prop({ ref: () => ToDos })
     public toDos?: Ref<ToDos>[];
+
+    @prop({ required: true })
+    public environment: string;
     
 }
 
