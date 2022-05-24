@@ -1,20 +1,6 @@
-<<<<<<< HEAD
+
 import React from "react";
-import "./App.css";
-import LoginButton from "./components/LoginButton"
 
-
-function App() {
-  return (
-      <div className="App">
-        <header className="App-header">
-          <h2>Security App</h2>
-          <LoginButton></LoginButton>
-        </header>
-      </div>
-  );
-}
-=======
 function App() {
     return (
         <div className='container mx-auto bg-green-400 rounded-xl shadow border p-8 m-10'>
@@ -27,6 +13,5 @@ function App() {
         </div>
     );
 };
->>>>>>> 352f91e17b0a5f1553bb42e214374aabb82373d0
 
 export default App;
