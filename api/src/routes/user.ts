@@ -7,12 +7,13 @@ router.get('/user', (req,res) => {
 })
 
 router.post('/user', async (req,res) => {
-    let{name, lastName, password, dni, role} = req.body
+    let{name, lastName, password, dni, role} = req.body;
     try{
-        let data = await SignIn(name, lastName, password, dni, role)
+        let data = await SignIn(name, lastName, password, dni, role);
         res.json(data)
     }catch(error){
-        console.log(error)
+        console.log(error);
+        res.status(409).json(error);
     }
 })
 

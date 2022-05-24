@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const {SignIn} = require('../controller/index')
+const {SignIn} = require('../controller/toDosController')
 const router = Router();
 
 router.get('/todos', (req,res) => {
