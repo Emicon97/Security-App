@@ -30,8 +30,13 @@ router.put('/:id',async(req,res)=>{
         let data = await toDosModel.findByIdAndUpdate(id,{name:name,description:description,status:status})
         console.log("DATA Puuuuuuuuuut",data)
         res.json(data)
-    }catch(err){
-        console.log("Put error",err)
+    }catch(error){
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 
