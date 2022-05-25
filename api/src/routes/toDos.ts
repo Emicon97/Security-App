@@ -61,8 +61,13 @@ router.put('/:id',async(req,res)=>{
             status})
 
         res.json(data)
-    }catch(err){
-        console.log("Put error",err)
+    }catch(error){
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 

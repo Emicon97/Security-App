@@ -5,9 +5,23 @@ import {
     watcherModel,
     neighbourModel } from '../models/user'
 
-// const { SignUp } = require('../controller/userController');
+const { GetUser } = require('../controller/userController');
 
 const router = Router();
+
+router.get('/', async(req,res)=>{
+    try{
+        let {name} = req.query
+        res.status(200).json(await GetUser(name))
+    }catch(error){
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
 
 router.get('/', (req,res) => {
     res.json("Holis")
