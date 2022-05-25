@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const {SignIn} = require('../controller/userController');
+const { SignUp } = require('../controller/userController');
 
 const router = Router();
 
@@ -10,7 +10,7 @@ router.get('/', (req,res) => {
 router.post('/', async (req,res) => {
     let{ name, lastName, password, dni } = req.body;
     try{
-        let data = await SignIn(name, lastName, password, dni);
+        let data = await SignUp(name, lastName, password, dni);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {
