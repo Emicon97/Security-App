@@ -24,11 +24,14 @@ router.post('/', async (req,res) => {
 })
 
 router.put('/:id',async(req,res)=>{
-    let {id} = req.params;
-    let {name,description,status} = req.body
+    let { id } = req.params;
+    let { name, description, status } = req.body
     try{
-        let data = await toDosModel.findByIdAndUpdate(id,{name:name,description:description,status:status})
-        console.log("DATA Puuuuuuuuuut",data)
+        let data = await toDosModel.findByIdAndUpdate(id, {
+            name,
+            description,
+            status})
+
         res.json(data)
     }catch(err){
         console.log("Put error",err)

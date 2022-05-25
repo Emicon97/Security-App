@@ -1,7 +1,8 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-import {ToDos} from './toDos';
+import { ToDos } from './toDos';
 
 class User {
+    
     @prop({ required: true, lowercase:true,trim:true})
     public name!: string;
 
