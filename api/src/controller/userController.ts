@@ -11,7 +11,8 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
                 name,
                 lastName,
                 password,
-                dni
+                dni,
+                toDos:[]
             }) 
             createUser.save()
             return 'Usuario creado correctamente...'
@@ -25,13 +26,23 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
 
 async function GetUser(classOfuser:string) {
     try{   
-        if(classOfuser==='supervisor') await supervisorModel.find({})
-        if(classOfuser==='watcher') await watcherModel.find({})
-        if(classOfuser==='neighbour') await neighbourModel.find({})
+        if(classOfuser==='supervisor') return await supervisorModel.find() 
+        if(classOfuser==='watcher') return await watcherModel.find()
+        if(classOfuser==='neighbour') return await neighbourModel.find()
     }catch(err:any){
         throw new Error(err)
     }    
 }
+
+// async function GetUserById(id:string) {
+//     try{   
+//         if(id==='supervisor') return await supervisorModel.find() 
+//         if(id==='watcher') return await watcherModel.find()
+//         if(id==='neighbour') return await neighbourModel.find()
+//     }catch(err:any){
+//         throw new Error(err)
+//     }    
+// }
 
 module.exports = {
     SignIn,
