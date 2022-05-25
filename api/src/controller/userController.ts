@@ -34,17 +34,21 @@ async function GetUser(classOfuser:string) {
     }    
 }
 
-// async function GetUserById(id:string) {
-//     try{   
-//         if(id==='supervisor') return await supervisorModel.find() 
-//         if(id==='watcher') return await watcherModel.find()
-//         if(id==='neighbour') return await neighbourModel.find()
-//     }catch(err:any){
-//         throw new Error(err)
-//     }    
-// }
+async function GetUserById(id:any) {
+    try{
+        let findSupervisor= await supervisorModel.findOne({id:id})
+        let findWatcher= await watcherModel.findOne({id:id})
+        let findNeighbour= await neighbourModel.findOne({id:id})
+        if(findSupervisor!==null) return findSupervisor 
+        if(findWatcher!==null) return findWatcher
+        if(findNeighbour!==null) return findNeighbour
+    }catch(err:any){
+        throw new Error(err)
+    }    
+}
 
 module.exports = {
     SignIn,
-    GetUser
+    GetUser,
+    GetUserById
 }

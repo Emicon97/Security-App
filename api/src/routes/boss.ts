@@ -5,7 +5,7 @@ import {
     watcherModel,
     neighbourModel } from '../models/user'
 
-const { GetUser } = require('../controller/userController');
+const { GetUser, GetUserById } = require('../controller/userController');
 
 const router = Router();
 //* GET trae los usuarios segun la clase desde la Base de Datos
@@ -23,13 +23,22 @@ router.get('/', async(req,res)=>{
         }
     }
 })
-
-// router.get('/:', (req,res) => {
-//     try{
-//         let {id} = req.params
-//         let dataUser = 
-//     }
-// })
+//* GET trae los usuarios segun el id desde la Base de Datos
+//http://localhost:3001/boss/:id
+router.get('/:id', async(req,res) => {
+    try{
+        let {id} = req.params
+        let dataUser = await GetUserById(id)
+        res.json(dataUser)
+    }catch(error){
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
 
 // router.post('/', async (req,res) => {
 //     let{ name, lastName, password, dni } = req.body;
