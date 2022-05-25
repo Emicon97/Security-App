@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import toDosModel from '../models/toDos';
-const { getAllToDos, assignTask, assignToWorker } = require('../controller/toDosController');
+const { getToDos, assignTask, assignToWorker } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
 //http://localhost:3001/todos
 router.get('/', async (req, res) => {
     try{
-        let list = await getAllToDos;
+        let list = await getToDos();
         res.status(200).json(list);
     }catch(error){
         if (error instanceof Error) {
@@ -24,10 +24,14 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
     try{
-        const todo = await toDosModel.findById(id)
-        res.json(todo)
+        let list = await getToDos(id);
+        res.status(200).json(list);
     }catch(error){
-        console.log(error)
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 

@@ -3,14 +3,19 @@ import toDosModel from '../models/toDos';
 import { watcherModel } from './../models/user';
 const mongoose = require('mongoose');
 
-async function getAllToDos () {
-  const allTodos = await toDosModel.find();
+async function getToDos (id?:string) {
   try {
-    if(allTodos.length > 0 ){
-      return allTodos;
+    if (id) {
+      const toDo = await toDosModel.findById(id)
+      return toDo;
+    } else {
+      const allTodos = await toDosModel.find();
+      if (allTodos.length > 0 ) {
+        return allTodos;
+      }
     }
   } catch (err) {
-    throw new Error ('No tiene tareas asignadas.');
+    throw new Error ('No hay tareas asignadas.');
   }
 }
 
@@ -43,7 +48,7 @@ async function assignToWorker(id:string, task) {
 }
 
 module.exports = {
-  getAllToDos,
+  getToDos,
   assignTask,
   assignToWorker
 }
