@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import toDosModel from '../models/toDos';
 const { assignTask } = require('../controller/toDosController');
 
 const router = Router();
@@ -19,6 +20,18 @@ router.post('/', async (req,res) => {
         } else {
             console.log('Unexpected Error', error);
         }
+    }
+})
+
+router.put('/:id',async(req,res)=>{
+    let {id} = req.params;
+    let {name,description,status} = req.body
+    try{
+        let data = await toDosModel.findByIdAndUpdate(id,{name:name,description:description,status:status})
+        console.log("DATA Puuuuuuuuuut",data)
+        res.json(data)
+    }catch(err){
+        console.log("Put error",err)
     }
 })
 
