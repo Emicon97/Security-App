@@ -1,11 +1,15 @@
 const { Router } = require('express');
 
-import userRoutes from './user';
+import bossRoutes from './boss';
+import supervisorRoutes from './supervisor';
+import watcherRoutes from './watcher';
 import todosRoutes from './toDos'
 
 const router = Router();
 
-router.use('/user', userRoutes);
+router.use('/boss', bossRoutes);
+router.use('/supervisor', supervisorRoutes);
+router.use('/watcher', watcherRoutes);
 router.use('/todos', todosRoutes);
 
 module.exports = router;
