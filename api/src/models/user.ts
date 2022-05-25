@@ -24,13 +24,13 @@ class User {
 class Boss extends User {
         
     @prop()
-    public environment: string;
+    public environment: string[];
 }
 
 class Supervisor extends User {
         
     @prop({ required: true })
-    public environment: string;
+    public environment: string[];
 
     @prop({ ref: () => ToDos })
     public toDos: Ref<ToDos>;
@@ -39,7 +39,7 @@ class Supervisor extends User {
 class Watcher extends User {
         
     @prop({ required: true })
-    public environment: string;
+    public environment: string[];
 
     @prop({ ref: () => ToDos })
     public toDos: Ref<ToDos>;
@@ -48,8 +48,16 @@ class Watcher extends User {
 class Neighbour extends User {
         
     @prop({ required: true })
-    public environment: string;
+    public environment: string[];
 }
 
-const UserModel = getModelForClass(User);
-export default UserModel;
+const bossModel = getModelForClass(Boss);
+const supervisorModel = getModelForClass(Supervisor);
+const watcherModel = getModelForClass(Watcher);
+const neighbourModel = getModelForClass(Neighbour);
+export {
+    bossModel,
+    supervisorModel,
+    watcherModel,
+    neighbourModel
+};

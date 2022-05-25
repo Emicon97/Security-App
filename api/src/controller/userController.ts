@@ -1,20 +1,17 @@
-import UserModel from '../models/user';
+import {bossModel} from '../models/user';
 
-async function SignIn(name:string,lastName:string,password:string,dni:number,role:string, environment:string, toDos:string) {
-    let findInDb = await UserModel.findOne({
+async function SignIn(name:string,lastName:string,password:string,dni:number) {
+    let findInDb = await bossModel.findOne({
         dni: dni,
     })
     
     try {
         if(findInDb===null){
-            let createUser = await UserModel.create({
+            let createUser = await bossModel.create({
                 name,
                 lastName,
                 password,
-                role,
-                dni,
-                environment,
-                toDos
+                dni
             }) 
             createUser.save()
             return 'Usuario creado correctamente...'

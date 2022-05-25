@@ -8,9 +8,9 @@ router.get('/', (req,res) => {
 })
 
 router.post('/', async (req,res) => {
-    let{ name, lastName, password, dni, role, environment, toDos } = req.body;
+    let{ name, lastName, password, dni } = req.body;
     try{
-        let data = await SignIn(name, lastName, password, dni, role, environment, toDos);
+        let data = await SignIn(name, lastName, password, dni);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {
