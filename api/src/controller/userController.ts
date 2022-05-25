@@ -1,4 +1,4 @@
-import {bossModel} from '../models/user';
+import { bossModel } from '../models/user';
 
 async function SignIn(name:string,lastName:string,password:string,dni:number) {
     let findInDb = await bossModel.findOne({
