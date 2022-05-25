@@ -1,27 +1,26 @@
 import { Router } from 'express';
-import User from '../models/user';
-const {SignIn} = require('../controller/index')
+const {SignIn} = require('../controller/userController');
+
 const router = Router();
 
-router.get('/user', (req,res) => {
+router.get('/', (req,res) => {
     res.json("Holis")
 })
 
-router.post('/user', async (req,res) => {
-    // const datos = {
-    //     name: "matias",
-    //     lastName:"rodriguez",
-    //     password: "sdas12sqas",
-    //     dni:21231221312,
-    //     role:"supervisor",
-    // }
-    let{name, lastName, password, dni, role} = req.body
+router.post('/', async (req,res) => {
+    let{ name, lastName, password, dni } = req.body;
     try{
-        let data = await SignIn(name, lastName, password, dni, role)
+        let data = await SignIn(name, lastName, password, dni);
         res.json(data)
     }catch(error){
-        console.log(error)
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(409).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
+
 
 export default router;
