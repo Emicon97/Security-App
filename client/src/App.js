@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
+import TableInfoSupervisors from "./components/TableInfoSupervisors";
 
 function App() {
   return (
@@ -17,5 +18,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;
