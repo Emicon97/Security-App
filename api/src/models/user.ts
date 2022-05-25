@@ -1,10 +1,7 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
 import {ToDos} from './toDos';
 
-const USER_ROLES:string[] = ['boss', 'supervisor', 'watcher'];
-
 class User {
-
     @prop({ required: true, lowercase:true,trim:true})
     public name!: string;
 
@@ -13,25 +10,45 @@ class User {
 
     @prop({ required: true })
     public password!: string;
-
-    @prop({ enum: USER_ROLES })
-    public role!: string;
         
     @prop({ required: true })
     public dni!: number;
-        
+    
     @prop()
     public workingHours?: string;
     
     @prop({lowercase:true,trim:true})
     public probilePic?: string;
+}
 
+class Boss extends User {
+        
+    @prop()
+    public environment: string;
+}
+
+class Supervisor extends User {
+        
     @prop({ required: true })
     public environment: string;
 
     @prop({ ref: () => ToDos })
     public toDos: Ref<ToDos>;
-    
+}
+
+class Watcher extends User {
+        
+    @prop({ required: true })
+    public environment: string;
+
+    @prop({ ref: () => ToDos })
+    public toDos: Ref<ToDos>;
+}
+
+class Neighbour extends User {
+        
+    @prop({ required: true })
+    public environment: string;
 }
 
 const UserModel = getModelForClass(User);
