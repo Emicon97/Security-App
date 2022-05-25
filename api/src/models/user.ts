@@ -32,18 +32,12 @@ export class Supervisor extends User {
         
     @prop({ required: true })
     public environment: string[];
-
-    @prop({ ref: () => ToDos })
-    public toDos: Ref<ToDos>;
 }
 
 export class Watcher extends User {
         
     @prop({ required: true })
     public environment: string[];
-
-    @prop({ ref: () => ToDos })
-    public toDos: Ref<ToDos>;
 }
 
 export class Neighbour extends User {
