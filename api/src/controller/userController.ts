@@ -24,10 +24,10 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
 }
 
 async function GetUser(classOfuser:string) {
-try{   
-    if(classOfuser==='supervisor') await supervisorModel.find({})
-    if(classOfuser==='watcher') await watcherModel.find({})
-    if(classOfuser==='neighbour') await neighbourModel.find({})
+    try{   
+        if(classOfuser==='supervisor') await supervisorModel.find({})
+        if(classOfuser==='watcher') await watcherModel.find({})
+        if(classOfuser==='neighbour') await neighbourModel.find({})
     }catch(err:any){
         throw new Error(err)
     }    

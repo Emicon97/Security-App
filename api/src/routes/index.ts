@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-import userRoutes from './user';
+import userRoutes from './boss';
 import todosRoutes from './toDos'
 
 const router = Router();
