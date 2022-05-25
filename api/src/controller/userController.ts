@@ -11,8 +11,7 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
                 name,
                 lastName,
                 password,
-                dni,
-                toDos:[]
+                dni
             }) 
             createUser.save()
             return 'Usuario creado correctamente...'
