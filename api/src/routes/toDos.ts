@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import toDosModel from '../models/toDos';
-const { assignTask } = require('../controller/toDosController');
+const { assignTask, assignToWorker } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -34,10 +34,11 @@ router.get('/:id', async(req, res) => {
 //* POST crea una tarea 
 //http://localhost:3001/todos/
 router.post('/', async(req,res) => {
-    let{ name, description } = req.body
+    let{ name, description, id } = req.body;
     try{
-        let data = await assignTask(name, description)
-        res.json(data)
+        let data = await assignTask(name, description);
+        let assign = await assignToWorker(id);
+        res.json(data);
     }catch(error){
         if (error instanceof Error) {
             console.error(error);
@@ -60,8 +61,13 @@ router.put('/:id',async(req,res)=>{
             status})
 
         res.json(data)
-    }catch(err){
-        console.log("Put error",err)
+    }catch(error){
+        if (error instanceof Error) {
+            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 
