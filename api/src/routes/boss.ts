@@ -8,7 +8,8 @@ import {
 const { GetUser } = require('../controller/userController');
 
 const router = Router();
-
+//* GET trae los usuarios segun la clase desde la Base de Datos
+//http://localhost:3001/boss/?name={name}
 router.get('/', async(req,res)=>{
     try{
         let {name} = req.query
@@ -23,9 +24,12 @@ router.get('/', async(req,res)=>{
     }
 })
 
-router.get('/', (req,res) => {
-    res.json("Holis")
-})
+// router.get('/:', (req,res) => {
+//     try{
+//         let {id} = req.params
+//         let dataUser = 
+//     }
+// })
 
 // router.post('/', async (req,res) => {
 //     let{ name, lastName, password, dni } = req.body;
