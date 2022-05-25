@@ -1,6 +1,8 @@
 import React from "react";
 import { Switch, Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
+import LoginButton from "./components/LoginButton"
+import LogOutButton from "./components/LogOutButton"
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/bossHome" element={<BossHome/>}/>
+        <Route path="/" element= {[<LoginButton />, <LogOutButton/>]} />
       </Routes>
     </>
   );

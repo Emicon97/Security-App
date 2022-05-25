@@ -1,10 +1,17 @@
 import React from 'react'
 import logo from "../assets/logo.png"
+import { useAuth0 } from '@auth0/auth0-react'
 
 
 export default function BossHome(){
-    return(
-<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+    const { user, isAuthenticated, isLoading } = useAuth0();
+  
+    if (isLoading) {
+      return <div>Loading ...</div>;
+    }
+
+ return(
+  isAuthenticated && (<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
   <div className="container flex flex-wrap justify-between items-center mx-auto">
     <a href="https://localhost:3000/bossHome" className="flex items-center">
         <img src={logo} className="mr-3 h-6 sm:h-9" alt="Centinel Logo" />
@@ -32,6 +39,6 @@ export default function BossHome(){
       </ul>
     </div>
   </div>
-</nav>
+</nav>)
     )
 }
