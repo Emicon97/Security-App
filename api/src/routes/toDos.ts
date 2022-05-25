@@ -1,11 +1,9 @@
 import { Router } from 'express';
 import toDosModel from '../models/toDos';
-const { getToDos, assignTask, assignToWorker } = require('../controller/toDosController');
+const { getToDos, assignTask, assignToWorker, updateToDo, deleteToDo } = require('../controller/toDosController');
 
 const router = Router();
 
-//* GET trae todos las tareas de la Base de Datos
-//http://localhost:3001/todos
 router.get('/', async (req, res) => {
     try{
         let list = await getToDos();
@@ -19,8 +17,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-//* GET trae una tarea en espeficico por ID
-//http://localhost:3001/todos/:id
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
     try{
@@ -58,11 +54,7 @@ router.put('/:id', async (req, res)=>{
     let { id } = req.params;
     let { name, description, status } = req.body
     try{
-        let data = await toDosModel.findByIdAndUpdate(id, {
-            name,
-            description,
-            status})
-
+        let data = await updateToDo(id, name, description, status);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {
@@ -78,13 +70,15 @@ router.put('/:id', async (req, res)=>{
 router.delete('/:id', async (req, res)=>{
     let { id } = req.params;
     try{
-
-        const todo = await toDosModel.findByIdAndDelete(id)
-        res.json(todo)
+        const successMessage = deleteToDo(id);
+        res.json(successMessage);
     }catch(error){
-        console.log(error)
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
-
 })
 
 export default router;

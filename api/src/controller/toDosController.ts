@@ -19,7 +19,7 @@ async function getToDos (id?:string) {
   }
 }
 
-async function assignTask(name:string, description:string) {
+async function assignTask (name:string, description:string) {
   try {
     let createToDo = await toDosModel.create({
         name,
@@ -33,7 +33,7 @@ async function assignTask(name:string, description:string) {
   }
 }
 
-async function assignToWorker(id:string, task) {
+async function assignToWorker (id:string, task) {
   /* try {
     watcherModel.findById(id)
       .then((worker) => {
@@ -47,8 +47,32 @@ async function assignToWorker(id:string, task) {
   } */
 }
 
+async function updateToDo (id:string, name:string, description:string, status:string) {
+  try {
+    let data = await toDosModel.findByIdAndUpdate(id, {
+      name,
+      description,
+      status
+    });
+    return data;
+  } catch (err) {
+    throw new Error ('Por favor indique todos los parámetros necesarios.')
+  }
+}
+
+async function deleteToDo (id:string) {
+  try {
+    await toDosModel.findByIdAndDelete(id);
+    return 'La tarea fue borrada con éxito.';
+  } catch (err) {
+    throw new Error ('La tarea no existe.');
+  }
+}
+
 module.exports = {
   getToDos,
   assignTask,
-  assignToWorker
+  assignToWorker,
+  updateToDo,
+  deleteToDo
 }
