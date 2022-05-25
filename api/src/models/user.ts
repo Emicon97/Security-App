@@ -21,13 +21,13 @@ class User {
     public probilePic?: string;
 }
 
-class Boss extends User {
+export class Boss extends User {
         
     @prop()
     public environment: string[];
 }
 
-class Supervisor extends User {
+export class Supervisor extends User {
         
     @prop({ required: true })
     public environment: string[];
@@ -36,7 +36,7 @@ class Supervisor extends User {
     public toDos: Ref<ToDos>;
 }
 
-class Watcher extends User {
+export class Watcher extends User {
         
     @prop({ required: true })
     public environment: string[];
@@ -45,7 +45,7 @@ class Watcher extends User {
     public toDos: Ref<ToDos>;
 }
 
-class Neighbour extends User {
+export class Neighbour extends User {
         
     @prop({ required: true })
     public environment: string[];
