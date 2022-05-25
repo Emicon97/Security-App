@@ -24,8 +24,8 @@ class User {
 
 export class Boss extends User {
         
-    @prop()
-    public environment: string[];
+    // @prop()
+    // public environment: string[];
 }
 
 export class Supervisor extends User {
