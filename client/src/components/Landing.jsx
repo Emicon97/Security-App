@@ -3,7 +3,7 @@ import LoginButton from "./LoginButton";
 
 const Landing = () => {
     return (
-        <div className="flex justify-center items-center w-full">
+        <div className="flex justify-center">
             <LoginButton />
         </div>
     );
