@@ -1,64 +1,64 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-import * as mongoose from 'mongoose';
-
-const USER_ROLES:string[] = ['boss', 'supervisor', 'watcher'];
-const TODO_STATUS:string[] = ['left', 'done'];
-
-class ToDos {
-    @prop()
-    public name: string;
-
-    @prop({ type: String, enum: TODO_STATUS })
-    public status: string;
-}
+import { ToDos } from './toDos';
 
 class User {
-    @prop({ required: true })
+    
+    @prop({ required: true, lowercase:true,trim:true})
     public name!: string;
 
-    @prop({ required: true })
+    @prop({ required: true, lowercase:true,trim:true})
     public lastName!: string;
 
     @prop({ required: true })
     public password!: string;
-
-    @prop({ type: String, enum: USER_ROLES })
-    public role!: string;
         
     @prop({ required: true })
     public dni!: number;
-        
+    
     @prop()
     public workingHours?: string;
     
-    @prop()
-    public probilePic?: URL;
-
-    @prop({ ref: () => ToDos })
-    public toDos?: Ref<ToDos>[];
-    
-    //     email: {
-    //         type: String,
-    //         required: true,
-    //         unique: true,
-    //     },
-    //     // date: {
-    //     //     type: Date,
-    //     //     default: Date.now
-    //     // }
-    // }, {
-    //     versionKey: false,
-    //     timestamps: false,
-
+    @prop({lowercase:true,trim:true})
+    public probilePic?: string;
 }
 
+export class Boss extends User {
+        
+    @prop()
+    public environment: string[];
+}
 
-// const userSchema = new Schema({
-// })
+export class Supervisor extends User {
+        
+    @prop({ required: true })
+    public environment: string[];
 
-const UserModel = getModelForClass(User);
-export default UserModel
+    @prop({ ref: () => ToDos })
+    public toDos: Ref<ToDos>;
+}
 
+export class Watcher extends User {
+        
+    @prop({ required: true })
+    public environment: string[];
 
+    @prop({ ref: () => ToDos })
+    public toDos: Ref<ToDos>;
+}
 
-// export default model('User', userSchema)
+export class Neighbour extends User {
+        
+    @prop({ required: true })
+    public environment: string[];
+}
+
+const bossModel = getModelForClass(Boss);
+const supervisorModel = getModelForClass(Supervisor);
+const watcherModel = getModelForClass(Watcher);
+const neighbourModel = getModelForClass(Neighbour);
+export {
+    bossModel,
+    supervisorModel,
+    watcherModel,
+    neighbourModel
+};
