@@ -1,5 +1,28 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 
+async function GetUser(classOfuser:string) {
+    try{   
+        if(classOfuser==='supervisor') return await supervisorModel.find() 
+        if(classOfuser==='watcher') return await watcherModel.find()
+        if(classOfuser==='neighbour') return await neighbourModel.find()
+    }catch(err:any){
+        throw new Error(err)
+    }    
+}
+
+async function GetUserById(id:any) {
+    try{
+        let findSupervisor= await supervisorModel.findById(id)
+        let findWatcher= await watcherModel.findById(id)
+        let findNeighbour= await neighbourModel.findById(id)
+        if(findSupervisor!==null) return findSupervisor 
+        if(findWatcher!==null) return findWatcher
+        if(findNeighbour!==null) return findNeighbour
+    }catch(err:any){
+        throw new Error(err)
+    }    
+}
+
 async function SignUp(name:string, lastName:string, password:string, dni:number, role:string) {
     try {
         if(!role){
@@ -42,27 +65,19 @@ async function SignUp(name:string, lastName:string, password:string, dni:number,
     }
 }
 
-async function GetUser(classOfuser:string) {
-    try{   
-        if(classOfuser==='supervisor') return await supervisorModel.find() 
-        if(classOfuser==='watcher') return await watcherModel.find()
-        if(classOfuser==='neighbour') return await neighbourModel.find()
-    }catch(err:any){
-        throw new Error(err)
-    }    
-}
-
-async function GetUserById(id:any) {
-    try{
-        let findSupervisor= await supervisorModel.findById(id)
-        let findWatcher= await watcherModel.findById(id)
-        let findNeighbour= await neighbourModel.findById(id)
-        if(findSupervisor!==null) return findSupervisor 
-        if(findWatcher!==null) return findWatcher
-        if(findNeighbour!==null) return findNeighbour
-    }catch(err:any){
-        throw new Error(err)
-    }    
+async function DeleteUser(id:string, role:string) {
+    try {
+        if(role==='supervisor') {
+            await supervisorModel.findByIdAndDelete(id);
+            return 'Supervisor eliminado.';
+        }
+        if(role==='watcher') {
+            await watcherModel.findByIdAndDelete(id);
+            return 'Guardia eliminado.';
+        };
+    } catch (err) {
+        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+    }
 }
 
 module.exports = {

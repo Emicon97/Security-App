@@ -38,21 +38,6 @@ router.get('/:id', async(req,res) => {
     }
 })
 
-// router.post('/', async (req,res) => {
-//     let{ name, lastName, password, dni } = req.body;
-//     try{
-//         let data = await SignUp(name, lastName, password, dni);
-//         res.json(data)
-//     }catch(error){
-//         if (error instanceof Error) {
-//             console.error(error);
-//             res.status(409).json(error.message);
-//         } else {
-//             console.log('Unexpected Error', error);
-//         }
-//     }
-// })
-
 router.post('/', async (req, res) => {
     let { name, lastName, password, dni, role } = req.body;
     try {
