@@ -19,11 +19,12 @@ async function getToDos (id?:string) {
   }
 }
 
-async function assignTask (name:string, description:string) {
+async function assignTask (name:string, description:string, role:string, id:string) {
   try {
     let createToDo = await toDosModel.create({
         name,
-        description
+        description,
+        [role]: id
     })
     let done = await createToDo.save()
 
