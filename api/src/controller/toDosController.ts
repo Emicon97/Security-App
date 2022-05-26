@@ -25,18 +25,19 @@ async function getToDosByRole (id:string, role:string) {
   }
 }
 
-async function assignTask (name:string, description:string, role:string, id:string) {
+async function assignTask (name:string, description:string | undefined, priority:string, role:string, id:string) {
   try {
     let createToDo = await toDosModel.create({
         name,
-        description,
+        description: description ? description : undefined,
+        priority,
         [role]: id
     })
-    let done = await createToDo.save()
+    await createToDo.save()
 
-    return done._id;
+    return '¡Tarea asignada correctamente!';
   } catch (err) {
-    throw new Error ('La tarea no pudo ser asignada...')
+    throw new Error ('La tarea no pudo ser asignada...');
   }
 }
 
