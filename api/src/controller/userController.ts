@@ -80,9 +80,24 @@ async function deleteUser (id:string, role:string) {
     }
 }
 
+async function updateUser(id:string, role:string, name:string, lastName:string, password:string, dni:number ,workingHours:string, probilePic:string) {
+    try{
+        if(role==='supervisor'){
+            await supervisorModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            return 'cambios registrado correctamente'
+        }
+        if(role==='watcher'){
+            await watcherModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            return 'cambios registrado correctamente'
+        }
+    }catch(err) {
+        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+    }
+}
 module.exports = {
     SignUp,
     GetUser,
     GetUserById,
-    deleteUser
+    deleteUser,
+    updateUser
 }

@@ -74,7 +74,7 @@ router.put('/:id', async (req, res)=>{
 router.delete('/:id', async (req, res)=>{
     let { id } = req.params;
     try{
-        const successMessage = deleteToDo(id);
+        const successMessage = await deleteToDo(id);
         res.json(successMessage);
     }catch(error){
         if (error instanceof Error) {
