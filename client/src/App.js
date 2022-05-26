@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
 import BossAddUser from "./components/BossAddUser";
+import Landing from "./components/Landing"
 
 function App() {
   return (
