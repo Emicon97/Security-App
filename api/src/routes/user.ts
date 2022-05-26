@@ -33,9 +33,9 @@ router.get('/:id', async(req,res) => {
 })
 
 router.post('/', async (req, res) => {
-    let { name, lastName, password, dni, role } = req.body;
+    let { name, lastName, password, dni, role, workingHours, profilePic  } = req.body;
     try {
-        let data = await signUp(name, lastName, password, dni, role);
+        let data = await signUp(name, lastName, password, dni, role, workingHours, profilePic);
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {
