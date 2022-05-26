@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { signUp, GetUser, GetUserById, deleteUser } = require('../controller/userController');
+const { signUp, GetUser, GetUserById, deleteUser, updateUser } = require('../controller/userController');
 
 const router = Router();
 //* GET trae los usuarios segun la clase desde la Base de Datos
@@ -46,11 +46,26 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res)=>{
+    let { id } = req.params;
+    let { name, lastName, password, dni, role, workingHours, probilePic } = req.body
+    try{
+        let data = await updateUser(id, name, lastName, password, dni, role, workingHours, probilePic);
+        res.json(data)
+    }catch(error){
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
+
 router.delete('/:id', async (req, res) => {
     let { id } = req.params;
     let { role } = req.body;
     try{
-        let message = deleteUser(id, role);
+        let message = await deleteUser(id, role);
         res.json(message);
     }catch(error){        
         if (error instanceof Error) {
