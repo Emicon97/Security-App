@@ -1,7 +1,4 @@
-import { ObjectId } from 'mongoose';
 import toDosModel from '../models/toDos';
-import { watcherModel } from './../models/user';
-const mongoose = require('mongoose');
 
 async function getToDos (id?:string) {
   try {
