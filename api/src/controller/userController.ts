@@ -65,7 +65,7 @@ async function SignUp(name:string, lastName:string, password:string, dni:number,
     }
 }
 
-async function DeleteUser(id:string, role:string) {
+async function deleteUser (id:string, role:string) {
     try {
         if(role==='supervisor') {
             await supervisorModel.findByIdAndDelete(id);
@@ -83,5 +83,6 @@ async function DeleteUser(id:string, role:string) {
 module.exports = {
     SignUp,
     GetUser,
-    GetUserById
+    GetUserById,
+    deleteUser
 }
