@@ -1,8 +1,8 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Landing from "./components/Landing";
+import { Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
 import AuthenticationBtn from "./components/AuthenticationBtn"
+import BossAddUser from "./components/BossAddUser";
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
         <Route path="/" element={<AuthenticationBtn/>}/>
         <Route path='/' element={<Landing/>}/>
         <Route path="/bossHome" element={<BossHome/>}/>
+        <Route path="/BossNewUser" element={<BossAddUser/>}/>
       </Routes>
     </>
   );
