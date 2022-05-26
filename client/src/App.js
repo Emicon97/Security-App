@@ -1,9 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import BossHome from "./components/BossHome";
-import AuthenticationBtn from "./components/AuthenticationBtn"
-import BossAddUser from "./components/BossAddUser";
-import TableInfoSupervisors from "./components/TableInfoSupervisors";
+import BossHome from "./components/boss/BossHome";
+import AuthenticationBtn from "./components/authentication/AuthenticationBtn";
+import BossAddUser from "./components/boss/BossAddUser";
+import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
+import GuardProfile from "./components/guard/GuardProfile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/bossHome" element={<BossHome/>}/>
         <Route path="/BossNewUser" element={<BossAddUser/>}/>
         <Route path='/TableInfoSupervisors' element={<TableInfoSupervisors />} />
+        <Route path='/GuardProfile' element={<GuardProfile />} />
       </Routes>
     </>
   );
