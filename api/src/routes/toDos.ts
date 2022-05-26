@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import toDosModel from '../models/toDos';
-const { getToDos, assignTask, assignToWorker, updateToDo, deleteToDo } = require('../controller/toDosController');
+const { getToDos, getToDosByRole, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -19,9 +18,15 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
+    let { role } = req.body;
     try{
-        let list = await getToDos(id);
-        res.status(200).json(list);
+        if (!role.length) {
+            let list = await getToDos(id);
+            res.status(200).json(list);
+        } else {
+            let toDos = await getToDosByRole(id, role);
+            res.status(200).json(toDos);
+        }
     }catch(error){
         if (error instanceof Error) {
             res.status(404).json(error.message);

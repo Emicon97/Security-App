@@ -19,6 +19,15 @@ async function getToDos (id?:string) {
   }
 }
 
+async function getToDosByRole (id:string, role:string) {
+  try {
+    let toDos = toDosModel.find({[role]: id});
+    return toDos;    
+  } catch (err) {
+    throw new Error ('No se encontraron tareas asignadas');
+  }
+}
+
 async function assignTask (name:string, description:string, role:string, id:string) {
   try {
     let createToDo = await toDosModel.create({
@@ -32,20 +41,6 @@ async function assignTask (name:string, description:string, role:string, id:stri
   } catch (err) {
     throw new Error ('La tarea no pudo ser asignada...')
   }
-}
-
-async function assignToWorker (id:string, task) {
-  /* try {
-    watcherModel.findById(id)
-      .then((worker) => {
-        console.log(typeof task)
-        if (worker !== null) {
-          worker.toDos.push(task);
-        }
-      });
-  } catch (err:any) {
-    throw new Error (err);
-  } */
 }
 
 async function updateToDo (id:string, name:string, description:string, status:string) {
@@ -72,8 +67,8 @@ async function deleteToDo (id:string) {
 
 module.exports = {
   getToDos,
+  getToDosByRole,
   assignTask,
-  assignToWorker,
   updateToDo,
   deleteToDo
 }
