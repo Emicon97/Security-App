@@ -5,7 +5,7 @@ const LoginButton = () => {
   const { loginWithRedirect } = useAuth0()
   return (
     <button onClick={() => loginWithRedirect()} className={button}>Log in</button>
-  )
+  );
 };
 
 const button = `
@@ -18,4 +18,4 @@ const button = `
   rounded-3xl
 `;
 
-export default LoginButton
+export default LoginButton;
