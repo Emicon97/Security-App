@@ -1,6 +1,7 @@
 import React from "react";
-import { Switch, Route, Link, Routes } from "react-router-dom";
+import { Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
+import AddUserBoss from "./components/AddUserBoss";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<BossHome/>}/>
+        <Route path="/addSupervisor" element={<AddUserBoss/>}/>
       </Routes>
     </>
   );
