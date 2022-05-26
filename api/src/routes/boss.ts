@@ -16,7 +16,6 @@ router.get('/', async(req,res)=>{
         res.status(200).json(await GetUser(name))
     }catch(error){
         if (error instanceof Error) {
-            console.error(error);
             res.status(404).json(error.message);
         } else {
             console.log('Unexpected Error', error);
@@ -32,7 +31,6 @@ router.get('/:id', async(req,res) => {
         res.json(dataUser)
     }catch(error){
         if (error instanceof Error) {
-            console.error(error);
             res.status(404).json(error.message);
         } else {
             console.log('Unexpected Error', error);

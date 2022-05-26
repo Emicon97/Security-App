@@ -11,8 +11,7 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
                 name,
                 lastName,
                 password,
-                dni,
-                toDos:[]
+                dni
             }) 
             createUser.save()
             return 'Usuario creado correctamente...'
@@ -36,9 +35,9 @@ async function GetUser(classOfuser:string) {
 
 async function GetUserById(id:any) {
     try{
-        let findSupervisor= await supervisorModel.findOne({id:id})
-        let findWatcher= await watcherModel.findOne({id:id})
-        let findNeighbour= await neighbourModel.findOne({id:id})
+        let findSupervisor= await supervisorModel.findById(id)
+        let findWatcher= await watcherModel.findById(id)
+        let findNeighbour= await neighbourModel.findById(id)
         if(findSupervisor!==null) return findSupervisor 
         if(findWatcher!==null) return findWatcher
         if(findNeighbour!==null) return findNeighbour
