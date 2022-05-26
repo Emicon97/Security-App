@@ -1,5 +1,6 @@
 
 import React from "react";
+// import GuardProfile from "./components/GuardProfile";
 import TableInfoSupervisors from "./components/TableInfoSupervisors";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
                 React and Tailwind CSS in action
             </p>
             <TableInfoSupervisors/>
+            
         </div>
     );
 };
