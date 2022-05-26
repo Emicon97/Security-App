@@ -1,28 +1,5 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 
-async function SignIn(name:string,lastName:string,password:string,dni:number) {
-    let findInDb = await bossModel.findOne({
-        dni: dni,
-    })
-    
-    try {
-        if(findInDb===null){
-            let createUser = await bossModel.create({
-                name,
-                lastName,
-                password,
-                dni
-            }) 
-            createUser.save()
-            return 'Usuario creado correctamente...'
-        }
-    } catch (err:any) {
-        throw new Error (err)
-        //throw new Error ('El usuario ya existe...')
-    }
-
-}
-
 async function GetUser(classOfuser:string) {
     try{   
         if(classOfuser==='supervisor') return await supervisorModel.find() 
@@ -46,8 +23,81 @@ async function GetUserById(id:any) {
     }    
 }
 
+async function SignUp(name:string, lastName:string, password:string, dni:number, role:string) {
+    try {
+        if(!role){
+            var findDNI = await bossModel.findOne({dni: dni});
+            if(!findDNI) {
+                const boss = await bossModel.create({name, lastName, password, dni});
+                boss.save();
+            } else {
+                throw new Error ("El usuario ya existe");
+            }
+        }
+        if (role === "supervisor") {
+            let findDNI = await supervisorModel.findOne({
+                dni: dni
+            })
+            if (!findDNI) {
+                const supervisor = await supervisorModel.create({
+                    name, lastName, password, dni
+                })
+                supervisor.save()
+            } else {
+                throw new Error ("¡El supervisor con ese DNI ya existe!");
+            }
+        }
+        if (role === "watcher") {
+            let findDNI = await watcherModel.findOne({
+                dni:dni
+            })
+            if(!findDNI){
+                const watcher = await watcherModel.create({
+                    name, lastName, password, dni
+                })
+                watcher.save();
+            } else {
+                throw new Error ("¡El guardia con ese DNI ya existe!");
+            }
+        }
+    } catch (err:any) {
+        throw new Error (err);
+    }
+}
+
+async function deleteUser (id:string, role:string) {
+    try {
+        if(role==='supervisor') {
+            await supervisorModel.findByIdAndDelete(id);
+            return 'Supervisor eliminado.';
+        }
+        if(role==='watcher') {
+            await watcherModel.findByIdAndDelete(id);
+            return 'Guardia eliminado.';
+        };
+    } catch (err) {
+        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+    }
+}
+
+async function updateUser(id:string, role:string, name:string, lastName:string, password:string, dni:number ,workingHours:string, probilePic:string) {
+    try{
+        if(role==='supervisor'){
+            await supervisorModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            return 'cambios registrado correctamente'
+        }
+        if(role==='watcher'){
+            await watcherModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            return 'cambios registrado correctamente'
+        }
+    }catch(err) {
+        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+    }
+}
 module.exports = {
-    SignIn,
+    SignUp,
     GetUser,
-    GetUserById
+    GetUserById,
+    deleteUser,
+    updateUser
 }
