@@ -1,12 +1,7 @@
 import React from "react";
 import { Switch, Route, Link, Routes } from "react-router-dom";
 import BossHome from "./components/BossHome";
-<<<<<<< HEAD
-import LoginButton from "./components/LoginButton"
-import LogOutButton from "./components/LogOutButton"
-=======
-import TableInfoSupervisors from "./components/TableInfoSupervisors";
->>>>>>> f2bf971bcc2dd15179c52b82e686d7f210b9c2ff
+import AuthenticationBtn from "./components/AuthenticationBtn"
 
 function App() {
   return (
@@ -18,8 +13,8 @@ function App() {
         </p>
       </div>
       <Routes>
+        <Route path="/" element={<AuthenticationBtn/>}/>
         <Route path="/bossHome" element={<BossHome/>}/>
-        <Route path="/" element= {[<LoginButton />, <LogOutButton/>]} />
       </Routes>
     </>
   );
