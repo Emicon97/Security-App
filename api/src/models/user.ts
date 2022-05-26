@@ -1,5 +1,4 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-import { ToDos } from './toDos';
 
 class User {
     
@@ -33,8 +32,8 @@ export class Supervisor extends User {
     @prop({ required: true })
     public environment: string[];
 
-    @prop({ ref: () => ToDos })
-    public toDos: Ref<ToDos>;
+    @prop({ ref: () => Watcher })
+    public watcher: Ref<Watcher>;
 }
 
 export class Watcher extends User {
@@ -42,8 +41,8 @@ export class Watcher extends User {
     @prop({ required: true })
     public environment: string[];
 
-    @prop({ ref: () => ToDos })
-    public toDos: Ref<ToDos>;
+    @prop({ ref: () => Supervisor })
+    public supervisor: Ref<Supervisor>;
 }
 
 export class Neighbour extends User {

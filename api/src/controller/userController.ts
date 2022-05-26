@@ -1,4 +1,4 @@
-import { bossModel } from '../models/user';
+import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 
 async function SignIn(name:string,lastName:string,password:string,dni:number) {
     let findInDb = await bossModel.findOne({
@@ -23,6 +23,31 @@ async function SignIn(name:string,lastName:string,password:string,dni:number) {
 
 }
 
+async function GetUser(classOfuser:string) {
+    try{   
+        if(classOfuser==='supervisor') return await supervisorModel.find() 
+        if(classOfuser==='watcher') return await watcherModel.find()
+        if(classOfuser==='neighbour') return await neighbourModel.find()
+    }catch(err:any){
+        throw new Error(err)
+    }    
+}
+
+async function GetUserById(id:any) {
+    try{
+        let findSupervisor= await supervisorModel.findById(id)
+        let findWatcher= await watcherModel.findById(id)
+        let findNeighbour= await neighbourModel.findById(id)
+        if(findSupervisor!==null) return findSupervisor 
+        if(findWatcher!==null) return findWatcher
+        if(findNeighbour!==null) return findNeighbour
+    }catch(err:any){
+        throw new Error(err)
+    }    
+}
+
 module.exports = {
-    SignIn
+    SignIn,
+    GetUser,
+    GetUserById
 }
