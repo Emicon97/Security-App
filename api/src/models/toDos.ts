@@ -14,10 +14,10 @@ export class ToDos {
     public status: string;
 
     @prop({ ref: () => Supervisor })
-    public supervisor: Ref<Supervisor>;
+    public supervisor: Ref<Supervisor>[];
 
     @prop({ ref: () => Watcher })
-    public watcher: Ref<Watcher>;
+    public watcher: Ref<Watcher>[];
 }
 
 const toDosModel = getModelForClass(ToDos);
