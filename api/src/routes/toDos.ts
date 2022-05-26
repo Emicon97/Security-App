@@ -39,9 +39,9 @@ router.get('/:id', async (req, res) => {
 //* POST crea una tarea 
 //http://localhost:3001/todos/
 router.post('/', async (req, res) => {
-    let{ name, description, role, id } = req.body;
+    let{ name, description, priority, role, id } = req.body;
     try{
-        let task = await assignTask(name, description, role, id);
+        let task = await assignTask(name, description, priority, role, id);
         res.json(task);
     }catch(error){
         if (error instanceof Error) {
