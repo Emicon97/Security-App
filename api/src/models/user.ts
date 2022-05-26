@@ -23,8 +23,8 @@ class User {
 
 export class Boss extends User {
         
-    // @prop()
-    // public environment: string[];
+    @prop({ required: true, default: [] })
+    public environment: string[];
 
     @prop({ ref: () => Supervisor })
     public supervisor: Ref<Supervisor>[];
@@ -33,7 +33,7 @@ export class Boss extends User {
 
 export class Supervisor extends User {
         
-    @prop({ required: true })
+    @prop({ required: true, default: [] })
     public environment: string[];
 
     @prop({ ref: () => Watcher })
@@ -42,7 +42,7 @@ export class Supervisor extends User {
 
 export class Watcher extends User {
         
-    @prop({ required: true })
+    @prop({ required: true, default: [] })
     public environment: string[];
 
     @prop({ ref: () => Supervisor })
