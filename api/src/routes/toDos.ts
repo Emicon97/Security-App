@@ -1,21 +1,50 @@
 import { Router } from 'express';
-import toDosModel from '../models/toDos';
-const { assignTask } = require('../controller/toDosController');
+const { getToDos, getToDosByRole, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
 
 const router = Router();
 
-router.get('/', (req,res) => {
-    res.json("Holis")
-})
-
-router.post('/', async (req,res) => {
-    let{ name, description } = req.body
+router.get('/', async (req, res) => {
     try{
-        let data = await assignTask(name, description)
-        res.json(data)
+        let list = await getToDos();
+        res.status(200).json(list);
     }catch(error){
         if (error instanceof Error) {
-            console.error(error);
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
+
+router.get('/:id', async (req, res) => { 
+    let { id } = req.params;
+    let { role } = req.body;
+    try{
+        if (!role.length) {
+            let list = await getToDos(id);
+            res.status(200).json(list);
+        } else {
+            let toDos = await getToDosByRole(id, role);
+            res.status(200).json(toDos);
+        }
+    }catch(error){
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
+
+//* POST crea una tarea 
+//http://localhost:3001/todos/
+router.post('/', async (req, res) => {
+    let{ name, description, role, id } = req.body;
+    try{
+        let task = await assignTask(name, description, role, id);
+        res.json(task);
+    }catch(error){
+        if (error instanceof Error) {
             res.status(409).json(error.message);
         } else {
             console.log('Unexpected Error', error);
@@ -23,18 +52,36 @@ router.post('/', async (req,res) => {
     }
 })
 
-router.put('/:id',async(req,res)=>{
+//* PUT modifica una tarea por ID
+//http://localhost:3001/todos/:id
+router.put('/:id', async (req, res)=>{
     let { id } = req.params;
     let { name, description, status } = req.body
     try{
-        let data = await toDosModel.findByIdAndUpdate(id, {
-            name,
-            description,
-            status})
-
+        let data = await updateToDo(id, name, description, status);
         res.json(data)
-    }catch(err){
-        console.log("Put error",err)
+    }catch(error){
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
+
+//* DELETE elimina una tarea por ID
+//http://localhost:3001/todos/:id
+router.delete('/:id', async (req, res)=>{
+    let { id } = req.params;
+    try{
+        const successMessage = await deleteToDo(id);
+        res.json(successMessage);
+    }catch(error){
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 
