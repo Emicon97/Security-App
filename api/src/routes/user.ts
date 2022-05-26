@@ -1,11 +1,5 @@
 import { Router } from 'express';
-import {
-    bossModel,
-    supervisorModel,
-    watcherModel,
-    neighbourModel } from '../models/user'
-
-const { signUp, GetUser, GetUserById } = require('../controller/userController');
+const { signUp, GetUser, GetUserById, deleteUser } = require('../controller/userController');
 
 const router = Router();
 //* GET trae los usuarios segun la clase desde la Base de Datos
@@ -41,9 +35,24 @@ router.get('/:id', async(req,res) => {
 router.post('/', async (req, res) => {
     let { name, lastName, password, dni, role } = req.body;
     try {
-        let data = signUp(name, lastName, password, dni, role);
+        let data = await signUp(name, lastName, password, dni, role);
         res.json(data);
     } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    let { id } = req.params;
+    let { role } = req.body;
+    try{
+        let message = deleteUser(id, role);
+        res.json(message);
+    }catch(error){        
         if (error instanceof Error) {
             res.status(404).json(error.message);
         } else {
