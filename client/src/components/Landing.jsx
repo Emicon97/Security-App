@@ -1,10 +1,10 @@
 import React from "react";
-import LoginButton from "./LoginButton";
+import AuthenticationBtn from "./AuthenticationBtn"
 
 const Landing = () => {
     return (
         <div className="flex justify-center">
-            <LoginButton />
+            <AuthenticationBtn />
         </div>
     );
 };
