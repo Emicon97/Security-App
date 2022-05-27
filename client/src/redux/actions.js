@@ -6,7 +6,9 @@ import {
   GET_USER_ID,
   GET_BOSS,
   GET_TODOS,
-  GET_TODOS_ID
+  GET_TODOS_ID,
+  UPDATE_TASK,
+  UPDATE_TASK_STATUS
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -30,6 +32,26 @@ export function getToDosById(id){
 }
 }
 
+export function updateTask(status, id){
+  return async function(dispatch){
+    const estado = await axios.get(`http://localhost:3001/todos/${id}/${status}`)
+    return dispatch({
+      type: UPDATE_TASK,
+      payload: estado.data
+    })
+  }
+}
+
+
+export function updateStatus(id,status){
+  return async function(dispatch){
+    const estado = await axios.put(`http://localhost:3001/todos/${id}`, status)
+    return dispatch({
+      type: UPDATE_TASK_STATUS,
+      payload: estado.data
+    })
+  }
+}
 
 
 // import axios from "axios";
