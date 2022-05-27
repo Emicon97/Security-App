@@ -23,44 +23,70 @@ async function GetUserById(id:any) {
     }    
 }
 
-async function SignUp(name:string, lastName:string, password:string, dni:number, role:string) {
-    try {
-        if(!role){
-            var findDNI = await bossModel.findOne({dni: dni});
-            if(!findDNI) {
-                const boss = await bossModel.create({name, lastName, password, dni});
-                boss.save();
-            } else {
-                throw new Error ("El usuario ya existe");
-            }
-        }
-        if (role === "supervisor") {
-            let findDNI = await supervisorModel.findOne({
-                dni: dni
+async function signUp(name:string, lastName:string, password:string, dni:number, role:string, workingHours:string, profilePic:string) {
+    await dniCHecker(dni);
+    
+    switch (role) {
+        case 'watcher':
+            const watcher = await watcherModel.create({
+                name,
+                lastName,
+                password,
+                dni,
+                workingHours: workingHours ? workingHours : undefined,
+                profilePic: profilePic ? profilePic : undefined
             })
-            if (!findDNI) {
-                const supervisor = await supervisorModel.create({
-                    name, lastName, password, dni
-                })
-                supervisor.save()
-            } else {
-                throw new Error ("¡El supervisor con ese DNI ya existe!");
-            }
-        }
-        if (role === "watcher") {
-            let findDNI = await watcherModel.findOne({
-                dni:dni
+            await watcher.save();
+            break;
+        case 'supervisor':
+            const supervisor = await supervisorModel.create({
+                name,
+                lastName,
+                password,
+                dni,
+                workingHours: workingHours ? workingHours : undefined,
+                profilePic: profilePic ? profilePic : undefined
             })
-            if(!findDNI){
-                const watcher = await watcherModel.create({
-                    name, lastName, password, dni
-                })
-                watcher.save();
-            } else {
-                throw new Error ("¡El guardia con ese DNI ya existe!");
-            }
-        }
+            await supervisor.save();
+            break;
+        case 'boss':
+            const boss = await bossModel.create({
+                name,
+                lastName,
+                password,
+                dni,
+                profilePic: profilePic ? profilePic : undefined
+                
+            });
+            await boss.save();
+            break;
+    }
+    
+    return 'Perfil creado exitosamente.';
+}
 
+async function dniCHecker (dni:number) {
+    await watcherModel.findOne({dni})
+    .then((watcher) => {
+        if (watcher) {
+            throw new Error ('Ese guardia ya está registrado en esta empresa.');
+        }
+    })
+    .then(async () => {
+        return await supervisorModel.findOne({dni});
+    })
+    .then((supervisor) => {
+        if (supervisor) {
+            throw new Error ('Ese supervisor ya está registrado en esta empresa.');
+        }
+    })
+    .then(async () => {
+        return await bossModel.findOne({dni});
+    })
+    .then((boss) => {
+        if (boss) {
+            throw new Error ('Usted ya está registrado en esta empresa.');
+        }
     })
     .catch((err) => {
         throw new Error (err.message);
@@ -113,7 +139,7 @@ async function updateUser(id:string, role:string, name?:string, lastName?:string
 }
 
 module.exports = {
-    SignUp,
+    signUp,
     GetUser,
     GetUserById,
     deleteUser,

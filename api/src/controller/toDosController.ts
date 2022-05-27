@@ -2,18 +2,14 @@ import toDosModel from '../models/toDos';
 import { supervisorModel, watcherModel } from '../models/user';
 
 async function getToDos (id?:string) {
-  try {
-    if (id) {
-      const toDo = await toDosModel.findById(id)
-      return toDo;
-    } else {
-      const allTodos = await toDosModel.find();
-      if (allTodos.length > 0 ) {
-        return allTodos;
-      }
+  if (id) {
+    const toDo = await toDosModel.findById(id)
+    return toDo;
+  } else {
+    const allTodos = await toDosModel.find();
+    if (allTodos.length > 0 ) {
+      return allTodos;
     }
-  } catch (err) {
-    throw new Error ('No hay tareas asignadas.');
   }
   console.log('llegué')
 }
@@ -38,9 +34,10 @@ async function assignTask (name:string, description:string | undefined, priority
     let createToDo = await toDosModel.create({
         name,
         description: description ? description : undefined,
+        priority,
         [role]: id
     })
-    let done = await createToDo.save()
+    await createToDo.save()
 
 
     return '¡Tarea asignada correctamente!';
