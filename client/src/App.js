@@ -1,6 +1,5 @@
 import React from "react";
 import Landing from "./components/Landing";
-import TableInfoSupervisors from "./components/TableInfoSupervisors";
 import { Route, Routes, BrowserRouter} from "react-router-dom";
 import BossHome from "./components/boss/BossHome";
 import AuthenticationBtn from "./components/authentication/AuthenticationBtn";
@@ -25,7 +24,7 @@ function App() {
         <Route path="/BossNewUser" element={<BossAddUser/>}/>
         <Route path='/TableInfoSupervisors' element={<TableInfoSupervisors />} />
         <Route path='/guard/:id' element={<PerfilGuardia/>}/>
-        <Route path='/GuardProfile' element={<GuardProfile />} />
+        <Route path='/GuardProfile/:id' element={<GuardProfile />} />
       </Routes>
       </div>
       

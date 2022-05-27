@@ -1,5 +1,5 @@
 import React from "react";
-import AuthenticationBtn from "./AuthenticationBtn"
+import AuthenticationBtn from "./authentication/AuthenticationBtn"
 
 const Landing = () => {
     return (

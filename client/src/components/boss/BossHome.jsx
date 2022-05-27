@@ -1,11 +1,8 @@
 import React from "react";
 import logo from "../../assets/logo.png";
 import { useAuth0 } from "@auth0/auth0-react";
-<<<<<<< HEAD:client/src/components/BossHome.jsx
-import AuthenticationButton from "./AuthenticationBtn";
-=======
 import TableInfoSupervisors from "../supervisor/TableInfoSupervisors";
->>>>>>> e411eff4444792e67f5960ae09f9fe8c0be97bca:client/src/components/boss/BossHome.jsx
+import AuthenticationButton from "../authentication/AuthenticationBtn"
 
 export default function BossHome() {
   const { user, isAuthenticated, isLoading } = useAuth0();

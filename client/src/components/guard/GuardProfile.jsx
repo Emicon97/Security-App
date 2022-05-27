@@ -1,7 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getToDosById } from "../../redux/actions"
 
 
 export default function GuardProfile () {
+
+    const ToDos = useSelector(state => state.todosId);
+    const dispatch = useDispatch()
+    const { id } = useParams()
 
     //datos de prueba
     let guards = {
@@ -40,6 +47,10 @@ export default function GuardProfile () {
         tasks.filteredTasks[event.target.value].completed = !tasks.filteredTasks[event.target.value].completed
     }
 
+    useEffect(()=> {
+        dispatch(getToDosById(id))
+    }, [dispatch])
+    console.log(ToDos)
 
     return (
         <div className="guard-profile">
