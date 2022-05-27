@@ -1,59 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getToDos } from "../redux/actions";
+import { getToDos, getToDosById } from "../redux/actions";
 
-export default function PerfilGuardia() {
-const dispatch = useDispatch();
-const todos = useSelector(state=>state.todos);
-// const todosId = useSelector(state=>state.todosId);
-const {id} = useParams();
 
+export default function PerfilGuardia () {
+    const {id} = useParams();
+    const dispatch = useDispatch();
+    const todosId = useSelector(state=>state.todosId);
 
 useEffect(()=>{
-    dispatch(getToDos())
+    dispatch(getToDos());
+    dispatch(getToDosById(id))
 },[dispatch])
 
 
-    const filtrado = todos.filter(e=>e.watcher === id)
-
-    const [state, setState]= useState({pendientes:filtrado, realizadas:[],postergadas:[]})
-
-    const handleFinished = (e)=>{
-        e.preventDefault();
-
-    }
-    const handlePostpond = (e)=>{
-        e.preventDefault();
-
-    }
-
-    return (
-        <>
-        {console.log(filtrado)}
-        <h1>hola</h1>
-        <select >
-            <option disabled selected>Filtrar por Estado</option>
-            <option value="pending">Pendiente</option>
-            <option value="finished">Realizada</option>
-            <option value="postpond">Postergada</option>
+return (
+    <div>
+        <h1>Tareas a realizar</h1>
+        {console.log(todosId)}
+        <select>
+            <option>Estado de la tarea</option>
+            <option>Realizadas</option>
+            <option>Pendientes</option>
+            <option>Postergadas</option>
         </select>
+    </div>
+)
 
-        <div>
-            <label>Descripcion de tareas:</label>
-            {
-                state.pendientes?.map((e,i)=>{
-                    return (
-                        <div key={i}>
-                            <span>{e.description}</span>
-                            <button onClick={handleFinished}>Realizada</button>
-                            <button onClick={handlePostpond}>Postergada</button>
-                        </div>
-                        
-                    )
-                })
-            }
-        </div>
-        </>
-    )
-} 
+}
+

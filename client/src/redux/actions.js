@@ -23,10 +23,10 @@ export function getToDos(){
 }
 }
 
-export function getToDosById(id, role){
+export function getToDosById(id){
   return async function(dispatch){
-      const todos = await axios.get(`http://localhost:3001/todos/${id}`, role)
-    return dispatch({type:GET_TODOS, payload: todos.data}) 
+      const todos = await axios.get(`http://localhost:3001/todos/${id}`)
+    return dispatch({type:GET_TODOS_ID, payload: todos.data}) 
 }
 }
 

@@ -1,7 +1,6 @@
 import { GET_USER , GET_TODOS, GET_TODOS_ID} from "./ActionTypes";
 
 const initialState = {
-  bossDetail: {},
   supervisorDetail: {},
   watcherDetail: {},
   supervisors: [],
@@ -14,7 +13,7 @@ const initialState = {
 const rootReducer = (state=initialState, action) => {
   switch (action.type) {
     case GET_USER:
-      return {
+    return {
         ...state,
         users: action.payload,
       };
@@ -23,6 +22,8 @@ const rootReducer = (state=initialState, action) => {
         ...state,
         todos: action.payload,
       };
+
+      
     
   case GET_TODOS_ID:
       return {

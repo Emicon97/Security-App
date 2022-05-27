@@ -11,6 +11,7 @@ import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
 
+
 function App() {
   return (
     <BrowserRouter>
