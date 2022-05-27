@@ -6,10 +6,12 @@ import BossAddUser from "./components/BossAddUser";
 // import Landing from "./components/Landing"
 import TableInfoSupervisors from "./components/TableInfoSupervisors";
 import TestActions from "./components/TestActions";
+import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
 
 function App() {
   return (
     <BrowserRouter>
+     <Auth0ProviderWithHistory>
     <div>
       <Routes>
         <Route path='/' element={<AuthenticationBtn />} />
@@ -19,6 +21,7 @@ function App() {
         <Route path='/test' element={<TestActions/>}/>
       </Routes>
       </div>
+      </Auth0ProviderWithHistory>
     </BrowserRouter>
   );
 };
