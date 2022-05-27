@@ -1,7 +1,10 @@
 import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 
 
 export default function GuardProfile () {
+
+    let tasks = useSelector(state => state.allTasks)
 
     //datos de prueba
     let guards = {
@@ -18,27 +21,27 @@ export default function GuardProfile () {
     }
 
     //creo un estado, como el valor inicial es un obj con todas las tareas y las filtradas
-    let [tasks, setTasks] = useState({filteredTasks: guards.tasks, allTasks: guards.tasks})
+    // let [tasks, setTasks] = useState({filteredTasks: guards.tasks, allTasks: guards.tasks})
 
     //function que le paso a los input radio, verifico si filtro tareas por pendientes, completadas o todas
-    let handleFilteredTasks = (event) => {
-        let filtered
-        if(event.target.value === "pending") {
-            filtered = tasks.allTasks.filter(e => !e.completed);
-            setTasks({...tasks, filteredTasks: filtered});
-        } else if (event.target.value === "completed") {
-            filtered = tasks.allTasks.filter(e => e.completed);
-            setTasks({...tasks, filteredTasks: filtered});    
-        }
-        else {
-            setTasks({...tasks, filteredTasks: tasks.allTasks})
-        }
-    }
+    // let handleFilteredTasks = (event) => {
+    //     let filtered
+    //     if(event.target.value === "pending") {
+    //         filtered = tasks.allTasks.filter(e => !e.completed);
+    //         setTasks({...tasks, filteredTasks: filtered});
+    //     } else if (event.target.value === "completed") {
+    //         filtered = tasks.allTasks.filter(e => e.completed);
+    //         setTasks({...tasks, filteredTasks: filtered});    
+    //     }
+    //     else {
+    //         setTasks({...tasks, filteredTasks: tasks.allTasks})
+    //     }
+    // }
 
     //function que le paso al checkbox para cambiar el estado de esa tarea (pending o completed)
-    let handleCompletedTask = (event) => {
-        tasks.filteredTasks[event.target.value].completed = !tasks.filteredTasks[event.target.value].completed
-    }
+    // let handleCompletedTask = (event) => {
+    //     tasks.filteredTasks[event.target.value].completed = !tasks.filteredTasks[event.target.value].completed
+    // }
 
 
     return (
@@ -53,7 +56,7 @@ export default function GuardProfile () {
                 <h2>{guards.name} {guards.lastname}</h2>
                 <p>Zona de vigilancia: {guards.zona}</p>
     
-                <label>
+                {/* <label>
                     <input type="radio" name="tasks" defaultChecked={true} onClick={handleFilteredTasks}/>
                     tareas asignadas
                 </label>
@@ -64,18 +67,18 @@ export default function GuardProfile () {
                 <label>
                     <input type="radio" name="tasks" value="completed" onClick={handleFilteredTasks}/>
                     tareas realizadas
-                </label>
+                </label> */}
 
                 {
                     //si hay tareas filtradas las renderizo, sino, renderizo un h3
-                    tasks.filteredTasks.length > 0 
+                    tasks.length > 0 
                     ? <ul>
                         {
-                            tasks.filteredTasks.map((e, i) => (
-                                <li>
-                                    {e.title}
+                            tasks.map((e, i) => (
+                                <li key={i}>
+                                    {e}
                                     {/* todas las tareas tienen su propio checkbox que se inicializa segun su estado */}
-                                    <input type="checkbox" id="cbox1" defaultChecked={e.completed ? true : false} value={i} onClick={handleCompletedTask}/>
+                                    {/* <input type="checkbox" id="cbox1" defaultChecked={e.completed ? true : false} value={i} onClick={handleCompletedTask}/> */}
                                 </li>
                             ))
                         }
