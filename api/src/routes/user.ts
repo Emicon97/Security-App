@@ -36,7 +36,7 @@ router.get('/:id', async(req,res) => {
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
 router.post('/', async (req, res) => {
-    let { name, lastName, password, dni, role, workingHours, profilePic  } = req.body;
+    let { name, lastName, password, dni, role, workingHours, profilePic } = req.body;
     try {
         let data = await signUp(name, lastName, password, dni, role, workingHours, profilePic);
         res.json(data);
