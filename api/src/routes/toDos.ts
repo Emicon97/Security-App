@@ -27,10 +27,10 @@ router.get('/:id', async (req, res) => {
         let list = await getToDos(id);
         if (list) {
             res.status(200).json(list);
+        }else {
+            let toDos = await getToDosByRole(id);
+            res.status(200).json(toDos);
         }
-
-        let toDos = await getToDosByRole(id);
-        res.status(200).json(toDos);
     }catch(error){
         if (error instanceof Error) {
             res.status(404).json(error.message);
