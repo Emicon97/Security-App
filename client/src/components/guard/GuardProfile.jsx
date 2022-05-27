@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 import {
   getToDosById,
   getUsersById,
-  updateTask,
+  filterTaskByIdAndStatus,
   updateStatus,
 } from "../../redux/actions";
 
 export default function GuardProfile() {
   const ToDos = useSelector((state) => state.todosId);
   const user = useSelector((state) => state.userDetails);
-  const updateTask = useSelector((state) => state.todoUpdate);
+  const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
   const { id } = useParams();
+
+    const [currentState, setCurrentState] = useState("All")
 
   useEffect(() => {
     dispatch(getUsersById(id));
@@ -21,19 +23,20 @@ export default function GuardProfile() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("hola");
-    dispatch(getToDosById(id));
-  }, [updateTask]);
+      dispatch(getToDosById(id));
 
-  console.log(updateTask);
-  console.log(user);
+    if(currentState !== "All"){
+        dispatch(filterTaskByIdAndStatus(id,currentState))
+    }
+
+  }, [updatedTask]);
 
   const tareas = (e) => {
-    dispatch(updateTask(e.target.value, id));
+    dispatch(filterTaskByIdAndStatus( id, e.target.value,));
+    setCurrentState(e.target.value)
   };
 
   const updateTaskStatus = (e) => {
-    console.log(e.target.value, "hoaaaaaaa");
     dispatch(updateStatus(e.target.id, { status: e.target.value }));
   };
 
