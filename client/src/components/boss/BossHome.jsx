@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { useAuth0 } from "@auth0/auth0-react";
-import TableInfoSupervisors from "./TableInfoSupervisors";
+import TableInfoSupervisors from "../supervisor/TableInfoSupervisors";
 
 export default function BossHome() {
   const { user, isAuthenticated, isLoading } = useAuth0();
