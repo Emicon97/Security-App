@@ -18,15 +18,14 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
-    let { role } = req.body;
     try{
-        if (!role.length) {
-            let list = await getToDos(id);
+        let list = await getToDos(id);
+        if (list) {
             res.status(200).json(list);
-        } else {
-            let toDos = await getToDosByRole(id, role);
-            res.status(200).json(toDos);
         }
+
+        let toDos = await getToDosByRole(id);
+        res.status(200).json(toDos);
     }catch(error){
         if (error instanceof Error) {
             res.status(404).json(error.message);
@@ -37,7 +36,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let{ name, description, priority, role, id } = req.body;
+    let{ name, description, priority, role, id, profilepic } = req.body;
     try{
         let task = await assignTask(name, description, priority, role, id);
         res.json(task);
