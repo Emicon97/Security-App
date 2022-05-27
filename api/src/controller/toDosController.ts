@@ -29,7 +29,7 @@ async function assignTask (name:string, description:string, role:string, id:stri
   try {
     let createToDo = await toDosModel.create({
         name,
-        description,
+        description: description ? description : undefined,
         [role]: id
     })
     let done = await createToDo.save()

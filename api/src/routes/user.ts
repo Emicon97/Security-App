@@ -1,7 +1,8 @@
 import { Router } from 'express';
-const { SignUp, GetUser, GetUserById, deleteUser, updateUser } = require('../controller/userController');
+const { signUp, GetUser, GetUserById, deleteUser, updateUser } = require('../controller/userController');
 
 const router = Router();
+
 //* GET trae los usuarios segun la clase desde la Base de Datos
 //http://localhost:3001/user/?name={name}
 router.get('/', async(req,res)=>{
@@ -17,7 +18,7 @@ router.get('/', async(req,res)=>{
     }
 })
 //* GET trae los usuarios segun el id desde la Base de Datos
-//http://localhost:3001/boss/:id
+//http://localhost:3001/user/:id   //*id por params
 router.get('/:id', async(req,res) => {
     try{
         let {id} = req.params
@@ -32,10 +33,12 @@ router.get('/:id', async(req,res) => {
     }
 })
 
+//* POST crea un usuario segun el role: boss/supervisor/watcher
+//http://localhost:3001/user  //*datos enviados por body
 router.post('/', async (req, res) => {
-    let { name, lastName, password, dni, role } = req.body;
+    let { name, lastName, password, dni, role, workingHours, profilePic  } = req.body;
     try {
-        let data = await SignUp(name, lastName, password, dni, role);
+        let data = await signUp(name, lastName, password, dni, role, workingHours, profilePic);
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {
@@ -46,6 +49,8 @@ router.post('/', async (req, res) => {
     }
 })
 
+//*PUT modifica los datos de un usuario segun su role: supervisor/watcher
+//http://locahost:3001/user/:id   //*id por params, datos por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
     let { name, lastName, password, dni, role, workingHours, probilePic } = req.body
@@ -61,6 +66,8 @@ router.put('/:id', async (req, res)=>{
     }
 })
 
+//*DELETE elimina un usuario segun su rol: supervisor/watcher
+//http://localhost:3001/user/:id  //*id por params
 router.delete('/:id', async (req, res) => {
     let { id } = req.params;
     let { role } = req.body;
