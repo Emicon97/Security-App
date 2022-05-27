@@ -44,9 +44,9 @@ router.get('/:id', async (req, res) => {
 //* por role: supervisor/watcher y por id del usuario
 //http://localhost:3001/todos //*datos por body
 router.post('/', async (req, res) => {
-    let{ name, description, priority, role, id, profilepic } = req.body;
+    let{ name, description, priority, id } = req.body;
     try{
-        let task = await assignTask(name, description, priority, role, id);
+        let task = await assignTask(name, description, priority, id);
         res.json(task);
     }catch(error){
         if (error instanceof Error) {
