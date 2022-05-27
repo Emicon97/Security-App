@@ -3,6 +3,9 @@ const { getToDos, getToDosByRole, assignTask, updateToDo, deleteToDo } = require
 
 const router = Router();
 
+
+//*GET trae todas las tareas en la Base de Datos
+//http://localhost:3001/todos 
 router.get('/', async (req, res) => {
     try{
         let list = await getToDos();
@@ -16,6 +19,8 @@ router.get('/', async (req, res) => {
     }
 })
 
+//*GET trae todas las tareas de un usuario por role: supervisor/watcher
+//http://localhost:3001/todos/:id  //*id por params del "usuario"
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
     let { role } = req.body;
@@ -36,6 +41,9 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+//*POST crea una tarea nueva y es asignada al mismo tiempo a un usuario
+//* por role: supervisor/watcher y por id del usuario
+//http://localhost:3001/todos //*datos por body
 router.post('/', async (req, res) => {
     let{ name, description, priority, role, id } = req.body;
     try{
@@ -50,6 +58,8 @@ router.post('/', async (req, res) => {
     }
 })
 
+//*PUT modifica los datos de una tarea
+//http://locahost:3001/todos/:id  //*id por params, datos a cambiar por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
     let { name, description, status } = req.body
@@ -65,6 +75,9 @@ router.put('/:id', async (req, res)=>{
     }
 })
 
+
+//*DELETE elimina una tarea por id
+//http://localhost:3001/todos/:id //*id por params
 router.delete('/:id', async (req, res)=>{
     let { id } = req.params;
     try{
