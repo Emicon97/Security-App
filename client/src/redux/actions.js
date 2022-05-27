@@ -26,7 +26,7 @@ export function getToDos(){
 export function getToDosById(id){
   return async function(dispatch){
       const todos = await axios.get(`http://localhost:3001/todos/${id}`)
-    return dispatch({type:GET_TODOS, payload: todos.data}) 
+    return dispatch({type:GET_TODOS_ID, payload: todos.data}) 
 }
 }
 
