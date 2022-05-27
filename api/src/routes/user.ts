@@ -3,7 +3,7 @@ const { SignUp, GetUser, GetUserById, deleteUser, updateUser } = require('../con
 
 const router = Router();
 //* GET trae los usuarios segun la clase desde la Base de Datos
-//http://localhost:3001/boss/?name={name}
+//http://localhost:3001/user/?name={name}
 router.get('/', async(req,res)=>{
     try{
         let {name} = req.query
