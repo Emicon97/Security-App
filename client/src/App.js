@@ -8,11 +8,12 @@ import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 // import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
 import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
+import NavBar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
-     
+     <NavBar></NavBar>
     <div>
       <Routes>
         <Route path='/' element={<Landing/>}/>
