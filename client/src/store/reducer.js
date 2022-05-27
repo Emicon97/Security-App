@@ -1,5 +1,5 @@
 import React from "react";
-import { GET_BOSS } from "./ActionTypes";
+import { GET_USER , GET_TODOS} from "./ActionTypes";
 
 const initialState = {
   bossDetail: {},
@@ -7,14 +7,21 @@ const initialState = {
   watcherDetail: {},
   supervisors: [],
   watchers: [],
+  users: [],
+  todos:[]
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case GET_BOSS:
+const rootReducer = (state=initialState, action) => {
+  switch (action.type) {
+    case GET_USER:
       return {
         ...state,
-        bossDetail: payload,
+        users: action.payload,
+      };
+      case GET_TODOS:
+      return {
+        ...state,
+        todos: action.payload,
       };
     default:
       return { ...state };

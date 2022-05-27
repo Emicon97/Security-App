@@ -6,11 +6,19 @@ import {
   DAILY_TASKS,
   GET_USER,
   GET_BOSS,
+  GET_TODOS
 } from "./ActionTypes";
 
-export function getVideogames(){
+export function getUsers(){
     return async function(dispatch){
         const users = await axios.get('http://localhost:3001/user')
         return dispatch({type:GET_USER, payload: users.data})
+}
+}
+
+export function getToDos(){
+  return async function(dispatch){
+      const todos = await axios.get('http://localhost:3001/todos')
+      return dispatch({type:GET_TODOS, payload: todos.data})
 }
 }
