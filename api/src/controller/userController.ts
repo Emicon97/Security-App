@@ -6,7 +6,7 @@ async function GetUser(classOfuser:string) {
         if(classOfuser==='watcher') return await watcherModel.find()
         if(classOfuser==='neighbour') return await neighbourModel.find()
     }catch(err:any){
-        throw new Error(err)
+        throw new Error(err.message)
     }    
 }
 
@@ -19,7 +19,7 @@ async function GetUserById(id:any) {
         if(findWatcher!==null) return findWatcher
         if(findNeighbour!==null) return findNeighbour
     }catch(err:any){
-        throw new Error(err)
+        throw new Error(err.message)
     }    
 }
 
@@ -88,8 +88,8 @@ async function dniCHecker (dni:number) {
             throw new Error ('Usted ya está registrado en esta empresa.');
         }
     })
-    .catch((err:string) => {
-        throw new Error (err);
+    .catch((err) => {
+        throw new Error (err.message);
     })
 }
 
@@ -108,20 +108,35 @@ async function deleteUser (id:string, role:string) {
     }
 }
 
-async function updateUser(id:string, role:string, name:string, lastName:string, password:string, dni:number ,workingHours:string, probilePic:string) {
+async function updateUser(id:string, role:string, name?:string, lastName?:string, password?:string, dni?:number ,workingHours?:string, probilePic?:string) {
     try{
         if(role==='supervisor'){
-            await supervisorModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            await supervisorModel.findByIdAndUpdate(id,{
+                name:name?name:undefined, 
+                lastName:lastName?lastName:undefined, 
+                password:password?password:undefined, 
+                dni:dni?dni:undefined, 
+                workingHours:workingHours?workingHours:undefined, 
+                probilePic:probilePic?probilePic:undefined
+            })
             return 'cambios registrado correctamente'
         }
         if(role==='watcher'){
-            await watcherModel.findByIdAndUpdate(id,{name, lastName, password, dni, workingHours, probilePic})
+            await watcherModel.findByIdAndUpdate(id,{
+                name:name?name:undefined, 
+                lastName:lastName?lastName:undefined, 
+                password:password?password:undefined, 
+                dni:dni?dni:undefined, 
+                workingHours:workingHours?workingHours:undefined, 
+                probilePic:probilePic?probilePic:undefined
+            })
             return 'cambios registrado correctamente'
         }
     }catch(err) {
         throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
     }
 }
+
 module.exports = {
     signUp,
     GetUser,
