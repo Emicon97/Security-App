@@ -58,7 +58,7 @@ export default function GuardProfile () {
         <div className="guard-profile">
 
             <div className="img-profile">
-                <img src="https://i.pinimg.com/236x/f0/e8/1d/f0e81d73918c34b90c5639fdba2f75af.jpg" alt="" />
+                <img src="https://i0.wp.com/robbreport.mx/wp-content/uploads/2019/08/therock2.jpg?w=526&ssl=1" alt="" />
             </div>
 
             <div className="info-profile">

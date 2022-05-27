@@ -1,7 +1,7 @@
 import React from "react";
 import Landing from "./components/Landing";
 import { Route, Routes, BrowserRouter} from "react-router-dom";
-import BossHome from "./components/boss/BossHome";
+import BossHome from "./components/Navbar";
 import AuthenticationBtn from "./components/authentication/AuthenticationBtn";
 import BossAddUser from "./components/boss/BossAddUser";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
