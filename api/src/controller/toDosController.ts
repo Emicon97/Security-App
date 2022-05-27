@@ -11,24 +11,29 @@ async function getToDos (id?:string) {
       return allTodos;
     }
   }
-  console.log('llegué')
 }
 
 async function getToDosByRole (id:string) {
   try {  
     const role = await workerIdentifier(id);
-    // console.log(role)
     let toDos = await toDosModel.find({[role]: id});
-    // console.log(toDos)
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
   }
 }
 
+async function compareWithStatus (id:string, status:string) {
+  try {
+    const role = await workerIdentifier(id);
+    let toDos = await toDosModel.find({ [role]: id, status });
+    return toDos;
+  } catch (err:any) {
+    throw new Error (err.message);
+  }
+}
 
 async function assignTask (name:string, description:string | undefined, priority:string, id:string) {
-
   try {
     const role = await workerIdentifier(id);
     let createToDo = await toDosModel.create({
@@ -39,11 +44,9 @@ async function assignTask (name:string, description:string | undefined, priority
     })
     await createToDo.save()
 
-
     return '¡Tarea asignada correctamente!';
   } catch (err:any) {
     throw new Error (err.message);
-
   }
 }
 
@@ -80,6 +83,7 @@ async function deleteToDo (id:string) {
 module.exports = {
   getToDos,
   getToDosByRole,
+  compareWithStatus,
   assignTask,
   updateToDo,
   deleteToDo
