@@ -5,8 +5,10 @@ import AuthenticationBtn from "./components/AuthenticationBtn"
 import BossAddUser from "./components/BossAddUser";
 // import Landing from "./components/Landing"
 import TableInfoSupervisors from "./components/TableInfoSupervisors";
-import TestActions from "./components/TestActions";
+
 // import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
+import GuardProfile from "./components/PerfilGuardia";
+import PerfilGuardia from "./components/PerfilGuardia";
 
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
         <Route path="/bossHome" element={<BossHome/>}/>
         <Route path="/BossNewUser" element={<BossAddUser/>}/>
         <Route path='/TableInfoSupervisors' element={<TableInfoSupervisors />} />
-        <Route path='/test' element={<TestActions/>}/>
+        
+        <Route path='/guard/:id' element={<PerfilGuardia/>}/>
       </Routes>
       </div>
       

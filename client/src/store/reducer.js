@@ -1,5 +1,4 @@
-import React from "react";
-import { GET_USER , GET_TODOS} from "./ActionTypes";
+import { GET_USER , GET_TODOS, GET_TODOS_ID} from "./ActionTypes";
 
 const initialState = {
   bossDetail: {},
@@ -8,6 +7,7 @@ const initialState = {
   supervisors: [],
   watchers: [],
   users: [],
+  todosId:[],
   todos:[]
 };
 
@@ -22,6 +22,12 @@ const rootReducer = (state=initialState, action) => {
       return {
         ...state,
         todos: action.payload,
+      };
+    
+  case GET_TODOS_ID:
+      return {
+        ...state,
+        todosId: action.payload,
       };
     default:
       return { ...state };

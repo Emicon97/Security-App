@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import {
   CREATE_USER,
@@ -6,7 +5,8 @@ import {
   DAILY_TASKS,
   GET_USER,
   GET_BOSS,
-  GET_TODOS
+  GET_TODOS,
+  GET_TODOS_ID
 } from "./ActionTypes";
 
 export function getUsers(){
@@ -18,7 +18,17 @@ export function getUsers(){
 
 export function getToDos(){
   return async function(dispatch){
-      const todos = await axios.get('http://localhost:3001/todos')
-      return dispatch({type:GET_TODOS, payload: todos.data})
+      const todos = await axios.get(`http://localhost:3001/todos`)
+    return dispatch({type:GET_TODOS, payload: todos.data}) 
 }
 }
+
+export function getToDosById(id, role){
+  return async function(dispatch){
+      const todos = await axios.get(`http://localhost:3001/todos/${id}`, role)
+    return dispatch({type:GET_TODOS, payload: todos.data}) 
+}
+}
+
+
+

@@ -3,14 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
+// import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
 import { Provider } from "react-redux";
 
 import store from "./store/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Auth0ProviderWithHistory>
+  
 <Provider store={store}>
   <React.StrictMode>
       
@@ -18,7 +18,7 @@ root.render(
        
   </React.StrictMode>
   </Provider>
-  </Auth0ProviderWithHistory>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function
