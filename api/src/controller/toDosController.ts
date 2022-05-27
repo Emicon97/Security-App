@@ -17,9 +17,9 @@ async function getToDos (id?:string) {
 async function getToDosByRole (id:string) {
   try {  
     const role = await workerIdentifier(id);
-    console.log(role)
+    // console.log(role)
     let toDos = await toDosModel.find({[role]: id});
-    console.log(toDos)
+    // console.log(toDos)
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
