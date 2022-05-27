@@ -113,23 +113,23 @@ async function updateUser(id:string, role:string, name?:string, lastName?:string
     try{
         if(role==='supervisor'){
             await supervisorModel.findByIdAndUpdate(id,{
-                name:name?name:undefined, 
-                lastName:lastName?lastName:undefined, 
-                password:password?password:undefined, 
-                dni:dni?dni:undefined, 
-                workingHours:workingHours?workingHours:undefined, 
-                probilePic:probilePic?probilePic:undefined
+                name:name, 
+                lastName:lastName,
+                password:password,
+                dni:dni,
+                workingHours:workingHours,
+                probilePic:probilePic
             })
             return 'cambios registrado correctamente'
         }
         if(role==='watcher'){
-            await watcherModel.findByIdAndUpdate(id,{
-                name:name?name:undefined, 
-                lastName:lastName?lastName:undefined, 
-                password:password?password:undefined, 
-                dni:dni?dni:undefined, 
-                workingHours:workingHours?workingHours:undefined, 
-                probilePic:probilePic?probilePic:undefined
+          const data=  await watcherModel.findByIdAndUpdate(id,{
+                name:name, 
+                lastName:lastName,
+                password:password,
+                dni:dni,
+                workingHours:workingHours,
+                probilePic:probilePic,
             })
             return 'cambios registrado correctamente'
         }
