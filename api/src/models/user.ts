@@ -2,10 +2,10 @@ import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
 
 class User {
     
-    @prop({ required: true, lowercase:true,trim:true})
+    @prop({ required: true, lowercase:true, trim:true })
     public name!: string;
 
-    @prop({ required: true, lowercase:true,trim:true})
+    @prop({ required: true, lowercase:true, trim:true })
     public lastName!: string;
 
     @prop({ required: true })
@@ -14,11 +14,8 @@ class User {
     @prop({ required: true })
     public dni!: number;
     
-    @prop()
-    public workingHours?: string;
-    
-    @prop({lowercase:true,trim:true})
-    public probilePic?: string;
+    @prop({ lowercase:true, trim:true })
+    public profilePic?: string | undefined;
 }
 
 export class Boss extends User {
@@ -38,6 +35,9 @@ export class Supervisor extends User {
 
     @prop({ ref: () => Watcher })
     public watcher: Ref<Watcher>[];
+
+    @prop()
+    public workingHours?: string | undefined;
 }
 
 export class Watcher extends User {
@@ -47,6 +47,9 @@ export class Watcher extends User {
 
     @prop({ ref: () => Supervisor })
     public supervisor: Ref<Supervisor>[];
+
+    @prop()
+    public workingHours?: string | undefined;
 }
 
 export class Neighbour extends User {
