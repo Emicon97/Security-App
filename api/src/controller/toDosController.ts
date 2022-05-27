@@ -23,7 +23,7 @@ async function getToDosByRole (id:string) {
   }
 }
 
-async function compareWithStatus (id:string, status:string) {
+async function getByIdAndStatus (id:string, status:string) {
   try {
     const role = await workerIdentifier(id);
     let toDos = await toDosModel.find({ [role]: id, status });
@@ -83,7 +83,7 @@ async function deleteToDo (id:string) {
 module.exports = {
   getToDos,
   getToDosByRole,
-  compareWithStatus,
+  getByIdAndStatus,
   assignTask,
   updateToDo,
   deleteToDo
