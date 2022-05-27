@@ -1,46 +1,58 @@
-import { ObjectId } from 'mongoose';
 import toDosModel from '../models/toDos';
-import { watcherModel } from './../models/user';
-const mongoose = require('mongoose');
+import { supervisorModel, watcherModel } from '../models/user';
 
 async function getToDos (id?:string) {
-  try {
-    if (id) {
-      const toDo = await toDosModel.findById(id)
-      return toDo;
-    } else {
-      const allTodos = await toDosModel.find();
-      if (allTodos.length > 0 ) {
-        return allTodos;
-      }
+  if (id) {
+    const toDo = await toDosModel.findById(id)
+    return toDo;
+  } else {
+    const allTodos = await toDosModel.find();
+    if (allTodos.length > 0 ) {
+      return allTodos;
     }
-  } catch (err) {
-    throw new Error ('No hay tareas asignadas.');
+  }
+  console.log('llegué')
+}
+
+async function getToDosByRole (id:string) {
+  try {  
+    const role = await workerIdentifier(id);
+    // console.log(role)
+    let toDos = await toDosModel.find({[role]: id});
+    // console.log(toDos)
+    return toDos;
+  } catch (err:any) {
+    throw new Error (err.message);
   }
 }
 
-async function getToDosByRole (id:string, role:string) {
-  try {
-    let toDos = toDosModel.find({[role]: id});
-    return toDos;    
-  } catch (err) {
-    throw new Error ('No se encontraron tareas asignadas');
-  }
-}
 
-async function assignTask (name:string, description:string, role:string, id:string) {
+async function assignTask (name:string, description:string | undefined, priority:string, id:string) {
+
   try {
+    const role = await workerIdentifier(id);
     let createToDo = await toDosModel.create({
         name,
-        description,
+        description: description ? description : undefined,
+        priority,
         [role]: id
     })
-    let done = await createToDo.save()
+    await createToDo.save()
 
-    return done._id;
-  } catch (err) {
-    throw new Error ('La tarea no pudo ser asignada...')
+
+    return '¡Tarea asignada correctamente!';
+  } catch (err:any) {
+    throw new Error (err.message);
+
   }
+}
+
+async function workerIdentifier (id:string) {
+  const isSupervisor = await supervisorModel.findById(id);
+  if (isSupervisor !== null) return 'supervisor';
+  const isWatcher = await watcherModel.findById(id); 
+  if (isWatcher !== null) return 'watcher';
+  throw new Error ('Ese trabajador no se encuentra registrado en la base de datos');
 }
 
 async function updateToDo (id:string, name:string, description:string, status:string) {

@@ -4,8 +4,13 @@ import { useAuth0 } from '@auth0/auth0-react'
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0()
   return (
+<<<<<<< HEAD:client/src/components/LoginButton.jsx
     <button onClick={() => loginWithRedirect(`/bossHome`)} className={button}>Log in</button>
   )
+=======
+    <button onClick={() => loginWithRedirect()} className={button}>Log in</button>
+  );
+>>>>>>> e411eff4444792e67f5960ae09f9fe8c0be97bca:client/src/components/authentication/LoginButton.jsx
 };
 
 const button = `
@@ -18,4 +23,4 @@ const button = `
   rounded-3xl
 `;
 
-export default LoginButton
+export default LoginButton;
