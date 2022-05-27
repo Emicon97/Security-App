@@ -1,4 +1,4 @@
-import { GET_USER , GET_TODOS, GET_TODOS_ID} from "./ActionTypes";
+import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID} from "./ActionTypes";
 
 const initialState = {
   bossDetail: {},
@@ -7,6 +7,7 @@ const initialState = {
   supervisors: [],
   watchers: [],
   users: [],
+  userDetails: {},
   todosId:[],
   todos:[]
 };
@@ -18,6 +19,11 @@ const rootReducer = (state=initialState, action) => {
         ...state,
         users: action.payload,
       };
+      case GET_USER_ID:
+        return {
+          ...state,
+          userDetails: action.payload
+        }
       case GET_TODOS:
       return {
         ...state,

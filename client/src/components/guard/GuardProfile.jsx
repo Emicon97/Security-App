@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getToDosById } from "../../redux/actions"
+import { getToDosById, getUsersById } from "../../redux/actions"
 
 
 export default function GuardProfile () {
 
     const ToDos = useSelector(state => state.todosId);
+    const user = useSelector(state => state.userDetails);
     const dispatch = useDispatch()
     const { id } = useParams()
 
@@ -48,10 +49,11 @@ export default function GuardProfile () {
     }
 
     useEffect(()=> {
+        dispatch(getUsersById(id))
         dispatch(getToDosById(id))
     }, [dispatch])
     console.log(ToDos)
-
+    console.log(user)
     return (
         <div className="guard-profile">
 
