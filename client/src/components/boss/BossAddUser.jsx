@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
-// import {useSelector, useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+
+
 
 const checkUndefined = (input)=>{
     if(input.rol.length===0)return true;
@@ -44,16 +46,44 @@ return errors;
 }
 
 export default function BossAddUser(){
+    const [loading, setLoading] = useState(false);
+    const uploadImage = async (e)=>{
+        const files = e.target.files;
+        const data = new FormData();
+    
+        data.append("file",files[0]);
+        data.append("upload_preset","magqqp6o");
+       
+        setLoading(true);
+        const res = await fetch(
+            "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
+            {
+                method: "POST",
+                body: data
+            }
+        )
+        const file = await res.json();
+        console.log(file)
+        
+        setInput({
+            ...input,
+            file: file.secure_url
+    });
+    setLoading(false)
+    }
+
+
     const typeUser = ["Jefe", "Supervisor", "Guardia"];
     const [input, setInput] = useState({
-        name:"",
+        file:"",
         lastName:"",
         email:"",
         phoneNumber:"",
         address:"",
         dni:"",
         rol:[],
-        image:"",
+        file:"",
+        image:""
     });
     const [error, setError] = useState({allFields: "Todos los campos son requeridos"});
 
@@ -94,13 +124,15 @@ export default function BossAddUser(){
             address:"",
             dni:"",
             rol:[],
-            image:"",
+            file:"",
+            image:""
         })
         console.log("Deberia mandar los datos del form al back")
     }
     return(
         <div>
             <h2 className="text-3xl text-gray-700 font-bold mb-5">Agregar Nuevo</h2>
+          
             <form onSubmit={handleSubmit}> 
                 <div>
                     <label htmlFor="inputName">Nombre: </label>
@@ -134,7 +166,8 @@ export default function BossAddUser(){
                 </div>
                 <div>
                     <label htmlFor="inputImage">Imagen: </label>
-                    <input id="inputImage" className="bg-blue-50" name="image" value={input.image} onChange={handleChange}></input>
+                    <input id="inputImage" className="bg-blue-50" name="image" value={input.image} placeholder="url de imagen" onChange={handleChange}></input>
+                    <input type="file" name="file" onChange={uploadImage}></input>
                     {error.image && <small >{error.image}</small>}
                 </div>
                 <div>
