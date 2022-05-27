@@ -36,9 +36,9 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    let{ name, description, priority, role, id, profilepic } = req.body;
+    let{ name, description, priority, id } = req.body;
     try{
-        let task = await assignTask(name, description, priority, role, id);
+        let task = await assignTask(name, description, priority, id);
         res.json(task);
     }catch(error){
         if (error instanceof Error) {
