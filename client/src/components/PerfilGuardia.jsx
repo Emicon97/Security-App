@@ -1,52 +1,7 @@
-// import React, {useEffect, useState} from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useParams } from "react-router";
-// import { getToDos, getToDosById } from "../redux/actions";
 
-// export default function PerfilGuardia () {
-//     const {id} = useParams();
-//     const dispatch = useDispatch();
-//     const todosId = useSelector(state=>state.todosId);
-
-Object.defineProperty(todosId, prop, descriptor)
-// useEffect(()=>{
-//     dispatch(getToDos());
-//     dispatch(getToDosById(id))
-// },[dispatch])
-
-// return (
-//     <div>
-//         {console.log(todosId)}
-//         <span>Filtrar tareas: </span>
-//         <select>
-//             <option disabled defaultValue>Estado de la tarea</option>
-//             <option value="Realizadas">Realizadas</option>
-//             <option value="Pendientes">Pendientes</option>
-//             <option value="Postergadas">Postergadas</option>
-//         </select>
-//         <h2>Tareas a realizar</h2>
-//     </div>
-// )
-
-// }
 import React, { useState, useEffect } from "react";
 // import './Todo.css';
 
-function Task({ task, index, completeTask, removeTask }) {
-  return (
-    <div
-      className="task"
-      style={{ textDecoration: task.completed ? "line-through" : "" }}
-    >
-      {task.title}
-
-      <button style={{ background: "red" }} onClick={() => removeTask(index)}>
-        x
-      </button>
-      <button onClick={() => completeTask(index)}>Complete</button>
-    </div>
-  );
-}
 
 function CreateTask({ addTask }) {
   const [value, setValue] = useState("");
