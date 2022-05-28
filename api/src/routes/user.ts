@@ -55,7 +55,7 @@ router.put('/:id', async (req, res)=>{
     let { id } = req.params;
     let { name, lastName, password, dni, role, workingHours, probilePic } = req.body
     try{
-        let data = await updateUser(id, name, lastName, password, dni, role, workingHours, probilePic);
+        let data = await updateUser(id,role, name, lastName, password, dni, workingHours, probilePic);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {

@@ -1,91 +1,85 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import {
+  getToDosById,
+  getUsersById,
+  filterTaskByIdAndStatus,
+  updateStatus,
+} from "../../redux/actions";
+import EditState from "../EditState/EditState"; 
+import './styles.css'
 
+export default function GuardProfile() {
+  const ToDos = useSelector((state) => state.todosId);
+  const user = useSelector((state) => state.userDetails);
+  const updatedTask = useSelector((state) => state.todoUpdate);
+  const dispatch = useDispatch();
+  const { id } = useParams();
 
-export default function GuardProfile () {
+    const [currentState, setCurrentState] = useState("All")
 
-    //datos de prueba
-    let guards = {
-        name: "Juan",
-        lastname: "Jhonson",
-        zona: "torres gemelas, tucuman",
-        tasks: [
-            {title: "mirar tiktoks", completed: false},
-            {title: "leer un libro", completed: false},
-            {title: "vigilar la entrada", completed: false},
-            {title: "mirar camaras", completed: false},
-            {title: "revisar los alrededores", completed: false},
-        ]
+  useEffect(() => {
+    dispatch(getUsersById(id));
+    dispatch(getToDosById(id));
+  }, [dispatch]);
+
+  useEffect(() => {
+      dispatch(getToDosById(id));
+
+    if(currentState !== "All"){
+        dispatch(filterTaskByIdAndStatus(id,currentState))
     }
 
-    //creo un estado, como el valor inicial es un obj con todas las tareas y las filtradas
-    let [tasks, setTasks] = useState({filteredTasks: guards.tasks, allTasks: guards.tasks})
+  }, [updatedTask]);
 
-    //function que le paso a los input radio, verifico si filtro tareas por pendientes, completadas o todas
-    let handleFilteredTasks = (event) => {
-        let filtered
-        if(event.target.value === "pending") {
-            filtered = tasks.allTasks.filter(e => !e.completed);
-            setTasks({...tasks, filteredTasks: filtered});
-        } else if (event.target.value === "completed") {
-            filtered = tasks.allTasks.filter(e => e.completed);
-            setTasks({...tasks, filteredTasks: filtered});    
-        }
-        else {
-            setTasks({...tasks, filteredTasks: tasks.allTasks})
-        }
-    }
+  const tareas = (e) => {
+    dispatch(filterTaskByIdAndStatus( id, e.target.value,));
+    setCurrentState(e.target.value)
+  };
 
-    //function que le paso al checkbox para cambiar el estado de esa tarea (pending o completed)
-    let handleCompletedTask = (event) => {
-        tasks.filteredTasks[event.target.value].completed = !tasks.filteredTasks[event.target.value].completed
-    }
+  const updateTaskStatus = (e) => {
+    dispatch(updateStatus(e.target.id, { status: e.target.value }));
+  };
+
+  return (
+    <div className="screen-tasks">
+      
 
 
-    return (
-        <div className="guard-profile">
-
-            <div className="img-profile">
-                <img src="https://i.pinimg.com/236x/f0/e8/1d/f0e81d73918c34b90c5639fdba2f75af.jpg" alt="" />
-            </div>
-
-            <div className="info-profile">
-
-                <h2>{guards.name} {guards.lastname}</h2>
-                <p>Zona de vigilancia: {guards.zona}</p>
-    
-                <label>
-                    <input type="radio" name="tasks" defaultChecked={true} onClick={handleFilteredTasks}/>
-                    tareas asignadas
-                </label>
-                <label>
-                    <input type="radio" name="tasks" value="pending" onClick={handleFilteredTasks}/>
-                    tareas pendientes
-                </label>
-                <label>
-                    <input type="radio" name="tasks" value="completed" onClick={handleFilteredTasks}/>
-                    tareas realizadas
-                </label>
-
-                {
-                    //si hay tareas filtradas las renderizo, sino, renderizo un h3
-                    tasks.filteredTasks.length > 0 
-                    ? <ul>
-                        {
-                            tasks.filteredTasks.map((e, i) => (
-                                <li>
-                                    {e.title}
-                                    {/* todas las tareas tienen su propio checkbox que se inicializa segun su estado */}
-                                    <input type="checkbox" id="cbox1" defaultChecked={e.completed ? true : false} value={i} onClick={handleCompletedTask}/>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                    : <h3>No tiene tareas asignadas</h3>
-                }
-
-            </div>
-
+      <div className="contenedor_tareas">
+        <div className="head-tasks">
+          <Link to={`/EditState/${id}`}><button>Edit</button></Link>
+          <h2 className="list-tasks">Lista de tareas</h2>
+          <div className="filter">
+            <span>Filtrar Tareas: </span>
+            <select onChange={(e) => tareas(e)}>
+              <option disabled defaultValue>
+                Seleccionar estado de tarea
+              </option>
+              <option value="done">Realizadas</option>
+              <option value="left">Pendientes</option>
+              <option value="postponed">Postergadas</option>
+            </select>
+          </div>
         </div>
-    )
+        
+        {ToDos?.map((todo, i) => (
+          <div key={i} className="tasks">
 
-} 
+            <div className="info-task">
+              <h3><span className="title">title:</span> {todo.name}</h3>
+              <p><span className="title">description:</span> {todo.description}</p>
+            </div>
+
+            <div className="status-task">
+              <p className={`${todo.status} status`} >{todo.status}</p>
+              <span className="title-priority"><span className="title">Prioridad:</span> <span className={`${todo.priority} priority`}>{todo.priority}</span></span>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
