@@ -1,21 +1,16 @@
 import React from "react";
-import Landing from "./components/Landing";
 import { Route, Routes, BrowserRouter} from "react-router-dom";
-// import BossHome from "./components/boss/BossHome";
-import BossHome from "./components/Navbar";
-import AuthenticationBtn from "./components/authentication/AuthenticationBtn";
-import BossAddUser from "./components/boss/BossAddUser";
+import NavBar from "./components/NavBar";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
-// import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history"
 import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
+import AddUser from "./components/boss/AddUser";
 
 
 function App() {
   return (
     <BrowserRouter>
-     
-    <div>
+      <NavBar />
       <Routes>
         <Route path='/' element={<Landing/>}/>
         <Route path='/' element={<AuthenticationBtn />} />
@@ -28,8 +23,6 @@ function App() {
        
         <Route path='/GuardProfile/:id' element={<GuardProfile />} />
       </Routes>
-      </div>
-      
     </BrowserRouter>
   );
 };
