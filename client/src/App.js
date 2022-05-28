@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes, BrowserRouter} from "react-router-dom";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
