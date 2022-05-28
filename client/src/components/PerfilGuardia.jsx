@@ -1,59 +1,95 @@
+
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { getToDos } from "../redux/actions";
-
-export default function PerfilGuardia() {
-const dispatch = useDispatch();
-const todos = useSelector(state=>state.todos);
-// const todosId = useSelector(state=>state.todosId);
-const {id} = useParams();
+// import './Todo.css';
 
 
-useEffect(()=>{
-    dispatch(getToDos())
-},[dispatch])
+function CreateTask({ addTask }) {
+  const [value, setValue] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!value) return;
+    addTask(value);
+    setValue("");
+  };
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="input"
+        value={value}
+        placeholder="Add a new task"
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </form>
+  );
+}
 
-    const filtrado = todos.filter(e=>e.watcher === id)
+function PerfilGuardia() {
+  const [tasksRemaining, setTasksRemaining] = useState(0);
+  const [tasks, setTasks] = useState([
+    {
+      title: "Grab some Pizza",
+      completed: true,
+    },
+    {
+      title: "Do your workout",
+      completed: true,
+    },
+    {
+      title: "Hangout with friends",
+      completed: false,
+    },
+  ]);
 
-    const [state, setState]= useState({pendientes:filtrado, realizadas:[],postergadas:[]})
+  useEffect(() => {
+    setTasksRemaining(tasks.filter((task) => !task.completed).length);
+  });
 
-    const handleFinished = (e)=>{
-        e.preventDefault();
+  const addTask = (title) => {
+    const newTasks = [...tasks, { title, completed: false }];
+    setTasks(newTasks);
+  };
 
-    }
-    const handlePostpond = (e)=>{
-        e.preventDefault();
+  const completeTask = (index) => {
+    const newTasks = [...tasks];
+    newTasks[index].completed = true;
+    setTasks(newTasks);
+  };
 
-    }
+  const removeTask = (index) => {
+    const newTasks = [...tasks];
+    newTasks.splice(index, 1);
+    setTasks(newTasks);
+  };
 
-    return (
-        <>
-        {console.log(filtrado)}
-        <h1>hola</h1>
-        <select >
-            <option disabled selected>Filtrar por Estado</option>
-            <option value="pending">Pendiente</option>
-            <option value="finished">Realizada</option>
-            <option value="postpond">Postergada</option>
-        </select>
+  return (
+    <div className="todo-container">
+      <div className="header">Pending tasks ({tasksRemaining})</div>
+      <div className="tasks">
+        {tasks.map((task, index) => (
+          <div
+            key={index}
+            className="task"
+            style={{ textDecoration: task.completed ? "line-through" : "" }}
+          >
+            {task.title}
 
-        <div>
-            <label>Descripcion de tareas:</label>
-            {
-                state.pendientes?.map((e,i)=>{
-                    return (
-                        <div key={i}>
-                            <span>{e.description}</span>
-                            <button onClick={handleFinished}>Realizada</button>
-                            <button onClick={handlePostpond}>Postergada</button>
-                        </div>
-                        
-                    )
-                })
-            }
-        </div>
-        </>
-    )
-} 
+            <button
+              style={{ background: "red" }}
+              onClick={() => removeTask(index)}
+            >
+              x
+            </button>
+            <button onClick={() => completeTask(index)}>Complete</button>
+          </div>
+        ))}
+      </div>
+      <div className="create-task">
+        <CreateTask addTask={addTask} />
+      </div>
+    </div>
+  );
+}
+
+export default PerfilGuardia;
