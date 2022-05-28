@@ -53,7 +53,7 @@ export default function NavBar() {
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-12 md:mt-1 md:text-sm md:font-medium">
             <li>
               <a
-                href="http://localhost:3000/bossHome"
+                href="http://localhost:3000/GuardProfile"
                 className="mt-1 text-xl block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
                 aria-current="page"
               >
