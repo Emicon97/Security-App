@@ -6,6 +6,7 @@ import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
 import AddUser from "./components/boss/AddUser";
 
+
 function App() {
   return (
     <BrowserRouter>
