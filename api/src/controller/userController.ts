@@ -111,25 +111,28 @@ async function deleteUser (id:string, role:string) {
 
 async function updateUser(id:string, role:string, name?:string, lastName?:string, password?:string, dni?:number ,workingHours?:string, probilePic?:string) {
     try{
+        
         if(role==='supervisor'){
-            await supervisorModel.findByIdAndUpdate(id,{
-                name:name, 
-                lastName:lastName,
-                password:password,
-                dni:dni,
-                workingHours:workingHours,
-                probilePic:probilePic
+            
+        await supervisorModel.findByIdAndUpdate(id,{
+                name, 
+                lastName,
+                password,
+                dni,
+                workingHours,
+                probilePic
             })
+           
             return 'cambios registrado correctamente'
         }
         if(role==='watcher'){
-          const data=  await watcherModel.findByIdAndUpdate(id,{
-                name:name, 
-                lastName:lastName,
-                password:password,
-                dni:dni,
-                workingHours:workingHours,
-                probilePic:probilePic,
+           await watcherModel.findByIdAndUpdate(id,{
+                name, 
+                lastName,
+                password,
+                dni,
+                workingHours,
+                probilePic,
             })
             return 'cambios registrado correctamente'
         }
