@@ -1,7 +1,7 @@
 import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
 import { Supervisor, Watcher } from './user';
 
-const TODO_STATUS:string[] = ['left', 'done'];
+const TODO_STATUS:string[] = ['left', 'done', 'postponed'];
 const PRIORITIES:string[] = ['urgent', 'high', 'regular', 'low'];
 
 export class ToDos {
