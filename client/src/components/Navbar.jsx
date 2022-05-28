@@ -1,20 +1,11 @@
 import React from "react";
-import logo from "../../assets/logo.png";
-import { useAuth0 } from "@auth0/auth0-react";
-import TableInfoSupervisors from "../supervisor/TableInfoSupervisors";
-import AuthenticationButton from "../authentication/AuthenticationBtn"
+import logo from "../assets/logo.png";
+import AuthenticationButton from "./authentication/AuthenticationBtn"
 
 export default function BossHome() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
 
   return (
-    isAuthenticated && (
-      <>
-      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+      <nav className="bg-gray-800 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <a
             href="http://localhost:3000/bossHome"
@@ -98,7 +89,5 @@ export default function BossHome() {
           </div>
         </div>
       </nav>
-      </>
-    )
   );
 }
