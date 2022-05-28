@@ -1,7 +1,6 @@
 import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK, UPDATE_TASK_STATUS} from "./ActionTypes";
 
 const initialState = {
-  bossDetail: {},
   supervisorDetail: {},
   watcherDetail: {},
   supervisors: [],
@@ -16,7 +15,7 @@ const initialState = {
 const rootReducer = (state=initialState, action) => {
   switch (action.type) {
     case GET_USER:
-      return {
+    return {
         ...state,
         users: action.payload,
       };
