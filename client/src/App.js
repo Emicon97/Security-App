@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Routes, BrowserRouter} from "react-router-dom";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import GuardProfile from "./components/guard/GuardProfile";
 import PerfilGuardia from "./components/PerfilGuardia";
 import AddUser from "./components/boss/AddUser";
+import EditState from './components/EditState/EditState';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/home/supervisor' element={<TableInfoSupervisors />} />
         <Route path='/guard/:id' element={<PerfilGuardia />}/>
         <Route path='/GuardProfile/:id' element={<GuardProfile />} />
+        <Route path='/EditState/:id' element={<EditState />} />
       </Routes>
     </BrowserRouter>
   );
