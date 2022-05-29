@@ -3,7 +3,6 @@ import { Route, Routes, BrowserRouter} from "react-router-dom";
 import NavBar from "./components/Navbar";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import GuardProfile from "./components/guard/GuardProfile";
-import PerfilGuardia from "./components/PerfilGuardia";
 import AddUser from "./components/boss/AddUser";
 import EditState from './components/EditState/EditState';
 
