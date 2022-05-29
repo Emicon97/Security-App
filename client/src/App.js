@@ -14,8 +14,7 @@ function App() {
       <Routes>
         <Route path='/home' />
         <Route path='/home/add' element={<AddUser />} />
-        <Route path='/home/supervisors' element={<TableInfoSupervisors />} />
-        {/* <Route path='/guard/:id' element={<PerfilGuardia />} /> */}
+        <Route path='/home/supervisor' element={<TableInfoSupervisors />} />
         <Route path='/guard/:id' element={<GuardProfile />} />
         <Route path='/EditState/:id' element={<EditState />} />
       </Routes>

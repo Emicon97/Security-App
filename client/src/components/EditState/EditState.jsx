@@ -41,7 +41,7 @@ export default function EditState() {
   return (
     <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
       <div className="flex justify-between text-base items-center gap-3 mr-3 text-gray-500">
-        <Link to={`/GuardProfile/${id}`} className="flex">
+        <Link to={`/guard/${id}`} className="flex">
           <button>
             <h2>Go Back</h2>
           </button>
@@ -115,7 +115,7 @@ export default function EditState() {
                   {todo.status}
                 </p>
               ) : (
-                <p className="bg-[#D8F7E6] text-[#006D64]">{todo.status}</p>
+                <p className="bg-[#FFE5E8] text-[#DB041A]">{todo.status}</p>
               )}
             </div>
           </div>
