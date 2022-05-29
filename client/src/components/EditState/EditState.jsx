@@ -15,7 +15,7 @@ export default function EditState() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [currentState, setCurrentState] = useState("All");
+  const [currentState, setCurrentState] = useState("all");
 
   useEffect(() => {
     dispatch(getUsersById(id));
@@ -23,13 +23,16 @@ export default function EditState() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getToDosById(id));
-    if (currentState !== "All") {
+    if (currentState !== "all") {
+      console.log(currentState)
       dispatch(filterTaskByIdAndStatus(id, currentState));
+    } else {
+      dispatch(getToDosById(id));
     }
   }, [updatedTask]);
 
   const tareas = (e) => {
+    e.preventDefault();
     dispatch(filterTaskByIdAndStatus(id, e.target.value));
     setCurrentState(e.target.value);
   };
