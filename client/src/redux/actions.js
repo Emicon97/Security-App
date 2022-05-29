@@ -33,7 +33,6 @@ export function getToDosById(id){
 }
 
 export function filterTaskByIdAndStatus(id, status){
-  console.log(id, status)
   return async function(dispatch){
     const estado = await axios.get(`http://localhost:3001/todos/${id}/${status}`)
     return dispatch({
