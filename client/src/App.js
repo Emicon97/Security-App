@@ -15,8 +15,7 @@ function App() {
         <Route path='/home' />
         <Route path='/home/add' element={<AddUser />} />
         <Route path='/home/supervisor' element={<TableInfoSupervisors />} />
-        <Route path='/guard/:id' element={<PerfilGuardia />}/>
-        <Route path='/GuardProfile/:id' element={<GuardProfile />} />
+        <Route path='/guard/:id' element={<GuardProfile />} />
         <Route path='/EditState/:id' element={<EditState />} />
       </Routes>
     </BrowserRouter>
