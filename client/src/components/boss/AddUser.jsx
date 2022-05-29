@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-
-
+import demo from "../../assets/demo.png";
 
 const checkUndefined = (input) => {
     if(input.rol.length === 0) return true;
@@ -154,13 +153,14 @@ const AddUser = () => {
                         }
                     </div>
                     <div className="w-96 mt-5">
-                                {loading ? (<span>cargando imagen...</span>) : (<img src={input.file} alt="vista previa" style={{width:"50px",height:"50px"}}/>)}
-                        {
-                            input.image.length ?
-                            <input className={FileDisabled} type="file" disabled></input> :
-                            <input className={File} type="file" name="file" onChange={uploadImage}></input> 
-                        }
-                        
+                        <div className="flex">
+                            {
+                                input.image.length ?
+                                <input className={FileDisabled} type="file" disabled></input> :
+                                <input className={File} type="file" name="file" onChange={uploadImage}></input> 
+                            }
+                            {loading ? <img src={input.file} /> : <img src={demo} className='w-10 h-10' />  }
+                        </div>
                         {error.image && <small className="text-red-600">{error.image}</small>}
                     </div>
                 </div>

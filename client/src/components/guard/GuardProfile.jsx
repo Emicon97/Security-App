@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   getToDosById,
   getUsersById,
   filterTaskByIdAndStatus,
   updateStatus,
 } from "../../redux/actions";
+import EditState from "../EditState/EditState"; 
 import './styles.css'
 
 export default function GuardProfile() {
@@ -48,6 +49,7 @@ export default function GuardProfile() {
 
       <div className="contenedor_tareas">
         <div className="head-tasks">
+          <Link to={`/EditState/${id}`}><button>Edit</button></Link>
           <h2 className="list-tasks">Lista de tareas</h2>
           <div className="filter">
             <span>Filtrar Tareas: </span>
@@ -66,37 +68,22 @@ export default function GuardProfile() {
           <div key={i} className="tasks">
 
             <div className="info-task">
+
             <h3 className="title">{todo.name}</h3>
             {/* <h3><span className="title">title:</span> {todo.name}</h3> */}
             <p className="title">{todo.description} </p>
             {/* <p><span className="title">description:</span> {todo.description}</p> */}
               <button>Adjuntar Imagen y Comentario</button>
+
+              <h3><span className="title">title:</span> {todo.name}</h3>
+              <p><span className="title">description:</span> {todo.description}</p>
+
             </div>
 
             <div className="status-task">
               <p className={`${todo.status} status`} >{todo.status}</p>
               <span className="title-priority"><span className="title">Prioridad:</span> <span className={`${todo.priority} priority`}>{todo.priority}</span></span>
-              <div className="buttons">
-                <button
-                  value="done"
-                  id={todo._id}
-                  onClick={(e) => updateTaskStatus(e)}
-                >
-                  Terminado
-                </button>
 
-                {todo.status === "done" ? (
-                  <button disabled>Postergar</button>
-                ) : (
-                  <button
-                    value="postponed"
-                    id={todo._id}
-                    onClick={(e) => updateTaskStatus(e)}
-                  >
-                    Postergar
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         ))}
