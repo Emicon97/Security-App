@@ -40,14 +40,14 @@ export default function EditState() {
 
   return (
     <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
-      <div className="flex justify-between text-lg gap-3 mr-3 text-gray-500">
+      <div className="flex justify-between text-base items-center gap-3 mr-3 text-gray-500">
         <Link to={`/GuardProfile/${id}`} className="flex">
           <button>
             <h2>Go Back</h2>
           </button>
         </Link>
         <div className="flex gap-3">
-          <span>Filtrar Tareas: </span>
+          <span className="mt-3">Filtrar Tareas: </span>
           <select onChange={(e) => tareas(e)}>
             <option disabled defaultValue>
               Seleccionar estado de tarea
