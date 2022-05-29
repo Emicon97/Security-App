@@ -156,8 +156,8 @@ const AddUser = () => {
                         <div className="flex">
                             {
                                 input.image.length ?
-                                <input className={FileDisabled} type="file" disabled></input> :
-                                <input className={File} type="file" name="file" onChange={uploadImage}></input> 
+                                <input className={FileDisabled()} type="file" disabled></input> :
+                                <input className={File()} type="file" name="file" onChange={uploadImage}></input> 
                             }
                             {loading ? <img src={input.file} /> : <img src={demo} className='w-10 h-10' />  }
                         </div>
@@ -188,7 +188,7 @@ const AddUser = () => {
     );
 };
 
-const Div = () => `
+const Div = (props) => `
     flex flex-row items-center justify-between
     label:text-red-500
 `;
@@ -196,24 +196,22 @@ const Div = () => `
 const Input = (props) => `
     hover:bg-slate-100
     placeholder:italic placeholder:text-slate-400 
-    block bg-white w-${props === 'Select' ? '32' : '96'} m-2.5
+    block bg-white w-${props === 'Select' ? '48' : '96'} m-2.5
     border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm 
+    py-2 pl-3 pr-3 shadow-sm 
     focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 
     sm:text-sm
 `;
 
 const InputDisabled = (props) => `
-    
     placeholder:italic placeholder:text-slate-400 
-    block bg-white w-${props === 'Select' ? '32' : '96'} m-2.5
+    block bg-white w-${props === 'Select' ? '48' : '96'} m-2.5
     border border-slate-300 rounded-md 
-    py-2 pl-9 pr-3 shadow-sm 
-    
+    py-2 pl-3 pr-3 shadow-sm 
     sm:text-sm
 `;
 
-const File = `
+const File = (props) => `
     block w-full text-sm text-slate-500
     file:mr-4 file:py-2 file:px-4
     file:rounded-full file:border-0
@@ -222,7 +220,7 @@ const File = `
     hover:file:bg-blue-100
 `;
 
-const FileDisabled = `
+const FileDisabled = (props) => `
     block w-full text-sm text-slate-500
     file:mr-4 file:py-2 file:px-4
     file:rounded-full file:border-0
@@ -230,7 +228,7 @@ const FileDisabled = `
     file:bg-blue-0 file:text-black-700
 `;
 
-const Button = () => `
+const Button = (props) => `
     font-bold text-white
     bg-blue-500
     w-32 h-10 p-0 m-0
@@ -240,7 +238,7 @@ const Button = () => `
     rounded-3xl
 `;
 
-const ButtonDisabled = () => `
+const ButtonDisabled = (props) => `
     font-bold text-black
     bg-blue-50
     w-32 h-10 p-0 m-0
