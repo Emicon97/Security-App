@@ -93,12 +93,6 @@ export default function GuardProfile() {
 
             <div className="info-task">
 
-            <h3 className="title">{todo.name}</h3>
-            {/* <h3><span className="title">title:</span> {todo.name}</h3> */}
-            <p className="title">{todo.description} </p>
-            {/* <p><span className="title">description:</span> {todo.description}</p> */}
-              <button onClick={toggle}>Adjuntar Imagen y Comentario</button>
-
               <h3><span className="title">title:</span> {todo.name}</h3>
               <p><span className="title">description:</span> {todo.description}</p>
 
