@@ -24,7 +24,7 @@ export default function EditState() {
 
   useEffect(() => {
     if (currentState !== "all") {
-      console.log(currentState)
+      console.log(currentState);
       dispatch(filterTaskByIdAndStatus(id, currentState));
     } else {
       dispatch(getToDosById(id));
@@ -43,9 +43,9 @@ export default function EditState() {
 
   return (
     <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
-      <div className="flex justify-between text-base items-center gap-3 mr-3 text-gray-500">
+      <div className="flex justify-between text-base gap-3 mr-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
-          <button>
+          <button className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200 ml-3">
             <h2>Go Back</h2>
           </button>
         </Link>
@@ -83,12 +83,13 @@ export default function EditState() {
                 </span>{" "}
                 {todo.description}
               </p>
-              <span>Prioridad: </span>
+              <span>Prioridad:  </span>
               <span>{todo.priority}</span>
-              <button>Adjuntar Imagen y Comentario</button>
+              <button  className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">Adjuntar Imagen y Comentario</button>
               {/* {beenClicked===1?<p>vuelva a presinar el boton para confirmar</p>:null} */}
               <div className="mt-3">
                 <button
+                  className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200"
                   value="done"
                   id={todo._id}
                   onClick={(e) => updateTaskStatus(e)}
@@ -96,9 +97,15 @@ export default function EditState() {
                   Terminado
                 </button>
                 {todo.status === "done" ? (
-                  <button disabled>Postergar</button>
+                  <button
+                    disabled
+                    className="rounded-lg border-solid border-2 border-inherit mr-2 bg-gray-200 text-gray-500"
+                  >
+                    Postergar
+                  </button>
                 ) : (
                   <button
+                    className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200"
                     value="postponed"
                     id={todo._id}
                     onClick={(e) => updateTaskStatus(e)}
@@ -118,7 +125,9 @@ export default function EditState() {
                   {todo.status}
                 </p>
               ) : (
-                <p className="bg-[#FFE5E8] text-[#DB041A]">{todo.status}</p>
+                <p className="bg-[#FFE5E8] text-[#DB041A] p-1 rounded-lg text-lg shadow-lg">
+                  {todo.status}
+                </p>
               )}
             </div>
           </div>
