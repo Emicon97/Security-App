@@ -1,4 +1,4 @@
-import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK, UPDATE_TASK_STATUS} from "./ActionTypes";
+import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK, UPDATE_TASK_STATUS,FILTER_BY_STATUS_AND_PRIORITY ,FILTER_BY_PRIORITY} from "./ActionTypes";
 
 const initialState = {
   supervisorDetail: {},
