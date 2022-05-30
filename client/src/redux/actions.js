@@ -42,7 +42,6 @@ export function filterTaskByIdAndStatus(id, status){
   }
 }
 
-
 export function updateStatus(id,status){
   return async function(dispatch){
     const estado = await axios.put(`http://localhost:3001/todos/${id}`, status)
@@ -50,6 +49,13 @@ export function updateStatus(id,status){
       type: UPDATE_TASK_STATUS,
       payload: estado.data
     })
+  }
+}
+
+export function postUser(post){
+  return async function(dispatch){
+      const data = await axios.post("http://localhost:3001/user", post)
+      return data;
   }
 }
 

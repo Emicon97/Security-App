@@ -119,6 +119,7 @@ export default function GuardProfile() {
           <textarea className={Input()} placeholder="Comentario sobre la tarea..."></textarea>
             <input className={File} type="file" name="file" onChange={uploadImage}></input>
             {loading ? (<p>...loading</p>) : (<img src={image} style={style.img}/>)}
+            <button onClick={()=>setImage('')}>x</button>
           <button className={Button()}>Enviar</button>
         </div>
       </Modal>

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
+import { postUser } from "../../redux/actions";
 import demo from "../../assets/demo.png";
 
 const checkUndefined = (input) => {
@@ -28,6 +29,9 @@ const validate = (input) => {
 };
 
 const AddUser = () => {
+    const dispatch = useDispatch();
+
+
     const [loading, setLoading] = useState(false);
     const uploadImage = async (e) => {
         const files = e.target.files;
@@ -51,6 +55,7 @@ const AddUser = () => {
         email: '',
         phoneNumber: '',
         address: '',
+        workingHours: '',
         dni: '',
         rol: [],
         file: '',
