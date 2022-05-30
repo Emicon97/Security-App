@@ -1,9 +1,9 @@
-import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
+import { prop, Ref, getModelForClass, modelOptions, Severity } from '@typegoose/typegoose';
 import { Supervisor, Watcher } from './user';
 
 const TODO_STATUS:string[] = ['left', 'done', 'postponed'];
 const PRIORITIES:string[] = ['urgent', 'high', 'regular', 'low'];
-
+@modelOptions({options: { allowMixed: Severity.ALLOW}})
 export class ToDos {
     @prop({ required: true })
     public name: string;

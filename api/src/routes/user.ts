@@ -33,6 +33,17 @@ router.get('/:id', async(req,res) => {
     }
 })
 
+//*GET trae de un Boss por id los supervisores que tiene a su cargo
+//* y si el id es de supervisor trae del mismo los watchers a su cargo
+//http://localhost:3001/user/:id?name=name
+router.get('/:id', async (req, res)=> {
+    try{
+
+    }catch(error){
+        console.log('Unexpected Error', error);
+    }
+})
+
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
 router.post('/', async (req, res) => {

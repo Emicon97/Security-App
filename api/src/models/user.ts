@@ -1,5 +1,5 @@
-import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-
+import { prop, Ref, getModelForClass, modelOptions, Severity } from '@typegoose/typegoose';
+@modelOptions({options: { allowMixed: Severity.ALLOW }})
 class User {
     
     @prop({ required: true, lowercase:true, trim:true })
@@ -15,7 +15,7 @@ class User {
     public dni!: number;
     
     @prop({ lowercase:true, trim:true })
-    public profilePic?: string | undefined;
+    public profilePic?: string ;
 }
 
 export class Boss extends User {
