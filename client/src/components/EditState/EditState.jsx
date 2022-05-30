@@ -83,9 +83,11 @@ export default function EditState() {
                 </span>{" "}
                 {todo.description}
               </p>
-              <span>Prioridad:  </span>
+              <span>Prioridad: </span>
               <span>{todo.priority}</span>
-              <button  className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">Adjuntar Imagen y Comentario</button>
+              <button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">
+                Adjuntar Imagen y Comentario
+              </button>
               {/* {beenClicked===1?<p>vuelva a presinar el boton para confirmar</p>:null} */}
               <div className="mt-3">
                 <button
