@@ -43,7 +43,7 @@ export default function EditState() {
 
   return (
     <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
-      <div className="flex justify-between text-base gap-3 mr-3 text-gray-500">
+      <div className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
           <button className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200 ml-3">
             <h2>Go Back</h2>
@@ -83,9 +83,11 @@ export default function EditState() {
                 </span>{" "}
                 {todo.description}
               </p>
-              <span>Prioridad:  </span>
+              <span>Prioridad: </span>
               <span>{todo.priority}</span>
-              <button  className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">Adjuntar Imagen y Comentario</button>
+              <button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">
+                Adjuntar Imagen y Comentario
+              </button>
               {/* {beenClicked===1?<p>vuelva a presinar el boton para confirmar</p>:null} */}
               <div className="mt-3">
                 <button
@@ -99,7 +101,7 @@ export default function EditState() {
                 {todo.status === "done" ? (
                   <button
                     disabled
-                    className="rounded-lg border-solid border-2 border-inherit mr-2 bg-gray-200 text-gray-500"
+                    className="rounded-lg border-solid border-2 border-inherit mr-2 bg-gray-200 text-gray-500 active:bg-gray-200"
                   >
                     Postergar
                   </button>
