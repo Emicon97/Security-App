@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { getToDos, getToDosByRole, getByIdAndStatus, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
+const { getToDosManager, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -8,7 +8,7 @@ const router = Router();
 //http://localhost:3001/todos 
 router.get('/', async (req, res) => {
     try{
-        let list = await getToDos();
+        let list = await getToDosManager();
         res.status(200).json(list);
     }catch(error){
         if (error instanceof Error) {
@@ -23,14 +23,10 @@ router.get('/', async (req, res) => {
 //http://localhost:3001/todos/:id  //*id por params del "usuario"
 router.get('/:id', async (req, res) => { 
     let { id } = req.params;
+    let { priority } = req.query;
     try{
-        let list = await getToDos(id);
-        if (list) {
-            res.status(200).json(list);
-        }
-
-        let toDos = await getToDosByRole(id);
-        res.status(200).json(toDos);
+        let list = await getToDosManager(id, priority);
+        res.status(200).json(list);
     }catch(error){
         if (error instanceof Error) {
             res.status(404).json(error.message);
@@ -42,8 +38,9 @@ router.get('/:id', async (req, res) => {
 
 router.get('/:id/:status', async (req, res) => { 
     let { id, status } = req.params;
+    let { priority } = req.query;
     try{
-        let toDos = await getByIdAndStatus(id, status);
+        let toDos = await getToDosManager(id, priority, status);
         res.status(200).json(toDos);
     }catch(error){
         if (error instanceof Error) {
