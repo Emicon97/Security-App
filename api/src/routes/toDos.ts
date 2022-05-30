@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { getToDosManager, getByIdAndStatus, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
+const { getToDosManager, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -26,7 +26,6 @@ router.get('/:id', async (req, res) => {
     let { priority } = req.query;
     try{
         let list = await getToDosManager(id, priority);
-        // let list = await getToDos(id);
         res.status(200).json(list);
     }catch(error){
         if (error instanceof Error) {
@@ -41,8 +40,7 @@ router.get('/:id/:status', async (req, res) => {
     let { id, status } = req.params;
     let { priority } = req.query;
     try{
-        let toDos = await getToDosManager(id, priority, status)
-        //let toDos = await getByIdAndStatus(id, status);
+        let toDos = await getToDosManager(id, priority, status);
         res.status(200).json(toDos);
     }catch(error){
         if (error instanceof Error) {
