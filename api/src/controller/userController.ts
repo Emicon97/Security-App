@@ -62,14 +62,14 @@ async function signUp(name:string, lastName:string, password:string, dni:number,
             break;
     }
     
-    return 'Perfil creado exitosamente.';
+    return 'Profile successfully created.';
 }
 
 async function dniCHecker (dni:number) {
     await watcherModel.findOne({dni})
     .then((watcher) => {
         if (watcher) {
-            throw new Error ('Ese guardia ya está registrado en esta empresa.');
+            throw new Error ("That security guard is already registered in the company's database.");
         }
     })
     .then(async () => {
@@ -77,7 +77,7 @@ async function dniCHecker (dni:number) {
     })
     .then((supervisor) => {
         if (supervisor) {
-            throw new Error ('Ese supervisor ya está registrado en esta empresa.');
+            throw new Error ("That supervisor is already registered in the company's database.");
         }
     })
     .then(async () => {
@@ -85,7 +85,7 @@ async function dniCHecker (dni:number) {
     })
     .then((boss) => {
         if (boss) {
-            throw new Error ('Usted ya está registrado en esta empresa.');
+            throw new Error ('You are already registered in our database.');
         }
     })
     .catch((err) => {
@@ -98,14 +98,14 @@ async function deleteUser (id:string, role:string) {
     try {
         if(role==='supervisor') {
             await supervisorModel.findByIdAndDelete(id);
-            return 'Supervisor eliminado.';
+            return 'Supervisor deleted.';
         }
         if(role==='watcher') {
             await watcherModel.findByIdAndDelete(id);
-            return 'Guardia eliminado.';
+            return 'Security guard deleted.';
         };
     } catch (err) {
-        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+        throw new Error ('The person that you are trying to delete from the database could not be found.');
     }
 }
 
@@ -123,7 +123,7 @@ async function updateUser(id:string, role:string, name?:string, lastName?:string
                 probilePic
             })
            
-            return 'cambios registrado correctamente'
+            return 'Parameters updated successfully.'
         }
         if(role==='watcher'){
            await watcherModel.findByIdAndUpdate(id,{
@@ -134,10 +134,10 @@ async function updateUser(id:string, role:string, name?:string, lastName?:string
                 workingHours,
                 probilePic,
             })
-            return 'cambios registrado correctamente'
+            return 'Parameters updated successfully.'
         }
     }catch(err) {
-        throw new Error ('No se encontró a la persona que intenta eliminar en la base de datos');
+        throw new Error ('The parameters could not be updated.');
     }
 }
 
