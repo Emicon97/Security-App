@@ -44,17 +44,22 @@ router.get('/:id/employees', async (req, res)=> {
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
         res.json(userData);
-    }catch(error){
-        console.log('Unexpected Error', error);
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
-router.post('/', async (req, res) => {
-    let { name, lastName, password, dni, email, telephone, role, workingHours, profilePic } = req.body;
+router.post('/:id', async (req, res) => {
+    let { id } = req.params;
+    let { name, lastName, password, dni, email, telephone, workingHours, profilePic } = req.body;
     try {
-        let data = await signUp(name, lastName, password, dni, email, telephone, role, workingHours, profilePic);
+        let data = await signUp(id, name, lastName, password, dni, email, telephone, workingHours, profilePic);
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {

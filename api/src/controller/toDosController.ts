@@ -1,5 +1,5 @@
 import toDosModel from '../models/toDos';
-import { supervisorModel, watcherModel } from '../models/user';
+import { bossModel, supervisorModel, watcherModel } from '../models/user';
 
 
 async function getToDosManager (id?:string, priority?:string, status?:string) {
@@ -96,7 +96,7 @@ async function getByIdAndName (id:string, name:string) {
     if(toDos.length !== 0){
       return toDos;
     }else{
-      return "No se encontraron tareas con ese nombre"
+      return "There are no matching tasks."
     }
   }catch(error: any){
     throw new Error (error.message);
@@ -124,7 +124,7 @@ async function assignTask (name:string, description:string | undefined, priority
         priority,
         [role]: id
     })
-    await createToDo.save()
+    await createToDo.save();
 
     return 'Task successfully assigned.';
   } catch (err:any) {
@@ -132,12 +132,14 @@ async function assignTask (name:string, description:string | undefined, priority
   }
 }
 
-async function workerIdentifier (id:string) {
+async function workerIdentifier (id:string):Promise<string> { 
+  const isBoss = await bossModel.findById(id);
+  if (isBoss !== null) return 'boss';
   const isSupervisor = await supervisorModel.findById(id);
   if (isSupervisor !== null) return 'supervisor';
   const isWatcher = await watcherModel.findById(id); 
   if (isWatcher !== null) return 'watcher';
-  throw new Error ("This worker hasn't been found in our database.");
+  throw new Error ("No task has been found for this employee.");
 }
 
 async function updateToDo (id:string, name:string, description:string, status:string) {
@@ -171,4 +173,5 @@ module.exports = {
   assignTask,
   updateToDo,
   deleteToDo,
+  workerIdentifier
 }

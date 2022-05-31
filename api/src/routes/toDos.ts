@@ -45,8 +45,12 @@ router.get('/:id/search', async (req, res) => {
     try{
         let toDos = await getByIdAndName(id, name);
         res.status(200).json(toDos);
-    }catch(error){
-        console.log('Unexpected Error', error)
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 
