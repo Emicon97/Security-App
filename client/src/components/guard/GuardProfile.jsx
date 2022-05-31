@@ -3,66 +3,85 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   getToDosById,
-  getUsersById,
-  filterTaskByIdAndStatus,
-  updateStatus,
+  filterByPriority,
+  filterByStatus,
+  filterByStatusAndPriority
 } from "../../redux/actions";
-import EditState from "../EditState/EditState"; 
+import Modal from "../reusable/Modal";
 import './styles.css'
 
 export default function GuardProfile() {
   
 
   const ToDos = useSelector((state) => state.todosId);
-  const user = useSelector((state) => state.userDetails);
-  const updatedTask = useSelector((state) => state.todoUpdate);
+  const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
   const { id } = useParams();
 
-    const [currentState, setCurrentState] = useState("All")
+  const [ currentPriority, setCurrentPriority ] = useState("all");
+  const [ currentStatus, setCurrentStatus ] = useState("all");
 
 
   useEffect(() => {
-    dispatch(getUsersById(id));
     dispatch(getToDosById(id));
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {
-      dispatch(getToDosById(id));
-
-    if(currentState !== "All"){
-        dispatch(filterTaskByIdAndStatus(id,currentState))
-    }
-
+    // eslint-disable-next-line
   }, [updatedTask]);
 
-  const tareas = (e) => {
-    dispatch(filterTaskByIdAndStatus( id, e.target.value,));
-    setCurrentState(e.target.value)
+  const priorityManager = (e) => {
+    let priority = e.target.value;
+    if (priority === "all" && currentStatus !== "all") {
+      dispatch(filterByStatus(id, currentStatus));
+    } else if (priority !== "all" && currentStatus !== "all") {
+      dispatch(filterByStatusAndPriority(id, currentStatus, priority));
+    } else if (priority !== "all" && currentStatus === "all") {
+      dispatch(filterByPriority(id, priority));
+    } else {
+      dispatch(getToDosById(id));
+    }
+    setCurrentPriority(priority);
   };
 
-  const updateTaskStatus = (e) => {
-    dispatch(updateStatus(e.target.id, { status: e.target.value }));
+  const statusManager = (e) => {
+    let status = e.target.value;
+    if (currentPriority === "all" && status !== "all") {
+      dispatch(filterByStatus(id, status));
+    } else if (currentPriority !== "all" && status !== "all") {
+      dispatch(filterByStatusAndPriority(id, status, currentPriority));
+    } else if (currentPriority !== "all" && status === "all") {
+      dispatch(filterByPriority(id, currentPriority));
+    } else {
+      dispatch(getToDosById(id));
+    }
+    setCurrentStatus(status);
   };
 
   return (
     <div className="screen-tasks">
-      
-
-
       <div className="contenedor_tareas">
         <div className="head-tasks">
           <Link to={`/EditState/${id}`}><button>Edit</button></Link>
-          <h2 className="list-tasks">Lista de tareas</h2>
-          <div className="filter">
-            <span>Filtrar Tareas: </span>
-            <select onChange={(e) => tareas(e)}>
-              <option disabled defaultValue>
-                Seleccionar estado de tarea
-              </option>
-              <option value="done">Realizadas</option>
-              <option value="left">Pendientes</option>
-              <option value="postponed">Postergadas</option>
+          <h2 className="list-tasks">List of Tasks</h2>
+          <div className="priorityFilter">
+            <select onChange={(e) => priorityManager(e)}>
+            <option value="0" hidden>Filter by priority</option>
+              <option value="all">All</option>
+              <option value="urgent">Urgent</option>
+              <option value="high">High</option>
+              <option value="regular">Regular</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div className="statusFilter">
+            <select onChange={(e) => statusManager(e)}>
+            <option value="0" hidden>Filter by status</option>
+              <option value="all">All</option>
+              <option value="done">Done</option>
+              <option value="left">Left</option>
+              <option value="postponed">Postponed</option>
             </select>
           </div>
         </div>
@@ -72,22 +91,22 @@ export default function GuardProfile() {
 
             <div className="info-task">
 
-              <h3><span className="title">title:</span> {todo.name}</h3>
-              <p><span className="title">description:</span> {todo.description}</p>
+              <h3><span className="title">Title:</span> {todo.name}</h3>
+              <p><span className="title">Description:</span> {todo.description}</p>
 
             </div>
 
             <div className="status-task">
               <p className={`${todo.status} status`} >{todo.status}</p>
-              <span className="title-priority"><span className="title">Prioridad:</span> <span className={`${todo.priority} priority`}>{todo.priority}</span></span>
+              <span className="title-priority"><span className="title">Priority:</span> <span className={`${todo.priority} priority`}>{todo.priority}</span></span>
 
             </div>
           </div>
         ))}
         
-        </div>
       </div>
       
-    
+    </div>
   );
 }
+
