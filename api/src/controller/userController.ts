@@ -73,7 +73,7 @@ async function getEmployeesAriel(id:string,  name:string){
     let supervisorEmployees = await supervisorModel.findById(id);
     if(name.length > 0){
         if(bossEmployees){
-            let employees = await supervisorModel.find({boss:id, name: {$regex}});
+            let employees = await bossModel.find({supervisor: {$regex}});
             return employees;
         }else{
             let employees = await watcherModel.find({supervisor:id, name: {$regex}});
