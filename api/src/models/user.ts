@@ -39,6 +39,9 @@ export class Supervisor extends User {
     @prop({ required: true, default: [] })
     public environment: string[];
 
+    @prop({ ref: () => Boss})
+    public boss: Ref<Boss>[];
+
     @prop({ ref: () => Watcher })
     public watcher: Ref<Watcher>[];
 
