@@ -15,7 +15,7 @@ class User {
     public dni!: number;
     
     @prop({ lowercase:true, trim:true })
-    public profilePic?: string ;
+    public profilePic?: string;
 }
 
 export class Boss extends User {
@@ -37,7 +37,7 @@ export class Supervisor extends User {
     public watcher: Ref<Watcher>[];
 
     @prop()
-    public workingHours?: string | undefined;
+    public workingHours?: string;
 }
 
 export class Watcher extends User {
@@ -49,7 +49,7 @@ export class Watcher extends User {
     public supervisor: Ref<Supervisor>[];
 
     @prop()
-    public workingHours?: string | undefined;
+    public workingHours?: string;
 }
 
 export class Neighbour extends User {

@@ -38,7 +38,8 @@ router.get('/:id', async(req,res) => {
 //http://localhost:3001/user/:id?name=name
 router.get('/:id', async (req, res)=> {
     try{
-
+        let { name } = req.query;
+        
     }catch(error){
         console.log('Unexpected Error', error);
     }

@@ -9,7 +9,7 @@ export class ToDos {
     public name: string;
 
     @prop()
-    public description: string | undefined;
+    public description?: string;
 
     @prop({ enum: TODO_STATUS, default: 'left' })
     public status: string;
