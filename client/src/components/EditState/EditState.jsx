@@ -11,7 +11,6 @@ import {
 
 export default function EditState() {
   const ToDos = useSelector((state) => state.todosId);
-  const user = useSelector((state) => state.userDetails);
   const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -21,6 +20,7 @@ export default function EditState() {
 
   useEffect(() => {
     dispatch(getToDosById(id));
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export default function EditState() {
       dispatch(getToDosById(id));
     }
     setCurrentStatus(currentStatus);
+    // eslint-disable-next-line
   }, [updatedTask]);
 
   const priorityManager = (e) => {
