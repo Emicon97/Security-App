@@ -5,6 +5,7 @@ import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import GuardProfile from "./components/guard/GuardProfile";
 import AddUser from "./components/boss/newAddUser";
 import EditState from './components/EditState/EditState';
+import UserProfile from "./components/reusable/Profile";
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <Routes>
         <Route path='/home' />
         <Route path='/home/add' element={<AddUser />} />
-        <Route path='/home/supervisor' element={<TableInfoSupervisors />} />
-        <Route path='/guard/:id' element={<GuardProfile />} />
-        <Route path='/EditState/:id' element={<EditState />} />
+        <Route path='/supervisor' element={<TableInfoSupervisors />} />
+        <Route exact path='/guard/:id' element={<GuardProfile />} />
+        <Route exact path='/guard/:id/profile' element={<UserProfile/>}/>
+        <Route path='/editState/:id' element={<EditState />} />
       </Routes>
     </BrowserRouter>
   );

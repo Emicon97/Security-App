@@ -58,7 +58,7 @@ validate={(val)=>{
 
     if(!val.role) {errors.role = "Por favor ingresa un rol"}
 
-    if(!val.profilePic) {errors.profilePic = "Por favor ingresa una imagen"}
+    // if(!val.profilePic) {errors.profilePic = "Por favor ingresa una imagen"}
 
     if(!val.dni) {errors.dni = "Por favor ingresa un DNI"}
     else if(isNaN(Number(val.dni)) || val.dni.length < 8 || val.dni.length > 8) {errors.dni = "El formato debe ser de 8 numeros"}

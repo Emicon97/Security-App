@@ -8,7 +8,9 @@ import {
   GET_TODOS,
   GET_TODOS_ID,
   UPDATE_TASK,
-  UPDATE_TASK_STATUS
+  UPDATE_TASK_STATUS,
+  FILTER_BY_STATUS_AND_PRIORITY,
+  FILTER_BY_PRIORITY
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -34,20 +36,20 @@ export function getToDosById(id){
 
 export function filterTaskByIdAndStatus(id, status){
   return async function(dispatch){
-    const estado = await axios.get(`http://localhost:3001/todos/${id}/${status}`)
+    const state = await axios.get(`http://localhost:3001/todos/${id}/${status}`)
     return dispatch({
       type: UPDATE_TASK,
-      payload: estado.data
+      payload: state.data
     })
   }
 }
 
 export function updateStatus(id,status){
   return async function(dispatch){
-    const estado = await axios.put(`http://localhost:3001/todos/${id}`, status)
+    const state = await axios.put(`http://localhost:3001/todos/${id}`, status)
     return dispatch({
       type: UPDATE_TASK_STATUS,
-      payload: estado.data
+      payload: state.data
     })
   }
 }
@@ -55,10 +57,30 @@ export function updateStatus(id,status){
 export function postUser(post){
   return async function(dispatch){
       const data = await axios.post("http://localhost:3001/user", post)
+      console.log(data)
       return data;
   }
 }
 
+// export function filterByStatusAndPriority(id,status,priority){
+//   return async function(dispatch){
+//     const state = await axios.get(`http://localhost:3001/todos/${id}/${status}/?priority=${priority}`)
+//     return dispatch({
+//       type: FILTER_BY_STATUS_AND_PRIORITY,
+//       payload: state.data
+//     })
+//   }
+// }
+
+// export function filterByPriority(id,priority){
+//   return async function(dispatch){
+//     const state = await axios.get(`http://localhost:3001/todos/${id}/?priority=${priority}`)
+//     return dispatch({
+//       type: FILTER_BY_PRIORITY,
+//       payload: state.data
+//     })
+//   }
+// }
 
 // import axios from "axios";
 // import {
