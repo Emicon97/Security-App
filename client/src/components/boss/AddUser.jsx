@@ -45,7 +45,7 @@ initialValues={{
             email:'',
             address:'',
             environment:'',
-            phoneNumber:'',
+            telephone:'',
             workingHours:''
 
 }}
@@ -73,8 +73,8 @@ validate={(val)=>{
     if(!val.address) {errors.address = "Por favor ingresa una direccion"}
     else if(!/^[A-Za-z0-9\s]+$/.test(val.address)) errors.address = "Solo se aceptan números, letras y espacios";
 
-    if(!val.phoneNumber) {errors.phoneNumber = "Por favor ingresa un telefono"}
-    else if(isNaN(Number(val.phoneNumber))) errors.phoneNumber = "Alguno de los valores no es un número";
+    if(!val.telephone) {errors.telephone = "Por favor ingresa un telefono"}
+    else if(isNaN(Number(val.telephone))) errors.telephone = "Alguno de los valores no es un número";
     return errors;
 }}
 onSubmit ={(values, {resetForm})=>{
@@ -89,13 +89,13 @@ onSubmit ={(values, {resetForm})=>{
     <Form className="flex flex-col items-center">
         {console.log(values)}
         <div className={Div()}>
-            <label htmlFor="name">Nombre</label>
+            <label htmlFor="name">Name</label>
             <Field 
             className={Input()}
             type="text"
             id="name"
             name="name"
-            placeholder="Nombre"/>
+            placeholder="Name"/>
             <ErrorMessage name="name" component={()=>(<small className="text-red-600">{errors.name}</small>)}/>
         </div>
         <div>
@@ -150,14 +150,14 @@ onSubmit ={(values, {resetForm})=>{
             <ErrorMessage name="email" component={()=>(<small className="text-red-600">{errors.email}</small>)}/>
         </div>
         <div className={Div()}>
-            <label htmlFor="phoneNumber">Telefono: </label>
+            <label htmlFor="telephone">Telephone: </label>
             <Field
             className={Input()}
             type="number"
-            id="phoneNumber"
-            name="phoneNumber"
-            placeholder="Telefono"/>
-            <ErrorMessage name="phoneNumber" component={()=>(<small className="text-red-600">{errors.phoneNumber}</small>)}/>
+            id="telephone"
+            name="telephone"
+            placeholder="Telephone"/>
+            <ErrorMessage name="telephone" component={()=>(<small className="text-red-600">{errors.telephone}</small>)}/>
         </div>
         <div>
             <label htmlFor="workingHours">Horas de trabajo: </label>
