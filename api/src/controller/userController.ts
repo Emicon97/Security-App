@@ -12,15 +12,25 @@ import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../model
 
 async function getUserById(id:string) {
     try{
+        const response:string[] = [];
         let findBoss = await bossModel.findById(id);
         let findSupervisor = await supervisorModel.findById(id);
         let findWatcher = await watcherModel.findById(id);
         let findNeighbour = await neighbourModel.findById(id);
 
-        if(findBoss!==null) return findBoss;
-        if(findSupervisor!==null) return findSupervisor;
-        if(findWatcher!==null) return findWatcher;
-        if(findNeighbour!==null) return findNeighbour;
+        if (findBoss!==null) {
+            response.push('boss');
+            return findBoss;
+        } else if (findSupervisor!==null) {
+            response.push('supervisor');
+            return findSupervisor;
+        } else if(findWatcher!==null) {
+            response.push('watcher');
+            return findWatcher;
+        } else if(findNeighbour!==null) {
+            response.push('neighbour');
+            return findNeighbour;
+        }
     }catch(err:any){
         throw new Error(err.message);
     }    
