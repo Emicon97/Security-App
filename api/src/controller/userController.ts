@@ -1,43 +1,59 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 
-async function GetUser(classOfuser:string) {
-    try{   
-        if(classOfuser==='supervisor') return await supervisorModel.find() 
-        if(classOfuser==='watcher') return await watcherModel.find()
-        if(classOfuser==='neighbour') return await neighbourModel.find()
+// async function getUsers(userClass:string) {
+//     try{   
+//         if(userClass==='supervisor') return await supervisorModel.find(); 
+//         if(userClass==='watcher') return await watcherModel.find();
+//         if(userClass==='neighbour') return await neighbourModel.find();
+//     }catch(err:any){
+//         throw new Error(err.message)
+//     }    
+// }
+
+async function getUserById(id:string) {
+    try{
+        let findBoss = await bossModel.findById(id);
+        let findSupervisor = await supervisorModel.findById(id);
+        let findWatcher = await watcherModel.findById(id);
+        let findNeighbour = await neighbourModel.findById(id);
+
+        if(findBoss!==null) return findBoss;
+        if(findSupervisor!==null) return findSupervisor;
+        if(findWatcher!==null) return findWatcher;
+        if(findNeighbour!==null) return findNeighbour;
     }catch(err:any){
-        throw new Error(err.message)
+        throw new Error(err.message);
     }    
 }
 
-async function GetUserById(id:string) {
+async function getUserByHierarchy(id:string, name?:string){
     try{
-        let findSupervisor= await supervisorModel.findById(id)
-        let findWatcher= await watcherModel.findById(id)
-        let findNeighbour= await neighbourModel.findById(id)
-        if(findSupervisor!==null) return findSupervisor 
-        if(findWatcher!==null) return findWatcher
-        if(findNeighbour!==null) return findNeighbour
-    }catch(err:any){
-        throw new Error(err.message)
-    }    
-}
-
-async function GetUserByHierarchy(id:string){
-    try{
-        let boss = await bossModel.findById(id)
-        if(boss){
-            return await supervisorModel.find()
-        }else{
-            return await watcherModel.find()
+        if (!name) {
+            return await getEmployees(id);
+        } else {
+            return await getEmployeeByName(name);
         }
     }catch(error:any){
         throw new Error(error.message);
     }
 }
 
+async function getEmployees (id:string) {
+    let boss = await bossModel.findById(id);
+    if (boss) {
+        // return await bossModel.findOne({ id }, 'supervisor');
+        return await supervisorModel.find();
+    }else{
+        // return await supervisorModel.findOne([id], 'watcher');
+        return await watcherModel.find();
+    }
+}
 
-async function signUp(name:string, lastName:string, password:string, dni:number, role:string, workingHours:string, profilePic:string) {
+async function getEmployeeByName (name:string) {
+
+}
+
+async function signUp(name:string, lastName:string, password:string, dni:number, role:string, email:string, telephone:number, workingHours?:string, profilePic?:string) {
     await dniCHecker(dni);
     
     switch (role) {
@@ -47,6 +63,8 @@ async function signUp(name:string, lastName:string, password:string, dni:number,
                 lastName,
                 password,
                 dni,
+                email,
+                telephone,
                 workingHours: workingHours ? workingHours : undefined,
                 profilePic: profilePic ? profilePic : undefined
             })
@@ -157,8 +175,8 @@ async function updateUser(id:string, role:string, name?:string, lastName?:string
 
 module.exports = {
     signUp,
-    GetUser,
-    GetUserById,
+    getUserById,
+    getUserByHierarchy,
     deleteUser,
     updateUser
 }

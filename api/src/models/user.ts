@@ -16,6 +16,12 @@ class User {
     
     @prop({ lowercase:true, trim:true })
     public profilePic?: string;
+
+    @prop()
+    public email: string;
+
+    @prop()
+    public telephone: string;
 }
 
 export class Boss extends User {
