@@ -38,7 +38,7 @@ async function getUserByHierarchy(id:string, name?:string) {
         if (!name) {
             return await getEmployees(id);
         } else {
-            return await getEmployeeByName(name);
+            return await getEmployeeByName(id, name);
         }
     }catch(error:any){
         throw new Error(error.message);
@@ -51,12 +51,12 @@ async function getEmployees (id:string) {
         // return await bossModel.findOne({ id }, 'supervisor');
         return await supervisorModel.find();
     }else{
-        // return await supervisorModel.findOne([id], 'watcher');
-        return await watcherModel.find();
+        return await supervisorModel.findOne([id], 'watcher');
+        // return await watcherModel.find();
     }
 }
 
-async function getEmployeeByName (name:string) {
+async function getEmployeeByName (id:string, name:string) {
 
 }
 
