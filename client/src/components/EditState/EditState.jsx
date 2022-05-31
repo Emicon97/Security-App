@@ -7,6 +7,7 @@ import {
   filterTaskByIdAndStatus,
   updateStatus,
 } from "../../redux/actions";
+import Modal from "../reusable/Modal";
 
 export default function EditState() {
   const ToDos = useSelector((state) => state.todosId);
@@ -15,7 +16,29 @@ export default function EditState() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [currentState, setCurrentState] = useState("all");
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState('')
+  const uploadImage = async (e) => {
+      const files = e.target.files;
+      const data = new FormData();
+  
+      data.append('file', files[0]);
+      data.append('upload_preset', 'magqqp6o');
+     
+      setLoading(true);
+      const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
+      const file = await res.json();
+      
+      setImage(file.secure_url);
+      setLoading(false)
+  };
+
+  const [active, setActive] = useState(false);
+
+  const toggle = ()=>{
+    setActive(!active);
+    setImage('')
+  }
 
   useEffect(() => {
     dispatch(getUsersById(id));
@@ -85,7 +108,7 @@ export default function EditState() {
               </p>
               <span>Prioridad: </span>
               <span>{todo.priority}</span>
-              <button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">
+              <button onClick={toggle} className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200">
                 Adjuntar Imagen y Comentario
               </button>
               {/* {beenClicked===1?<p>vuelva a presinar el boton para confirmar</p>:null} */}
@@ -135,6 +158,57 @@ export default function EditState() {
           </div>
         ))}
       </div>
+      <Modal active={active} toggle={toggle}>
+        <div style={style.modal}>
+          <label>Comentario:</label>
+          <textarea className={Input()} placeholder="Comentario sobre la tarea..."></textarea>
+            <input className={File} type="file" name="file" onChange={uploadImage}></input>
+            {loading ? (<p>...loading</p>) : (<img src={image} style={style.img}/>)}
+            <button onClick={()=>setImage('')}>x</button>
+          <button className={Button()}>Enviar</button>
+        </div>
+      </Modal>
     </div>
   );
 }
+
+const style = {
+  modal: {
+    display:'flex',
+    flexDirection: 'column',
+    margin: '5px'
+  },
+  img: {
+    width :'100px',
+    heigth: '100px'
+  }
+}
+
+const Input = (props) => `
+    hover:bg-slate-100
+    placeholder:italic placeholder:text-slate-400 
+    block bg-white w-${props === 'Select' ? '32' : '96'} m-2.5
+    border border-slate-300 rounded-md 
+    py-2 pl-9 pr-3 shadow-sm 
+    focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 
+    sm:text-sm
+`;
+
+const Button = () => `
+    font-bold text-white
+    bg-blue-500
+    w-32 h-10 p-0 mt-3
+    border-2 border-blue-500
+    hover:border-blue-600 hover:bg-blue-600
+    active:border-blue-700 active:bg-blue-700
+    rounded-3xl
+`;
+
+const File = `
+    block w-full text-sm text-slate-500
+    file:mr-4 file:py-2 file:px-4
+    file:rounded-full file:border-0
+    file:text-sm file:font-semibold
+    file:bg-blue-50 file:text-blue-700
+    hover:file:bg-blue-100
+`;

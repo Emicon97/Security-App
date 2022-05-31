@@ -56,9 +56,9 @@ export function updateStatus(id,status){
 
 export function postUser(post){
   return async function(dispatch){
-      const data = await axios.post("http://localhost:3001/user", post)
-      console.log(data)
-      return data;
+      const values = await axios.post("http://localhost:3001/user", post)
+      console.log(values)
+      return values;
   }
 }
 

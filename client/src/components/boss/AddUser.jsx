@@ -55,7 +55,6 @@ const AddUser = () => {
         email: '',
         phoneNumber: '',
         address: '',
-        workingHours: '',
         dni: '',
         rol: [],
         file: '',

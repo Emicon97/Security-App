@@ -49,8 +49,10 @@ router.get('/:id', async (req, res)=> {
 //http://localhost:3001/user  //*datos enviados por body
 router.post('/', async (req, res) => {
     let { name, lastName, password, dni, role, workingHours, profilePic } = req.body;
+    console.log("es esto" ,name, lastName, password, dni, role, workingHours, profilePic)
     try {
         let data = await signUp(name, lastName, password, dni, role, workingHours, profilePic);
+        console.log("la data: ", data)
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {
