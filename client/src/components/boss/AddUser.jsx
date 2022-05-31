@@ -33,154 +33,155 @@ export default function AddUser() {
     };
 
     return (
-        <Formik 
-            initialValues={{
-                name: '',
-                lastName:'',
-                password:'',
-                dni:'',
-                role:'',
-                profilePic:'',
-                email:'',
-                address:'',
-                environment:'',
-                phoneNumber:'',
-                workingHours:''
-            }}
+      <div>Sin vulnerabilidades altas por favor</div>
+        // <Formik 
+        //     initialValues={{
+        //         name: '',
+        //         lastName:'',
+        //         password:'',
+        //         dni:'',
+        //         role:'',
+        //         profilePic:'',
+        //         email:'',
+        //         address:'',
+        //         environment:'',
+        //         phoneNumber:'',
+        //         workingHours:''
+        //     }}
 
-            validate={(val) => {
-                let errors = {};
-                if(!val.name) {errors.name = "Por favor ingresa un nombre *"}
-                else if(!/^[a-zA-Z ]*$/.test(val.name)) {errors.name = "Solo se aceptan letras y espacios *"}
+        //     validate={(val) => {
+        //         let errors = {};
+        //         if(!val.name) {errors.name = "Por favor ingresa un nombre *"}
+        //         else if(!/^[a-zA-Z ]*$/.test(val.name)) {errors.name = "Solo se aceptan letras y espacios *"}
 
-                if(!val.lastName) {errors.lastName = "Por favor ingresa un apellido *"}
-                else if(!/^[a-zA-Z ]*$/.test(val.lastName)) {errors.lastName = "Solo se aceptan letras y espacios *"}
+        //         if(!val.lastName) {errors.lastName = "Por favor ingresa un apellido *"}
+        //         else if(!/^[a-zA-Z ]*$/.test(val.lastName)) {errors.lastName = "Solo se aceptan letras y espacios *"}
 
-                if(!val.password) {errors.password = "Por favor ingresa una contraseña *"}
+        //         if(!val.password) {errors.password = "Por favor ingresa una contraseña *"}
 
-                if(!val.workingHours) {errors.workingHours = "Por favor ingresa las horas de trabajo *"}
+        //         if(!val.workingHours) {errors.workingHours = "Por favor ingresa las horas de trabajo *"}
 
-                if(!val.environment) {errors.environment = "Por favor ingresa lugar de trabajo *"}
+        //         if(!val.environment) {errors.environment = "Por favor ingresa lugar de trabajo *"}
 
-                if(!val.role) {errors.role = "Por favor ingresa un rol *"}
+        //         if(!val.role) {errors.role = "Por favor ingresa un rol *"}
 
-                if(!val.profilePic) {errors.profilePic = "Por favor ingresa una imagen *"}
+        //         if(!val.profilePic) {errors.profilePic = "Por favor ingresa una imagen *"}
 
-                if(!val.dni) {errors.dni = "Por favor ingresa un DNI *"}
-                else if(isNaN(Number(val.dni)) || val.dni.length < 8 || val.dni.length > 8) {errors.dni = "El formato debe ser de 8 numeros *"}
+        //         if(!val.dni) {errors.dni = "Por favor ingresa un DNI *"}
+        //         else if(isNaN(Number(val.dni)) || val.dni.length < 8 || val.dni.length > 8) {errors.dni = "El formato debe ser de 8 numeros *"}
 
-                if(!val.address) {errors.address = "Por favor ingresa una direccion *"}
-                else if(!/^[A-Za-z0-9\s]+$/.test(val.address)) errors.address = "Solo se aceptan números, letras y espacios *";
+        //         if(!val.address) {errors.address = "Por favor ingresa una direccion *"}
+        //         else if(!/^[A-Za-z0-9\s]+$/.test(val.address)) errors.address = "Solo se aceptan números, letras y espacios *";
 
-                if(!val.phoneNumber) {errors.phoneNumber = "Por favor ingresa un telefono *"}
-                else if(isNaN(Number(val.phoneNumber))) errors.phoneNumber = "Alguno de los valores no es un número *";
-                return errors;
-            }}
+        //         if(!val.phoneNumber) {errors.phoneNumber = "Por favor ingresa un telefono *"}
+        //         else if(isNaN(Number(val.phoneNumber))) errors.phoneNumber = "Alguno de los valores no es un número *";
+        //         return errors;
+        //     }}
 
-            onSubmit ={(values, {resetForm})=>{
-                dispatch(postUser(values));
-                console.log(values)
-                setFormSend(true);
-                resetForm();
-                setTimeout(()=>setFormSend(false),5000)
-            }}
-        >
+        //     onSubmit ={(values, {resetForm})=>{
+        //         dispatch(postUser(values));
+        //         console.log(values)
+        //         setFormSend(true);
+        //         resetForm();
+        //         setTimeout(()=>setFormSend(false),5000)
+        //     }}
+        // >
 
-          {( {errors, values} ) => (
-            <Form className="flex flex-col items-center">
-              {console.log(values)}
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="name">
-                    Nombre: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="name" name="name" placeholder="Nombre..."/>
-                </div>
-                <div>
-                  <label htmlFor="lastName">
-                    Apellido: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Apellido..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="password">
-                    Contraseña: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="password" id="password" name="password" placeholder="Contraseña..." />
-                  {/* <input type="checkbox" onClick={viewPassword}/> */}
-                </div>
-                <div>
-                  <label htmlFor="dni">
-                    DNI: <ErrorMessage name="dni" component={()=>(<small className="text-red-600">{errors.dni}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="number" id="dni" name="dni" placeholder="DNI..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="address">
-                    Direccion: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="address" name="address" placeholder="Direccion..."/>
-                </div>
-                <div>
-                  <label htmlFor="email">
-                    Email: <ErrorMessage name="email" component={()=>(<small className="text-red-600">{errors.email}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="email" name="email" placeholder="Email..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="phoneNumber">
-                    Telefono: <ErrorMessage name="phoneNumber" component={()=>(<small className="text-red-600">{errors.phoneNumber}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="number" id="phoneNumber" name="phoneNumber" placeholder="Telefono..."/>
-                </div>
-                <div>
-                  <label htmlFor="workingHours">
-                    Horas de trabajo: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Horas de trabajo..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="environment">
-                    Entorno de trabajo: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Entorno de trabajo..."/>
-                </div>
-                <div>  
-                  <label>Rol: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
-                  <Field name="role" as="select" className={Input()}>
-                    {
-                      !values.role.length ?
-                      <option key="select">Seleccionar</option> :
-                      <option key="select" disabled >Seleccionar</option>
-                    }
-                    {typeUser?.map(e => <option key={e} value={e}>{e}</option>)}
-                  </Field>
-                </div>
-              </div>
-              <div className="m-3 w-96">
-                <div className="flex flex-row">
-                  <Field className={File()} type="file" name="file" onChange={(e)=>uploadImage(e)}/>
-                  {
-                    loading ? 
-                    ((values.profilePic = image), <img className='w-10 h-10' src={image} style={{widht: '100px'}}/>) :
-                    <img src={demo} className='w-10 h-10' />
-                  }
-                </div>
-                <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
-              </div>
-              <button className={Button()} type="submit">Agregar</button>
-              {formSend && (<small className="text-green-600">Usuario creado con exito</small>)}
-            </Form>
-          )}
-        </Formik>
+        //   {( {errors, values} ) => (
+        //     <Form className="flex flex-col items-center">
+        //       {console.log(values)}
+        //       <div className="flex flex-row items-center justify-between">
+        //         <div>
+        //           <label htmlFor="name">
+        //             Nombre: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="name" name="name" placeholder="Nombre..."/>
+        //         </div>
+        //         <div>
+        //           <label htmlFor="lastName">
+        //             Apellido: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Apellido..."/>
+        //         </div>
+        //       </div>
+        //       <div className="flex flex-row items-center justify-between">
+        //         <div>
+        //           <label htmlFor="password">
+        //             Contraseña: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="password" id="password" name="password" placeholder="Contraseña..." />
+        //           {/* <input type="checkbox" onClick={viewPassword}/> */}
+        //         </div>
+        //         <div>
+        //           <label htmlFor="dni">
+        //             DNI: <ErrorMessage name="dni" component={()=>(<small className="text-red-600">{errors.dni}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="number" id="dni" name="dni" placeholder="DNI..."/>
+        //         </div>
+        //       </div>
+        //       <div className="flex flex-row items-center justify-between">
+        //         <div>
+        //           <label htmlFor="address">
+        //             Direccion: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="address" name="address" placeholder="Direccion..."/>
+        //         </div>
+        //         <div>
+        //           <label htmlFor="email">
+        //             Email: <ErrorMessage name="email" component={()=>(<small className="text-red-600">{errors.email}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="email" name="email" placeholder="Email..."/>
+        //         </div>
+        //       </div>
+        //       <div className="flex flex-row items-center justify-between">
+        //         <div>
+        //           <label htmlFor="phoneNumber">
+        //             Telefono: <ErrorMessage name="phoneNumber" component={()=>(<small className="text-red-600">{errors.phoneNumber}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="number" id="phoneNumber" name="phoneNumber" placeholder="Telefono..."/>
+        //         </div>
+        //         <div>
+        //           <label htmlFor="workingHours">
+        //             Horas de trabajo: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Horas de trabajo..."/>
+        //         </div>
+        //       </div>
+        //       <div className="flex flex-row items-center justify-between">
+        //         <div>
+        //           <label htmlFor="environment">
+        //             Entorno de trabajo: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
+        //           </label>
+        //           <Field className={Input()} type="text" id="environment" name="environment" placeholder="Entorno de trabajo..."/>
+        //         </div>
+        //         <div>  
+        //           <label>Rol: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
+        //           <Field name="role" as="select" className={Input()}>
+        //             {
+        //               !values.role.length ?
+        //               <option key="select">Seleccionar</option> :
+        //               <option key="select" disabled >Seleccionar</option>
+        //             }
+        //             {typeUser?.map(e => <option key={e} value={e}>{e}</option>)}
+        //           </Field>
+        //         </div>
+        //       </div>
+        //       <div className="m-3 w-96">
+        //         <div className="flex flex-row">
+        //           <Field className={File()} type="file" name="file" onChange={(e)=>uploadImage(e)}/>
+        //           {
+        //             loading ? 
+        //             ((values.profilePic = image), <img className='w-10 h-10' src={image} style={{widht: '100px'}}/>) :
+        //             <img src={demo} className='w-10 h-10' />
+        //           }
+        //         </div>
+        //         <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
+        //       </div>
+        //       <button className={Button()} type="submit">Agregar</button>
+        //       {formSend && (<small className="text-green-600">Usuario creado con exito</small>)}
+        //     </Form>
+        //   )}
+        // </Formik>
     );
 };
 
