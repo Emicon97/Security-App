@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
+const { getEmployeesAriel, signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
 
 const router = Router();
 
@@ -50,6 +50,21 @@ router.get('/:id/employees', async (req, res)=> {
         } else {
             console.log('Unexpected Error', error);
         }
+    }
+})
+
+
+//*GET trae de un Boos/Supervisor sus subordinados
+//http://localhost:3001/user/employees/:id
+router.get('/employees/:id', async (req, res) =>{
+    let { id } = req.params;
+    let { name } = req.query;
+    try{
+       let employees= await getUserByHierarchy(id, name)
+       res.json(employees)
+      
+    }catch(error){
+        console.log('Unexpected Error', error)
     }
 })
 
