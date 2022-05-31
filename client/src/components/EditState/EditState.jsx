@@ -3,38 +3,66 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   getToDosById,
-  getUsersById,
-  filterTaskByIdAndStatus,
+  filterByPriority,
+  filterByStatus,
+  filterByStatusAndPriority,
   updateStatus,
 } from "../../redux/actions";
 
 export default function EditState() {
   const ToDos = useSelector((state) => state.todosId);
-  const user = useSelector((state) => state.userDetails);
   const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [currentState, setCurrentState] = useState("all");
+  const [ currentPriority, setCurrentPriority ] = useState("all");
+  const [ currentStatus, setCurrentStatus ] = useState("all");
 
   useEffect(() => {
-    dispatch(getUsersById(id));
     dispatch(getToDosById(id));
+    // eslint-disable-next-line
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentState !== "all") {
-      console.log(currentState);
-      dispatch(filterTaskByIdAndStatus(id, currentState));
+    if (currentPriority === "all" && currentStatus !== "all") {
+      dispatch(filterByStatus(id, currentStatus));
+    } else if (currentPriority !== "all" && currentStatus !== "all") {
+      dispatch(filterByStatusAndPriority(id, currentStatus, currentPriority));
+    } else if (currentPriority !== "all" && currentStatus === "all") {
+      dispatch(filterByPriority(id, currentPriority));
     } else {
       dispatch(getToDosById(id));
     }
+    setCurrentStatus(currentStatus);
+    // eslint-disable-next-line
   }, [updatedTask]);
 
-  const tareas = (e) => {
-    e.preventDefault();
-    dispatch(filterTaskByIdAndStatus(id, e.target.value));
-    setCurrentState(e.target.value);
+  const priorityManager = (e) => {
+    let priority = e.target.value;
+    if (priority === "all" && currentStatus !== "all") {
+      dispatch(filterByStatus(id, currentStatus));
+    } else if (priority !== "all" && currentStatus !== "all") {
+      dispatch(filterByStatusAndPriority(id, currentStatus, priority));
+    } else if (priority !== "all" && currentStatus === "all") {
+      dispatch(filterByPriority(id, priority));
+    } else {
+      dispatch(getToDosById(id));
+    }
+    setCurrentPriority(priority);
+  };
+
+  const statusManager = (e) => {
+    let status = e.target.value;
+    if (currentPriority === "all" && status !== "all") {
+      dispatch(filterByStatus(id, status));
+    } else if (currentPriority !== "all" && status !== "all") {
+      dispatch(filterByStatusAndPriority(id, status, currentPriority));
+    } else if (currentPriority !== "all" && status === "all") {
+      dispatch(filterByPriority(id, currentPriority));
+    } else {
+      dispatch(getToDosById(id));
+    }
+    setCurrentStatus(status);
   };
 
   const updateTaskStatus = (e) => {
@@ -49,17 +77,25 @@ export default function EditState() {
             <h2>Go Back</h2>
           </button>
         </Link>
-        <div className="flex gap-3">
-          <span className="mt-3">Filtrar Tareas: </span>
-          <select onChange={(e) => tareas(e)}>
-            <option disabled defaultValue>
-              Seleccionar estado de tarea
-            </option>
-            <option value="done">Realizadas</option>
-            <option value="left">Pendientes</option>
-            <option value="postponed">Postergadas</option>
-          </select>
-        </div>
+        <div className="priorityFilter">
+            <select onChange={(e) => priorityManager(e)}>
+            <option value="0" hidden>Filter by priority</option>
+              <option value="all">All</option>
+              <option value="urgent">Urgent</option>
+              <option value="high">High</option>
+              <option value="regular">Regular</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+          <div className="statusFilter">
+            <select onChange={(e) => statusManager(e)}>
+            <option value="0" hidden>Filter by status</option>
+              <option value="all">All</option>
+              <option value="done">Done</option>
+              <option value="left">Left</option>
+              <option value="postponed">Postponed</option>
+            </select>
+          </div>
       </div>
 
       <h2 className="flex justify-center text-xl text-gray-500">
