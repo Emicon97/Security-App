@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
+const { getEmployeesAriel, signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
 
 const router = Router();
 
@@ -44,6 +44,34 @@ router.get('/:id/employees', async (req, res)=> {
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
         res.json(userData);
+    }catch(error){
+        console.log('Unexpected Error', error);
+    }
+})
+
+//cambio reciente Ariel//
+//*GET trae de un Boos/Supervisor sus subordinados
+//http://localhost:3001/user/employees/:id
+router.get('/employees/:id', async (req, res) =>{
+    let { id } = req.params;
+    let { name } = req.query;
+    try{
+        let employees = await getEmployeesAriel(id,name)
+        res.json(employees)
+    }catch(error){
+        console.log('Unexpected Error', error)
+    }
+})
+//Cambio reciente Ariel//
+
+
+//*PUT agrega un guardia o supervisor a un modelo
+//http://localhost:3001/user/:id
+router.put('/:id', async (req, res)=>{
+    let { id } = req.params;
+    let { ids } = req.body;
+    try{
+        
     }catch(error){
         console.log('Unexpected Error', error);
     }

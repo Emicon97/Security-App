@@ -50,7 +50,41 @@ async function getEmployees (id:string) {
 }
 
 async function getEmployeeByName (name:string) {
+ 
+}
 
+function escapeStringRegexp(string:string) {
+	if (typeof string !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+	return string
+		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+		.replace(/-/g, '\\x2d');
+}
+
+async function getEmployeesAriel(id:string,  name:string){
+    const $regex = escapeStringRegexp(name)
+    let bossEmployees = await bossModel.findById(id);
+    let supervisorEmployees = await supervisorModel.findById(id);
+    if(name.length > 0){
+        if(bossEmployees){
+            let employees = await supervisorModel.find({boss:id, name: {$regex}});
+            return employees;
+        }else{
+            let employees = await watcherModel.find({supervisor:id, name: {$regex}});
+            return employees;
+        }
+    }else{
+        if(bossEmployees){
+            let employees = await supervisorModel.find({boss: id});
+            return employees;
+        }else if(supervisorEmployees){
+            let employees = await watcherModel.find({supervisor:id});
+            return employees;
+        } else {
+            
+        }
+    }
 }
 
 async function signUp(name:string, lastName:string, password:string, dni:number, role:string, email:string, telephone:number, workingHours?:string, profilePic?:string) {
@@ -177,6 +211,7 @@ module.exports = {
     signUp,
     getUserById,
     getUserByHierarchy,
+    getEmployeesAriel,
     deleteUser,
     updateUser
 }
