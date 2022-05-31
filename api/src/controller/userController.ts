@@ -10,7 +10,7 @@ async function GetUser(classOfuser:string) {
     }    
 }
 
-async function GetUserById(id:any) {
+async function GetUserById(id:string) {
     try{
         let findSupervisor= await supervisorModel.findById(id)
         let findWatcher= await watcherModel.findById(id)
@@ -22,6 +22,20 @@ async function GetUserById(id:any) {
         throw new Error(err.message)
     }    
 }
+
+async function GetUserByHierarchy(id:string){
+    try{
+        let boss = await bossModel.findById(id)
+        if(boss){
+            return await supervisorModel.find()
+        }else{
+            return await watcherModel.find()
+        }
+    }catch(error:any){
+        throw new Error(error.message);
+    }
+}
+
 
 async function signUp(name:string, lastName:string, password:string, dni:number, role:string, workingHours:string, profilePic:string) {
     await dniCHecker(dni);
