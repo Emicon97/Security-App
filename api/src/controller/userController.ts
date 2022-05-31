@@ -1,4 +1,5 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
+import { Boss, Supervisor, Watcher, Neighbour } from '../models/user';
 
 // async function getUsers(userClass:string) {
 //     try{   
@@ -10,23 +11,27 @@ import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../model
 //     }    
 // }
 
-async function getUserById(id:string) {
-    try{
-        let findBoss = await bossModel.findById(id);
-        let findSupervisor = await supervisorModel.findById(id);
-        let findWatcher = await watcherModel.findById(id);
-        let findNeighbour = await neighbourModel.findById(id);
+async function getUserById(id:string):Promise<[ Boss | Supervisor | Watcher | Neighbour, string ] | string> {
+    var response:[ Boss | Supervisor | Watcher | Neighbour, string ];
 
-        if(findBoss!==null) return findBoss;
-        if(findSupervisor!==null) return findSupervisor;
-        if(findWatcher!==null) return findWatcher;
-        if(findNeighbour!==null) return findNeighbour;
-    }catch(err:any){
-        throw new Error(err.message);
-    }    
+    let findBoss = await bossModel.findById(id);
+    let findSupervisor = await supervisorModel.findById(id);
+    let findWatcher = await watcherModel.findById(id);
+    let findNeighbour = await neighbourModel.findById(id);
+    
+    if (findBoss!==null) {
+        return response = [findBoss, 'boss'];
+    } else if (findSupervisor!==null) {
+        return response = [findSupervisor, 'supervisor'];
+    } else if (findWatcher!==null) {
+        return response = [findWatcher, 'watcher'];
+    } else if (findNeighbour!==null) {
+        return response = [findNeighbour, 'neighbour'];
+    }
+    return "This user doesn't exist.";
 }
 
-async function getUserByHierarchy(id:string, name?:string){
+async function getUserByHierarchy(id:string, name?:string) {
     try{
         if (!name) {
             return await getEmployees(id);
