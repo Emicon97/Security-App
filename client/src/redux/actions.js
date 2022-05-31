@@ -75,3 +75,10 @@ export function filterByStatusAndPriority(id,status,priority){
     })
   }
 }
+
+export function postUser(post){
+  return async function(dispatch){
+      const user = await axios.post("http://localhost:3001/user", post)
+      return user;
+  }
+}

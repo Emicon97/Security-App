@@ -16,6 +16,12 @@ class User {
     
     @prop({ lowercase:true, trim:true })
     public profilePic?: string;
+
+    @prop()
+    public email: string;
+
+    @prop()
+    public telephone: string;
 }
 
 export class Boss extends User {
@@ -32,6 +38,9 @@ export class Supervisor extends User {
         
     @prop({ required: true, default: [] })
     public environment: string[];
+
+    @prop({ ref: () => Boss})
+    public boss: Ref<Boss>[];
 
     @prop({ ref: () => Watcher })
     public watcher: Ref<Watcher>[];

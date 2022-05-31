@@ -11,6 +11,7 @@ import Modal from "../reusable/Modal";
 import "./styles.css";
 
 export default function GuardProfile() {
+
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const uploadImage = async (e) => {
@@ -35,7 +36,7 @@ export default function GuardProfile() {
   const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
   const { id } = useParams();
-
+  
   const [active, setActive] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
   const [currentStatus, setCurrentStatus] = useState("all");
@@ -44,6 +45,7 @@ export default function GuardProfile() {
     setActive(!active);
     setImage("");
   };
+
 
   useEffect(() => {
     dispatch(getToDosById(id));
@@ -138,6 +140,7 @@ export default function GuardProfile() {
           </div>
         ))}
       </div>
+
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
           <label>Your comment:</label>
@@ -207,3 +210,4 @@ const File = `
     file:bg-blue-50 file:text-blue-700
     hover:file:bg-blue-100
 `;
+
