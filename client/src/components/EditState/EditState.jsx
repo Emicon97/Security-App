@@ -94,7 +94,7 @@ export default function EditState() {
 
   return (
     <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
-      <div className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
+      <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
           <button className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200 ml-3">
             <h2>Go Back</h2>
@@ -119,7 +119,7 @@ export default function EditState() {
               <option value="postponed">Postponed</option>
             </select>
           </div>
-      </div>
+      </nav>
 
       <h2 className="flex justify-center text-xl text-gray-500">
         Lista de tareas:{" "}
