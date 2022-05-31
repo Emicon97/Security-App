@@ -1,26 +1,29 @@
 import React, {useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
+import { postUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 
 export default function AddUser() {
-    const typeUser = ["Jefe", "Supervisor", "Guardia"];
+    const dispatch = useDispatch()
+    const typeUser = ["boss", "supervisor", "watcher"];
     const [formSend, setFormSend] = useState(false);
     const [image, setImage]= useState('');
 
     const [loading, setLoading] = useState(false);
-    const uploadImage = async (e) => {
-        const files = e.target.files;
-        const data = new FormData();
+   const uploadImage = async  (data)=> {
+        // const files = e.target.files;
+        // const data = new FormData();
     
-        data.append('profilePic', files[0]);
+        // data.append('ProfilePic', files[0]);
         data.append('upload_preset', 'magqqp6o');
-        {console.log(data)}
         setLoading(true);
         const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
         const file = await res.json();
         
-        setImage( file.secure_url );
+        setImage(file.secure_url);
         setLoading(false)
+        // setFieldValue("profilePic", file.secure_url)
     };
 
 return (
@@ -37,8 +40,7 @@ initialValues={{
             address: '',
             dni: '',
             role: '',
-            image: '',
-            profilePic: image
+            profilePic: ''
 }}
 validate={(val)=>{
     let errors = {};
@@ -68,13 +70,18 @@ validate={(val)=>{
     else if(isNaN(Number(val.phoneNumber))) errors.phoneNumber = "Alguno de los valores no es un número";
     return errors;
 }}
-onSubmit ={(val, {resetForm})=>{
+onSubmit ={(values, {resetForm})=>{
+    const data = new FormData();
+    data.append("profilePic", values.profilePic);
+    uploadImage(data)
     resetForm();
     setFormSend(true);
+    console.log(values)
+    dispatch(postUser(values));
     setTimeout(()=>setFormSend(false),5000)
 }}
 >
-{( {errors, values} ) => (
+{( {errors, values, setFieldValue} ) => (
     <Form>
         {console.log(values)}
         <div>
@@ -141,6 +148,7 @@ onSubmit ={(val, {resetForm})=>{
             <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
         </div>
         <div>
+            <label>Rol: </label>
             <Field name="role" as="select">
             {
                 !values.role.length ?
@@ -153,8 +161,8 @@ onSubmit ={(val, {resetForm})=>{
         </div>
         <div>
         <div>
-                <Field type="file" name="profilePic" onChange={uploadImage}></Field>
-            {loading ? <img src={values.profilePic} /> : <img src={demo} className='w-10 h-10' />  }
+            <input type="file" name="profilePic" onChange={(event)=>setFieldValue("profilePic", event.target.files[0])}/>
+            {loading ? <img src={image} /> : <img src={demo} className='w-10 h-10' />  }
         </div>
         <ErrorMessage name="profilePic" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
         </div>
