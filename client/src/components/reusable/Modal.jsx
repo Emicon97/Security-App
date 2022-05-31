@@ -45,8 +45,9 @@ const styles = {
     },
     closeBtn: {
         position: 'absolute',
-        top:0,
-        right:0,
+        top:10,
+        right:15,
+        borderRadius: '50%',
     },
     background: {
         position: 'absolute',
