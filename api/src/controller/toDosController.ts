@@ -78,6 +78,33 @@ async function getByIdAndStatus (id:string, status:string) {
   }
 }
 
+function escapeStringRegexp(string:string) {
+	if (typeof string !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+	return string
+		.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+		.replace(/-/g, '\\x2d');
+}
+
+
+async function getByIdAndName (id:string, name:string) {
+  const $regex = escapeStringRegexp(name)
+  try{
+    const role = await workerIdentifier(id);
+    let toDos = await toDosModel.find({[role]:id, name: {$regex}})
+    if(toDos.length !== 0){
+      return toDos;
+    }else{
+      return "No se encontraron tareas con ese nombre"
+    }
+  }catch(error: any){
+    throw new Error (error.message);
+  }
+}
+
+
+
 async function getByIdPriorityAndStatus (id:string, priority:string, status:string) {
   try {
     const role = await workerIdentifier(id);
@@ -140,7 +167,8 @@ module.exports = {
   getToDos,
   getToDosByRole,
   getByIdAndStatus,
+  getByIdAndName,
   assignTask,
   updateToDo,
-  deleteToDo
+  deleteToDo,
 }

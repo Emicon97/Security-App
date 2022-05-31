@@ -1,5 +1,5 @@
 import { Router } from 'express';
-const { getToDosManager, assignTask, updateToDo, deleteToDo } = require('../controller/toDosController');
+const { getToDosManager, assignTask, updateToDo, deleteToDo, getByIdAndName } = require('../controller/toDosController');
 
 const router = Router();
 
@@ -36,6 +36,23 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+
+//*GET trae todas las tareas de un usuario segun el name de la tarea
+//http://localhost:3001/todos/:id/search?name=name
+router.get('/:id/search', async (req, res) => {
+    let { id } = req.params;
+    let { name } = req.query;
+    try{
+        let toDos = await getByIdAndName(id, name);
+        res.status(200).json(toDos);
+    }catch(error){
+        console.log('Unexpected Error', error)
+    }
+})
+
+
+//*GET trae las tareas de un usuario con un status especifico 
+//http://localhost:3001/todos/:id/:status //*id y status por params
 router.get('/:id/:status', async (req, res) => { 
     let { id, status } = req.params;
     let { priority } = req.query;
