@@ -5,27 +5,30 @@ import {
   getToDosById,
   filterByPriority,
   filterByStatus,
-  filterByStatusAndPriority
+  filterByStatusAndPriority,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
-import './styles.css'
+import "./styles.css";
 
 export default function GuardProfile() {
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState("");
   const uploadImage = async (e) => {
-      const files = e.target.files;
-      const data = new FormData();
-  
-      data.append('file', files[0]);
-      data.append('upload_preset', 'magqqp6o');
-     
-      setLoading(true);
-      const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
-      const file = await res.json();
-      
-      setImage(file.secure_url);
-      setLoading(false)
+    const files = e.target.files;
+    const data = new FormData();
+
+    data.append("file", files[0]);
+    data.append("upload_preset", "magqqp6o");
+
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
+      { method: "POST", body: data }
+    );
+    const file = await res.json();
+
+    setImage(file.secure_url);
+    setLoading(false);
   };
 
   const ToDos = useSelector((state) => state.todosId);
@@ -33,14 +36,14 @@ export default function GuardProfile() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const [ active, setActive ] = useState(false);
-  const [ currentPriority, setCurrentPriority ] = useState("all");
-  const [ currentStatus, setCurrentStatus ] = useState("all");
+  const [active, setActive] = useState(false);
+  const [currentPriority, setCurrentPriority] = useState("all");
+  const [currentStatus, setCurrentStatus] = useState("all");
 
-  const toggle = ()=>{
+  const toggle = () => {
     setActive(!active);
-    setImage('')
-  }
+    setImage("");
+  };
 
   useEffect(() => {
     dispatch(getToDosById(id));
@@ -83,11 +86,15 @@ export default function GuardProfile() {
     <div className="screen-tasks">
       <div className="contenedor_tareas">
         <div className="head-tasks">
-          <Link to={`/EditState/${id}`}><button>Edit</button></Link>
+          <Link to={`/EditState/${id}`}>
+            <button>Edit</button>
+          </Link>
           <h2 className="list-tasks">List of Tasks</h2>
           <div className="priorityFilter">
             <select onChange={(e) => priorityManager(e)}>
-            <option value="0" hidden>Filter by priority</option>
+              <option value="0" hidden>
+                Filter by priority
+              </option>
               <option value="all">All</option>
               <option value="urgent">Urgent</option>
               <option value="high">High</option>
@@ -97,7 +104,9 @@ export default function GuardProfile() {
           </div>
           <div className="statusFilter">
             <select onChange={(e) => statusManager(e)}>
-            <option value="0" hidden>Filter by status</option>
+              <option value="0" hidden>
+                Filter by status
+              </option>
               <option value="all">All</option>
               <option value="done">Done</option>
               <option value="left">Left</option>
@@ -105,32 +114,52 @@ export default function GuardProfile() {
             </select>
           </div>
         </div>
-        
+
         {ToDos?.map((todo, i) => (
           <div key={i} className="tasks">
-
             <div className="info-task">
-
-              <h3><span className="title">Title:</span> {todo.name}</h3>
-              <p><span className="title">Description:</span> {todo.description}</p>
-
+              <h3>
+                <span className="title">Title:</span> {todo.name}
+              </h3>
+              <p>
+                <span className="title">Description:</span> {todo.description}
+              </p>
             </div>
 
             <div className="status-task">
-              <p className={`${todo.status} status`} >{todo.status}</p>
-              <span className="title-priority"><span className="title">Priority:</span> <span className={`${todo.priority} priority`}>{todo.priority}</span></span>
-
+              <p className={`${todo.status} status`}>{todo.status}</p>
+              <span className="title-priority">
+                <span className="title">Priority:</span>{" "}
+                <span className={`${todo.priority} priority`}>
+                  {todo.priority}
+                </span>
+              </span>
             </div>
           </div>
         ))}
-        
       </div>
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
           <label>Your comment:</label>
-          <textarea className={Input()} placeholder="Comentario sobre la tarea..."></textarea>
-            <input className={File} type="file" name="file" onChange={uploadImage}></input>
-            {loading ? (<p>...Loading</p>) : (<img src={image} alt="Nothing has been uploaded." style={style.img}/>)}
+          <textarea
+            className={Input()}
+            placeholder="Comentario sobre la tarea..."
+          ></textarea>
+          <input
+            className={File}
+            type="file"
+            name="file"
+            onChange={uploadImage}
+          ></input>
+          {loading ? (
+            <p>...Loading</p>
+          ) : (
+            <img
+              src={image}
+              alt="Nothing has been uploaded."
+              style={style.img}
+            />
+          )}
           <button className={Button()}>Send</button>
         </div>
       </Modal>
@@ -140,20 +169,20 @@ export default function GuardProfile() {
 
 const style = {
   modal: {
-    display:'flex',
-    flexDirection: 'column',
-    margin: '5px'
+    display: "flex",
+    flexDirection: "column",
+    margin: "5px",
   },
   img: {
-    width :'100px',
-    heigth: '100px'
-  }
-}
+    width: "100px",
+    heigth: "100px",
+  },
+};
 
 const Input = (props) => `
     hover:bg-slate-100
     placeholder:italic placeholder:text-slate-400 
-    block bg-white w-${props === 'Select' ? '32' : '96'} m-2.5
+    block bg-white w-${props === "Select" ? "32" : "96"} m-2.5
     border border-slate-300 rounded-md 
     py-2 pl-9 pr-3 shadow-sm 
     focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 
