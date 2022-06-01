@@ -1,7 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getEmployees } from "../../redux/actions";
+import { getEmployees, searchEmployees } from "../../redux/actions";
 import "./TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
 
@@ -12,19 +12,21 @@ export default function TableInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const regex = /^[ ]/g;
-    // if (!name) return alert("You have to fill the input first");
-    // if (regex.test(name)) return alert("You have to enter a valid name");
     dispatch(getEmployees(id, e.target.value));
   };
+
   const handleAllButton = (e) => {
     e.preventDefault();
-    dispatch(getEmployees(id, ""));
-  }
+    dispatch(searchEmployees(id, ""));
+  };
+
   const handleCheckbox = (e) => {
       if(e.target.checked) {
-        
+        document.querySelectorAll(".checkbox").forEach(checkbox => checkbox.checked = true);
       }
+        else {
+            document.querySelectorAll(".checkbox").forEach(checkbox => checkbox.checked = false);
+            }
   }
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function TableInfo() {
           <ul>
             <li>
               <span className="ml-4">
-                <input type="checkbox" />
+                <input type="checkbox" onClick={handleCheckbox} />
               </span>
             </li>
             <li>
@@ -82,7 +84,7 @@ export default function TableInfo() {
               watchers.map((employee) => (
                 <tr key={employee._id}>
                   <td className="table-checkbox">
-                    <input type="checkbox" />
+                    <input type="checkbox" className="checkbox" />
                   </td>
                   <td>
                     {employee.name} {employee.lastName}

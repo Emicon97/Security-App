@@ -84,12 +84,22 @@ export function postUser(post){
   }
 }
 
-export function getEmployees(id,name){
+export function getEmployees(id){
   return async function(dispatch){
-      const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+      const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
       return dispatch({
         type:GET_EMPLOYEES,
         payload: users.data.watcher
       });
 }
-}
+};
+
+export function searchEmployees(id, name){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+    return dispatch({
+      type:GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
+};
