@@ -13,7 +13,6 @@ useEffect(()=>{
     dispatch(getEmployees(id))
 },[dispatch])
 
-
     return (
         <div className="datatable-container">
             {console.log(employees)}
