@@ -42,6 +42,10 @@ select option[value="postponed"] {
 .contenedor_tareas {
     width: 100%;
 }
+.contenedor_tareas2{
+    width: 100%;
+    background-color: #d20319;
+}
 .tasks {
     height: 160px;
     width: 87%;
@@ -144,4 +148,18 @@ button {
 }
 button:active {
     background-color: #f1f1f14f;
+}
+/* .div-notification{
+    align-content: center;
+    justify-content: center;
+} */
+.notification{
+    display: flex;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    width: 0.9rem;
+    height: 0.9rem;
+    right: -10.5rem;
+    bottom: -0.73rem;
 }

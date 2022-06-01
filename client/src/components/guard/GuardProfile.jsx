@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+
 import {
   getToDosById,
   filterByPriority,
@@ -29,6 +30,9 @@ export default function GuardProfile() {
   };
 
   const ToDos = useSelector((state) => state.todosId);
+  const todosStatus = ToDos.map(m=>m.status)
+  const todosInLeft = todosStatus.filter(f=>f==='left')
+  const todosInPostPoned = todosStatus.filter(f=>f==='postponed')
   const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -65,6 +69,12 @@ export default function GuardProfile() {
     setCurrentPriority(priority);
   };
 
+  // const notificationColor=()=>{
+  //   if(ToDos.filter(f=>f.status==="left")){
+
+  //   }
+  // }
+
   const statusManager = (e) => {
     let status = e.target.value;
     if (currentPriority === "all" && status !== "all") {
@@ -83,7 +93,9 @@ export default function GuardProfile() {
     <div className="screen-tasks">
       <div className="contenedor_tareas">
         <div className="head-tasks">
-          <Link to={`/EditState/${id}`}><button>Edit</button></Link>
+
+          <Link to={`/EditState/${id}`}><button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200 mt-2 
+" >Edit</button></Link>
           <h2 className="list-tasks">List of Tasks</h2>
           <div className="priorityFilter">
             <select onChange={(e) => priorityManager(e)}>
@@ -95,6 +107,7 @@ export default function GuardProfile() {
               <option value="low">Low</option>
             </select>
           </div>
+            {todosInLeft.length?<p className="notification">🔴</p>:todosInPostPoned.length?<p className="notification">🟠</p>:<p className="notification">🟢</p>}
           <div className="statusFilter">
             <select onChange={(e) => statusManager(e)}>
             <option value="0" hidden>Filter by status</option>
