@@ -1,40 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { getUsersById } from "../../redux/actions";
 import { useParams } from "react-router-dom";
+import { Primary } from "../styles/Buttons";
+import see from "../../assets/see.png";
 
 export default function UserProfile() {
+  const dispatch = useDispatch();
+  const [active, setActive] = useState(false);
+  const user = useSelector((state) => state.userDetails);
+  const { id } = useParams();
 
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.userDetails);
-    const { id } = useParams()
+  const toggle = () => {
+    setActive(!active);
+  };
 
-    useEffect(() => {
-        dispatch(getUsersById(id));
-    }, [])
+  useEffect(() => {
+    dispatch(getUsersById(id));
+  }, []);
 
   return (
-    <div className="flex justify-around bg-black">
-      <div className="flex-column justify-center m-4">
+    <>
+      <div className="h-4/5 flex justify-center items-center">
+        <div className="flex flex-col items-center m-4">
+          <img 
+            src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+            alt="foto de perfil"
+            width="300rem"
+            className={Image()}
+          />
+          <button onClick={toggle} className={Primary()}>
+            See pic
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <div className="bg-[#EEEDFF] w-2/5 h-64 p-5 m-4 h-60 rounded-3xl">
+          <div className="flex justify-end">
+            <button className={Primary()}>Edit</button>
+          </div>
+          <div className="h-40 flex flex-col justify-end">
+            <p className="text-4xl font-semibold">Leonel Messi</p>
+            <p className="text-2xl italic font-light">leomessielmasgrande@gmail.com</p>
+            <p>123132342543513124</p>
+            <p>+54 9 351-935-935</p>
+          </div>
+        </div>
+      </div>
+      <Modal active={active} toggle={toggle}>
         <img
-          src="https://thumbs.dreamstime.com/z/guardia-de-seguridad-90118429.jpg"
-          alt="foto de perfil"
-          width="300rem"
-          className="rounded-full overflow-hidden border-solid border-black"
+          className="w-80 h-80 rounded-full m-5"
+          src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+          alt="Foto de perfil"
         />
-        <button  className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200 m-4">Profile Pic</button>
-      </div>
-      <div className="flex-column bg-gray-200 m-6 px-10 py-4 self-center rounded-2xl text-lg leading-10">
-        <h2> <span className={style}>Name: </span> {user.name}</h2>
-        <h2> <span className={style}>Last Name: </span> {user.lastName} </h2>
-        <h2> <span className={style}>Email: </span>  robertocarlosgarcia@gmail.com</h2>
-        <h2> <span className={style}>DNI: </span>  {user.dni}</h2>
-        <h2> <span className={style}>Neighborhood watching: </span> San Isidro</h2>
-
-      </div>
-    </div>
+      </Modal>
+    </>
   );
-}
+};
 
-const style = `text-xl text-gray-700 font-bold`;
+const Image = () => `
+  rounded-full 
+  border-4 border-white
+  ring-4 ring-[#0243EC]
+  m-5
+`;
