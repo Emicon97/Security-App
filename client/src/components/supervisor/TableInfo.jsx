@@ -6,7 +6,7 @@ import './TableInfo.css';
 
 export default function TableInfo(){
 const dispatch = useDispatch();
-const employees = useSelector(state=>state.employees);
+const employees = useSelector(state => state.employees);
 const {id} = useParams();
 
 useEffect(()=>{

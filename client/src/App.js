@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import AddUser from "./components/boss/AddUser";
-import EditState from './components/EditState/EditState';
+import EditState from './components/reusable/EditState';
 import { UseProtectedRouteHome, UseProtectedRoutes} from "./customHooks/ProtectedRoutes";
 import GuardProfile from "./components/guard/GuardProfile";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";

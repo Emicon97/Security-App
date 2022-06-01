@@ -8,7 +8,7 @@ import {
   filterByStatusAndPriority,
   updateStatus,
 } from "../../redux/actions";
-import Modal from "../reusable/Modal";
+import Modal from "./Modal";
 import { container } from '../styles/EditState';
 import { Primary } from '../styles/Buttons'
 
