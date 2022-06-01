@@ -21,7 +21,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<h2>texto de prueba</h2>}/>
+        {/* <Route path="/" element={<h2>texto de prueba</h2>}/>
         <Route path='/home' 
           element={
             <UseProtectedRouteHome 
@@ -54,15 +54,15 @@ function App() {
               children={<GuardProfile/>}
             />
           }
-        />
+        /> */}
 
         {/* Rutas sin modificar por si pinta eliminar las de arriba */}
-        {/* <Route path="/home/add" element={<AddUser />} />
-        <Route path="/supervisor" element={<TableInfoSupervisors />} />
-        <Route path="/supervisor" element={<TableInfo />} />
+        <Route path="/home/add" element={<AddUser />} />
+        <Route path="/super" element={<TableInfoSupervisors />} />
+        <Route path="/supervisor/:id" element={<TableInfo />} />
         <Route exact path="/guard/:id" element={<GuardProfile />} />
         <Route exact path="/guard/:id/profile" element={<UserProfile />} />
-        <Route path="/editState/:id" element={<EditState />} /> */}
+        <Route path="/editState/:id" element={<EditState />} />
       </Routes>
     </>
   );
