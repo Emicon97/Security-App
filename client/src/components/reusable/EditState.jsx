@@ -8,7 +8,9 @@ import {
   filterByStatusAndPriority,
   updateStatus,
 } from "../../redux/actions";
-import Modal from "../reusable/Modal";
+import Modal from "./Modal";
+import { container } from '../styles/EditState';
+import { Primary } from '../styles/Buttons'
 
 export default function EditState() {
   const ToDos = useSelector((state) => state.todosId);
@@ -93,10 +95,10 @@ export default function EditState() {
   };
 
   return (
-    <div className="flex-column bg-[#EDF6FE] m-auto w-4/5 mt-6">
+    <div className={container}>
       <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
-          <button className="rounded-lg border-solid border-2 border-inherit mr-2 hover:bg-cyan-200 ml-3">
+          <button className={Primary}>
             <h2>Go Back</h2>
           </button>
         </Link>
