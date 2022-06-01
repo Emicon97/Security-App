@@ -1,3 +1,4 @@
+import React from 'react';
 import HomeBoss from "./boss/HomeBoss";
 import GuardProfile from "./guard/GuardProfile";
 import TableInfoSupervisors from "./supervisor/TableInfoSupervisors";
@@ -13,10 +14,7 @@ export default function Home ({rol}) {
         home = <GuardProfile/>;
     }
 
-
-
     return (
         home
     )
-    
 }

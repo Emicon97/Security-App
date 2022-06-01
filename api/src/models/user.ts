@@ -2,10 +2,10 @@ import { prop, Ref, getModelForClass, modelOptions, Severity } from '@typegoose/
 @modelOptions({options: { allowMixed: Severity.ALLOW }})
 class User {
     
-    @prop({ required: true, lowercase:true, trim:true })
+    @prop({ required: true, lowercase: true, trim: true })
     public name!: string;
 
-    @prop({ required: true, lowercase:true, trim:true })
+    @prop({ required: true, lowercase: true, trim: true })
     public lastName!: string;
 
     @prop({ required: true })
@@ -14,13 +14,13 @@ class User {
     @prop({ required: true })
     public dni!: number;
     
-    @prop({ lowercase:true, trim:true })
+    @prop({ lowercase: true, trim: true })
     public profilePic?: string;
 
-    @prop()
+    @prop({ required: true })
     public email: string;
 
-    @prop()
+    @prop({ required: true })
     public telephone: string;
 }
 
@@ -38,6 +38,9 @@ export class Supervisor extends User {
         
     @prop({ required: true, default: [] })
     public environment: string[];
+
+    @prop({ ref: () => Boss})
+    public boss: Ref<Boss>[];
 
     @prop({ ref: () => Watcher })
     public watcher: Ref<Watcher>[];

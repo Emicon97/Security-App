@@ -1,10 +1,13 @@
 import React from "react";
-import { Route, Routes, BrowserRouter} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import AddUser from "./components/boss/AddUser";
 import EditState from './components/EditState/EditState';
 import { UseProtectedRouteHome, UseProtectedRoutes} from "./customHooks/ProtectedRoutes";
 import GuardProfile from "./components/guard/GuardProfile";
+import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
+import TableInfo from "./components/supervisor/TableInfo";
+import UserProfile from "./components/reusable/Profile";
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -15,7 +18,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <>
       <NavBar />
       <Routes>
         <Route path="/" element={<h2>texto de prueba</h2>}/>
@@ -53,16 +56,16 @@ function App() {
           }
         />
 
-
-
-        {/* <Route path='/home'/>
-        <Route path='/home/add' element={<AddUser />} />
-        <Route path='/home/supervisor' element={<TableInfoSupervisors />} />
-        <Route path='/guard/:id' element={<GuardProfile />} />
-        <Route path='/EditState/:id' element={<EditState />} /> */}
+        {/* Rutas sin modificar por si pinta eliminar las de arriba */}
+        {/* <Route path="/home/add" element={<AddUser />} />
+        <Route path="/supervisor" element={<TableInfoSupervisors />} />
+        <Route path="/supervisor" element={<TableInfo />} />
+        <Route exact path="/guard/:id" element={<GuardProfile />} />
+        <Route exact path="/guard/:id/profile" element={<UserProfile />} />
+        <Route path="/editState/:id" element={<EditState />} /> */}
       </Routes>
-    </BrowserRouter>
+    </>
   );
-};
+}
 
 export default App;
