@@ -10,6 +10,16 @@ async function GetUser(classOfuser:string) {
     }    
 }
 
+async function logIn(name:string, lastName:string, dni:number){
+    try{
+        let findSupervisor= await supervisorModel.find({name,lastName,dni})
+        let findWatcher= await watcherModel.find({name,lastName,dni})
+        let findNeighbour= await neighbourModel.find({name,lastName,dni})
+    }catch(err){
+        console.log(err)
+    }
+}
+
 async function GetUserById(id:string) {
     try{
         let findSupervisor= await supervisorModel.findById(id)

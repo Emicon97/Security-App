@@ -1,7 +1,9 @@
 import { Router } from 'express';
 const { signUp, GetUser, GetUserById, deleteUser, updateUser } = require('../controller/userController');
-
 const router = Router();
+
+
+
 
 //* GET trae los usuarios segun la clase desde la Base de Datos
 //http://localhost:3001/user/?name={name}
@@ -21,7 +23,8 @@ router.get('/', async(req,res)=>{
 //http://localhost:3001/user/:id   //*id por params
 router.get('/:id', async(req,res) => {
     try{
-        let {id} = req.params
+        let {id}=req.cookies.id
+        //let {id} = req.params
         let dataUser = await GetUserById(id)
         res.json(dataUser)
     } catch (error) {
@@ -32,6 +35,13 @@ router.get('/:id', async(req,res) => {
         }
     }
 })
+
+//Loggin (prueba)
+router.get('/login', (req, res)=>{
+    
+})
+
+
 
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
