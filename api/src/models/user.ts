@@ -25,13 +25,9 @@ class User {
 }
 
 export class Boss extends User {
-        
-    @prop({ required: true, default: [] })
-    public environment: string[];
 
     @prop({ ref: () => Supervisor })
     public supervisor: Ref<Supervisor>[];
-
 }
 
 export class Supervisor extends User {
