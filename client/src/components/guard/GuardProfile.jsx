@@ -100,11 +100,8 @@ export default function GuardProfile() {
         <div className="head-tasks">
 
 
-          <Link to={`/EditState/${id}`}><button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200 mt-2 
-" >Edit</button></Link>
-
-            <button>Edit</button>
-          </Link>
+          <Link to={`/EditState/${id}`}><button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200 mt-2">Edit</button></Link>
+          
 
           <h2 className="list-tasks">List of Tasks</h2>
           <div className="priorityFilter">
