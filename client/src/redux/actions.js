@@ -89,7 +89,7 @@ export function getEmployees(id){
       const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
       return dispatch({
         type:GET_EMPLOYEES,
-        payload: users.data
+        payload: users.data.watcher
       });
 }
 };
