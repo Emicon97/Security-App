@@ -38,7 +38,7 @@ router.get('/:id', async(req,res) => {
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
 //http://localhost:3001/user/:id?name=name
-router.get('/:id/employees', async (req, res)=> {
+router.get('/employees/:id', async (req, res)=> {
     try{
         let { id } = req.params;
         let { name } = req.query;
@@ -53,20 +53,6 @@ router.get('/:id/employees', async (req, res)=> {
     }
 })
 
-
-//*GET trae de un Boos/Supervisor sus subordinados
-//http://localhost:3001/user/employees/:id
-router.get('/employees/:id', async (req, res) =>{
-    let { id } = req.params;
-    let { name } = req.query;
-    try{
-       let employees= await getUserByHierarchy(id, name)
-       res.json(employees)
-      
-    }catch(error){
-        console.log('Unexpected Error', error)
-    }
-})
 
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
@@ -89,7 +75,7 @@ router.post('/:id', async (req, res) => {
 //http://locahost:3001/user/:id   //*id por params, datos por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
-    let { name, lastName, password, dni, role, workingHours, probilePic } = req.body
+    let {  role, name, lastName, password, dni, workingHours, probilePic } = req.body
     try{
         let data = await updateUser(id,role, name, lastName, password, dni, workingHours, probilePic);
         res.json(data)

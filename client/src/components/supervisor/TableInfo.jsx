@@ -12,7 +12,7 @@ const {id} = useParams();
 useEffect(()=>{
     dispatch(getEmployees(id))
 },[dispatch])
-
+console.log(employees, "Acaaaa")
 
     return (
         <div className="datatable-container">
