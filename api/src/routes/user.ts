@@ -1,23 +1,7 @@
 import { Router } from 'express';
-const { getEmployeesAriel, signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
+const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
 
 const router = Router();
-
-// //* GET trae los usuarios segun la clase desde la Base de Datos
-// //http://localhost:3001/user/?name={name}
-// router.get('/', async(req,res)=>{
-//     try{
-//         let { role } = req.query;
-//         let users = await getUsers(role);
-//         res.status(200).json(users);
-//     }catch(error){
-//         if (error instanceof Error) {
-//             res.status(404).json(error.message);
-//         } else {
-//             console.log('Unexpected Error', error);
-//         }
-//     }
-// })
 
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
@@ -38,7 +22,7 @@ router.get('/:id', async(req,res) => {
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
 //http://localhost:3001/user/:id?name=name
-router.get('/:id/employees', async (req, res)=> {
+router.get('/employees/:id', async (req, res)=> {
     try{
         let { id } = req.params;
         let { name } = req.query;
@@ -54,27 +38,13 @@ router.get('/:id/employees', async (req, res)=> {
 })
 
 
-//*GET trae de un Boos/Supervisor sus subordinados
-//http://localhost:3001/user/employees/:id
-router.get('/employees/:id', async (req, res) =>{
-    let { id } = req.params;
-    let { name } = req.query;
-    try{
-       let employees= await getUserByHierarchy(id, name)
-       res.json(employees)
-      
-    }catch(error){
-        console.log('Unexpected Error', error)
-    }
-})
-
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
 router.post('/:id', async (req, res) => {
     let { id } = req.params;
-    let { name, lastName, password, dni, email, telephone, workingHours, profilePic } = req.body;
+    let { name, lastName, password, dni, email, telephone, environment, workingHours, profilePic } = req.body;
     try {
-        let data = await signUp(id, name, lastName, password, dni, email, telephone, workingHours, profilePic);
+        let data = await signUp(id, name, lastName, password, dni, email, telephone, environment, workingHours, profilePic);
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {
@@ -89,9 +59,9 @@ router.post('/:id', async (req, res) => {
 //http://locahost:3001/user/:id   //*id por params, datos por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
-    let { name, lastName, password, dni, role, workingHours, probilePic } = req.body
+    let { password, email, telephone, environment, workingHours, profilePic } = req.body
     try{
-        let data = await updateUser(id,role, name, lastName, password, dni, workingHours, probilePic);
+        let data = await updateUser(id, password, email, telephone, environment, workingHours, profilePic);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {
