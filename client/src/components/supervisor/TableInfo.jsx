@@ -1,14 +1,21 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getEmployees, searchEmployees } from "../../redux/actions";
 import "./TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
+import Modal from "../reusable/Modal";
+import EditUser from "./EditUser";
 
 export default function TableInfo() {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
   const { id } = useParams();
+  const [active, setActive] = useState(false);
+
+  const toggle = () => {
+    setActive(!active);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,55 +28,60 @@ export default function TableInfo() {
   };
 
   const handleCheckbox = (e) => {
-      if(e.target.checked) {
-        document.querySelectorAll(".checkbox").forEach(checkbox => checkbox.checked = true);
-      }
-        else {
-            document.querySelectorAll(".checkbox").forEach(checkbox => checkbox.checked = false);
-            }
-  }
+    if (e.target.checked) {
+      document
+        .querySelectorAll(".checkbox")
+        .forEach((checkbox) => (checkbox.checked = true));
+    } else {
+      document
+        .querySelectorAll(".checkbox")
+        .forEach((checkbox) => (checkbox.checked = false));
+    }
+  };
 
   useEffect(() => {
     dispatch(getEmployees(id, ""));
   }, [dispatch]);
   return (
-    <div className="datatable-container">
-      <div className="header-tools">
-        <div className="tools">
-          <ul>
-            <li>
-              <span className="ml-4">
-                <input type="checkbox" onClick={handleCheckbox} />
-              </span>
-            </li>
-            <li>
-              <button>
-                <i className="material-icons">add_circle</i>
-              </button>
-            </li>
-            <li>
-              <button>
-                <i className="material-icons">edit</i>
-              </button>
-            </li>
-            <li>
-              <button>
-                <i className="material-icons">delete</i>
-              </button>
-            </li>
-          </ul>
+    <>
+      <div className="datatable-container">
+        <div className="header-tools">
+          <div className="tools">
+            <ul>
+              <li>
+                <span className="ml-4">
+                  <input type="checkbox" onClick={handleCheckbox} />
+                </span>
+              </li>
+              <li>
+                <button>
+                  <i className="material-icons">add_circle</i>
+                </button>
+              </li>
+              <li>
+                <button>
+                  <i className="material-icons">edit</i>
+                </button>
+              </li>
+              <li>
+                <button>
+                  <i className="material-icons">delete</i>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div className="search flex mr-4">
+            <input
+              type="text"
+              placeholder="Search name"
+              className="search-input mr-4"
+              onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
+            ></input>
+            <button className={button()} onClick={(e) => handleAllButton(e)}>
+              All
+            </button>
+          </div>
         </div>
-        <div className="search flex mr-4">
-          <input
-            type="text"
-            placeholder="Search name"
-            className="search-input mr-4"
-            onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
-          ></input>
-          <button className={button()} onClick={e => handleAllButton(e)}>All</button>
-        </div>
-      </div>
-      <>
         <table className="datatable">
           <thead>
             <tr>
@@ -91,7 +103,7 @@ export default function TableInfo() {
                   </td>
                   <td>{employee.environment} (lugar de trabajo)</td>
                   <td>
-                    <button>
+                    <button onClick={e => toggle(e)}>
                       <i className="material-icons">edit</i>
                     </button>
                   </td>
@@ -135,7 +147,10 @@ export default function TableInfo() {
             </ul>
           </div>
         </div>
-      </>
-    </div>
+      </div>
+      <Modal active={active} toggle={toggle}>
+        <EditUser id="id"></EditUser>
+      </Modal>
+    </>
   );
 }

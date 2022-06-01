@@ -4,7 +4,8 @@ import {
   GET_TODOS,
   GET_TODOS_ID,
   UPDATE_TASK_STATUS,
-  GET_EMPLOYEES
+  GET_EMPLOYEES,
+  GET_EMPLOYEE_BY_ID
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -100,6 +101,16 @@ export function searchEmployees(id, name){
     return dispatch({
       type:GET_EMPLOYEES,
       payload: users.data
+    });
+  }
+};
+
+export function getEmployeeById(id){
+  return async function(dispatch){
+    const user = await axios.get(`http://localhost:3001/user/${id}`);
+    return dispatch({
+      type:GET_EMPLOYEE_BY_ID,
+      payload: user.data
     });
   }
 };
