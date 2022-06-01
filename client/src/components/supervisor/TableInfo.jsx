@@ -1,109 +1,139 @@
-import React,{useDeferredValue, useEffect} from "react";
+import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getEmployees } from "../../redux/actions";
-import './TableInfo.css';
+import "./TableInfo.css";
+import { Primary as button } from "../styles/Buttons";
 
-export default function TableInfo(){
-const dispatch = useDispatch();
-const employees = useSelector(state => state.employees);
-const {id} = useParams();
+export default function TableInfo() {
+  const dispatch = useDispatch();
+  const watchers = useSelector((state) => state.employees);
+  const { id } = useParams();
 
-useEffect(()=>{
-    dispatch(getEmployees(id))
-},[dispatch])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const regex = /^[ ]/g;
+    // if (!name) return alert("You have to fill the input first");
+    // if (regex.test(name)) return alert("You have to enter a valid name");
+    dispatch(getEmployees(id, e.target.value));
+  };
+  const handleAllButton = (e) => {
+    e.preventDefault();
+    dispatch(getEmployees(id, ""));
+  }
+  const handleCheckbox = (e) => {
+      if(e.target.checked) {
+        
+      }
+  }
 
-
-    return (
-        <div className="datatable-container">
-            {console.log(employees)}
-            <div className="header-tools">
-                <div className="tools">
-                    <ul>
-                        <li><span><input type="checkbox"/></span></li>
-                        <li>
-                            <button>
-                                <i className="material-icons">add_circle</i>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i className="material-icons">edit</i>
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i className="material-icons">delete</i>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <div className="search">
-                    <input type='text' placeholder="Search name" className="search-input"></input>
-                </div>
-            </div>
-            <table className="datatable">
-                <thead>
-                    <tr>
-                        <th>Marcar</th><th>Nombre</th><th>Environment</th><th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className="table-checkbox"><input type="checkbox"/></td>
-                        <td>Juan Perez</td>
-                        <td>Lugar de trabajo</td>
-                        <td><button><i className="material-icons">edit</i></button></td>
-                    </tr>
-                    <tr>
-                        <td className="table-checkbox"><input type="checkbox"/></td>
-                        <td>Pedro Rodriguez</td>
-                        <td>Lugar de trabajo</td>
-                        <td><button><i className="material-icons">edit</i></button></td>
-                    </tr>
-                    <tr>
-                        <td className="table-checkbox"><input type="checkbox"/></td>
-                        <td>Jose Lopez</td>
-                        <td>Lugar de trabajo</td>
-                        <td><button><i className="material-icons">edit</i></button></td>
-                    </tr>
-                    <tr>
-                        <td className="table-checkbox"><input type="checkbox"/></td>
-                        <td>Luis Diaz</td>
-                        <td>Lugar de trabajo</td>
-                        <td><button><i className="material-icons">edit</i></button></td>
-                    </tr>
-                    <tr>
-                        <td className="table-checkbox"><input type="checkbox"/></td>
-                        <td>Marcos Juarez</td>
-                        <td>Lugar de trabajo</td>
-                        <td><button><i className="material-icons">edit</i></button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className="footer-tools">
-                <div className="list-items">
-                    Show
-                    <select name="n-entries" id="n-entries" className="n-entries">
-                        <option value="20">20</option>
-                        <option value="10">10</option>
-                        <option value="5">5</option>
-                    </select>
-                    entries
-                </div>
-                <div className="pages">
-                    <ul>
-                        <li><span className="active">1</span></li>
-                        <li><button>2</button></li>
-                        <li><button>3</button></li>
-                        <li><button>4</button></li>
-                        <li><span>...</span></li>
-                        <li><button>11</button></li>
-                        <li><button>12</button></li>
-                    </ul>
-                    
-                </div>
-            </div>
+  useEffect(() => {
+    dispatch(getEmployees(id, ""));
+  }, [dispatch]);
+  return (
+    <div className="datatable-container">
+      <div className="header-tools">
+        <div className="tools">
+          <ul>
+            <li>
+              <span className="ml-4">
+                <input type="checkbox" />
+              </span>
+            </li>
+            <li>
+              <button>
+                <i className="material-icons">add_circle</i>
+              </button>
+            </li>
+            <li>
+              <button>
+                <i className="material-icons">edit</i>
+              </button>
+            </li>
+            <li>
+              <button>
+                <i className="material-icons">delete</i>
+              </button>
+            </li>
+          </ul>
         </div>
-    )
+        <div className="search flex mr-4">
+          <input
+            type="text"
+            placeholder="Search name"
+            className="search-input mr-4"
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}
+          ></input>
+          <button className={button()} onClick={e => handleAllButton(e)}>All</button>
+        </div>
+      </div>
+      <>
+        <table className="datatable">
+          <thead>
+            <tr>
+              <th>Check</th>
+              <th>Name</th>
+              <th>Environment</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {watchers &&
+              watchers.map((employee) => (
+                <tr key={employee._id}>
+                  <td className="table-checkbox">
+                    <input type="checkbox" />
+                  </td>
+                  <td>
+                    {employee.name} {employee.lastName}
+                  </td>
+                  <td>{employee.environment} (lugar de trabajo)</td>
+                  <td>
+                    <button>
+                      <i className="material-icons">edit</i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+        <div className="footer-tools">
+          <div className="list-items">
+            Show
+            <select name="n-entries" id="n-entries" className="n-entries">
+              <option value="20">20</option>
+              <option value="10">10</option>
+              <option value="5">5</option>
+            </select>
+            entries
+          </div>
+          <div className="pages">
+            <ul>
+              <li>
+                <span className="active">1</span>
+              </li>
+              <li>
+                <button>2</button>
+              </li>
+              <li>
+                <button>3</button>
+              </li>
+              <li>
+                <button>4</button>
+              </li>
+              <li>
+                <span>...</span>
+              </li>
+              <li>
+                <button>11</button>
+              </li>
+              <li>
+                <button>12</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </>
+    </div>
+  );
 }
