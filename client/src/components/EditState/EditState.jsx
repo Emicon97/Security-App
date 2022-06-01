@@ -32,7 +32,7 @@ export default function EditState() {
   
       data.append('file', files[0]);
       data.append('upload_preset', 'magqqp6o');
-     
+     console.log(files[0])
       setLoading(true);
       const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
       const file = await res.json();
