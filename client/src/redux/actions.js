@@ -92,7 +92,7 @@ export function getEmployees(id){
         payload: users.data
       });
 }
-}
+};
 
 export function searchEmployees(id, name){
   return async function(dispatch){
@@ -102,4 +102,4 @@ export function searchEmployees(id, name){
       payload: users.data
     });
   }
-}
+};
