@@ -44,7 +44,7 @@ export default function AddUser() {
                 email:'',
                 address:'',
                 environment:'',
-                phoneNumber:'',
+                telephone:'',
                 workingHours:''
             }}
 
@@ -72,8 +72,8 @@ export default function AddUser() {
                 if(!val.address) {errors.address = "Por favor ingresa una direccion *"}
                 else if(!/^[A-Za-z0-9\s]+$/.test(val.address)) errors.address = "Solo se aceptan números, letras y espacios *";
 
-                if(!val.phoneNumber) {errors.phoneNumber = "Por favor ingresa un telefono *"}
-                else if(isNaN(Number(val.phoneNumber))) errors.phoneNumber = "Alguno de los valores no es un número *";
+                if(!val.telephone) {errors.telephone = "Por favor ingresa un telefono *"}
+                else if(isNaN(Number(val.telephone))) errors.telephone = "Alguno de los valores no es un número *";
                 return errors;
             }}
 
@@ -92,23 +92,23 @@ export default function AddUser() {
               <div className="flex flex-row items-center justify-between">
                 <div>
                   <label htmlFor="name">
-                    Nombre: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
+                    Name: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="name" name="name" placeholder="Nombre..."/>
+                  <Field className={Input()} type="text" id="name" name="name" placeholder="Name..."/>
                 </div>
                 <div>
                   <label htmlFor="lastName">
-                    Apellido: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
+                    Lastname: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Apellido..."/>
+                  <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Lastname..."/>
                 </div>
               </div>
               <div className="flex flex-row items-center justify-between">
                 <div>
                   <label htmlFor="password">
-                    Contraseña: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
+                    Password: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
                   </label>
-                  <Field className={Input()} type="password" id="password" name="password" placeholder="Contraseña..." />
+                  <Field className={Input()} type="password" id="password" name="password" placeholder="Password..." />
                   {/* <input type="checkbox" onClick={viewPassword}/> */}
                 </div>
                 <div>
@@ -121,9 +121,9 @@ export default function AddUser() {
               <div className="flex flex-row items-center justify-between">
                 <div>
                   <label htmlFor="address">
-                    Direccion: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
+                    Address: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="address" name="address" placeholder="Direccion..."/>
+                  <Field className={Input()} type="text" id="address" name="address" placeholder="Address..."/>
                 </div>
                 <div>
                   <label htmlFor="email">
@@ -134,32 +134,32 @@ export default function AddUser() {
               </div>
               <div className="flex flex-row items-center justify-between">
                 <div>
-                  <label htmlFor="phoneNumber">
-                    Telefono: <ErrorMessage name="phoneNumber" component={()=>(<small className="text-red-600">{errors.phoneNumber}</small>)}/>
+                  <label htmlFor="telephone">
+                    Telephone: <ErrorMessage name="telephone" component={()=>(<small className="text-red-600">{errors.telephone}</small>)}/>
                   </label>
-                  <Field className={Input()} type="number" id="phoneNumber" name="phoneNumber" placeholder="Telefono..."/>
+                  <Field className={Input()} type="number" id="telephone" name="telephone" placeholder="Telephone..."/>
                 </div>
                 <div>
                   <label htmlFor="workingHours">
-                    Horas de trabajo: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
+                    Working Hours: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Horas de trabajo..."/>
+                  <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Working Hours..."/>
                 </div>
               </div>
               <div className="flex flex-row items-center justify-between">
                 <div>
                   <label htmlFor="environment">
-                    Entorno de trabajo: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
+                    Environment: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Entorno de trabajo..."/>
+                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Environment..."/>
                 </div>
                 <div>  
-                  <label>Rol: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
+                  <label>Role: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
                   <Field name="role" as="select" className={Input()}>
                     {
                       !values.role.length ?
-                      <option key="select">Seleccionar</option> :
-                      <option key="select" disabled >Seleccionar</option>
+                      <option key="select">Select</option> :
+                      <option key="select" disabled >Select</option>
                     }
                     {typeUser?.map(e => <option key={e} value={e}>{e}</option>)}
                   </Field>
@@ -176,8 +176,8 @@ export default function AddUser() {
                 </div>
                 <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
               </div>
-              <button className={Button()} type="submit">Agregar</button>
-              {formSend && (<small className="text-green-600">Usuario creado con exito</small>)}
+              <button className={Button()} type="submit">Add</button>
+              {formSend && (<small className="text-green-600">Employee created successfully</small>)}
             </Form>
           )}
         </Formik>
