@@ -1,10 +1,9 @@
-import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK_STATUS } from "./ActionTypes";
+import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK_STATUS, GET_EMPLOYEES } from "./ActionTypes";
 
 const initialState = {
   supervisorDetail: {},
   watcherDetail: {},
-  supervisors: [],
-  watchers: [],
+  employees: [],
   users: [],
   userDetails: {},
   todosId:[],
@@ -38,6 +37,11 @@ const rootReducer = (state=initialState, action) => {
       return {
         ...state,
         todoUpdate: action.payload
+      }
+      case GET_EMPLOYEES: 
+      return {
+        ...state,
+        employees: action.payload
       }
     default:
       return { ...state };

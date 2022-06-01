@@ -1,9 +1,22 @@
-import React from "react";
+import React,{useDeferredValue, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getEmployees } from "../../redux/actions";
 import './TableInfo.css';
 
 export default function TableInfo(){
+const dispatch = useDispatch();
+const employees = useSelector(state=>state.employees);
+const {id} = useParams();
+
+useEffect(()=>{
+    dispatch(getEmployees(id))
+},[dispatch])
+
+
     return (
         <div className="datatable-container">
+            {console.log(employees)}
             <div className="header-tools">
                 <div className="tools">
                     <ul>
