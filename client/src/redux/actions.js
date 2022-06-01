@@ -5,7 +5,8 @@ import {
   GET_TODOS_ID,
   UPDATE_TASK_STATUS,
   GET_EMPLOYEES,
-  GET_EMPLOYEE_BY_ID
+  GET_EMPLOYEE_BY_ID,
+  UPDATE_USER
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -114,3 +115,13 @@ export function getEmployeeById(id){
     });
   }
 };
+
+export function updateUser(id, post){
+  return async function(dispatch){
+    const user = await axios.put(`http://localhost:3001/user/${id}`, post);
+    return dispatch({
+      type: UPDATE_USER,
+      payload: user.data
+    });
+  }
+}

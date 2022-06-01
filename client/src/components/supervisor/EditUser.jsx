@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
-import { getEmployeeById } from "../../redux/actions";
+import { getEmployeeById, updateUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 
@@ -80,13 +80,13 @@ export default function AddUser() {
                 return errors;
             }}
 
-            // onSubmit ={(values, {resetForm})=>{
-            //     dispatch(postUser(values));
-            //     console.log(values)
-            //     setFormSend(true);
-            //     resetForm();
-            //     setTimeout(()=>setFormSend(false),5000)
-            // }}
+            onSubmit ={(values, {resetForm})=>{
+                dispatch(updateUser(values));
+                console.log(values)
+                setFormSend(true);
+                resetForm();
+                setTimeout(()=>setFormSend(false),5000)
+            }}
         >
 
           {( {errors, values} ) => (

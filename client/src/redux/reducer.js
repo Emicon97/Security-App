@@ -6,6 +6,7 @@ import {
   UPDATE_TASK_STATUS,
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
+  UPDATE_USER
 } from "./ActionTypes";
 
 const initialState = {
@@ -56,6 +57,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         watcherDetail: action.payload,
       }
+      case UPDATE_USER:
+        return{
+          ...state,
+          userDetails: action.payload,
+        }
     default:
       return { ...state };
   }
