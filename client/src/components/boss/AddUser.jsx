@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
+import { Primary } from "../styles/Buttons";
 
 export default function AddUser() {
     const dispatch = useDispatch()
@@ -105,11 +106,10 @@ export default function AddUser() {
               </div>
               <div className="flex flex-row items-center justify-between">
                 <div>
-                  <label htmlFor="password">
-                    Password: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
+                  <label htmlFor="environment">
+                    Environment: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
                   </label>
-                  <Field className={Input()} type="password" id="password" name="password" placeholder="Password..." />
-                  {/* <input type="checkbox" onClick={viewPassword}/> */}
+                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Environment..."/>
                 </div>
                 <div>
                   <label htmlFor="dni">
@@ -148,21 +148,18 @@ export default function AddUser() {
               </div>
               <div className="flex flex-row items-center justify-between">
                 <div>
-                  <label htmlFor="environment">
-                    Environment: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
+                  <label htmlFor="password">
+                    Password: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
                   </label>
-                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Environment..."/>
-                </div>
-                <div>  
-                  <label>Role: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
-                  <Field name="role" as="select" className={Input()}>
-                    {
-                      !values.role.length ?
-                      <option key="select">Select</option> :
-                      <option key="select" disabled >Select</option>
-                    }
-                    {typeUser?.map(e => <option key={e} value={e}>{e}</option>)}
-                  </Field>
+                  <div className="flex items-center">
+                    <Field className={Input()} type="password" id="password" name="password" placeholder="Password..." />
+                    {/* <button onClick={viewPassword} className={Primary()}> */}
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" onClick={viewPassword} >
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                      </svg>
+                    {/* </button> */}
+                  </div>
                 </div>
               </div>
               <div className="m-3 w-96">
@@ -176,7 +173,7 @@ export default function AddUser() {
                 </div>
                 <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
               </div>
-              <button className={Button()} type="submit">Add</button>
+              <button className={Primary()} type="submit">Add</button>
               {formSend && (<small className="text-green-600">Employee created successfully</small>)}
             </Form>
           )}
@@ -206,14 +203,4 @@ const File = (props) => `
     file:text-sm file:font-semibold
     file:bg-blue-50 file:text-blue-700
     hover:file:bg-blue-100
-`;
-
-const Button = (props) => `
-    font-bold text-white
-    bg-blue-500
-    w-32 h-10 p-0 m-0
-    border-2 border-blue-500
-    hover:border-blue-600 hover:bg-blue-600
-    active:border-blue-700 active:bg-blue-700
-    rounded-3xl
 `;
