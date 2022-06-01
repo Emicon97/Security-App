@@ -3,15 +3,16 @@ import {
   GET_USER_ID,
   GET_TODOS,
   GET_TODOS_ID,
-  UPDATE_TASK_STATUS
+  UPDATE_TASK_STATUS,
+  GET_EMPLOYEES
 } from "./ActionTypes";
 
 export function getUsersById(id){
     return async function(dispatch){
-        const users = await axios.get(`http://localhost:3001/user/${id}`);
+        const employees = await axios.get(`http://localhost:3001/user/${id}`);
         return dispatch({
           type:GET_USER_ID,
-          payload: users.data
+          payload: employees.data
         });
 }
 }
@@ -73,5 +74,32 @@ export function filterByStatusAndPriority(id,status,priority){
       type: GET_TODOS_ID,
       payload: state.data
     })
+  }
+}
+
+export function postUser(post){
+  return async function(dispatch){
+      const user = await axios.post("http://localhost:3001/user", post)
+      return user;
+  }
+}
+
+export function getEmployees(id){
+  return async function(dispatch){
+      const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
+      return dispatch({
+        type:GET_EMPLOYEES,
+        payload: users.data
+      });
+}
+}
+
+export function searchEmployees(id, name){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+    return dispatch({
+      type:GET_EMPLOYEES,
+      payload: users.data
+    });
   }
 }
