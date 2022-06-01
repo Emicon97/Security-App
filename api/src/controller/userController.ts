@@ -38,7 +38,7 @@ async function getUserByHierarchy(id:string, name?:string) {
         if (!name) {
             return await getEmployees(id);
         } else {
-            return await getEmployeeByName(name);
+            return await getEmployeeByName(id, name);
         }
     }catch(error:any){
         throw new Error(error.message);
@@ -48,16 +48,30 @@ async function getUserByHierarchy(id:string, name?:string) {
 async function getEmployees (id:string) {
     let boss = await bossModel.findById(id);
     if (boss) {
-        // return await bossModel.findOne({ id }, 'supervisor');
-        return await supervisorModel.find();
+        return await bossModel.findById(id ).populate({path:'supervisor'});
     }else{
-        // return await supervisorModel.findOne([id], 'watcher');
-        return await watcherModel.find();
+        return await supervisorModel.findById(id).populate({path:'watcher'});
     }
 }
 
-async function getEmployeeByName (name:string) {
+function escapeStringRegexp(string:string) {
+    if (typeof string !== 'string') {
+        throw new TypeError('Expected a string');
+	}
+	return string
+    .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+    .replace(/-/g, '\\x2d');
+}
 
+async function getEmployeeByName (id:string, name:string) {
+    let $regex = escapeStringRegexp(name)
+    let boss = await bossModel.findById(id);
+    if (boss) {
+        return await bossModel.findById(id).populate({path:'supervisor', match:{name: {$regex}}});
+    }else{
+        return await supervisorModel.findById(id).populate({path:'watcher', match:{name:{$regex}}});
+    }
+    
 }
 
 async function signUp (

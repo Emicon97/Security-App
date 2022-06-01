@@ -92,11 +92,11 @@ async function getByIdAndName (id:string, name:string) {
   const $regex = escapeStringRegexp(name)
   try{
     const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({[role]:id, name: {$regex}})
+    let toDos = await toDosModel.find({[role]:id, name: {$regex}});
     if(toDos.length !== 0){
       return toDos;
     }else{
-      return "There are no matching tasks."
+      return "There are no matching tasks.";
     }
   }catch(error: any){
     throw new Error (error.message);
