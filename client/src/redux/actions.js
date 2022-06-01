@@ -3,15 +3,16 @@ import {
   GET_USER_ID,
   GET_TODOS,
   GET_TODOS_ID,
-  UPDATE_TASK_STATUS
+  UPDATE_TASK_STATUS,
+  GET_EMPLOYEES
 } from "./ActionTypes";
 
 export function getUsersById(id){
     return async function(dispatch){
-        const users = await axios.get(`http://localhost:3001/user/${id}`);
+        const employees = await axios.get(`http://localhost:3001/user/${id}`);
         return dispatch({
           type:GET_USER_ID,
-          payload: users.data
+          payload: employees.data
         });
 }
 }
@@ -81,4 +82,14 @@ export function postUser(post){
       const user = await axios.post("http://localhost:3001/user", post)
       return user;
   }
+}
+
+export function getEmployees(id,name){
+  return async function(dispatch){
+      const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+      return dispatch({
+        type:GET_EMPLOYEES,
+        payload: users.data
+      });
+}
 }
