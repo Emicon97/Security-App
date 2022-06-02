@@ -9,6 +9,7 @@ import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import TableInfo from "./components/supervisor/TableInfo";
 import UserProfile from "./components/reusable/Profile";
 import HomeBoss from "./components/boss/HomeBoss";
+import LoginFake from "./components/LoginFake";
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -65,6 +66,7 @@ function App() {
         <Route exact path="/guard/:id" element={<GuardProfile />} />
         <Route exact path="/guard/:id/profile" element={<UserProfile />} />
         <Route path="/editState/:id" element={<EditState />} />
+        <Route path="/login" element={<LoginFake/>}/>
       </Routes>
     </>
   );

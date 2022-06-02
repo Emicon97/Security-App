@@ -8,8 +8,8 @@ const router = Router();
 router.get('/:id', async(req,res) => {
     try{
         let { id } = req.params;
-        let userData = await getUserById(id);
-        res.json(userData);
+        let dataUser = await getUserById(id);
+        res.json(dataUser);
     } catch (error) {
         if (error instanceof Error) {
             res.status(404).json(error.message);
