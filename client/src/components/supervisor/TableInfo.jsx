@@ -12,7 +12,7 @@ export default function TableInfo() {
   const watchers = useSelector((state) => state.employees);
   const { id } = useParams();
   const [active, setActive] = useState(false);
-
+console.log(watchers)
   const toggle = () => {
     setActive(!active);
   };
@@ -149,7 +149,7 @@ export default function TableInfo() {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditUser id="id"></EditUser>
+        <EditUser id={id}></EditUser>
       </Modal>
     </>
   );

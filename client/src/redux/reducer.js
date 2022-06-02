@@ -6,7 +6,8 @@ import {
   UPDATE_TASK_STATUS,
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
-  UPDATE_USER
+  UPDATE_USER,
+  DELETE_USER
 } from "./ActionTypes";
 
 const initialState = {
@@ -48,9 +49,10 @@ const rootReducer = (state = initialState, action) => {
         todoUpdate: action.payload,
       };
     case GET_EMPLOYEES:
+      const array = action.payload.watcher ? action.payload.watcher : action.payload.supervisor
       return {
         ...state,
-        employees: action.payload,
+        employees: array,
       };
     case GET_EMPLOYEE_BY_ID:
       return {
@@ -62,6 +64,10 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           userDetails: action.payload,
         }
+        case DELETE_USER:
+          return{
+            ...state,
+          }
     default:
       return { ...state };
   }
