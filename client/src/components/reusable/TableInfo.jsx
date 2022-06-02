@@ -29,11 +29,6 @@ export default function TableInfo() {
     e.preventDefault();
     dispatch(searchEmployees(id, ""));
   };
-//chequear
-  const handleDelete = (e) => {
-    e.preventDefault();
-    if(e.target.value) console.log("entre")
-  }
 
   const handleCheckbox = (e) => {
     if (e.target.checked) {
@@ -63,17 +58,7 @@ export default function TableInfo() {
               </li>
               <li>
                 <button>
-                  <i className="material-icons">add_circle</i>
-                </button>
-              </li>
-              <li>
-                <button>
                   <i className="material-icons">edit</i>
-                </button>
-              </li>
-              <li>
-                <button onClick={e => handleDelete(e)}>
-                  <i className="material-icons">delete</i>
                 </button>
               </li>
             </ul>
