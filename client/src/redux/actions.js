@@ -7,7 +7,8 @@ import {
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
   UPDATE_USER,
-  DELETE_USER
+  DELETE_USER,
+  LOGIN_PRUEBA
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -135,4 +136,14 @@ export function deleteUser(id){
       payload: user.data
     });
   }
+}
+export function loginPrueba(value){
+  return async function(dispatch){
+    const user = await axios.post(`http://localhost:3001/login/`, value);
+    return dispatch({
+      type: LOGIN_PRUEBA,
+      payload: user.data
+    })
+  }
+
 }

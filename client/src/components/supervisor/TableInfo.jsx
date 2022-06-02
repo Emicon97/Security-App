@@ -7,6 +7,9 @@ import { Primary as button } from "../styles/Buttons";
 import Modal from "../reusable/Modal";
 import EditUser from "./EditUser";
 
+//hacer filtrado por uno solo, para boton delete llenar un estado
+//propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
+
 export default function TableInfo() {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
@@ -118,7 +121,7 @@ export default function TableInfo() {
         </table>
         <div className="footer-tools">
           <div className="list-items">
-            Show
+            Show    
             <select name="n-entries" id="n-entries" className="n-entries">
               <option value="20">20</option>
               <option value="10">10</option>
