@@ -1,35 +1,54 @@
 import { Router } from 'express';
+import { getCookie, setCookie } from 'typescript-cookie';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
-const router=Router()
-// //* GET trae los usuarios segun la clase desde la Base de Datos
-// //http://localhost:3001/user/?name={name}
-// router.get('/', async(req,res)=>{
-//     try{
-//         let { role } = req.query;
-//         let users = await getUsers(role);
-//         res.status(200).json(users);
-//     }catch(error){
-//         if (error instanceof Error) {
-//             res.status(404).json(error.message);
-//         } else {
-//             console.log('Unexpected Error', error);
-//         }
-//     }
-// })
-const isNotAuth= async(req,res,next)=>{
-    let {id} = req.cookies
-    let findUser = await getUserById(id)
-    if(findUser===null){
-        res.redirect('../login')
+const {logIn} = require('../controller/logInController');
+
+const router=Router();
+
+router.post('/login', async(req, res, next)=>{
+    try{
+       let {dni, password }= req.body;
+       let findUser = await logIn(dni, password);
+       let url = findUser.id;
+       console.log('hola' + url)
+       if(findUser!==false){
+          setCookie('id', url);
+          res.redirect(`../`);
+       }else{
+          res.redirect('/');
+       }
+    } catch (error) {
+       if (error instanceof Error) {
+          res.status(404).json(error.message);
+       } else {
+          console.log('Unexpected Error', error);
+       }
     }
-    next()
+ })
+
+const isNotAuth = async (req, res, next) => {
+    try {
+        let id = getCookie('id');
+        let findUser = await getUserById(id);
+        if(findUser === null) {
+        }
+        next();
+     } catch (error) {
+        if (error instanceof Error) {
+            console.log(error.message)
+            res.redirect('../login');
+        } else {
+            console.log('Unexpected Error', error);
+        }
+     }
 }
 
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
-router.get('/:id',isNotAuth, async(req,res) => {
+router.get('/:id', async(req,res) => {
     try{
         let { id } = req.params;
+        console.log('get uer by id' + id);
         let dataUser = await getUserById(id);
         res.json(dataUser);
     } catch (error) {
