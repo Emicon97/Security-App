@@ -49,9 +49,10 @@ router.post('/login', async(req, res)=>{
     try{
         let {dni, password}= req.body
         let findUser = await logIn(dni, password)
+        console.log("acaaaaaaa",findUser[0].id)
         if(findUser!==false){
-            res.cookie('id',findUser.id)
-            res.redirect('/:id')
+            res.cookie('id',findUser[0].id)
+            res.redirect(`/:id`)
         }else{
             res.redirect('/login')
         }
