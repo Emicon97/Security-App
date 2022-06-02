@@ -42,7 +42,7 @@ export default function TableEmployees({ name, employees }) {
                 {
                     allEmployees
                     ? allEmployees.map(el => <div key={el}>{el}</div>)
-                    : <h4>No tiene empleados</h4> 
+                    : <h4>No tiene empleados</h4>
                 }
             </div>
         </>
