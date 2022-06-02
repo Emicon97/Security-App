@@ -18,18 +18,18 @@ const router = Router();
 //         }
 //     }
 // })
-// const isAuth= async(req,res,next)=>{
-//     let {id} = req.cookies
-//     let findUser = await getUserById(id)
-//     if(findUser!==null){
-//         res.redirect('/:id')
-//     }
-//     next()
-// }
+const isNotAuth= async(req,res,next)=>{
+    let {id} = req.cookies
+    let findUser = await getUserById(id)
+    if(findUser===null){
+        res.redirect('/login')
+    }
+    next()
+}
 
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
-router.get('/:id', async(req,res) => {
+router.get('/:id',isNotAuth, async(req,res) => {
     try{
         let {id}=req.cookies
         //let {id} = req.params
@@ -49,9 +49,9 @@ router.post('/login', async(req, res)=>{
     try{
         let {dni, password}= req.body
         let findUser = await logIn(dni, password)
-        console.log("acaaaaaaa",findUser[0].id)
+        console.log("acaaaaaaa",findUser.id)
         if(findUser!==false){
-            res.cookie('id',findUser[0].id)
+            res.cookie('id',findUser.id)
             res.redirect(`/:id`)
         }else{
             res.redirect('/login')
