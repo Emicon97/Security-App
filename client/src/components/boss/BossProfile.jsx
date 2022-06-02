@@ -32,8 +32,8 @@ export default function BossProfile () {
                 <ul className="options-list">
                     <li>Info</li>
                     <li>Perfil</li>
-                    <li>Empleados</li>
-                    <li><Link to="/home/add">Añadir Empleados</Link></li>
+                    <Link to= {`/user/${id}`}><li>Empleados</li></Link>
+                    <Link to="/home/add"><li>Añadir Empleados</li></Link>
                 </ul>
             </div>
             <div className="info-screen">
