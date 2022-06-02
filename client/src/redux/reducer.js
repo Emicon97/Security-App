@@ -71,10 +71,10 @@ const rootReducer = (state=initialState, {type,payload}) => {
           userDetails: payload,
         }
         case LOGIN_PRUEBA:
-        return {
-          ...state,
-          userData
-        }
+          return {
+            ...state,
+            userData: payload
+          }
     default:
       return { ...state };
   }

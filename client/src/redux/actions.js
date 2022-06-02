@@ -129,9 +129,9 @@ export function updateUser(id, post){
 
 export function loginPrueba(value){
   return async function(dispatch){
-    const user = await axios.post(`http://localhost:3001/user/login/`,value)
+    const user = await axios.post(`http://localhost:3001/login/`, value);
     return dispatch({
-      type:LOGIN_PRUEBA,
+      type: LOGIN_PRUEBA,
       payload: user.data
     })
   }
