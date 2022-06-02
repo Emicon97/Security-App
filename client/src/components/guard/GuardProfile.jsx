@@ -141,11 +141,11 @@ export default function GuardProfile() {
               </p>
             </div>
 
-            <div className="status-task">
-              <p className={`${todo.status} status`}>{todo.status}</p>
+            <div className="status-task pr-4">
+              <p className={`${todo.status} status min-w-[4em] text-center`}>{todo.status}</p>
               <span className="title-priority">
                 <span className="title">Priority:</span>{" "}
-                <span className={`${todo.priority} priority`}>
+                <span className={`${todo.priority} priority min-w-[4em] text-center ml-3`}>
                   {todo.priority}
                 </span>
               </span>
