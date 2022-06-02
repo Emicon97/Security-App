@@ -1,54 +1,14 @@
 import { Router } from 'express';
-import { getCookie, setCookie } from 'typescript-cookie';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
-const {logIn} = require('../controller/logInController');
+const { idIdentifier } = require('../controller/logInController');
 
 const router=Router();
-
-router.post('/login', async(req, res, next)=>{
-    try{
-       let {dni, password }= req.body;
-       let findUser = await logIn(dni, password);
-       let url = findUser.id;
-       console.log('hola' + url)
-       if(findUser!==false){
-          setCookie('id', url);
-          res.redirect(`../`);
-       }else{
-          res.redirect('/');
-       }
-    } catch (error) {
-       if (error instanceof Error) {
-          res.status(404).json(error.message);
-       } else {
-          console.log('Unexpected Error', error);
-       }
-    }
- })
-
-const isNotAuth = async (req, res, next) => {
-    try {
-        let id = getCookie('id');
-        let findUser = await getUserById(id);
-        if(findUser === null) {
-        }
-        next();
-     } catch (error) {
-        if (error instanceof Error) {
-            console.log(error.message)
-            res.redirect('../login');
-        } else {
-            console.log('Unexpected Error', error);
-        }
-     }
-}
 
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
 router.get('/:id', async(req,res) => {
     try{
         let { id } = req.params;
-        console.log('get uer by id' + id);
         let dataUser = await getUserById(id);
         res.json(dataUser);
     } catch (error) {
@@ -66,6 +26,7 @@ router.get('/:id', async(req,res) => {
 router.get('/employees/:id', async (req, res)=> {
     try{
         let { id } = req.params;
+        await idIdentifier(id);
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
         res.json(userData);
