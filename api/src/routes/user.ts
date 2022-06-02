@@ -59,7 +59,7 @@ router.post('/:id', async (req, res) => {
 //http://locahost:3001/user/:id   //*id por params, datos por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
-    let { password, email, telephone, environment, workingHours, profilePic } = req.body
+    let { password, email, telephone, environment, workingHours, profilePic } = req.body;
     try{
         let data = await updateUser(id, password, email, telephone, environment, workingHours, profilePic);
         res.json(data)
