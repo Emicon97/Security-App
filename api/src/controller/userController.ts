@@ -2,16 +2,6 @@ import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../model
 import { Boss, Supervisor, Watcher, Neighbour } from '../models/user';
 
 const { workerIdentifier } = require('./toDosController');
-
-// async function getUsers(userClass:string) {
-//     try{   
-//         if(userClass==='supervisor') return await supervisorModel.find(); 
-//         if(userClass==='watcher') return await watcherModel.find();
-//         if(userClass==='neighbour') return await neighbourModel.find();
-//     }catch(err:any){
-//         throw new Error(err.message)
-//     }    
-// }
  
 async function getUserById(id:string):Promise<[ Boss | Supervisor | Watcher | Neighbour, string ]> {
     var response:[ Boss | Supervisor | Watcher | Neighbour, string ];
@@ -82,6 +72,7 @@ async function signUp (
     dni:number,
     email:string,
     telephone:number,
+    environment:string,
     workingHours?:string,
     profilePic?:string):Promise<string> {
         
@@ -96,6 +87,9 @@ async function signUp (
                 lastName,
                 password,
                 dni,
+                email,
+                telephone,
+                environment,
                 workingHours: workingHours ? workingHours : undefined,
                 profilePic: profilePic ? profilePic : undefined
             })
@@ -110,6 +104,7 @@ async function signUp (
                 dni,
                 email,
                 telephone,
+                environment,
                 workingHours: workingHours ? workingHours : undefined,
                 profilePic: profilePic ? profilePic : undefined
             })
@@ -163,35 +158,36 @@ async function deleteUser (id:string, role:string):Promise<string> {
 
 async function updateUser (
     id:string,
-    role:string,
-    name?:string,
-    lastName?:string,
     password?:string,
-    dni?:number,
+    email?:string,
+    telephone?:number,
+    environment?:string,
     workingHours?:string,
-    probilePic?:string
+    profilePic?:string
     ):Promise<string> {
+
+    const role = await workerIdentifier(id);
         
     if (role === 'supervisor') {
     await supervisorModel.findByIdAndUpdate(id,{
-            name, 
-            lastName,
             password,
-            dni,
+            email,
+            telephone,
+            environment,
             workingHours,
-            probilePic
+            profilePic
         })
         
         return 'Parameters updated successfully.'
     }
     if (role === 'watcher') {
         await watcherModel.findByIdAndUpdate(id,{
-            name, 
-            lastName,
             password,
-            dni,
+            email,
+            telephone,
+            environment,
             workingHours,
-            probilePic,
+            profilePic
         })
         return 'Parameters updated successfully.'
     }

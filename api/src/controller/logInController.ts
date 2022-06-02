@@ -14,7 +14,7 @@ async function logIn(dni:number, password:string){
             console.log(err)
         }
     } else {
-        throw new Error('complete the required fields')
+        throw new Error('Complete the required fields.');
     }
 }
 

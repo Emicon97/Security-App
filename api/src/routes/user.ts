@@ -1,8 +1,6 @@
 import { Router } from 'express';
-const { getEmployeesAriel, signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
-const {logIn} = require('../controller/logInController')
-const router = Router();
-
+const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
+const router=Router()
 // //* GET trae los usuarios segun la clase desde la Base de Datos
 // //http://localhost:3001/user/?name={name}
 // router.get('/', async(req,res)=>{
@@ -22,7 +20,7 @@ const isNotAuth= async(req,res,next)=>{
     let {id} = req.cookies
     let findUser = await getUserById(id)
     if(findUser===null){
-        res.redirect('/login')
+        res.redirect('../login')
     }
     next()
 }
@@ -31,10 +29,9 @@ const isNotAuth= async(req,res,next)=>{
 //http://localhost:3001/user/:id   //*id por params
 router.get('/:id',isNotAuth, async(req,res) => {
     try{
-        let {id}=req.cookies
-        //let {id} = req.params
-        let dataUser = await getUserById(id)
-        res.json(dataUser)
+        let { id } = req.params;
+        let dataUser = await getUserById(id);
+        res.json(dataUser);
     } catch (error) {
         if (error instanceof Error) {
             res.status(404).json(error.message);
@@ -43,25 +40,6 @@ router.get('/:id',isNotAuth, async(req,res) => {
         }
     }
 })
-
-//Login (prueba)
-router.post('/login', async(req, res)=>{
-    try{
-        let {dni, password}= req.body
-        let findUser = await logIn(dni, password)
-        console.log("acaaaaaaa",findUser.id)
-        if(findUser!==false){
-            res.cookie('id',findUser.id)
-            res.redirect(`/:id`)
-        }else{
-            res.redirect('/login')
-        }
-    }catch(err){
-        console.log(err)
-    }
-})
-
-
 
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
@@ -86,9 +64,9 @@ router.get('/employees/:id', async (req, res)=> {
 //http://localhost:3001/user  //*datos enviados por body
 router.post('/:id', async (req, res) => {
     let { id } = req.params;
-    let { name, lastName, password, dni, email, telephone, workingHours, profilePic } = req.body;
+    let { name, lastName, password, dni, email, telephone, environment, workingHours, profilePic } = req.body;
     try {
-        let data = await signUp(id, name, lastName, password, dni, email, telephone, workingHours, profilePic);
+        let data = await signUp(id, name, lastName, password, dni, email, telephone, environment, workingHours, profilePic);
         res.json(data);
     } catch (error) {
         if (error instanceof Error) {
@@ -103,9 +81,9 @@ router.post('/:id', async (req, res) => {
 //http://locahost:3001/user/:id   //*id por params, datos por body
 router.put('/:id', async (req, res)=>{
     let { id } = req.params;
-    let {  role, name, lastName, password, dni, workingHours, probilePic } = req.body
+    let { password, email, telephone, environment, workingHours, profilePic } = req.body;
     try{
-        let data = await updateUser(id,role, name, lastName, password, dni, workingHours, probilePic);
+        let data = await updateUser(id, password, email, telephone, environment, workingHours, profilePic);
         res.json(data)
     }catch(error){
         if (error instanceof Error) {
