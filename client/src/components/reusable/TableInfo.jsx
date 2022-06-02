@@ -2,10 +2,10 @@ import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
-import "./TableInfo.css";
+import "../styles/TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
-import Modal from "../reusable/Modal";
-import EditUser from "./EditUser";
+import Modal from "./Modal";
+import EditUser from "../supervisor/EditUser";
 
 //hacer filtrado por uno solo, para boton delete llenar un estado
 //propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
@@ -111,7 +111,7 @@ export default function TableInfo() {
                   </td>
                   <td>{employee.environment} (lugar de trabajo)</td>
                   <td>
-                    <button onClick={e => toggle(e)}>
+                    <button onClick={e => toggle(e)} id={employee._id}>
                       <i className="material-icons">edit</i>
                     </button>
                   </td>
@@ -121,7 +121,7 @@ export default function TableInfo() {
         </table>
         <div className="footer-tools">
           <div className="list-items">
-            Show    
+            Show
             <select name="n-entries" id="n-entries" className="n-entries">
               <option value="20">20</option>
               <option value="10">10</option>

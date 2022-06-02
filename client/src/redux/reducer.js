@@ -51,7 +51,7 @@ const rootReducer = (state=initialState, {type,payload}) => {
         todoUpdate: payload,
       };
     case GET_EMPLOYEES:
-      const array = action.payload.watcher ? action.payload.watcher : action.payload.supervisor
+      const array = payload.watcher ? payload.watcher : payload.supervisor
       return {
         ...state,
         employees: array,
