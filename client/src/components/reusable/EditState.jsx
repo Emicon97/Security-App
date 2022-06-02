@@ -180,15 +180,15 @@ export default function EditState() {
             </div>
             <div>
               {todo.status === "done" ? (
-                <p className="bg-[#D8F7E6] text-[#006D64] px-2 py-0.5 rounded-lg text-lg shadow-lg">
+                <p className="bg-[#D8F7E6] text-[#006D64] px-2 py-0.5 rounded-lg text-lg shadow-lg min-w-[5em] text-center">
                   {todo.status}
                 </p>
               ) : todo.status === "postponed" ? (
-                <p className="bg-[#FFEFE4] text-[#EF5F0A] p-1 rounded-lg text-lg shadow-lg">
+                <p className="bg-[#FFEFE4] text-[#EF5F0A] p-1 rounded-lg text-lg shadow-lg min-w-[5em] text-center">
                   {todo.status}
                 </p>
               ) : (
-                <p className="bg-[#FFE5E8] text-[#DB041A] p-1 rounded-lg text-lg shadow-lg">
+                <p className="bg-[#FFE5E8] text-[#DB041A] p-1 rounded-lg text-lg shadow-lg min-w-[5em] text-center">
                   {todo.status}
                 </p>
               )}
