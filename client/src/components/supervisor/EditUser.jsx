@@ -3,52 +3,50 @@ import { useDispatch } from "react-redux";
 import { getEmployeeById, updateUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
+import { Primary } from "../styles/Buttons";
 
-export default function AddUser() {
+export default function EditUser() {
     const dispatch = useDispatch()
-    const typeUser = ["Boss", "Supervisor", "Watcher"];
+    const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
     const [formSend, setFormSend] = useState(false);
-
     const [image, setImage] = useState('')
     const [loading, setLoading] = useState(false);
     const uploadImage = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    
-    data.append('file', files[0]);
-    data.append('upload_preset', 'magqqp6o');
-    console.log(data)
-    setLoading(true);
-    const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
-    const file = await res.json();
-    console.log(file)
-    
-        setImage(file.secure_url);
-        setLoading(false)
+      const files = e.target.files;
+      const data = new FormData();
+      data.append('file', files[0]);
+      data.append('upload_preset', 'magqqp6o');
+      console.log(data)
+      setLoading(true);
+      const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
+      const file = await res.json();
+      console.log(file)
+      setImage(file.secure_url);
+      setLoading(false)
     };
 
     const viewPassword = () => {
         var x = document.getElementById('password');
         x.type === 'password' ? x.type = 'text' : x.type = 'password'
     };
+
     useEffect(() => {
-        dispatch(getEmployeeById());
+      dispatch(getEmployeeById());
     }, [dispatch]);
 
     return (
         <Formik 
             initialValues={{
                 name: '',
-                lastName:'',
-                password:'',
-                dni:'',
-                role:'',
-                profilePic:'',
-                email:'',
-                address:'',
-                environment:'',
-                telephone:'',
-                workingHours:''
+                lastName: '',
+                password: '',
+                dni: '',
+                profilePic: '',
+                email: '',
+                address: '',
+                environment: '',
+                telephone: '',
+                workingHours: ''
             }}
 
             validate={(val) => {
@@ -65,8 +63,6 @@ export default function AddUser() {
 
                 if(!val.environment) {errors.environment = "Por favor ingresa lugar de trabajo *"}
 
-                if(!val.role) {errors.role = "Por favor ingresa un rol *"}
-
                 if(!val.profilePic) {errors.profilePic = "Por favor ingresa una imagen *"}
 
                 if(!val.dni) {errors.dni = "Por favor ingresa un DNI *"}
@@ -80,117 +76,113 @@ export default function AddUser() {
                 return errors;
             }}
 
-            onSubmit ={(values, {resetForm})=>{
+            onSubmit ={(values, {resetForm}) => {
                 dispatch(updateUser(values));
                 console.log(values)
                 setFormSend(true);
                 resetForm();
-                setTimeout(()=>setFormSend(false),5000)
+                setTimeout(() => setFormSend(false), 5000)
             }}
-        >
+            >
 
-          {( {errors, values} ) => (
-            <Form className="flex flex-col items-center">
-              {console.log(values)}
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="name">
-                    Name: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="name" name="name" placeholder="Name..."/>
+            {( {errors, values} ) => (
+              <Form className="flex flex-col items-center">
+                {console.log(values)}
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <label htmlFor="name">
+                      Fisrt Name: <ErrorMessage name="name" component={() => (<small className="text-red-600">{errors.name}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="text" id="name" name="name" placeholder="Fisrt Name..."/>
+                  </div>
+                  <div>
+                    <label htmlFor="lastName">
+                      Last Name: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Last Name..."/>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="lastName">
-                    Lastname: <ErrorMessage name="lastName" component={()=>(<small className="text-red-600">{errors.lastName}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="lastName" name="lastName" placeholder="Lastname..."/>
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <label htmlFor="environment">
+                      Environment: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
+                    </label>
+                    <Field className={Input()} name="environment" as="select" >
+                      {
+                        !values.environment.length ?
+                        <option key="select">Environment...</option> :
+                        <option key="select" disabled >Environment...</option>
+                      }
+                      {typeEnv?.map(e => <option key={e} value={e}>{e}</option>)}
+                    </Field>
+                  </div>
+                  <div>
+                    <label htmlFor="dni">
+                      DNI: <ErrorMessage name="dni" component={()=>(<small className="text-red-600">{errors.dni}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="number" id="dni" name="dni" placeholder="DNI..."/>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="password">
-                    Password: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="password" id="password" name="password" placeholder="Password..." />
-                  {/* <input type="checkbox" onClick={viewPassword}/> */}
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <label htmlFor="address">
+                      Address: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="text" id="address" name="address" placeholder="Address..."/>
+                  </div>
+                  <div>
+                    <label htmlFor="email">
+                      Email: <ErrorMessage name="email" component={()=>(<small className="text-red-600">{errors.email}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="text" id="email" name="email" placeholder="Email..."/>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="dni">
-                    DNI: <ErrorMessage name="dni" component={()=>(<small className="text-red-600">{errors.dni}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="number" id="dni" name="dni" placeholder="DNI..."/>
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <label htmlFor="telephone">
+                      Telephone: <ErrorMessage name="telephone" component={()=>(<small className="text-red-600">{errors.telephone}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="number" id="telephone" name="telephone" placeholder="Telephone..."/>
+                  </div>
+                  <div>
+                    <label htmlFor="workingHours">
+                      Working Hours: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
+                    </label>
+                    <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Working Hours..."/>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="address">
-                    Address: <ErrorMessage name="address" component={()=>(<small className="text-red-600">{errors.address}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="address" name="address" placeholder="Address..."/>
+                <div className="flex flex-row items-center justify-between">
+                  <div>
+                    <label htmlFor="password">
+                      Password: <ErrorMessage name="password" component={() => (<small className="text-red-600">{errors.password}</small>)}/>
+                    </label>
+                    <div className="flex items-center">
+                      <Field className={Input()} type="password" id="password" name="password" placeholder="Password..." />
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" onClick={viewPassword} >
+                          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                          <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                        </svg>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email">
-                    Email: <ErrorMessage name="email" component={()=>(<small className="text-red-600">{errors.email}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="email" name="email" placeholder="Email..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="telephone">
-                    Telephone: <ErrorMessage name="telephone" component={()=>(<small className="text-red-600">{errors.telephone}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="number" id="telephone" name="telephone" placeholder="Telephone..."/>
-                </div>
-                <div>
-                  <label htmlFor="workingHours">
-                    Working Hours: <ErrorMessage name="workingHours" component={()=>(<small className="text-red-600">{errors.workingHours}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="workingHours" name="workingHours" placeholder="Working Hours..."/>
-                </div>
-              </div>
-              <div className="flex flex-row items-center justify-between">
-                <div>
-                  <label htmlFor="environment">
-                    Environment: <ErrorMessage name="environment" component={()=>(<small className="text-red-600">{errors.environment}</small>)}/>
-                  </label>
-                  <Field className={Input()} type="text" id="environment" name="environment" placeholder="Environment..."/>
-                </div>
-                <div>  
-                  <label>Role: <ErrorMessage name="role" component={()=>(<small className="text-red-600">{errors.role}</small>)}/></label>
-                  <Field name="role" as="select" className={Input()}>
+                <div className="m-3 w-96">
+                  <div className="flex flex-row">
+                    <Field className={File()} type="file" name="file" onChange={(e)=>uploadImage(e)}/>
                     {
-                      !values.role.length ?
-                      <option key="select">Select</option> :
-                      <option key="select" disabled >Select</option>
+                      loading ? 
+                      ((values.profilePic = image), <img className='w-10 h-10' src={image} style={{widht: '100px'}}/>) :
+                      <img src={demo} className='w-10 h-10' />
                     }
-                    {typeUser?.map(e => <option key={e} value={e}>{e}</option>)}
-                  </Field>
+                  </div>
+                  <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
                 </div>
-              </div>
-              <div className="m-3 w-96">
-                <div className="flex flex-row">
-                  <Field className={File()} type="file" name="file" onChange={(e)=>uploadImage(e)}/>
-                  {
-                    loading ? 
-                    ((values.profilePic = image), <img className='w-10 h-10' src={image} style={{widht: '100px'}}/>) :
-                    <img src={demo} className='w-10 h-10' />
-                  }
-                </div>
-                <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
-              </div>
-              <button className={Button()} type="submit">Add</button>
-              {formSend && (<small className="text-green-600">Employee created successfully</small>)}
-            </Form>
-          )}
+                <button className={Primary()} type="submit">Add</button>
+                {formSend && (<small className="text-green-600">Employee created successfully</small>)}
+              </Form>
+            )}
         </Formik>
     );
 };
-
-const Div = (props) => `
-    flex flex-row items-center justify-between
-    label:text-red-500
-`;
 
 const Input = (props) => `
     hover:bg-slate-100
@@ -209,14 +201,4 @@ const File = (props) => `
     file:text-sm file:font-semibold
     file:bg-blue-50 file:text-blue-700
     hover:file:bg-blue-100
-`;
-
-const Button = (props) => `
-    font-bold text-white
-    bg-blue-500
-    w-32 h-10 p-0 m-0
-    border-2 border-blue-500
-    hover:border-blue-600 hover:bg-blue-600
-    active:border-blue-700 active:bg-blue-700
-    rounded-3xl
 `;
