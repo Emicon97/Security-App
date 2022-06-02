@@ -8,12 +8,10 @@ export default function TableEmployees({ name, employees }) {
 
     useEffect(() => {
         setAllEmployees(employees)
-        console.log(allEmployees, "useEffect")
     }, [employees])
     useEffect(() => {
-        console.log(allEmployees)        
-    }, [allEmployees])
 
+    }, [allEmployees])
 
     let handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +24,7 @@ export default function TableEmployees({ name, employees }) {
     let handleRestart = () => {
         setAllEmployees(employees)
     }
-
+    console.log(allEmployees, employees)
     return (
         <>
             <div className="head">
@@ -35,7 +33,6 @@ export default function TableEmployees({ name, employees }) {
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="">
                         <button type="submit">🔎</button>
-                        {/* <input type="submit" value="🔎" /> */}
                         <input type="text" value={value} placeholder={`buscar ${name}`} onChange={handleChange}/>
                     </label>
 
@@ -43,7 +40,7 @@ export default function TableEmployees({ name, employees }) {
             </div>
             <div className="list-employees">
                 {
-                    allEmployees.length
+                    allEmployees
                     ? allEmployees.map(el => <div key={el}>{el}</div>)
                     : <h4>No tiene empleados</h4> 
                 }
