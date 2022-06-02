@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
 import Modal from "../reusable/Modal";
 import TableEmployees from "./tableEmployees";
-import { getUsersById } from "../../redux/actions";
+import { getEmployees, getUsersById } from "../../redux/actions";
 import './style.css'
 import { Primary } from "../styles/Buttons";
 
@@ -14,12 +14,14 @@ export default function BossProfile () {
     let dispatch = useDispatch();
     let { id } = useParams();
     let user = useSelector(state => state.userDetails[0])
-    console.log(user)
+    let supervisors = useSelector(state => state.employees)
+
     const toggle = () => {
         setActive(!active);
     };
     useEffect(() => {
         dispatch(getUsersById(id));
+        dispatch(getEmployees(id, ""));
     }, [dispatch])
 
 
@@ -30,8 +32,8 @@ export default function BossProfile () {
         <div className="home-boss">
             <div className="options">
                 <ul className="options-list">
-                    <li>Info</li>
-                    <li>Perfil</li>
+                    <Link to={`boss/${id}`}><li>Info</li></Link>
+                    <Link to={`/user/${id}/profile`}><li>Perfil</li></Link>
                     <Link to= {`/user/${id}`}><li>Empleados</li></Link>
                     <Link to="/home/add"><li>Añadir Empleados</li></Link>
                 </ul>
@@ -70,7 +72,7 @@ export default function BossProfile () {
                     </div>
 
                     <div className="employees">
-                        <TableEmployees name={"Supervisores"} employees={user ? user.employees : []}/>
+                        <TableEmployees name={"Supervisores"} employees={supervisors ? supervisors : []}/>
                     </div>
                     <div className="employees">
                         <TableEmployees name={"Guardias"} employees={user ? user.employees : []}/>

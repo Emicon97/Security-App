@@ -65,7 +65,7 @@ function App() {
         <Route path="/super" element={<TableInfoSupervisors />} />
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
         <Route exact path="/guard/:id" element={<GuardProfile />} />
-        <Route exact path="/guard/:id/profile" element={<UserProfile />} />
+        <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/editState/:id" element={<EditState />} />
         <Route path="/login" element={<LoginFake/>}/>
       </Routes>
