@@ -72,14 +72,10 @@ export default function BossProfile () {
                     </div>
 
                     <div className="employees">
-<<<<<<< HEAD
-                        <TableEmployees name={"Supervisores"} employees={user ? user.supervisor : []}/>
-=======
                         <TableEmployees name={"Supervisores"} employees={supervisors ? supervisors : []}/>
->>>>>>> 1238c73fc3d57a8d8e1070815417988261a569bf
                     </div>
                     <div className="employees">
-                        <TableEmployees name={"Guardias"} employees={user ? user.supervisor : []}/>
+                        <TableEmployees name={"Guardias"} employees={user ? user.employees : []}/>
                     </div>
 
                 </div>
