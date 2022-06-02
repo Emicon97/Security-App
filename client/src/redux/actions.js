@@ -4,7 +4,8 @@ import {
   GET_TODOS,
   GET_TODOS_ID,
   UPDATE_TASK_STATUS,
-  GET_EMPLOYEES
+  GET_EMPLOYEES,
+  LOGIN_PRUEBA
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -102,4 +103,15 @@ export function searchEmployees(id, name){
       payload: users.data
     });
   }
+}
+
+export function loginPrueba(value){
+  return async function(dispatch){
+    const user = await axios.post(`http://localhost:3001/user/login/`,value)
+    return dispatch({
+      type:LOGIN_PRUEBA,
+      payload: user.data
+    })
+  }
+
 }
