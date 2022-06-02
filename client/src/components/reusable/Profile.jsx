@@ -43,10 +43,10 @@ export default function UserProfile() {
             <button className={Primary()}>Edit</button>
           </div>
           <div className="h-40 flex flex-col justify-end">
-            <p className="text-4xl font-semibold">Lionel Messi</p>
-            <p className="text-2xl italic font-light">liomessielmasgrande@gmail.com</p>
-            <p>123132342543513124</p>
-            <p>+54 9 351-935-935</p>
+            <p className="text-4xl font-semibold">{user.name} {user.lastName}</p>
+            <p className="text-2xl italic font-light">{user.email}</p>
+            <p>{user.dni}</p>
+            <p>{user.telephone}</p>
           </div>
         </div>
       </div>

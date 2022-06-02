@@ -1,31 +1,39 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getEmployees, searchEmployees } from "../../redux/actions";
-import "./TableInfo.css";
+import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
+import "../styles/TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
-import Modal from "../reusable/Modal";
-import EditUser from "./EditUser";
+import Modal from "./Modal";
+import EditUser from "../supervisor/EditUser";
+
+//hacer filtrado por uno solo, para boton delete llenar un estado
+//propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
 
 export default function TableInfo() {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
   const { id } = useParams();
   const [active, setActive] = useState(false);
-
+  
   const toggle = () => {
     setActive(!active);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getEmployees(id, e.target.value));
+    dispatch(searchEmployees(id, e.target.value));
   };
 
   const handleAllButton = (e) => {
     e.preventDefault();
     dispatch(searchEmployees(id, ""));
   };
+//chequear
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if(e.target.value) console.log("entre")
+  }
 
   const handleCheckbox = (e) => {
     if (e.target.checked) {
@@ -64,7 +72,7 @@ export default function TableInfo() {
                 </button>
               </li>
               <li>
-                <button>
+                <button onClick={e => handleDelete(e)}>
                   <i className="material-icons">delete</i>
                 </button>
               </li>
@@ -103,7 +111,7 @@ export default function TableInfo() {
                   </td>
                   <td>{employee.environment} (lugar de trabajo)</td>
                   <td>
-                    <button onClick={e => toggle(e)}>
+                    <button onClick={e => toggle(e)} id={employee._id}>
                       <i className="material-icons">edit</i>
                     </button>
                   </td>
@@ -149,7 +157,7 @@ export default function TableInfo() {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditUser id="id"></EditUser>
+        <EditUser id={id}></EditUser>
       </Modal>
     </>
   );

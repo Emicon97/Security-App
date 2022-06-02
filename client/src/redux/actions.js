@@ -7,6 +7,7 @@ import {
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
   UPDATE_USER,
+  DELETE_USER,
   LOGIN_PRUEBA
 } from "./ActionTypes";
 
@@ -92,7 +93,7 @@ export function getEmployees(id){
       const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
       return dispatch({
         type:GET_EMPLOYEES,
-        payload: users.data.watcher
+        payload: users.data
       });
 }
 };
@@ -127,6 +128,15 @@ export function updateUser(id, post){
   }
 }
 
+export function deleteUser(id){
+  return async function(dispatch){
+    const user = await axios.delete(`http://localhost:3001/user/${id}`);
+    return dispatch({
+      type: DELETE_USER,
+      payload: user.data
+    });
+  }
+}
 export function loginPrueba(value){
   return async function(dispatch){
     const user = await axios.post(`http://localhost:3001/login/`, value);
