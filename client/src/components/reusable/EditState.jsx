@@ -98,7 +98,7 @@ export default function EditState() {
     <div className={container}>
       <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
-          <button className={Primary}>
+          <button className={`${Primary()} ml-3`}>
             <h2>Go Back</h2>
           </button>
         </Link>

@@ -10,6 +10,7 @@ import {
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
 import "./styles.css";
+import { Primary } from '../styles/Buttons'
 
 export default function GuardProfile() {
 
@@ -97,10 +98,10 @@ export default function GuardProfile() {
   return (
     <div className="screen-tasks">
       <div className="contenedor_tareas">
-        <div className="head-tasks">
+        <div className="head-tasks p-3">
 
 
-          <Link to={`/EditState/${id}`}><button className="rounded-lg border-solid border-2 border-inherit ml-2 hover:bg-cyan-200 mt-2">Edit</button></Link>
+          <Link to={`/EditState/${id}`}><button className={`${Primary()}`}>Edit</button></Link>
           
 
           <h2 className="list-tasks">List of Tasks</h2>
