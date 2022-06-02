@@ -1,7 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getEmployees, searchEmployees } from "../../redux/actions";
+import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
 import "./TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
 import Modal from "../reusable/Modal";
@@ -12,20 +12,25 @@ export default function TableInfo() {
   const watchers = useSelector((state) => state.employees);
   const { id } = useParams();
   const [active, setActive] = useState(false);
-console.log(watchers)
+  
   const toggle = () => {
     setActive(!active);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getEmployees(id, e.target.value));
+    dispatch(searchEmployees(id, e.target.value));
   };
 
   const handleAllButton = (e) => {
     e.preventDefault();
     dispatch(searchEmployees(id, ""));
   };
+//chequear
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if(e.target.value) console.log("entre")
+  }
 
   const handleCheckbox = (e) => {
     if (e.target.checked) {
@@ -64,7 +69,7 @@ console.log(watchers)
                 </button>
               </li>
               <li>
-                <button>
+                <button onClick={e => handleDelete(e)}>
                   <i className="material-icons">delete</i>
                 </button>
               </li>
