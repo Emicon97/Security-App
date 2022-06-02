@@ -6,7 +6,9 @@ import {
   UPDATE_TASK_STATUS,
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
-  UPDATE_USER
+  UPDATE_USER,
+  DELETE_USER,
+  LOGIN_PRUEBA
 } from "./ActionTypes";
 
 const initialState = {
@@ -15,53 +17,70 @@ const initialState = {
   employees: [],
   users: [],
   userDetails: {},
-  todosId: [],
-  todos: [],
+  todosId:[],
+  todos:[],
   todoUpdate: {},
+  userData:{}
 };
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
+const rootReducer = (state=initialState, {type,payload}) => {
+  switch (type) {
     case GET_USER:
       return {
         ...state,
-        users: action.payload,
+        users: payload,
       };
-    case GET_USER_ID:
+      case GET_USER_ID:
+        return {
+          ...state,
+          userDetails: payload
+        }
+      case GET_TODOS:
       return {
         ...state,
-        userDetails: action.payload,
-      };
-    case GET_TODOS:
-      return {
-        ...state,
-        todos: action.payload,
+        todos: payload,
       };
     case GET_TODOS_ID:
       return {
         ...state,
-        todosId: action.payload,
+        todosId: payload,
       };
     case UPDATE_TASK_STATUS:
       return {
         ...state,
-        todoUpdate: action.payload,
+        todoUpdate: payload,
       };
     case GET_EMPLOYEES:
+      const array = payload.watcher ? payload.watcher : payload.supervisor
       return {
         ...state,
-        employees: action.payload,
+        employees: array,
       };
     case GET_EMPLOYEE_BY_ID:
       return {
         ...state,
-        watcherDetail: action.payload,
+        watcherDetail: payload,
+        todoUpdate: payload
+      }
+      case GET_EMPLOYEES: 
+      return {
+        ...state,
+        employees: payload
       }
       case UPDATE_USER:
         return{
           ...state,
-          userDetails: action.payload,
+          userDetails: payload,
         }
+        case DELETE_USER:
+          return{
+            ...state,
+          }
+        case LOGIN_PRUEBA:
+          return {
+            ...state,
+            userData: payload
+          }
     default:
       return { ...state };
   }
