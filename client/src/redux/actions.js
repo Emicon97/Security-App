@@ -4,7 +4,9 @@ import {
   GET_TODOS,
   GET_TODOS_ID,
   UPDATE_TASK_STATUS,
-  GET_EMPLOYEES
+  GET_EMPLOYEES,
+  GET_EMPLOYEE_BY_ID,
+  UPDATE_USER
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -84,12 +86,42 @@ export function postUser(post){
   }
 }
 
-export function getEmployees(id,name){
+export function getEmployees(id){
   return async function(dispatch){
-      const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+      const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
       return dispatch({
         type:GET_EMPLOYEES,
-        payload: users.data
+        payload: users.data.watcher
       });
 }
+};
+
+export function searchEmployees(id, name){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+    return dispatch({
+      type:GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
+};
+
+export function getEmployeeById(id){
+  return async function(dispatch){
+    const user = await axios.get(`http://localhost:3001/user/${id}`);
+    return dispatch({
+      type:GET_EMPLOYEE_BY_ID,
+      payload: user.data
+    });
+  }
+};
+
+export function updateUser(id, post){
+  return async function(dispatch){
+    const user = await axios.put(`http://localhost:3001/user/${id}`, post);
+    return dispatch({
+      type: UPDATE_USER,
+      payload: user.data
+    });
+  }
 }

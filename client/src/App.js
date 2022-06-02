@@ -61,6 +61,7 @@ function App() {
         
         {/* Rutas sin modificar por si pinta eliminar las de arriba */}
         <Route path="/home/add" element={<AddUser />} />
+        <Route path="/boss/:id" element={ <HomeBoss/> } />
         <Route path="/super" element={<TableInfoSupervisors />} />
         <Route path="/supervisor/:id" element={<TableInfo />} />
         <Route exact path="/guard/:id" element={<GuardProfile />} />
