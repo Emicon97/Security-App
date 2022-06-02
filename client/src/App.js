@@ -57,7 +57,9 @@ function App() {
             />
           }
         /> */}
-
+        {/* Ruta para testear los componentes Home de cada rol */}
+        <Route path="/boss/:id" element={<HomeBoss/>}/>
+        
         {/* Rutas sin modificar por si pinta eliminar las de arriba */}
         <Route path="/home/add" element={<AddUser />} />
         <Route path="/super" element={<TableInfoSupervisors />} />
