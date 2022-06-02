@@ -12,10 +12,10 @@ class Report {
    @prop()
    public picture?: string;
 
-   @prop({ ref: () => Watcher || Supervisor })
+   @prop({ required: true, ref: () => Watcher || Supervisor })
    public sender: Ref<Watcher> | Ref<Supervisor>;
 
-   @prop({ ref: () => Supervisor || Boss })
+   @prop({ required: true, ref: () => Supervisor || Boss })
    public receiver: Ref<Supervisor> | Ref<Boss>;
 
 }
