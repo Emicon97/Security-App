@@ -8,6 +8,7 @@ import GuardProfile from "./components/guard/GuardProfile";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import TableInfo from "./components/supervisor/TableInfo";
 import UserProfile from "./components/reusable/Profile";
+import HomeBoss from "./components/boss/HomeBoss";
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -55,7 +56,9 @@ function App() {
             />
           }
         /> */}
-
+        {/* Ruta para testear los componentes Home de cada rol */}
+        <Route path="/boss/:id" element={<HomeBoss/>}/>
+        
         {/* Rutas sin modificar por si pinta eliminar las de arriba */}
         <Route path="/home/add" element={<AddUser />} />
         <Route path="/super" element={<TableInfoSupervisors />} />
