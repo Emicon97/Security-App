@@ -8,11 +8,8 @@ import GuardProfile from "./components/guard/GuardProfile";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import TableInfo from "./components/supervisor/TableInfo";
 import UserProfile from "./components/reusable/Profile";
-<<<<<<< HEAD
 import HomeBoss from "./components/boss/HomeBoss";
-=======
 import LoginFake from "./components/LoginFake";
->>>>>>> 3eae3eca3e68d0c0c0873044ec0bb3b77f8756b9
 
 function App() {
 //objeto que simula datos del usuario logeado

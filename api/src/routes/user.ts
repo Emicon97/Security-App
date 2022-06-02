@@ -9,7 +9,7 @@ const router = Router();
 router.get('/:id', async(req,res) => {
     try{
         let {id}=req.cookies
-        //let {id} = req.params
+        console.log(id)
         let dataUser = await getUserById(id)
         res.json(dataUser)
     } catch (error) {
@@ -26,15 +26,19 @@ router.post('/login', async(req, res)=>{
     try{
         let {dni, password}= req.body
         let findUser = await logIn(dni, password)
-        console.log("acaaaaaaa",findUser[0].id)
+        let url = findUser[0].id
         if(findUser!==false){
-            res.cookie('id',findUser[0].id)
-            res.redirect(`/:id`)
+            res.cookie('id', url)
+            res.redirect(`/user`)
         }else{
             res.redirect('/login')
         }
-    }catch(err){
-        console.log(err)
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(404).json(error.message);
+        } else {
+            console.log('Unexpected Error', error);
+        }
     }
 })
 

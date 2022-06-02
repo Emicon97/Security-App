@@ -13,7 +13,7 @@ export default function LoginFake(){
         password:""
     })
     useEffect(()=>{
-        dispatch(loginPrueba({dni:14000,password:"abc123"}))
+        dispatch(loginPrueba({dni:12415114336,password:"1234"}))
     },[userdata])
     console.log(userdata)
     return(
