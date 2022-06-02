@@ -1,4 +1,13 @@
-import { GET_USER , GET_TODOS, GET_TODOS_ID, GET_USER_ID, UPDATE_TASK_STATUS, GET_EMPLOYEES } from "./ActionTypes";
+import {
+  GET_USER,
+  GET_TODOS,
+  GET_TODOS_ID,
+  GET_USER_ID,
+  UPDATE_TASK_STATUS,
+  GET_EMPLOYEES,
+  GET_EMPLOYEE_BY_ID,
+  UPDATE_USER
+} from "./ActionTypes";
 
 const initialState = {
   supervisorDetail: {},
@@ -6,43 +15,53 @@ const initialState = {
   employees: [],
   users: [],
   userDetails: {},
-  todosId:[],
-  todos:[],
-  todoUpdate: {}
+  todosId: [],
+  todos: [],
+  todoUpdate: {},
 };
 
-const rootReducer = (state=initialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
-    return {
+      return {
         ...state,
         users: action.payload,
       };
-      case GET_USER_ID:
-        return {
-          ...state,
-          userDetails: action.payload
-        }
-      case GET_TODOS:
+    case GET_USER_ID:
+      return {
+        ...state,
+        userDetails: action.payload,
+      };
+    case GET_TODOS:
       return {
         ...state,
         todos: action.payload,
       };
-     case GET_TODOS_ID:
+    case GET_TODOS_ID:
       return {
         ...state,
         todosId: action.payload,
       };
-      case UPDATE_TASK_STATUS: 
+    case UPDATE_TASK_STATUS:
       return {
         ...state,
-        todoUpdate: action.payload
-      }
-      case GET_EMPLOYEES: 
+        todoUpdate: action.payload,
+      };
+    case GET_EMPLOYEES:
       return {
         ...state,
-        employees: action.payload
+        employees: action.payload,
+      };
+    case GET_EMPLOYEE_BY_ID:
+      return {
+        ...state,
+        watcherDetail: action.payload,
       }
+      case UPDATE_USER:
+        return{
+          ...state,
+          userDetails: action.payload,
+        }
     default:
       return { ...state };
   }
