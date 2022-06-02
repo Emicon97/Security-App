@@ -1,3 +1,4 @@
+import React from 'react'
 import { useEffect, useState } from "react"
 
 
@@ -5,6 +6,7 @@ export default function TableEmployees({ name, employees }) {
 
     let [value, setValue] = useState('');
     let [allEmployees, setAllEmployees] = useState(employees)
+    console.log(employees)
 
     useEffect(() => {
         setAllEmployees(employees)
@@ -24,7 +26,6 @@ export default function TableEmployees({ name, employees }) {
     let handleRestart = () => {
         setAllEmployees(employees)
     }
-    console.log(allEmployees, employees)
     return (
         <>
             <div className="head">
@@ -41,8 +42,8 @@ export default function TableEmployees({ name, employees }) {
             <div className="list-employees">
                 {
                     allEmployees
-                    ? allEmployees.map(el => <div key={el}>{el}</div>)
-                    : <h4>No tiene empleados</h4>
+                    ? allEmployees.map(employee => <div key={employee._id}>{employee.name} {employee.lastName}</div>)
+                    : <h4>No tiene empleados</h4> 
                 }
             </div>
         </>
