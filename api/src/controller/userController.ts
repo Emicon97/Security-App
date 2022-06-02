@@ -20,7 +20,7 @@ async function getUserById(id:string):Promise<[ Boss | Supervisor | Watcher | Ne
     } else if (findNeighbour!==null) {
         return response = [findNeighbour, 'neighbour'];
     }
-    throw new Error ("This user doesn't exist.");
+    throw new Error ("This user does not exist.");
 }
 
 async function getUserByHierarchy(id:string, name?:string) {
