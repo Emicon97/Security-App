@@ -5,15 +5,21 @@ import { getUsersById } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import { Primary } from "../styles/Buttons";
 import see from "../../assets/see.png";
+import EditUser from "../supervisor/EditUser";
 
 export default function UserProfile() {
   const dispatch = useDispatch();
-  const [active, setActive] = useState(false);
-  const user = useSelector((state) => state.userDetails);
+  const [activePic, setActivePic] = useState(false);
+  const [activeEdit, setActiveEdit] = useState(false);
+  const user = useSelector((state) => state.userDetails[0]);
   const { id } = useParams();
 
-  const toggle = () => {
-    setActive(!active);
+
+  const togglePic = () => {
+    setActivePic(!activePic);
+  };
+  const toggleEdit = () => {
+    setActiveEdit(!activeEdit);
   };
 
   useEffect(() => {
@@ -30,7 +36,7 @@ export default function UserProfile() {
             width="300rem"
             className={Image()}
           />
-          <button onClick={toggle} className={Primary()}>
+          <button onClick={togglePic} className={Primary()}>
             See pic
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -40,7 +46,7 @@ export default function UserProfile() {
         </div>
         <div className="bg-[#EEEDFF] w-2/5 h-64 p-5 m-4 h-60 rounded-3xl">
           <div className="flex justify-end">
-            <button className={Primary()}>Edit</button>
+            <button className={Primary()} onClick={toggleEdit}>Edit</button>
           </div>
           <div className="h-40 flex flex-col justify-end">
             <p className="text-4xl font-semibold">{user.name} {user.lastName}</p>
@@ -50,12 +56,15 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <Modal active={active} toggle={toggle}>
+      <Modal active={activePic} toggle={togglePic}>
         <img
           className="w-80 h-80 rounded-full m-5"
           src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
           alt="Foto de perfil"
         />
+      </Modal>
+      <Modal active={activeEdit} toggle={toggleEdit}>
+        <EditUser user={user}></EditUser>
       </Modal>
     </>
   );
