@@ -36,7 +36,7 @@ async function getUserByHierarchy(id:string, name?:string) {
 async function getEmployees (id:string) {
     let boss = await bossModel.findById(id);
     if (boss) {
-        return await bossModel.findById(id ).populate({path:'supervisor'});
+        return await bossModel.findById(id).populate({path:'supervisor'});
     }else{
         return await supervisorModel.findById(id).populate({path:'watcher'});
     }
@@ -207,5 +207,5 @@ module.exports = {
     getUserById,
     getUserByHierarchy,
     deleteUser,
-    updateUser
+    updateUser,
 }
