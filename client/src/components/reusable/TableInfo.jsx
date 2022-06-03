@@ -1,6 +1,5 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
 import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
 import "../styles/TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
@@ -13,21 +12,23 @@ import EditUser from "../supervisor/EditUser";
 export default function TableInfo({ id }) {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
+  const header = useSelector((state) => state.token);
   const [active, setActive] = useState(false);
   const[editUser, setEditUser] = useState({});
-
   const toggle = () => {
     setActive(!active);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(searchEmployees(id, e.target.value));
+    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
+    //dispatch(getEmployees(id));
   };
 
   const handleAllButton = (e) => {
     e.preventDefault();
-    dispatch(searchEmployees(id, ""));
+    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
+    // dispatch(searchEmployees(id, ""));
   };
 
   const handleCheckbox = (e) => {
@@ -48,8 +49,9 @@ export default function TableInfo({ id }) {
 
   //Each time you click the edit button, the function will be called
   useEffect(() => {
-    dispatch(getEmployees(id, ""));
-  }, [dispatch, id]);
+    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
+  }, [dispatch]);
+  
   return (
     <>
       <div className="datatable-container">

@@ -88,15 +88,15 @@ export function postUser(post){
   }
 }
 
-export function getEmployees(id){
+export function getEmployees(id, header){
   return async function(dispatch){
-      const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
-      return dispatch({
-        type:GET_EMPLOYEES,
-        payload: users.data
-      });
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    return dispatch({
+      type: GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
 }
-};
 
 export function searchEmployees(id, name){
   return async function(dispatch){
@@ -139,11 +139,20 @@ export function deleteUser(id){
 }
 export function loginPrueba(value){
   return async function(dispatch){
-    const user = await axios.post(`http://localhost:3001/login/`, value);
+    const user = await axios.post(`http://localhost:3001/login`, value);
     return dispatch({
       type: LOGIN_PRUEBA,
       payload: user.data
     })
   }
+}
 
+export function headerTest(id, header){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    return dispatch({
+      type: GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
 }

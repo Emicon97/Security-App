@@ -1,10 +1,21 @@
-import React from 'react';
-import { useLocation, useResolvedPath } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useLocation } from 'react-router-dom';
 import BossProfile from './boss/BossProfile';
 import GuardProfile from './guard/GuardProfile';
 import HomeSupervisor from './supervisor/HomeSupervisor';
 
+import { getEmployees } from '../redux/actions';
+
 export default function Home () {
+    const dispatch = useDispatch();
+    const header = useSelector((state) => state.token);
+    const { id } = useParams();
+
+    useEffect(() => {
+        console.log(header)
+        dispatch(getEmployees(id, {headers:{'auth-token': header}}))
+      }, [dispatch]);
 
     //variable para saber el path
     let prueba = useLocation()
