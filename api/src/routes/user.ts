@@ -1,5 +1,6 @@
 import { Router } from 'express';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
+<<<<<<< HEAD
 const {logIn}=require('../controller/logInController')
 import jwt from 'jsonwebtoken';
 // import { TokenValidation } from './../libs/verifyToken';
@@ -47,6 +48,15 @@ export const TokenValidation = (req, res, next)=>{
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
 router.get('/:id',TokenValidation ,async(req,res) => {
+=======
+const { idIdentifier } = require('../controller/logInController');
+
+const router=Router();
+
+//* GET trae los usuarios segun el id desde la Base de Datos
+//http://localhost:3001/user/:id   //*id por params
+router.get('/:id', async(req,res) => {
+>>>>>>> 7106e847e77e625ed1272f31e7b0af112448dafb
     try{
         console.log('req',TokenValidation)
         let { id } = req.params;
@@ -90,6 +100,7 @@ router.post('/login', async(req, res)=>{
 router.get('/employees/:id', async (req, res)=> {
     try{
         let { id } = req.params;
+        await idIdentifier(id);
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
         res.json(userData);
