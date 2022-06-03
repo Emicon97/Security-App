@@ -14,11 +14,8 @@ export class ToDos {
     @prop({ enum: TODO_STATUS, default: 'left' })
     public status: string;
 
-    @prop({ ref: () => Supervisor })
-    public supervisor: Ref<Supervisor>;
-
-    @prop({ ref: () => Watcher })
-    public watcher: Ref<Watcher>;
+    @prop({ ref: () => Supervisor || Watcher })
+    public responsible: Ref<Supervisor> |  Ref<Watcher>;
 
     @prop({ enum: PRIORITIES, required: true })
     public priority: string;
