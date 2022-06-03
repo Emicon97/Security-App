@@ -2,11 +2,23 @@ import { Router } from 'express';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
 const {logIn}=require('../controller/logInController')
 import jwt from 'jsonwebtoken';
-import { TokenValidation } from './../libs/verifyToken';
+// import { TokenValidation } from './../libs/verifyToken';
 
 const router=Router()
 
+interface IPayload {
+    _id: string;
+    iat: number;
+    exp: number;
+}
 
+export const TokenValidation = (req, res, next)=>{
+    const token = req.header('auth-token');
+    if(!token) return res.status(401).json('Access denied')
+    const payload = jwt.verify(token,process.env.TOKEN_SECRET||'tokenPass') as IPayload
+    req.userId = payload._id;
+    next()
+}
 // //* GET trae los usuarios segun la clase desde la Base de Datos
 // //http://localhost:3001/user/?name={name}
 // router.get('/', async(req,res)=>{
