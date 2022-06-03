@@ -1,7 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getEmployees, searchEmployees } from "../../redux/actions";
+import { getEmployees, searchEmployees, headerTest } from "../../redux/actions";
 import "./TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
 import Modal from "../reusable/Modal";
@@ -10,6 +10,7 @@ import EditUser from "./EditUser";
 export default function TableInfo() {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
+  const header = useSelector((state) => state.token);
   const { id } = useParams();
   const [active, setActive] = useState(false);
 
@@ -19,12 +20,14 @@ export default function TableInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getEmployees(id, e.target.value));
+    dispatch(headerTest(id, {headers:{'auth-token':header}}))
+    //dispatch(getEmployees(id));
   };
 
   const handleAllButton = (e) => {
     e.preventDefault();
-    dispatch(searchEmployees(id, ""));
+    dispatch(headerTest(id, {headers:{'auth-token':header}}))
+    // dispatch(searchEmployees(id, ""));
   };
 
   const handleCheckbox = (e) => {
@@ -40,7 +43,8 @@ export default function TableInfo() {
   };
 
   useEffect(() => {
-    dispatch(getEmployees(id, ""));
+    dispatch(headerTest(id, {headers:{'auth-token':header}}))
+    //dispatch(getEmployees(id, ""));
   }, [dispatch]);
   return (
     <>

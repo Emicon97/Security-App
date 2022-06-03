@@ -130,10 +130,21 @@ export function updateUser(id, post){
 export function loginPrueba(value){
   return async function(dispatch){
     const user = await axios.post(`http://localhost:3001/user/login`, value);
+    console.log(user)
     return dispatch({
       type: LOGIN_PRUEBA,
       payload: user.data
     })
   }
+}
 
+export function headerTest(id, header){
+  return async function(dispatch){
+    // const users = await axios.get(`http://localhost:3001/user/employees/${id}`);
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    return dispatch({
+      type: GET_EMPLOYEES,
+      payload: users.data.watcher
+    });
+  }
 }
