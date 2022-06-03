@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { TokenValidation } from '../libs/verifyToken';
 import jwt from 'jsonwebtoken';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
-const {logIn} = require('../controller/logInController');
 const { idIdentifier } = require('../controller/logInController');
 
 const router=Router();
@@ -23,30 +22,6 @@ router.get('/:id', TokenValidation, async(req,res) => {
     }
 })
 
-router.post('/login', async(req, res, next)=>{
-    try{
-        let {dni, password}= req.body;
-        let findUser = await logIn(dni, password);
-       
-        if(findUser!==false){
-                const token = jwt.sign({_id:findUser.id}, process.env.TOKEN_SECRET || 'tokenPass', {
-                expiresIn:60*60*24
-            })
-            let dataUser = await getUserById(findUser.id);
-            dataUser.push(token);
-            res.cookie('auth-token', token).json(dataUser);
-            //res.header('auth-token', token).json(dataUser);
-        } else {
-          res.redirect('/login');
-        }
-    } catch (error) {
-       if (error instanceof Error) {
-          res.status(404).json(error.message);
-       } else {
-          console.log('Unexpected Error', error);
-       }
-    }
- })
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
 //http://localhost:3001/user/:id?name=name
@@ -65,7 +40,6 @@ router.get('/employees/:id', TokenValidation, async (req, res)=> {
         }
     }
 })
-
 
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body

@@ -81,7 +81,7 @@ const rootReducer = (state=initialState, {type,payload}) => {
           return {
             ...state,
             userData: payload,
-            token: payload
+            token: payload[2]
           }
     default:
       return { ...state };
