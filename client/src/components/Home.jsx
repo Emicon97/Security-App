@@ -10,7 +10,6 @@ export default function Home () {
     let prueba = useLocation()
     //me quedo con el string del rol
     let rolUsuario = prueba.pathname.split("/")[1];
-    console.log(rolUsuario)
     let home;
     switch (rolUsuario) {
         case "boss": 
