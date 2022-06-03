@@ -1,6 +1,5 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 import { Boss, Supervisor, Watcher, Neighbour } from '../models/user';
-import jwt from 'jsonwebtoken';
 
 const { workerIdentifier } = require('./toDosController');
  
@@ -75,7 +74,7 @@ async function signUp (
     telephone:number,
     environment:string,
     workingHours?:string,
-    profilePic?:string):Promise<string> {
+    profilePic?:string) {
         
     await dniCHecker(dni);
     
@@ -95,11 +94,8 @@ async function signUp (
                 profilePic: profilePic ? profilePic : undefined
             })
             const saveUser:any = await supervisor.save();
-            //create Token
-            // const token:string = jwt.sign({_id:saveUser._id},process.env.TOKEN_SECRET||'tokenPass');
             await bossModel.findByIdAndUpdate(id, { $push: { supervisor } });
             return saveUser;
-            //break;
         case 'supervisor':
             const watcher = await watcherModel.create({
                 name,
@@ -113,13 +109,9 @@ async function signUp (
                 profilePic: profilePic ? profilePic : undefined
             })
             const saveUser2:any = await watcher.save();
-            //const token2:string = jwt.sign({_id:saveUser2._id},process.env.TOKEN_SECRET||'tokenPass');
             await supervisorModel.findByIdAndUpdate(id, { $push: { watcher } });
             return saveUser2;
-            //break;
     }
-
-    return 'Profile successfully created.';
 }
 
 async function dniCHecker (dni:number) {

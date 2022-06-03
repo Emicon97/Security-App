@@ -100,5 +100,5 @@
   },
   "include": ["src"],
   "exclude": ["node_modules"],
-  "files":["types.d.ts"]
+  "files":["custom.d.ts"]
 }
