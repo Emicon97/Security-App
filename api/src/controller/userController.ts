@@ -1,7 +1,5 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 import { Boss, Supervisor, Watcher, Neighbour } from '../models/user';
-
-const { workerIdentifier } = require('./toDosController');
  
 async function getUserById(id:string):Promise<[ Boss | Supervisor | Watcher | Neighbour, string ]> {
     var response:[ Boss | Supervisor | Watcher | Neighbour, string ];
@@ -78,7 +76,7 @@ async function signUp (
         
     await dniCHecker(dni);
     
-    let creator = await workerIdentifier(id);
+    let creator = await roleIdentifier(id);
 
     switch (creator) {
         case 'boss':
@@ -116,6 +114,66 @@ async function signUp (
     return 'Profile successfully created.';
 }
 
+async function deleteUser (id:string, role:string):Promise<string> {
+    if(role === 'supervisor') {
+        await supervisorModel.findByIdAndDelete(id);
+        return 'Supervisor deleted.';
+    }
+    if(role === 'watcher') {
+        await watcherModel.findByIdAndDelete(id);
+        return 'Security guard deleted.';
+    };
+    throw new Error ('The person that you are trying to delete from the database could not be found.');
+}
+
+async function updateUser (
+    id:string,
+    password?:string,
+    email?:string,
+    telephone?:number,
+    environment?:string,
+    workingHours?:string,
+    profilePic?:string
+    ):Promise<string> {
+
+    const role = await roleIdentifier(id);
+        
+    if (role === 'supervisor') {
+    await supervisorModel.findByIdAndUpdate(id,{
+            password,
+            email,
+            telephone,
+            environment,
+            workingHours,
+            profilePic
+        })
+        
+        return 'Parameters updated successfully.'
+    }
+    if (role === 'watcher') {
+        await watcherModel.findByIdAndUpdate(id,{
+            password,
+            email,
+            telephone,
+            environment,
+            workingHours,
+            profilePic
+        })
+        return 'Parameters updated successfully.'
+    }
+    return 'The parameters could not be updated.';
+}
+
+async function roleIdentifier (id:string):Promise<string> { 
+    const isBoss = await bossModel.findById(id);
+    if (isBoss !== null) return 'boss';
+    const isSupervisor = await supervisorModel.findById(id);
+    if (isSupervisor !== null) return 'supervisor';
+    const isWatcher = await watcherModel.findById(id); 
+    if (isWatcher !== null) return 'watcher';
+    throw new Error ("No task has been found for this employee.");
+}
+
 async function dniCHecker (dni:number) {
     await watcherModel.findOne({dni})
     .then((watcher) => {
@@ -142,56 +200,6 @@ async function dniCHecker (dni:number) {
     .catch((err) => {
         throw new Error (err.message);
     })
-}
-
-async function deleteUser (id:string, role:string):Promise<string> {
-    if(role === 'supervisor') {
-        await supervisorModel.findByIdAndDelete(id);
-        return 'Supervisor deleted.';
-    }
-    if(role === 'watcher') {
-        await watcherModel.findByIdAndDelete(id);
-        return 'Security guard deleted.';
-    };
-    throw new Error ('The person that you are trying to delete from the database could not be found.');
-}
-
-async function updateUser (
-    id:string,
-    password?:string,
-    email?:string,
-    telephone?:number,
-    environment?:string,
-    workingHours?:string,
-    profilePic?:string
-    ):Promise<string> {
-
-    const role = await workerIdentifier(id);
-        
-    if (role === 'supervisor') {
-    await supervisorModel.findByIdAndUpdate(id,{
-            password,
-            email,
-            telephone,
-            environment,
-            workingHours,
-            profilePic
-        })
-        
-        return 'Parameters updated successfully.'
-    }
-    if (role === 'watcher') {
-        await watcherModel.findByIdAndUpdate(id,{
-            password,
-            email,
-            telephone,
-            environment,
-            workingHours,
-            profilePic
-        })
-        return 'Parameters updated successfully.'
-    }
-    return 'The parameters could not be updated.';
 }
 
 module.exports = {
