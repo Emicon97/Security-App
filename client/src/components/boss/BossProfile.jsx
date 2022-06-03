@@ -15,7 +15,6 @@ export default function BossProfile () {
     let { id } = useParams();
     let user = useSelector(state => state.userDetails[0])
     let supervisors = useSelector(state => state.employees)
-
     const toggle = () => {
         setActive(!active);
     };
@@ -30,14 +29,7 @@ export default function BossProfile () {
 
     return (
         <div className="home-boss">
-            <div className="options">
-                <ul className="options-list">
-                    <Link to={`boss/${id}`}><li>Info</li></Link>
-                    <Link to={`/user/${id}/profile`}><li>Perfil</li></Link>
-                    <Link to= {`/user/${id}`}><li>Empleados</li></Link>
-                    <Link to="/home/add"><li>Añadir Empleados</li></Link>
-                </ul>
-            </div>
+            
             <div className="info-screen">
 
 

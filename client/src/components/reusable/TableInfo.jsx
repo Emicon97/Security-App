@@ -10,10 +10,9 @@ import EditUser from "../supervisor/EditUser";
 //hacer filtrado por uno solo, para boton delete llenar un estado
 //propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
 
-export default function TableInfo() {
+export default function TableInfo({id}) {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
-  const { id } = useParams();
   const [active, setActive] = useState(false);
   
   const toggle = () => {
