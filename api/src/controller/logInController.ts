@@ -1,5 +1,4 @@
 import { bossModel, supervisorModel, watcherModel } from '../models/user';
-import { sessionModel } from '../models/session';
 
 async function logIn (dni:number, password:string) {
     if(dni && password){
@@ -19,14 +18,6 @@ async function logIn (dni:number, password:string) {
     }
 }
 
-async function idIdentifier (paramsId:string) {
-    let session = await sessionModel.findOne({ user: paramsId });
-    if (session) return;
-
-    throw new Error ('ESTE ES UN ERROR');
-}
-
 module.exports={
-    logIn,
-    idIdentifier
+    logIn
 }

@@ -36,13 +36,13 @@ async function getPaginatedAll (id:string, limit:number, skip:number){
         if(boss){
             return await bossModel.findOne({id:id}).populate({
                     path:'supervisor',
-                    options:{ limit:limit, skip:skip }
+                    options:{ limit, skip }
                 });
         }else{
             return await supervisorModel.findOne({id:id}).populate(
                 {
                     path:'watcher',
-                    options:{ limit: limit, skip:skip }
+                    options:{ limit, skip }
                 });
         }
     }catch(error:any){
@@ -59,13 +59,13 @@ async function getPaginatedEmployeesByName (id:string, limit:number, skip:number
             return await bossModel.findOne({id:id}).populate({
                 path:'supervisor',
                 match:{ name: {$regex} },
-                options:{ limit:limit, skip:skip }
+                options:{ limit, skip }
             })
         }else {
             return await supervisorModel.findOne({id:id}).populate({
                 path:'watcher',
                 match: { name: {$regex}},
-                options:{ limit:limit, skip:skip }
+                options:{ limit, skip }
             })
         }
     }catch(error:any){
