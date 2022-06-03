@@ -6,7 +6,6 @@ export default function TableEmployees({ name, employees }) {
 
     let [value, setValue] = useState('');
     let [allEmployees, setAllEmployees] = useState(employees)
-    console.log(employees)
 
     useEffect(() => {
         setAllEmployees(employees)
