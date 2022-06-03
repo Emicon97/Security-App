@@ -7,6 +7,7 @@ export const Primary = (props) => `
     hover:bg-[#002583]
     active:bg-[#0243EC] active:ring-4 active:ring-blue-200
 `;
+
 export const Input = (props) => `
     hover:bg-slate-100
     placeholder:italic placeholder:text-slate-400 

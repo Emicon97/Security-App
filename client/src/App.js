@@ -1,15 +1,16 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/Navbar";
+import NavBar from "./components/navbar/Navbar";
 import AddUser from "./components/boss/AddUser";
 import EditState from './components/reusable/EditState';
 import { UseProtectedRouteHome, UseProtectedRoutes} from "./customHooks/ProtectedRoutes";
 import GuardProfile from "./components/guard/GuardProfile";
 import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import UserProfile from "./components/reusable/Profile";
-import HomeBoss from "./components/boss/HomeBoss";
 import LoginFake from "./components/LoginFake";
 import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
+import Home from "./components/Home";
+import HomeSupervisor from "./components/supervisor/HomeSupervisor";
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -57,17 +58,23 @@ function App() {
             />
           }
         /> */}
-        {/* Ruta para testear los componentes Home de cada rol */}
-        <Route path="/boss/:id" element={<HomeBoss/>}/>
+        {/* Rutas HOME para cada rol */}
+        <Route exact path="/boss/:id" element={<Home/>}/>
+        <Route exact path="/supervisor/:id" element={<Home/>}/>
+        <Route exact path="/guard/:id" element={<Home/>} />
         
-        {/* Rutas sin modificar por si pinta eliminar las de arriba */}
-        <Route path="/home/add" element={<AddUser />} />
-        <Route path="/super" element={<TableInfoSupervisors />} />
+        {/* Rutas para el BOSS */}
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
-        <Route exact path="/guard/:id" element={<GuardProfile />} />
-        <Route exact path="/user/:id/profile" element={<UserProfile />} />
+
+        {/* Rutas para el SUPERVISOR */}
+        <Route path="/super" element={<TableInfoSupervisors />} />
         <Route path="/editState/:id" element={<EditState />} />
+        
+        {/* Rutas GENERALES */}
+        <Route path="/user/add" element={<AddUser />} />
+        <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/login" element={<LoginFake/>}/>
+
       </Routes>
     </>
   );

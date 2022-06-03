@@ -11,13 +11,13 @@ const LogOutButton = () => {
 };
 
 const button = `
-  font-bold text-white
+  flex flex-row justify-evenly items-center
+  h-10 w-28
+  text-white font-semibold
+  rounded-md
   bg-red-500
-  w-32 h-10 p-0 m-0
-  border-2 border-red-500
-  hover:border-red-600 hover:bg-red-600
-  active:border-red-700 active:bg-red-700
-  rounded-3xl
+  hover:bg-red-600
+  active:bg-red-400 active:ring-4 active:ring-red-200
 `;
 
 export default LogOutButton;
