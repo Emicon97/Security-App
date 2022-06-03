@@ -50,13 +50,12 @@ router.post('/login', async(req, res, next)=>{
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
 //http://localhost:3001/user/:id?name=name
-router.head('/employees/:id', TokenValidation, async (req, res)=> {
+router.get('/employees/:id', TokenValidation, async (req, res)=> {
     try{
         let { id } = req.params;
         await idIdentifier(id);
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
-        console.log(userData)
         res.json(userData);
     } catch (error) {
         if (error instanceof Error) {
