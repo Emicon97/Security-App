@@ -8,7 +8,7 @@ export default function HomeBoss() {
     return (
         <div>
             <TableInfo id={id} />
-            <Link to="/home/add">
+            <Link to="/user/add">
                 <button className={`mx-auto my-5 ${Primary()}`}>Add User</button>
             </Link>
         </div>
