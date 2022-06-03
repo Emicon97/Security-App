@@ -10,11 +10,12 @@ import EditUser from "../supervisor/EditUser";
 //hacer filtrado por uno solo, para boton delete llenar un estado
 //propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
 
-export default function TableInfo({id}) {
+export default function TableInfo({ id }) {
   const dispatch = useDispatch();
   const watchers = useSelector((state) => state.employees);
   const [active, setActive] = useState(false);
-  
+  const[editUser, setEditUser] = useState({});
+
   const toggle = () => {
     setActive(!active);
   };
@@ -40,6 +41,10 @@ export default function TableInfo({id}) {
         .forEach((checkbox) => (checkbox.checked = false));
     }
   };
+
+  function reply_click(e) {
+    setEditUser(watchers.find((employee) => employee._id === e.target.id));
+  }
 
   useEffect(() => {
     dispatch(getEmployees(id, ""));
@@ -95,8 +100,13 @@ export default function TableInfo({id}) {
                   </td>
                   <td>{employee.environment} (lugar de trabajo)</td>
                   <td>
-                    <button onClick={e => toggle(e)} id={employee._id}>
-                      <i className="material-icons">edit</i>
+                    <button
+                      onClick={(e) => {
+                        toggle(e);
+                        reply_click(e);
+                      }}
+                    >
+                      <i className="material-icons" id={employee._id}>edit</i>
                     </button>
                   </td>
                 </tr>
@@ -141,7 +151,7 @@ export default function TableInfo({id}) {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditUser id={id}></EditUser>
+        <EditUser user={editUser}></EditUser>
       </Modal>
     </>
   );
