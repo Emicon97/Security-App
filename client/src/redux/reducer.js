@@ -20,7 +20,8 @@ const initialState = {
   todosId:[],
   todos:[],
   todoUpdate: {},
-  userData:{}
+  userData:{},
+  token: ''
 };
 
 const rootReducer = (state=initialState, {type,payload}) => {
@@ -62,7 +63,7 @@ const rootReducer = (state=initialState, {type,payload}) => {
         watcherDetail: payload,
         todoUpdate: payload
       }
-      case GET_EMPLOYEES: 
+      case GET_EMPLOYEES:
       return {
         ...state,
         employees: payload
@@ -79,7 +80,8 @@ const rootReducer = (state=initialState, {type,payload}) => {
         case LOGIN_PRUEBA:
           return {
             ...state,
-            userData: payload
+            userData: payload,
+            token: payload
           }
     default:
       return { ...state };

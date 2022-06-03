@@ -32,7 +32,7 @@ export class Boss extends User {
 
 export class Supervisor extends User {
         
-    @prop({ required: true, default: [] })
+    @prop({ required: true })
     public environment: string[];
 
     @prop({ ref: () => Boss})
@@ -47,7 +47,7 @@ export class Supervisor extends User {
 
 export class Watcher extends User {
         
-    @prop({ required: true, default: [] })
+    @prop({ required: true })
     public environment: string[];
 
     @prop({ ref: () => Supervisor })

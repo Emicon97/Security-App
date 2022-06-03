@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate  } from "react-router-dom";
 
-import { loginPrueba } from '../redux/actions';
+import { headerTest, loginPrueba } from '../redux/actions';
 
 export default function LoginFake(){
     const dispatch = useDispatch();
-    const userdata = useSelector((state)=>state.userData);
+    const userData = useSelector((state)=>state.userData);
     const navigate = useNavigate ();
     const [ input, setInput ] = useState({
         dni:"",
@@ -14,15 +14,22 @@ export default function LoginFake(){
     });
 
     useEffect(() => {
-        if (userdata[1]) {
-            console.log('acá');
-            navigate('/supervisor/628efaec038a543cbc4c1f49');
+        if (userData[1]) {
+            const id = userData[0]._id;
+            switch (userData[1]) {
+                case 'watcher':
+                    return navigate(`/watcher/${id}`);
+                case 'supervisor':
+                    return navigate(`/supervisor/${id}`);
+                case 'boss':
+                    return navigate(`/boss/${id}`);
+            }
         }
-    }, [userdata]);
+    }, [userData]);
     
     const redirector = (e) => {
         e.preventDefault();
-        dispatch(loginPrueba({ dni:1234, password:"1234" }));
+        dispatch(loginPrueba({ dni:3453245, password:"sdas12sqas" }));
     };
 
     return(
