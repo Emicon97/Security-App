@@ -1,11 +1,7 @@
 import React from "react";
-
+import  HomeBoss from "../boss/HomeBoss";
 export default function HomeSupervisor () {
 
-    return (
-
-        <h3>Home Supervisor</h3>
-
-    )
+    return <HomeBoss/>
 
 }

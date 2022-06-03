@@ -67,7 +67,6 @@ function App() {
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
-        <Route path="/super" element={<TableInfoSupervisors />} />
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}

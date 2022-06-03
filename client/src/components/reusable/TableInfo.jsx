@@ -46,9 +46,10 @@ export default function TableInfo({ id }) {
     setEditUser(watchers.find((employee) => employee._id === e.target.id));
   }
 
+  //Each time you click the edit button, the function will be called
   useEffect(() => {
     dispatch(getEmployees(id, ""));
-  }, [dispatch]);
+  }, [dispatch, id]);
   return (
     <>
       <div className="datatable-container">
