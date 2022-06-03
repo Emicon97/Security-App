@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { TokenValidation } from '../libs/verifyToken';
 import jwt from 'jsonwebtoken';
 const { signUp, getUserById, getUserByHierarchy, deleteUser, updateUser } = require('../controller/userController');
-const { idIdentifier } = require('../controller/logInController');
 
 const router=Router();
 
@@ -28,7 +27,6 @@ router.get('/:id', TokenValidation, async(req,res) => {
 router.get('/employees/:id', TokenValidation, async (req, res)=> {
     try{
         let { id } = req.params;
-        await idIdentifier(id);
         let { name } = req.query;
         let userData = await getUserByHierarchy(id, name);
         res.json(userData);
@@ -43,7 +41,7 @@ router.get('/employees/:id', TokenValidation, async (req, res)=> {
 
 //* POST crea un usuario segun el role: boss/supervisor/watcher
 //http://localhost:3001/user  //*datos enviados por body
-router.post('/:id', async (req, res) => {
+router.post('/:id', TokenValidation, async (req, res) => {
     let { id } = req.params;
     let { name, lastName, password, dni, email, telephone, environment, workingHours, profilePic } = req.body;
     try {
@@ -63,7 +61,7 @@ router.post('/:id', async (req, res) => {
 
 //*PUT modifica los datos de un usuario segun su role: supervisor/watcher
 //http://locahost:3001/user/:id   //*id por params, datos por body
-router.put('/:id', async (req, res)=>{
+router.put('/:id', TokenValidation, async (req, res)=>{
     let { id } = req.params;
     let { password, email, telephone, environment, workingHours, profilePic } = req.body;
     try{
@@ -80,7 +78,7 @@ router.put('/:id', async (req, res)=>{
 
 //*DELETE elimina un usuario segun su rol: supervisor/watcher
 //http://localhost:3001/user/:id  //*id por params
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', TokenValidation, async (req, res) => {
     let { id } = req.params;
     let { role } = req.body;
     try{

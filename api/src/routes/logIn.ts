@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 
 const router = Router();
 
-//Login (prueba)
 router.post('/', async(req, res, next)=>{
    try{
        let {dni, password}= req.body;
@@ -17,7 +16,7 @@ router.post('/', async(req, res, next)=>{
            })
            let dataUser = await getUserById(findUser.id);
            dataUser.push(token);
-           res.cookie('auth-token', token).json(dataUser);
+           res.json(dataUser);
        } else {
          res.redirect('/login');
        }

@@ -13,7 +13,6 @@ export default function Home () {
     const { id } = useParams();
 
     useEffect(() => {
-        console.log(header)
         dispatch(getEmployees(id, {headers:{'auth-token': header}}))
       }, [dispatch]);
 
