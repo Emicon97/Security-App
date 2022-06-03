@@ -11,17 +11,17 @@ export default function NavBarBoss ({userData}) {
         <>
             {
                 userData 
-                ? <li>
-                    <Link to={`/boss/${userData._id}`}>
+                ? <li className='flex items-center'>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData._id}`}>
                         Dashboard
                     </Link>
-                    <Link to={`/user/${userData._id}/profile`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}/profile`}>
                         Perfil
                     </Link>
-                    <Link to={`/user/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}`}>
                         Empleados
                     </Link>
-                    <Link to={'/user/add'}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/add'}>
                         Añadir empleados
                     </Link>
                 </li>
