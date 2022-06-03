@@ -6,7 +6,7 @@ import { Primary } from "../styles/Buttons";
 export default function HomeBoss() {
     const { id } = useParams();
     return (
-        <div>
+        <div className='flex flex-col items-center justify-center'>
             <TableInfo id={id} />
             <Link to="/user/add">
                 <button className={`mx-auto my-5 ${Primary()}`}>Add User</button>
