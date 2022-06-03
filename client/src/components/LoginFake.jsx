@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate  } from "react-router-dom";
 
-import { loginPrueba } from '../redux/actions';
+import { headerTest, loginPrueba } from '../redux/actions';
 
 export default function LoginFake(){
     const dispatch = useDispatch();
@@ -20,7 +20,6 @@ export default function LoginFake(){
                 case 'watcher':
                     return navigate(`/watcher/${id}`);
                 case 'supervisor':
-                    //return console.log(userData[2])
                     return navigate(`/supervisor/${id}`);
                 case 'boss':
                     return navigate(`/boss/${id}`);

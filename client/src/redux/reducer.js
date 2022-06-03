@@ -62,7 +62,6 @@ const rootReducer = (state=initialState, {type,payload}) => {
         todoUpdate: payload
       }
       case GET_EMPLOYEES:
-        console.log(payload)
       return {
         ...state,
         employees: payload
