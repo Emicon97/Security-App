@@ -1,9 +1,10 @@
 import { Router } from 'express';
+import { TokenValidation } from '../libs/verifyToken';
 const {  sendReport, getReportsById, getSenderOrReceiver } = require('../controller/reportController');
 
 const router = Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', TokenValidation, async (req, res) => {
    try {
       let { id } = req.params;
       let { relation } = req.body;
@@ -18,7 +19,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/content/:id', async (req, res) => {
+router.get('/content/:id', TokenValidation, async (req, res) => {
    try {
       let { id } = req.params;
       let { relation } = req.body;
@@ -33,7 +34,7 @@ router.get('/content/:id', async (req, res) => {
    }
 })
 
-router.post('/:id', async (req, res) => {
+router.post('/:id', TokenValidation, async (req, res) => {
    try {
       let { id } = req.params;
       let report = await sendReport('Nuevo reporte', '628efaec038a543cbc4c1f49', '629001d1f77222d7eee888da');

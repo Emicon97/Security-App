@@ -7,6 +7,7 @@ import {
   GET_EMPLOYEES,
   GET_EMPLOYEE_BY_ID,
   UPDATE_USER,
+  DELETE_USER,
   LOGIN_PRUEBA
 } from "./ActionTypes";
 
@@ -19,7 +20,8 @@ const initialState = {
   todosId:[],
   todos:[],
   todoUpdate: {},
-  userData:{}
+  userData:{},
+  token: ''
 };
 
 const rootReducer = (state=initialState, {type,payload}) => {
@@ -50,9 +52,10 @@ const rootReducer = (state=initialState, {type,payload}) => {
         todoUpdate: payload,
       };
     case GET_EMPLOYEES:
+      const array = payload.watcher ? payload.watcher : payload.supervisor
       return {
         ...state,
-        employees: payload,
+        employees: array,
       };
     case GET_EMPLOYEE_BY_ID:
       return {
@@ -60,7 +63,7 @@ const rootReducer = (state=initialState, {type,payload}) => {
         watcherDetail: payload,
         todoUpdate: payload
       }
-      case GET_EMPLOYEES: 
+      case GET_EMPLOYEES:
       return {
         ...state,
         employees: payload
@@ -70,10 +73,15 @@ const rootReducer = (state=initialState, {type,payload}) => {
           ...state,
           userDetails: payload,
         }
+        case DELETE_USER:
+          return{
+            ...state,
+          }
         case LOGIN_PRUEBA:
           return {
             ...state,
-            userData: payload
+            userData: payload,
+            token: payload[2]
           }
     default:
       return { ...state };

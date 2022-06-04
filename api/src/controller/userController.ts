@@ -1,8 +1,5 @@
 import {bossModel, neighbourModel, supervisorModel, watcherModel} from '../models/user';
 import { Boss, Supervisor, Watcher, Neighbour } from '../models/user';
-import jwt from 'jsonwebtoken';
-
-const { workerIdentifier } = require('./toDosController');
  
 async function getUserById(id:string):Promise<[ Boss | Supervisor | Watcher | Neighbour, string ]> {
     var response:[ Boss | Supervisor | Watcher | Neighbour, string ];
@@ -39,7 +36,7 @@ async function getUserByHierarchy(id:string, name?:string) {
 async function getEmployees (id:string) {
     let boss = await bossModel.findById(id);
     if (boss) {
-        return await bossModel.findById(id ).populate({path:'supervisor'});
+        return await bossModel.findById(id).populate({path:'supervisor'});
     }else{
         return await supervisorModel.findById(id).populate({path:'watcher'});
     }
@@ -75,11 +72,11 @@ async function signUp (
     telephone:number,
     environment:string,
     workingHours?:string,
-    profilePic?:string):Promise<string> {
+    profilePic?:string) {
         
     await dniCHecker(dni);
     
-    let creator = await workerIdentifier(id);
+    let creator = await roleIdentifier(id);
 
     switch (creator) {
         case 'boss':
@@ -95,11 +92,8 @@ async function signUp (
                 profilePic: profilePic ? profilePic : undefined
             })
             const saveUser:any = await supervisor.save();
-            //create Token
-            // const token:string = jwt.sign({_id:saveUser._id},process.env.TOKEN_SECRET||'tokenPass');
             await bossModel.findByIdAndUpdate(id, { $push: { supervisor } });
             return saveUser;
-            //break;
         case 'supervisor':
             const watcher = await watcherModel.create({
                 name,
@@ -113,13 +107,69 @@ async function signUp (
                 profilePic: profilePic ? profilePic : undefined
             })
             const saveUser2:any = await watcher.save();
-            //const token2:string = jwt.sign({_id:saveUser2._id},process.env.TOKEN_SECRET||'tokenPass');
             await supervisorModel.findByIdAndUpdate(id, { $push: { watcher } });
             return saveUser2;
-            //break;
     }
+}
 
-    return 'Profile successfully created.';
+async function deleteUser (id:string, role:string):Promise<string> {
+    if(role === 'supervisor') {
+        await supervisorModel.findByIdAndDelete(id);
+        return 'Supervisor deleted.';
+    }
+    if(role === 'watcher') {
+        await watcherModel.findByIdAndDelete(id);
+        return 'Security guard deleted.';
+    };
+    throw new Error ('The person that you are trying to delete from the database could not be found.');
+}
+
+async function updateUser (
+    id:string,
+    password?:string,
+    email?:string,
+    telephone?:number,
+    environment?:string,
+    workingHours?:string,
+    profilePic?:string
+    ):Promise<string> {
+
+    const role = await roleIdentifier(id);
+        
+    if (role === 'supervisor') {
+    await supervisorModel.findByIdAndUpdate(id,{
+            password,
+            email,
+            telephone,
+            environment,
+            workingHours,
+            profilePic
+        })
+        
+        return 'Parameters updated successfully.'
+    }
+    if (role === 'watcher') {
+        await watcherModel.findByIdAndUpdate(id,{
+            password,
+            email,
+            telephone,
+            environment,
+            workingHours,
+            profilePic
+        })
+        return 'Parameters updated successfully.'
+    }
+    return 'The parameters could not be updated.';
+}
+
+async function roleIdentifier (id:string):Promise<string> { 
+    const isBoss = await bossModel.findById(id);
+    if (isBoss !== null) return 'boss';
+    const isSupervisor = await supervisorModel.findById(id);
+    if (isSupervisor !== null) return 'supervisor';
+    const isWatcher = await watcherModel.findById(id); 
+    if (isWatcher !== null) return 'watcher';
+    throw new Error ("No task has been found for this employee.");
 }
 
 async function dniCHecker (dni:number) {
@@ -150,60 +200,10 @@ async function dniCHecker (dni:number) {
     })
 }
 
-async function deleteUser (id:string, role:string):Promise<string> {
-    if(role === 'supervisor') {
-        await supervisorModel.findByIdAndDelete(id);
-        return 'Supervisor deleted.';
-    }
-    if(role === 'watcher') {
-        await watcherModel.findByIdAndDelete(id);
-        return 'Security guard deleted.';
-    };
-    throw new Error ('The person that you are trying to delete from the database could not be found.');
-}
-
-async function updateUser (
-    id:string,
-    password?:string,
-    email?:string,
-    telephone?:number,
-    environment?:string,
-    workingHours?:string,
-    profilePic?:string
-    ):Promise<string> {
-
-    const role = await workerIdentifier(id);
-        
-    if (role === 'supervisor') {
-    await supervisorModel.findByIdAndUpdate(id,{
-            password,
-            email,
-            telephone,
-            environment,
-            workingHours,
-            profilePic
-        })
-        
-        return 'Parameters updated successfully.'
-    }
-    if (role === 'watcher') {
-        await watcherModel.findByIdAndUpdate(id,{
-            password,
-            email,
-            telephone,
-            environment,
-            workingHours,
-            profilePic
-        })
-        return 'Parameters updated successfully.'
-    }
-    return 'The parameters could not be updated.';
-}
-
 module.exports = {
     signUp,
     getUserById,
     getUserByHierarchy,
     deleteUser,
-    updateUser
+    updateUser,
 }

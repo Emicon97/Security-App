@@ -48,30 +48,27 @@ async function getToDos (id:string) {
   return toDos;
 }
 
-async function getToDosByRole (id:string) {
-  try {  
-    const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({[role]: id});
+async function getToDosByRole (responsible:string) {
+  try {
+    let toDos = await toDosModel.find({ responsible });
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
   }
 }
 
-async function getByIdAndPriority (id:string, priority:string) {
+async function getByIdAndPriority (responsible:string, priority:string) {
   try {
-    const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({[role]: id, priority})
+    let toDos = await toDosModel.find({ responsible, priority })
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
   }
 }
 
-async function getByIdAndStatus (id:string, status:string) {
+async function getByIdAndStatus (responsible:string, status:string) {
   try {
-    const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({ [role]: id, status });
+    let toDos = await toDosModel.find({ responsible, status });
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
@@ -88,11 +85,10 @@ function escapeStringRegexp(string:string) {
 }
 
 
-async function getByIdAndName (id:string, name:string) {
+async function getByIdAndName (responsible:string, name:string) {
   const $regex = escapeStringRegexp(name)
   try{
-    const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({[role]:id, name: {$regex}});
+    let toDos = await toDosModel.find({ responsible, name: {$regex}});
     if(toDos.length !== 0){
       return toDos;
     }else{
@@ -105,24 +101,26 @@ async function getByIdAndName (id:string, name:string) {
 
 
 
-async function getByIdPriorityAndStatus (id:string, priority:string, status:string) {
+async function getByIdPriorityAndStatus (responsible:string, priority:string, status:string) {
   try {
-    const role = await workerIdentifier(id);
-    let toDos = await toDosModel.find({ [role]: id, priority, status });
+    let toDos = await toDosModel.find({ responsible, priority, status });
     return toDos;
   } catch (err:any) {
     throw new Error (err.message);
   }
 }
 
-async function assignTask (name:string, description:string | undefined, priority:string, id:string) {
+async function assignTask (
+  name:string,
+  description:string | undefined,
+  priority:string,
+  responsible:string) {
   try {
-    const role = await workerIdentifier(id);
     let createToDo = await toDosModel.create({
         name,
         description: description ? description : undefined,
         priority,
-        [role]: id
+        responsible
     })
     await createToDo.save();
 
@@ -130,16 +128,6 @@ async function assignTask (name:string, description:string | undefined, priority
   } catch (err:any) {
     throw new Error (err.message);
   }
-}
-
-async function workerIdentifier (id:string):Promise<string> { 
-  const isBoss = await bossModel.findById(id);
-  if (isBoss !== null) return 'boss';
-  const isSupervisor = await supervisorModel.findById(id);
-  if (isSupervisor !== null) return 'supervisor';
-  const isWatcher = await watcherModel.findById(id); 
-  if (isWatcher !== null) return 'watcher';
-  throw new Error ("No task has been found for this employee.");
 }
 
 async function updateToDo (id:string, name:string, description:string, status:string) {
@@ -172,6 +160,5 @@ module.exports = {
   getByIdAndName,
   assignTask,
   updateToDo,
-  deleteToDo,
-  workerIdentifier
+  deleteToDo
 }

@@ -1,4 +1,4 @@
-import reportModel from '../models/report';
+import reportModel from '../models/Report';
 
 async function sendReport (title:string, sender:string, receiver:string) {
    console.log('entré')
