@@ -13,6 +13,19 @@ export default function LoginFake(){
         password:""
     });
 
+    function handleChange(e){
+        setInput({
+            ...input,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        dispatch(loginPrueba(input))
+        setInput({dni:"",password:""})
+    }
+
     useEffect(() => {
         if (userData[1]) {
             const id = userData[0]._id;
@@ -29,14 +42,14 @@ export default function LoginFake(){
     
     const redirector = (e) => {
         e.preventDefault();
-        dispatch(loginPrueba({ dni:14996744, password:"1234" }));
+        dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
     };
 
     return(
         <div className='background-color: black'>
-            <form onSubmit={(e) => {redirector(e)}}>
-                <label htmlFor="">dni:<input type="number" value={input.dni} name="dni"/></label>
-                <label htmlFor="">password: <input type="text" value={input.password} name="password"/></label>
+            <form onSubmit={(e) => {handleSubmit(e)}}>
+                <label htmlFor="">dni:<input type="number" value={input.dni} name="dni" onChange={(e)=>{handleChange(e)}}/></label>
+                <label htmlFor="">password: <input type="text" value={input.password} name="password" onChange={(e)=>{handleChange(e)}}/></label>
                 <button>BOTÓN</button>
             </form>
         </div>
