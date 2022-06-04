@@ -34,16 +34,33 @@ async function getPaginatedAll (id:string, limit:number, skip:number){
     try{
         let boss = await bossModel.findById(id);
         if(boss){
-            return await bossModel.findOne({id:id}).populate({
-                    path:'supervisor',
-                    options:{ limit, skip }
-                });
+            let number = await bossModel.find({id:id}).populate({path:'supervisor'});
+            let count:any;
+             if (number){
+                 count = { count : (number[0].supervisor).length}
+             }else{
+                 count = { count : 0}
+             }
+             let boss:any = await bossModel.find({id:id}).populate({
+                 path:'supervisor',
+                 options:{ limit, skip}
+                })
+            let response = [...boss, count]
+            return response;
         }else{
-            return await supervisorModel.findOne({id:id}).populate(
-                {
-                    path:'watcher',
-                    options:{ limit, skip }
-                });
+            let number = await supervisorModel.find({id:id}).populate({path:'watcher'});
+            let count:any
+            if(number){
+               count = {count :(number[0].watcher).length}
+            }else{
+                count= {count : 0}
+            }
+            let supervisor = await supervisorModel.find({id:id}).populate({
+                path:'watcher',
+                options:{ limit, skip }
+            })
+            let response = [...supervisor,count] 
+          return response
         }
     }catch(error:any){
         throw new Error(error.message);
@@ -56,17 +73,35 @@ async function getPaginatedEmployeesByName (id:string, limit:number, skip:number
     try{
         let boss = await bossModel.findById(id);
         if(boss){
-            return await bossModel.findOne({id:id}).populate({
-                path:'supervisor',
-                match:{ name: {$regex} },
-                options:{ limit, skip }
+            let number = await bossModel.find({id:id}).populate({path:'supervisor',match:{ name: {$regex} }});
+            let count:any;
+            if(number){
+                count = { count: (number[0].supervisor).length}
+            }else{
+                count = { count: 0 }
+            }
+            let boss = await bossModel.find({id:id}).populate({
+                path: 'supervisor',
+                match: { name: {$regex}},
+                options: { limit, skip}
             })
+            let response = [...boss, count]
+            return response
         }else {
-            return await supervisorModel.findOne({id:id}).populate({
+            let number = await supervisorModel.find({id:id}).populate({path:'watcher', match: { name: {$regex}}});
+            let count:any;
+            if(number){
+                count={ count :(number[0].watcher).length}
+            }else{
+                count={ count: 0}
+            }
+            let supervisor:any = await supervisorModel.find({id:id}).populate({
                 path:'watcher',
                 match: { name: {$regex}},
                 options:{ limit, skip }
             })
+            let response = [...supervisor, count]
+            return response
         }
     }catch(error:any){
         throw new Error(error.message)

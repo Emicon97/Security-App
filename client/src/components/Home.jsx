@@ -4,16 +4,17 @@ import { useParams, useLocation } from 'react-router-dom';
 import BossProfile from './boss/BossProfile';
 import GuardProfile from './guard/GuardProfile';
 import HomeSupervisor from './supervisor/HomeSupervisor';
+import LoginController from '../components/reusable/LoginController'
 
 import { getEmployees } from '../redux/actions';
 
 export default function Home () {
     const dispatch = useDispatch();
-    const header = useSelector((state) => state.token);
+    const header = LoginController();
     const { id } = useParams();
 
     useEffect(() => {
-        dispatch(getEmployees(id, {headers:{'auth-token': header}}))
+        dispatch(getEmployees(id, header))
       }, [dispatch]);
 
     //variable para saber el path
