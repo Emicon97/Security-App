@@ -1,13 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { Auth0Provider } from '@auth0/auth0-react';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import store from "./redux/store";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Auth0Provider
+        domain="dev-ib0nyaqv.us.auth0.com"
+        clientId="fOR9cYEmOqtFI8XCo4xdQdONY7sQ07cg"
+        redirectUri={window.location.origin}
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Auth0Provider>
+    </Provider>
   </React.StrictMode>
 );
 
