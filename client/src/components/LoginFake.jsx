@@ -9,7 +9,7 @@ export default function LoginFake(){
     const userData = useSelector((state)=>state.userData);
     const navigate = useNavigate ();
     const [ input, setInput ] = useState({
-        dni:"",
+        dni:"", 
         password:""
     });
 
@@ -40,10 +40,10 @@ export default function LoginFake(){
         }
     }, [userData]);
     
-    // const redirector = (e) => {
-    //     e.preventDefault();
-    //     dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
-    // };
+    const redirector = (e) => {
+        e.preventDefault();
+        dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
+    };
 
     return(
         <div className='background-color: black'>
