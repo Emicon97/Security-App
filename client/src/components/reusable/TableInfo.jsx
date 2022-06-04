@@ -1,7 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
+import { getEmployees, searchEmployees, deleteUser, getUsersPaginate } from "../../redux/actions";
 import "../styles/TableInfo.css";
 import { Primary as button } from "../styles/Buttons";
 import Modal from "./Modal";
@@ -15,6 +15,8 @@ export default function TableInfo({ id }) {
   const watchers = useSelector((state) => state.employees);
   const [active, setActive] = useState(false);
   const[editUser, setEditUser] = useState({});
+  const [limit, setLimit] = useState(5);
+  const [skip, setSkip] = useState(0);
 
   const toggle = () => {
     setActive(!active);
@@ -48,8 +50,9 @@ export default function TableInfo({ id }) {
 
   //Each time you click the edit button, the function will be called
   useEffect(() => {
-    dispatch(getEmployees(id, ""));
-  }, [dispatch, id]);
+    // dispatch(getEmployees(id, ""));
+    dispatch(getUsersPaginate(id, limit, skip))
+  }, [dispatch, id, limit, skip]);
   return (
     <>
       <div className="datatable-container">

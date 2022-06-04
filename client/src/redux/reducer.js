@@ -8,7 +8,8 @@ import {
   GET_EMPLOYEE_BY_ID,
   UPDATE_USER,
   DELETE_USER,
-  LOGIN_PRUEBA
+  LOGIN_PRUEBA,
+  GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
 const initialState = {
@@ -17,25 +18,25 @@ const initialState = {
   employees: [],
   users: [],
   userDetails: {},
-  todosId:[],
-  todos:[],
+  todosId: [],
+  todos: [],
   todoUpdate: {},
-  userData:{}
+  userData: {}
 };
 
-const rootReducer = (state=initialState, {type,payload}) => {
+const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_USER:
       return {
         ...state,
         users: payload,
       };
-      case GET_USER_ID:
-        return {
-          ...state,
-          userDetails: payload
-        }
-      case GET_TODOS:
+    case GET_USER_ID:
+      return {
+        ...state,
+        userDetails: payload,
+      };
+    case GET_TODOS:
       return {
         ...state,
         todos: payload,
@@ -51,7 +52,7 @@ const rootReducer = (state=initialState, {type,payload}) => {
         todoUpdate: payload,
       };
     case GET_EMPLOYEES:
-      const array = payload.watcher ? payload.watcher : payload.supervisor
+      const array = payload.watcher ? payload.watcher : payload.supervisor;
       return {
         ...state,
         employees: array,
@@ -60,30 +61,35 @@ const rootReducer = (state=initialState, {type,payload}) => {
       return {
         ...state,
         watcherDetail: payload,
-        todoUpdate: payload
-      }
-      case GET_EMPLOYEES: 
+        todoUpdate: payload,
+      };
+    case GET_EMPLOYEES:
       return {
         ...state,
-        employees: payload
-      }
-      case UPDATE_USER:
-        return{
-          ...state,
-          userDetails: payload,
-        }
-        case DELETE_USER:
-          return{
-            ...state,
-          }
-        case LOGIN_PRUEBA:
-          return {
-            ...state,
-            userData: payload
-          }
+        employees: payload,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        userDetails: payload,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+      };
+    case LOGIN_PRUEBA:
+      return {
+        ...state,
+        userData: payload,
+      };
+    case GET_USERS_PAGINATE:
+      return {
+        ...state,
+        employees: payload,
+      };
     default:
       return { ...state };
-  }
+  };
 };
 
 export default rootReducer;
