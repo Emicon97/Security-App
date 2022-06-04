@@ -49,7 +49,7 @@ export default function LoginFake(){
     
     const redirector = (e) => {
         e.preventDefault();
-        dispatch(loginPrueba({ dni:1234, password:"1234" }));
+        dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
     };
 
     return(
