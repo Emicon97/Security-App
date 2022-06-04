@@ -1,6 +1,7 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployees, searchEmployees, deleteUser } from "../../redux/actions";
+import { Link, useParams } from "react-router-dom";
+import { getEmployees, searchEmployees, deleteUser, getUsersPaginate } from "../../redux/actions";
 import "../styles/TableInfo.css";
 import { Tertiary, Input  } from "../styles/Buttons";
 import Modal from "./Modal";
@@ -11,26 +12,46 @@ import EditUser from "../supervisor/EditUser";
 
 export default function TableInfo({ id }) {
   const dispatch = useDispatch();
-  const watchers = useSelector((state) => state.employees);
+  //empleados por página
+  const watchers = useSelector((state) => state.usersPaginate);
+  //total de empleados para calcular el total de paginas
+  const employees = useSelector((state) => state.employees)
   const header = useSelector((state) => state.token);
-  const [active, setActive] = useState(false);
-  const[editUser, setEditUser] = useState({});
+  
+
+  //====================================
+  //============== STATES ==============
+  //====================================
+
+  const [active, setActive] = useState(false); 
+  const[editUser, setEditUser] = useState({});  
+  const [limit, setLimit] = useState(5);  //limite de empleados por pagina
+  const [skip, setSkip] = useState(0);  //empleado inicial por pagina
+  const [pagesNum, setPagesNum] = useState([]); //array de paginas totales 
+  const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
+  
+  //====================================
+  //====================================
+  
+  //total de empleados para calcular el total de paginas
+  let usersNum = employees.length;
+  
   const toggle = () => {
     setActive(!active);
   };
-
+  const handleSearch = (event) => {   //funcion para actualizar el estado con el valor del input search
+    setNameEmployee(event.target.value)
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
-    //dispatch(getEmployees(id));
+    dispatch(getUsersPaginate(id, limit, skip, nameEmployee))
+    setNameEmployee("");
   };
-
-  const handleAllButton = (e) => {
+  const handleAllButton = (e) => {  //function para resetear la busqueda
     e.preventDefault();
-    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
-    // dispatch(searchEmployees(id, ""));
+    dispatch(getUsersPaginate(id, limit, skip))
+    setNameEmployee("");
   };
-
   const handleCheckbox = (e) => {
     if (e.target.checked) {
       document
@@ -42,15 +63,25 @@ export default function TableInfo({ id }) {
         .forEach((checkbox) => (checkbox.checked = false));
     }
   };
-
   function reply_click(e) {
     setEditUser(watchers.find((employee) => employee._id === e.target.id));
+  }
+  const nextPage = (event) => {   //cambiar de pagina
+    setSkip(event.target.textContent * limit - limit)
+  }
+  const handleLimit = (event) => {  //cambiar el limite por pagina
+    setLimit(event.target.value)
   }
 
   //Each time you click the edit button, the function will be called
   useEffect(() => {
-    dispatch(getEmployees(id, {headers:{'auth-token': header}}))
-  }, [dispatch]);
+    dispatch(getUsersPaginate(id, limit, skip))
+      let pages = []
+      for(let i = 0; i < Math.ceil(usersNum/limit); i++) {
+        pages.push(i + 1)
+      }
+      setPagesNum(pages)
+  }, [dispatch, limit, skip]);
   
   return (
     <>
@@ -64,48 +95,21 @@ export default function TableInfo({ id }) {
             </button>
             <input type="checkbox" onClick={handleCheckbox} />
           </div>
-          <div>
-            <input type="text" placeholder="Search name..." className={Input()} onKeyDown={(e) => e.key === "Enter" && handleSubmit(e)}></input>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <button type="submit">Search</button>
+            <input 
+              type="text" 
+              placeholder="Search name..." 
+              value={nameEmployee} 
+              className={Input()} 
+              onChange={handleSearch}
+            >
+            </input>
+          </form>
           <div className="search flex mr-4">
             <button className={Tertiary} onClick={(e) => handleAllButton(e)}>All</button>
           </div>
         </div>
-        {/* <table className="w-9/12">
-          <thead>
-            <tr className="h-10">
-              <th className="border-x-2 border-[#b6c2e2]">Check</th>
-              <th className="border-x-2 border-[#b6c2e2]">Name</th>
-              <th className="border-x-2 border-[#b6c2e2]">Environment</th>
-              <th className="border-x-2 border-[#b6c2e2]">Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              watchers && watchers.map((employee) => (
-                  <tr key={employee._id}>
-                    <td className="border-x-2 border-[#b6c2e2]">
-                      <input type="checkbox" className="checkbox" />
-                    </td>
-                    <td className="border-x-2 border-[#b6c2e2]">
-                      {employee.name} {employee.lastName}
-                    </td>
-                    <td className="border-x-2 border-[#b6c2e2]">{employee.environment}</td>
-                    <td className="border-x-2 border-[#b6c2e2]">
-                      <button
-                        onClick={(e) => {
-                          toggle(e);
-                          reply_click(e);
-                        }}
-                      >
-                        <i className="material-icons" id={employee._id}>edit</i>
-                      </button>
-                    </td>
-                  </tr>
-              ))
-            }
-          </tbody>
-        </table> */}
         <div className="w-9/12">
           <div className="w-full my-2.5">
             <div className="h-10 flex justify-evenly items-center border-2 border-[#0243EC] rounded-full">
@@ -117,8 +121,8 @@ export default function TableInfo({ id }) {
           </div>
           <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
               {
-                watchers && watchers.map((employee) => (
-                  <div className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]">
+                watchers.length ? watchers.map((employee, i) => (
+                  <div className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]" key={employee + i}>
                     <div className="w-48 h-full flex justify-center items-center">
                       <input type="checkbox" className="checkbox" />
                     </div>
@@ -131,13 +135,14 @@ export default function TableInfo({ id }) {
                     </button>
                   </div>
                 ))
+                : null
               }
           </div>
         </div>
         <div className="w-9/12 h-10 flex justify-between items-center">
           <div className="w-52 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
             Show
-            <select name="n-entries" id="n-entries" className="m-2">
+            <select name="n-entries" id="n-entries" className="m-2" onClick={handleLimit} defaultValue="5">
               <option value="20">20</option>
               <option value="10">10</option>
               <option value="5">5</option>
@@ -146,27 +151,11 @@ export default function TableInfo({ id }) {
           </div>
           <div className="w-96 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
             <ul className="w-full flex justify-around">
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <span className="active">1</span>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <button>2</button>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <button>3</button>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <button>4</button>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <span>...</span>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <button>11</button>
-              </li>
-              <li className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
-                <button>12</button>
-              </li>
+              {
+                pagesNum ? pagesNum.map(num => <li key={num} onClick={nextPage} className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold">
+                  <span className="active">{num}</span>  
+                </li>) : null
+              }
             </ul>
           </div>
         </div>
