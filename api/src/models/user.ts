@@ -1,11 +1,11 @@
-import { prop, Ref, getModelForClass } from '@typegoose/typegoose';
-
+import { prop, Ref, getModelForClass, modelOptions, Severity } from '@typegoose/typegoose';
+@modelOptions({options: { allowMixed: Severity.ALLOW }})
 class User {
     
-    @prop({ required: true, lowercase:true, trim:true })
+    @prop({ required: true, lowercase: true, trim: true })
     public name!: string;
 
-    @prop({ required: true, lowercase:true, trim:true })
+    @prop({ required: true, lowercase: true, trim: true })
     public lastName!: string;
 
     @prop({ required: true })
@@ -14,42 +14,47 @@ class User {
     @prop({ required: true })
     public dni!: number;
     
-    @prop({ lowercase:true, trim:true })
-    public profilePic?: string | undefined;
+    @prop({ lowercase: true, trim: true })
+    public profilePic?: string;
+
+    @prop({ required: true })
+    public email: string;
+
+    @prop({ required: true })
+    public telephone: string;
 }
 
 export class Boss extends User {
-        
-    @prop({ required: true, default: [] })
-    public environment: string[];
 
     @prop({ ref: () => Supervisor })
     public supervisor: Ref<Supervisor>[];
-
 }
 
 export class Supervisor extends User {
         
-    @prop({ required: true, default: [] })
+    @prop({ required: true })
     public environment: string[];
+
+    @prop({ ref: () => Boss})
+    public boss: Ref<Boss>[];
 
     @prop({ ref: () => Watcher })
     public watcher: Ref<Watcher>[];
 
     @prop()
-    public workingHours?: string | undefined;
+    public workingHours?: string;
 }
 
 export class Watcher extends User {
         
-    @prop({ required: true, default: [] })
+    @prop({ required: true })
     public environment: string[];
 
     @prop({ ref: () => Supervisor })
     public supervisor: Ref<Supervisor>[];
 
     @prop()
-    public workingHours?: string | undefined;
+    public workingHours?: string;
 }
 
 export class Neighbour extends User {

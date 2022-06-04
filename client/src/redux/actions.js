@@ -1,90 +1,158 @@
 import axios from "axios";
 import {
-  CREATE_USER,
-  VALIDATE_USER,
-  DAILY_TASKS,
   GET_USER_ID,
-  GET_BOSS,
   GET_TODOS,
   GET_TODOS_ID,
-  UPDATE_TASK,
-  UPDATE_TASK_STATUS
+  UPDATE_TASK_STATUS,
+  GET_EMPLOYEES,
+  GET_EMPLOYEE_BY_ID,
+  UPDATE_USER,
+  DELETE_USER,
+  LOGIN_PRUEBA
 } from "./ActionTypes";
 
 export function getUsersById(id){
     return async function(dispatch){
-        const users = await axios.get(`http://localhost:3001/user/${id}`)
-        return dispatch({type:GET_USER_ID, payload: users.data})
+        const employees = await axios.get(`http://localhost:3001/user/${id}`);
+        return dispatch({
+          type:GET_USER_ID,
+          payload: employees.data
+        });
 }
 }
 
 export function getToDos(){
   return async function(dispatch){
-      const todos = await axios.get(`http://localhost:3001/todos`)
-    return dispatch({type:GET_TODOS, payload: todos.data}) 
+      const todos = await axios.get(`http://localhost:3001/todos`);
+    return dispatch({
+      type:GET_TODOS,
+      payload: todos.data
+    });
 }
 }
 
 export function getToDosById(id){
   return async function(dispatch){
-      const todos = await axios.get(`http://localhost:3001/todos/${id}`)
-    return dispatch({type:GET_TODOS_ID, payload: todos.data}) 
-}
-}
-
-export function filterTaskByIdAndStatus(id, status){
-  return async function(dispatch){
-    const estado = await axios.get(`http://localhost:3001/todos/${id}/${status}`)
+      const todos = await axios.get(`http://localhost:3001/todos/${id}`);
     return dispatch({
-      type: UPDATE_TASK,
-      payload: estado.data
-    })
+      type: GET_TODOS_ID,
+      payload: todos.data
+    });
   }
 }
-
 
 export function updateStatus(id,status){
   return async function(dispatch){
-    const estado = await axios.put(`http://localhost:3001/todos/${id}`, status)
+    const state = await axios.put(`http://localhost:3001/todos/${id}`, status)
     return dispatch({
       type: UPDATE_TASK_STATUS,
-      payload: estado.data
+      payload: state.data
     })
   }
 }
 
+export function filterByPriority(id,priority){
+  return async function(dispatch){
+    const state = await axios.get(`http://localhost:3001/todos/${id}/?priority=${priority}`)
+    return dispatch({
+      type: GET_TODOS_ID,
+      payload: state.data
+    });
+  }
+}
 
-// import axios from "axios";
-// import {
-//   CREATE_USER,
-//   VALIDATE_USER,
-//   DAILY_TASKS,
-//   GET_USER,
-//   GET_BOSS,
-//   GET_TODOS,
-//   GET_TODOS_ID
-// } from "./ActionTypes";
+export function filterByStatus(id, status){
+  return async function(dispatch){
+    const state = await axios.get(`http://localhost:3001/todos/${id}/${status}`);
+    return dispatch({
+      type: GET_TODOS_ID,
+      payload: state.data
+    });
+  }
+}
 
-// export function getUsers(){
-//     return async function(dispatch){
-//         const users = await axios.get('http://localhost:3001/user')
-//         return dispatch({type:GET_USER, payload: users.data})
-// }
-// }
+export function filterByStatusAndPriority(id,status,priority){
+  return async function(dispatch){
+    const state = await axios.get(`http://localhost:3001/todos/${id}/${status}/?priority=${priority}`)
+    return dispatch({
+      type: GET_TODOS_ID,
+      payload: state.data
+    })
+  }
+}
 
-// export function getToDos(){
-//   return async function(dispatch){
-//       const todos = await axios.get(`http://localhost:3001/todos`)
-//     return dispatch({type:GET_TODOS, payload: todos.data}) 
-// }
-// }
+export function postUser(post){
+  return async function(dispatch){
+      const user = await axios.post("http://localhost:3001/user", post)
+      return user;
+  }
+}
 
-// export function getToDosById(id){
-//   return async function(dispatch){
-//       const todos = await axios.get(`http://localhost:3001/todos/${id}`)
-//     return dispatch({type:GET_TODOS_ID, payload: todos.data}) 
-// }
-// }
+export function getEmployees(id, header){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    return dispatch({
+      type: GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
+}
 
+export function searchEmployees(id, name){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}?name=${name}`);
+    return dispatch({
+      type:GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
+};
 
+export function getEmployeeById(id){
+  return async function(dispatch){
+    const user = await axios.get(`http://localhost:3001/user/${id}`);
+    return dispatch({
+      type:GET_EMPLOYEE_BY_ID,
+      payload: user.data
+    });
+  }
+};
 
+export function updateUser(id, post){
+  return async function(dispatch){
+    const user = await axios.put(`http://localhost:3001/user/${id}`, post);
+    return dispatch({
+      type: UPDATE_USER,
+      payload: user.data
+    });
+  }
+}
+
+export function deleteUser(id){
+  return async function(dispatch){
+    const user = await axios.delete(`http://localhost:3001/user/${id}`);
+    return dispatch({
+      type: DELETE_USER,
+      payload: user.data
+    });
+  }
+}
+export function loginPrueba(value){
+  return async function(dispatch){
+    const user = await axios.post(`http://localhost:3001/login`, value);
+    return dispatch({
+      type: LOGIN_PRUEBA,
+      payload: user.data
+    })
+  }
+}
+
+export function headerTest(id, header){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    return dispatch({
+      type: GET_EMPLOYEES,
+      payload: users.data
+    });
+  }
+}
