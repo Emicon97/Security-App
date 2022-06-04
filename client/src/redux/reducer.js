@@ -22,6 +22,7 @@ const initialState = {
   todos: [],
   todoUpdate: {},
   userData:{},
+  usersPaginate: [],
   token: ''
 };
 
@@ -86,7 +87,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_USERS_PAGINATE:
       return {
         ...state,
-        employees: payload,
+        usersPaginate: payload,
       };
     case LOGIN_PRUEBA:
       return {
