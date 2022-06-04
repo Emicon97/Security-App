@@ -3,14 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar/Navbar";
 import AddUser from "./components/boss/AddUser";
 import EditState from './components/reusable/EditState';
-import { UseProtectedRouteHome, UseProtectedRoutes} from "./customHooks/ProtectedRoutes";
-import GuardProfile from "./components/guard/GuardProfile";
-import TableInfoSupervisors from "./components/supervisor/TableInfoSupervisors";
 import UserProfile from "./components/reusable/Profile";
 import LoginFake from "./components/LoginFake";
 import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Home from "./components/Home";
-import HomeSupervisor from "./components/supervisor/HomeSupervisor";
+import TableInfo from './components/reusable/TableInfo';
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -24,40 +21,6 @@ function App() {
     <>
       <NavBar />
       <Routes>
-        {/* <Route path="/" element={<h2>texto de prueba</h2>}/>
-        <Route path='/home' 
-          element={
-            <UseProtectedRouteHome 
-            user={user}
-            redirectPath='/'
-            roles={user ? user.roles : null}
-            />
-          }
-        />
-        <Route path='/home/add' 
-          element={
-            <UseProtectedRoutes
-              isAllowed={!!user && user.roles === "boss"}
-              children={<AddUser/>}
-            />
-          } 
-        />
-        <Route path='/EditState/:id' 
-          element={
-            <UseProtectedRoutes
-              isAllowed={!!user && user.roles === "watcher"}
-              children={<EditState />}
-            />        
-          } 
-        />
-        <Route path='/guard/:id' 
-          element={
-            <UseProtectedRoutes
-              isAllowed={!!user && user.roles === "watcher"}
-              children={<GuardProfile/>}
-            />
-          }
-        /> */}
         {/* Rutas HOME para cada rol */}
         <Route exact path="/boss/:id" element={<Home/>}/>
         <Route exact path="/supervisor/:id" element={<Home/>}/>

@@ -72,7 +72,7 @@ async function signUp (
     telephone:number,
     environment:string,
     workingHours?:string,
-    profilePic?:string):Promise<string> {
+    profilePic?:string) {
         
     await dniCHecker(dni);
     
@@ -91,9 +91,9 @@ async function signUp (
                 workingHours: workingHours ? workingHours : undefined,
                 profilePic: profilePic ? profilePic : undefined
             })
-            await supervisor.save();
-            await bossModel.findByIdAndUpdate(id, { $push: { supervisor } })
-            break;
+            const saveUser:any = await supervisor.save();
+            await bossModel.findByIdAndUpdate(id, { $push: { supervisor } });
+            return saveUser;
         case 'supervisor':
             const watcher = await watcherModel.create({
                 name,
@@ -106,12 +106,10 @@ async function signUp (
                 workingHours: workingHours ? workingHours : undefined,
                 profilePic: profilePic ? profilePic : undefined
             })
-            await watcher.save();
-            await supervisorModel.findByIdAndUpdate(id, { $push: { watcher } })
-            break;
+            const saveUser2:any = await watcher.save();
+            await supervisorModel.findByIdAndUpdate(id, { $push: { watcher } });
+            return saveUser2;
     }
-
-    return 'Profile successfully created.';
 }
 
 async function deleteUser (id:string, role:string):Promise<string> {
