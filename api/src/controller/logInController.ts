@@ -1,11 +1,9 @@
 import { bossModel, supervisorModel, watcherModel } from '../models/user';
 
 async function logIn (dni:number, password:string) {
-    console.log(dni, password, "login")
     if(dni && password){
         try{
             let findBoss = await bossModel.findOne({dni, password});
-            console.log(findBoss, "findBoss")
             let findSupervisor= await supervisorModel.findOne({dni, password});
             let findWatcher= await watcherModel.findOne({dni, password});
             if(findBoss!==null) return findBoss;
