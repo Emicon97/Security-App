@@ -29,7 +29,7 @@ async function getEmployeesPaginatedManager (id:string, limit:number, skip:numbe
     }
 }
 
-//* Realiza el paginado sobre todos los usuarios segun limit y skip
+//* Realiza el paginado sobre todos los usuarios segun limit y skip.
 async function getPaginatedAll (id:string, limit:number, skip:number){
     try{
         let boss = await bossModel.findById(id);
@@ -67,7 +67,7 @@ async function getPaginatedAll (id:string, limit:number, skip:number){
     }
 }
 
-//*Realiza un filtrado especifico segun el resultado de busqueda del nombre con limit y skip
+//*Realiza un filtrado especifico segun el resultado de busqueda del nombre con limit y skip.
 async function getPaginatedEmployeesByName (id:string, limit:number, skip:number, name:string){
     let $regex = escapeStringRegexp(name)
     try{
@@ -113,7 +113,7 @@ async function getPaginatedEmployeesByName (id:string, limit:number, skip:number
 //* id = identifica sobre que usuario hacer el paginado Supervisor/Watcher
 //* limit = cantidad de tareas para ver por pagina
 //* skip = Desde que tarea empieza a contar ej: 0 igual a la primer tarea del usuario
-//* name = realiza el paginado segun el resultado de la busqueda de nombre
+//* name = realiza el paginado segun el resultado de la busqueda de nombre.
 async function getTodosPaginatedManager(id:string, limit:number, skip:number, name:string){
     try{
         if(id && limit && skip && !name){
