@@ -129,8 +129,16 @@ async function getTodosPaginatedManager(id:string, limit:number, skip:number, na
 //* Realiza el paginado sobre todas las tareas segun limit y skip
 async function getToDosPaginatedAll (id:string, limit:number, skip:number) {
     try{
-        let response = await toDosModel.find({responsible: id}).skip(skip).limit(limit)
-        return response
+        let number = await toDosModel.find({responsible: id});
+        let count:any;
+        if(number){
+            count = { count: number.length }
+        } else {
+            count = { count: 0 }
+        }
+        let todos = await toDosModel.find({responsible: id}).skip(skip).limit(limit)
+        let response = [...todos, count]
+        return response;
     }catch(error:any){
         throw new Error(error.message)
     }
@@ -139,10 +147,16 @@ async function getToDosPaginatedAll (id:string, limit:number, skip:number) {
 async function getToDosPaginatedFilterName (id:string, limit:number, skip:number, name:string){
     let $regex = escapeStringRegexp(name)
     try{
-        return await toDosModel.find({$and:[
-            {responsible:id},
-            {name:{$regex}}
-        ]}).skip(skip).limit(limit)
+        let number = await toDosModel.find({$and:[{responsible:id},{name:{$regex}}]});
+        let count:any;
+        if(number){
+            count = { count: number.length }
+        }else{
+            count = { count: 0 }
+        }
+        let todos = await toDosModel.find({$and:[{responsible:id},{name:{$regex}}]}).skip(skip).limit(limit);
+        let response = [...todos, count];
+        return response;
     }catch(error:any){
         throw new Error(error.message)
     }
