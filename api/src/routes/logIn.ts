@@ -13,10 +13,10 @@ router.post('/', async(req, res, next)=>{
        if(findUser!==false){
             const token = jwt.sign({_id:findUser.id}, process.env.TOKEN_SECRET || 'tokenPass', {
                expiresIn:60*60*24
-           })
-           let dataUser = await getUserById(findUser.id);
-           dataUser.push(token);
-           res.json(dataUser);
+            })
+            let dataUser = await getUserById(findUser.id);
+            dataUser.push(token);
+            res.json(dataUser);
        } else {
          res.redirect('/');
        }

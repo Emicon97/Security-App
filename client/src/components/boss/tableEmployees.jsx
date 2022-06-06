@@ -10,9 +10,6 @@ export default function TableEmployees({ name, employees }) {
     useEffect(() => {
         setAllEmployees(employees)
     }, [employees])
-    useEffect(() => {
-
-    }, [allEmployees])
 
     let handleSubmit = (event) => {
         event.preventDefault();
