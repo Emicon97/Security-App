@@ -46,7 +46,7 @@ export default function NavBar() {
     <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5 dark:bg-gray-800">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <a
-          href="http://localhost:3000/home"
+          href="https://security-app-puce.vercel.app/home"
           className="flex items-center"
         >
           <img src={logo} className="mr-3 h-6 sm:h-9" alt="Centinel Logo" />

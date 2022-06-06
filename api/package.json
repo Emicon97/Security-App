@@ -4,9 +4,10 @@
   "description": "Back-Side config.",
   "main": "index.js",
   "scripts": {
+    "start": "node build/index",
+    "start:dev": "nodemon -L",
     "tsc": "tsc",
-    "test": "test",
-    "dev": "ts-node-dev index.ts"
+    "test": "test"
   },
   "repository": {
     "type": "git",

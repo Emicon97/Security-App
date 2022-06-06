@@ -48,45 +48,49 @@ export default function LoginFake() {
   // };
 
   return (
-    <div className="flex-column">
-      <div className="flex justify-center mb-10">
-        {" "}
-        <h2 className="text-3xl font-extrabold">Log In</h2>{" "}
-      </div>
-      <div className="flex justify-center">
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-        >
-          <label className="text-xl font-bold">
-            DNI:
-            <input
-              type="number"
-              value={input.dni}
-              placeholder="Example: 1234567..."
-              className={Input()}
-              name="dni"
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-          </label>
-          <label className="text-xl font-bold">
-            Password:{" "}
-            <input
-              type="text"
-              value={input.password}
-              className={Input()}
-              placeholder="Your password..."
-              name="password"
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-          </label>
-          <button className={`${Primary()} mt-6 font-extrabold text-lg`}>Log In</button>
-        </form>
+    <div className="flex justify-center items-center">
+      <div className="border-solid border-2 rounded-xl p-4 shadow-lg max-w-prose flex-column">
+        <div className="flex justify-center mb-10">
+          {" "}
+          <h2 className="text-3xl font-extrabold">Log In</h2>{" "}
+        </div>
+        <div className="flex justify-center">
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <label className="text-xl font-bold">
+              DNI:
+              <input
+                type="number"
+                value={input.dni}
+                placeholder="Example: 1234567..."
+                className={Input()}
+                name="dni"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </label>
+            <label className="text-xl font-bold">
+              Password:{" "}
+              <input
+                type="password"
+                value={input.password}
+                className={Input()}
+                placeholder="Your password..."
+                name="password"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </label>
+            <button className={`${Primary()} mt-6 font-extrabold text-lg`}>
+              Log In
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

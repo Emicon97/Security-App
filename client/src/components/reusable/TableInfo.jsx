@@ -8,18 +8,19 @@ import Modal from "./Modal";
 import EditUser from "../supervisor/EditUser";
 import LoginController from '../reusable/LoginController';
 
-//hacer filtrado por uno solo, para boton delete llenar un estado
-//propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
 
-export default function TableInfo() {
+
+export default function TableInfo(props) {
   const dispatch = useDispatch();
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees)
   const header = LoginController()
+
   //toma el id del usuario actual
   const id = useSelector((state) => state.userData[0]._id)
+
 
   //====================================
   //============== STATES ==============
