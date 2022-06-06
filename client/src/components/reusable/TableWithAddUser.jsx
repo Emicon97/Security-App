@@ -4,11 +4,9 @@ import TableInfo from "../reusable/TableInfo";
 import { Primary } from "../styles/Buttons";
 
 export default function HomeBoss() {
-    const { id } = useParams();
-    console.log(id, "desde el homeboss")
     return (
         <div className='flex flex-col items-center justify-center'>
-            <TableInfo id = { id } />
+            <TableInfo />
             <Link to="/user/add">
                 <button className={`mx-auto my-5 ${Primary()}`}>Add User</button>
             </Link>

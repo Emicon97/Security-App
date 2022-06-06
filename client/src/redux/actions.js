@@ -147,15 +147,27 @@ export function loginPrueba(value){
     })
   }
 }
-export function getUsersPaginate(id, limit, skip, name = "", header) {
+export function getUsersPaginate(id, limit, skip, name, header) {
   return async function(dispatch){
     const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`, header);
     return dispatch({
       type: GET_USERS_PAGINATE,
-      payload: users.data.supervisor,
+      payload: users.data
     })
   }
 }
+
+export function getUsersPaginateAll(id,limit,skip,header){
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}`, header);
+    return dispatch({
+      type: GET_USERS_PAGINATE,
+      payload: users.data
+    })
+  }
+}
+
+
 export function headerTest(id, header){
   return async function(dispatch){
     const users = await axios.get(`https://centinel.herokuapp.com/user/employees/${id}`, header)
