@@ -147,9 +147,9 @@ export function loginPrueba(value){
     })
   }
 }
-export function getUsersPaginate(id, limit, skip, name = "") {
+export function getUsersPaginate(id, limit, skip, name = "", header) {
   return async function(dispatch){
-    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`);
+    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`, header);
     return dispatch({
       type: GET_USERS_PAGINATE,
       payload: users.data.supervisor,
