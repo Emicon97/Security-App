@@ -138,6 +138,7 @@ export function deleteUser(id){
   }
 }
 export function loginPrueba(value){
+  console.log(value)
   return async function(dispatch){
     const user = await axios.post(`http://localhost:3001/login`, value);
     return dispatch({
