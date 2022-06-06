@@ -7,6 +7,7 @@ import UserProfile from "./components/reusable/Profile";
 import LoginFake from "./components/LoginFake";
 import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Home from "./components/Home";
+import LandingPage from "./components/Landing.jsx";
 import TableInfo from './components/reusable/TableInfo';
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
     <>
       <NavBar />
       <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+        
         {/* Rutas HOME para cada rol */}
         <Route exact path="/boss/:id" element={<Home/>}/>
         <Route exact path="/supervisor/:id" element={<Home/>}/>
@@ -35,7 +38,7 @@ function App() {
         {/* Rutas GENERALES */}
         <Route path="/user/add" element={<AddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
-        <Route path="/login" element={<LoginFake/>}/>
+        <Route path="/login" element={<LoginFake />}/>
 
       </Routes>
     </>
