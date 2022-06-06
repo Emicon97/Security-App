@@ -29,44 +29,79 @@ async function getEmployeesPaginatedManager (id:string, limit:number, skip:numbe
     }
 }
 
-//* Realiza el paginado sobre todos los usuarios segun limit y skip
+//* Realiza el paginado sobre todos los usuarios segun limit y skip.
 async function getPaginatedAll (id:string, limit:number, skip:number){
     try{
         let boss = await bossModel.findById(id);
         if(boss){
-            return await bossModel.findOne({id:id}).populate({
-                    path:'supervisor',
-                    options:{ limit, skip }
-                });
+            let number = await bossModel.find({id:id}).populate({path:'supervisor'});
+            let count:any;
+             if (number){
+                 count = { count : (number[0].supervisor).length}
+             }else{
+                 count = { count : 0}
+             }
+             let boss:any = await bossModel.find({id:id}).populate({
+                 path:'supervisor',
+                 options:{ limit, skip}
+                })
+            let response = [...boss, count]
+            return response;
         }else{
-            return await supervisorModel.findOne({id:id}).populate(
-                {
-                    path:'watcher',
-                    options:{ limit, skip }
-                });
+            let number = await supervisorModel.find({id:id}).populate({path:'watcher'});
+            let count:any
+            if(number){
+               count = {count :(number[0].watcher).length}
+            }else{
+                count= {count : 0}
+            }
+            let supervisor = await supervisorModel.find({id:id}).populate({
+                path:'watcher',
+                options:{ limit, skip }
+            })
+            let response = [...supervisor,count] 
+          return response
         }
     }catch(error:any){
         throw new Error(error.message);
     }
 }
 
-//*Realiza un filtrado especifico segun el resultado de busqueda del nombre con limit y skip
+//*Realiza un filtrado especifico segun el resultado de busqueda del nombre con limit y skip.
 async function getPaginatedEmployeesByName (id:string, limit:number, skip:number, name:string){
     let $regex = escapeStringRegexp(name)
     try{
         let boss = await bossModel.findById(id);
         if(boss){
-            return await bossModel.findOne({id:id}).populate({
-                path:'supervisor',
-                match:{ name: {$regex} },
-                options:{ limit, skip }
+            let number = await bossModel.find({id:id}).populate({path:'supervisor',match:{ name: {$regex} }});
+            let count:any;
+            if(number){
+                count = { count: (number[0].supervisor).length}
+            }else{
+                count = { count: 0 }
+            }
+            let boss = await bossModel.find({id:id}).populate({
+                path: 'supervisor',
+                match: { name: {$regex}},
+                options: { limit, skip}
             })
+            let response = [...boss, count]
+            return response
         }else {
-            return await supervisorModel.findOne({id:id}).populate({
+            let number = await supervisorModel.find({id:id}).populate({path:'watcher', match: { name: {$regex}}});
+            let count:any;
+            if(number){
+                count={ count :(number[0].watcher).length}
+            }else{
+                count={ count: 0}
+            }
+            let supervisor:any = await supervisorModel.find({id:id}).populate({
                 path:'watcher',
                 match: { name: {$regex}},
                 options:{ limit, skip }
             })
+            let response = [...supervisor, count]
+            return response
         }
     }catch(error:any){
         throw new Error(error.message)
@@ -78,7 +113,7 @@ async function getPaginatedEmployeesByName (id:string, limit:number, skip:number
 //* id = identifica sobre que usuario hacer el paginado Supervisor/Watcher
 //* limit = cantidad de tareas para ver por pagina
 //* skip = Desde que tarea empieza a contar ej: 0 igual a la primer tarea del usuario
-//* name = realiza el paginado segun el resultado de la busqueda de nombre
+//* name = realiza el paginado segun el resultado de la busqueda de nombre.
 async function getTodosPaginatedManager(id:string, limit:number, skip:number, name:string){
     try{
         if(id && limit && skip && !name){
@@ -94,8 +129,16 @@ async function getTodosPaginatedManager(id:string, limit:number, skip:number, na
 //* Realiza el paginado sobre todas las tareas segun limit y skip
 async function getToDosPaginatedAll (id:string, limit:number, skip:number) {
     try{
-        let response = await toDosModel.find({responsible: id}).skip(skip).limit(limit)
-        return response
+        let number = await toDosModel.find({responsible: id});
+        let count:any;
+        if(number){
+            count = { count: number.length }
+        } else {
+            count = { count: 0 }
+        }
+        let todos = await toDosModel.find({responsible: id}).skip(skip).limit(limit)
+        let response = [...todos, count]
+        return response;
     }catch(error:any){
         throw new Error(error.message)
     }
@@ -104,10 +147,16 @@ async function getToDosPaginatedAll (id:string, limit:number, skip:number) {
 async function getToDosPaginatedFilterName (id:string, limit:number, skip:number, name:string){
     let $regex = escapeStringRegexp(name)
     try{
-        return await toDosModel.find({$and:[
-            {responsible:id},
-            {name:{$regex}}
-        ]}).skip(skip).limit(limit)
+        let number = await toDosModel.find({$and:[{responsible:id},{name:{$regex}}]});
+        let count:any;
+        if(number){
+            count = { count: number.length }
+        }else{
+            count = { count: 0 }
+        }
+        let todos = await toDosModel.find({$and:[{responsible:id},{name:{$regex}}]}).skip(skip).limit(limit);
+        let response = [...todos, count];
+        return response;
     }catch(error:any){
         throw new Error(error.message)
     }

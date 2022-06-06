@@ -8,7 +8,8 @@ import {
   GET_EMPLOYEE_BY_ID,
   UPDATE_USER,
   DELETE_USER,
-  LOGIN_PRUEBA
+  LOGIN_PRUEBA,
+  GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
 export function getUsersById(id){
@@ -81,7 +82,7 @@ export function filterByStatusAndPriority(id,status,priority){
   }
 }
 
-export function postUser(post){
+export function postUser(post,header){
   return async function(dispatch){
       const user = await axios.post("http://localhost:3001/user", post)
       return user;
@@ -90,7 +91,7 @@ export function postUser(post){
 
 export function getEmployees(id, header){
   return async function(dispatch){
-    const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
+    const users = await axios.get(`http://localhost:3001/user/employees/${id}`,header)
     return dispatch({
       type: GET_EMPLOYEES,
       payload: users.data
@@ -128,9 +129,9 @@ export function updateUser(id, post){
   }
 }
 
-export function deleteUser(id){
+export function deleteUser(id, header){
   return async function(dispatch){
-    const user = await axios.delete(`http://localhost:3001/user/${id}`);
+    const user = await axios.delete(`http://localhost:3001/user/${id}`, header);
     return dispatch({
       type: DELETE_USER,
       payload: user.data
@@ -146,7 +147,15 @@ export function loginPrueba(value){
     })
   }
 }
-
+export function getUsersPaginate(id, limit, skip, name = "") {
+  return async function(dispatch){
+    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`);
+    return dispatch({
+      type: GET_USERS_PAGINATE,
+      payload: users.data.supervisor,
+    })
+  }
+}
 export function headerTest(id, header){
   return async function(dispatch){
     const users = await axios.get(`http://localhost:3001/user/employees/${id}`, header)
