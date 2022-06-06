@@ -4,6 +4,7 @@ import { postUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
+import LoginController from "../reusable/LoginController";
 
 export default function AddUser() {
     const dispatch = useDispatch()
@@ -20,10 +21,10 @@ export default function AddUser() {
       setLoading(true);
       const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
       const file = await res.json();
-      console.log(file)
       setImage(file.secure_url);
       setLoading(false)
     };
+    const header = LoginController()
 
     const viewPassword = () => {
         var x = document.getElementById('password');
@@ -73,7 +74,7 @@ export default function AddUser() {
             }}
 
             onSubmit ={(values, {resetForm}) => {
-                dispatch(postUser(values));
+                dispatch(postUser(values, header));
                 console.log(values)
                 setFormSend(true);
                 resetForm();

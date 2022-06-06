@@ -6,18 +6,16 @@ import "../styles/TableInfo.css";
 import { Tertiary, Input  } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditUser from "../supervisor/EditUser";
+import LoginController from "./LoginController";
 
-//hacer filtrado por uno solo, para boton delete llenar un estado
-//propuesta al back para pedir el id del guardia, boton de mas para agregar un guardia
 
-export default function TableInfo({ id }) {
+export default function TableInfo(props) {
   const dispatch = useDispatch();
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees)
-  const header = useSelector((state) => state.token);
-  
+  const header = LoginController()
 
   //====================================
   //============== STATES ==============
@@ -44,12 +42,12 @@ export default function TableInfo({ id }) {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getUsersPaginate(id, limit, skip, nameEmployee))
+    dispatch(getUsersPaginate(props.id, limit, skip, nameEmployee, header))
     setNameEmployee("");
   };
   const handleAllButton = (e) => {  //function para resetear la busqueda
     e.preventDefault();
-    dispatch(getUsersPaginate(id, limit, skip))
+    dispatch(getUsersPaginate(props.id, limit, skip, header))
     setNameEmployee("");
   };
   const handleCheckbox = (e) => {
@@ -75,7 +73,7 @@ export default function TableInfo({ id }) {
 
   //Each time you click the edit button, the function will be called
   useEffect(() => {
-    dispatch(getUsersPaginate(id, limit, skip))
+    dispatch(getUsersPaginate(props.id, limit, skip, header))
       let pages = []
       for(let i = 0; i < Math.ceil(usersNum/limit); i++) {
         pages.push(i + 1)
