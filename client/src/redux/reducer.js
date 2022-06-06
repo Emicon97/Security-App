@@ -79,11 +79,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
-    case LOGIN_PRUEBA:
-      return {
-        ...state,
-        userData: payload,
-      };
+    // case LOGIN_PRUEBA:
+    //   return {
+    //     ...state,
+    //     userData: payload,
+    //   };
     case GET_USERS_PAGINATE:
       return {
         ...state,
