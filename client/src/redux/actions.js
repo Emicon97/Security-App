@@ -12,7 +12,7 @@ import {
   GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
-import url from './url';
+import { url } from './url';
 
 export function getUsersById(id, header){
     return async function(dispatch){
