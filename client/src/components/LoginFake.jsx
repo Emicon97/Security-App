@@ -40,10 +40,10 @@ export default function LoginFake(){
         }
     }, [userData]);
     
-    const redirector = (e) => {
-        e.preventDefault();
-        dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
-    };
+    // const redirector = (e) => {
+    //     e.preventDefault();
+    //     dispatch(loginPrueba({ dni:2400000, password:"1234567" }));
+    // };
 
     return(
         <div className='background-color: black'>

@@ -12,9 +12,9 @@ import {
   GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
-export function getUsersById(id){
+export function getUsersById(id, header){
     return async function(dispatch){
-        const employees = await axios.get(`http://localhost:3001/user/${id}`);
+        const employees = await axios.get(`http://localhost:3001/user/${id}`,header);
         return dispatch({
           type:GET_USER_ID,
           payload: employees.data
