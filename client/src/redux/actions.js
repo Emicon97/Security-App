@@ -139,6 +139,7 @@ export function deleteUser(id, header){
   }
 }
 export function loginPrueba(value){
+  console.log(value)
   return async function(dispatch){
     const user = await axios.post(`https://centinel.herokuapp.com/login`, value);
     return dispatch({
