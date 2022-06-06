@@ -5,6 +5,7 @@ import { Primary } from "../styles/Buttons";
 
 export default function HomeBoss() {
     const { id } = useParams();
+    console.log(id, "desde el homeboss")
     return (
         <div className='flex flex-col items-center justify-center'>
             <TableInfo id={id} />

@@ -12,9 +12,9 @@ import {
   GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
-export function getUsersById(id){
+export function getUsersById(id, header){
     return async function(dispatch){
-        const employees = await axios.get(`https://centinel.herokuapp.com/user/${id}`);
+        const employees = await axios.get(`http://localhost:3001/user/${id}`, header);
         return dispatch({
           type:GET_USER_ID,
           payload: employees.data
@@ -147,9 +147,9 @@ export function loginPrueba(value){
     })
   }
 }
-export function getUsersPaginate(id, limit, skip, name = "") {
+export function getUsersPaginate(id, limit, skip, name = "", header) {
   return async function(dispatch){
-    const users = await axios.get(`https://centinel.herokuapp.com/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`);
+    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`, header);
     return dispatch({
       type: GET_USERS_PAGINATE,
       payload: users.data.supervisor,
