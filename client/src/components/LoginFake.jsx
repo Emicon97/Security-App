@@ -24,7 +24,7 @@ export default function LoginFake() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(loginPrueba(input.dni, input.password));
+    dispatch(loginPrueba(input));
     setInput({ dni: "", password: "" });
   }
 
@@ -42,10 +42,10 @@ export default function LoginFake() {
     }
   }, [userData]);
 
-  const redirector = (e) => {
-    e.preventDefault();
-    dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  };
+  // const redirector = (e) => {
+  //   e.preventDefault();
+  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
+  // };
 
   return (
     <div className="flex-column">

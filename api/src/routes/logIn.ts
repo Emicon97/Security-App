@@ -16,7 +16,7 @@ router.post('/', async(req, res, next)=>{
            })
            let dataUser = await getUserById(findUser.id);
            dataUser.push(token);
-           res.cookie("auth-token", token).json(dataUser);
+           res.json(dataUser);
        } else {
          res.redirect('/');
        }
