@@ -100,14 +100,14 @@ export default function EditUser({ user }) {
           errors.telephone = "Alguno de los valores no es un número *";
         return errors;
       }}
-      onSubmit={(values, { resetForm }) => {
-        dispatch(updateUser(user.id, values));
-        setFormSend(true);
-        resetForm();
-        setTimeout(() => setFormSend(false), 5000);
+      onSubmit={async (values, { resetForm }) => {
+         dispatch(updateUser(user.id, values));
+         setFormSend(true);
+         resetForm();
+         setTimeout(() => setFormSend(false), 5000);
       }}
     >
-      {({ errors, values }) => (
+      {({ errors, values, isSubmitting }) => (
         <Form className="flex flex-col items-center">
           <div className="flex flex-row items-center justify-between">
             <div>
@@ -305,12 +305,12 @@ export default function EditUser({ user }) {
             />
           </div>
           <div className="flex gap-4">
-            <button className={Primary()} type="submit">
+            <button className={Primary()} type="submit" disabled={isSubmitting}>
               Edit
             </button>
-            <button className={ButtonDelete()} type="submit">
+            {/* <button className={ButtonDelete()} type="submit" disabled={isSubmitting}>
               Delete
-            </button>
+            </button> */}
           </div>
           {formSend && (
             <small className="text-green-600">

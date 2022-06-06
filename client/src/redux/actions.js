@@ -82,7 +82,7 @@ export function filterByStatusAndPriority(id,status,priority){
   }
 }
 
-export function postUser(post,header){
+export function postUser(post, header){
   return async function(dispatch){
       const user = await axios.post("https://centinel.herokuapp.com/user", post)
       return user;
