@@ -1,2 +1,2 @@
 export const url = 'https://centinel.herokuapp.com';
-// export conts url = 'http://localhost:3001';
+//export const url = 'http://localhost:3001';
