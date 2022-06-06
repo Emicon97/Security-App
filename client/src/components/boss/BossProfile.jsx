@@ -7,11 +7,13 @@ import { getEmployees, getUsersById } from "../../redux/actions";
 import "./style.css";
 import { Primary } from "../styles/Buttons";
 import EditUser from "../supervisor/EditUser";
+import LoginController from '../reusable/LoginController';
 
 export default function BossProfile() {
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   let dispatch = useDispatch();
+  const header = LoginController();
   let { id } = useParams();
   let user = useSelector((state) => state.userDetails[0]);
   let supervisors = useSelector((state) => state.employees);
@@ -22,8 +24,8 @@ export default function BossProfile() {
     setActiveEdit(!activeEdit);
   };
   useEffect(() => {
-    dispatch(getUsersById(id));
-    dispatch(getEmployees(id, ""));
+    dispatch(getUsersById(id, header));
+    dispatch(getEmployees(id, header));
   }, [dispatch]);
 
   return (

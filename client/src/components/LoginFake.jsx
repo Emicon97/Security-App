@@ -42,10 +42,10 @@ export default function LoginFake() {
     }
   }, [userData]);
 
-  const redirector = (e) => {
-    e.preventDefault();
-    dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  };
+  // const redirector = (e) => {
+  //   e.preventDefault();
+  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
+  // };
 
   return (
     <div className="flex justify-center items-center">
