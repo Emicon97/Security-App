@@ -7,7 +7,7 @@ import HomeSupervisor from './supervisor/HomeSupervisor';
 import LoginController from '../components/reusable/LoginController'
 
 import { getEmployees } from '../redux/actions';
-import { logout } from './../redux/actions';
+import Logout from './Logout';
 
 export default function Home () {
     const dispatch = useDispatch();
@@ -53,7 +53,7 @@ export default function Home () {
     return (  
         <div>
             {home}
-            <logout/>
+            <Logout/>
         </div>      
     )
 
