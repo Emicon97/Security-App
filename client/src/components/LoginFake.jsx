@@ -8,8 +8,8 @@ import { Input, Primary } from "./styles/Buttons";
 
 export default function LoginFake() {
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.userData);
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.userData);
   const [input, setInput] = useState({
     dni: "",
     password: "",

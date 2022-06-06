@@ -138,9 +138,9 @@ export function deleteUser(id, header){
     });
   }
 }
-export function loginPrueba(value){
+export function loginPrueba(value, header){
   return async function(dispatch){
-    const user = await axios.post(`https://centinel.herokuapp.com/login`, value);
+    const user = await axios.post(`https://centinel.herokuapp.com/login`, value, header);
     return dispatch({
       type: LOGIN_PRUEBA,
       payload: user.data
