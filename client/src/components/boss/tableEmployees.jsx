@@ -10,13 +10,10 @@ export default function TableEmployees({ name, employees }) {
     useEffect(() => {
         setAllEmployees(employees)
     }, [employees])
-    useEffect(() => {
-
-    }, [allEmployees])
 
     let handleSubmit = (event) => {
         event.preventDefault();
-        let arrFilter = allEmployees.filter(e => e.includes(value));
+        let arrFilter = allEmployees.filter(employee => employee.name === value);
         setAllEmployees(arrFilter)
     }
     let handleChange = (event) =>{
