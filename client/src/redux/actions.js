@@ -179,14 +179,3 @@ export function getUsersPaginateAll(id,limit,skip,header){
     })
   }
 }
-
-
-export function headerTest(id, header){
-  return async function(dispatch){
-    const users = await axios.get(`${url}/user/employees/${id}`, header)
-    return dispatch({
-      type: GET_EMPLOYEES,
-      payload: users.data
-    });
-  }
-}

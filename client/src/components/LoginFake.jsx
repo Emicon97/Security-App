@@ -42,11 +42,6 @@ export default function LoginFake() {
     }
   }, [userData]);
 
-  // const redirector = (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  // };
-
   return (
     <div className="flex justify-center items-center">
       <div className="border-solid border-2 rounded-xl p-4 shadow-lg max-w-prose flex-column">

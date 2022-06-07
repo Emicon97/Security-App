@@ -16,12 +16,7 @@ export default function Logout() {
     dispatch(logout());
     navigate('/login')
   }
-
-  // const redirector = (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  // };
-
+  
   return (
     <div className="flex justify-center items-center">
             <Link to={'/login'}>
