@@ -50,8 +50,6 @@ export default function Login() {
   }
 
   useEffect(() => {
-    console.log(userData);
-    console.log(token);
     if (userData[1] && token) {
       const id = userData[0]._id;
       switch (userData[1]) {
