@@ -3,16 +3,16 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { postUser, getEmployees } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
-import { useForm } from "react-hook-form";
+import { Primary, Input, File } from "../styles/Buttons";
+import demo from "../../assets/demo.png";
 
-export default function CreateRecipe() {
+export default function AddNewUser() {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees);
-  const { id } = useParams();
   const header = LoginController();
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const user = useSelector((state) => state.userDetails);
 
-
+  const [image, setImage] = useState("");
   const [input, setInput] = useState({
     name: "",
     lastName: "",
@@ -25,9 +25,8 @@ export default function CreateRecipe() {
     address: "",
     environment: "",
   });
-
+  console.log(input)
   const [error, setError] = useState({});
-  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const typeEnv = [
@@ -48,10 +47,16 @@ export default function CreateRecipe() {
       "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
       { method: "POST", body: data }
     );
+
     const file = await res.json();
-    setImage(file.secure_url);
+    setImage(await file.secure_url);
     setLoading(false);
+    setInput({
+        ...input,
+        profilePic: file.secure_url,
+      });
   };
+  console.log(image)
 
   function validateInput(input) {
     let error = {};
@@ -122,11 +127,11 @@ export default function CreateRecipe() {
   }
 
   function handleClassName(error) {
-    if (!error) return "chau";
-    else return "hola";
+    if (!error) return Input();
+    else return Input();
   }
   //Function for submit button recipe//
-  function onSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     const userExists = employees.find(
       (employee) =>
@@ -152,16 +157,16 @@ export default function CreateRecipe() {
     )
       return alert("You have to fill the mandatory fields first");
     if (userExists) return alert("it seems this user already exists");
-    dispatch(postUser(input));
+    dispatch(postUser(input, header, user[0]._id));
     setInput({});
     //history.push("/recipes");
   }
 
-  useEffect(() => {
-    dispatch(getEmployees(id, header));
-  }, [dispatch]);
+  //   useEffect(() => {
+  //     dispatch(getEmployees(id, header));
+  //   }, [dispatch]);
   return (
-    <div className="">
+    <div>
       {/* <div className="">
         <Link to={"/recipes"}>
           {" "}
@@ -170,7 +175,7 @@ export default function CreateRecipe() {
         <h2>Create Your Recipe:</h2>
       </div> */}
       <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
-        <div className="">
+        <div className="flex-column justify-center">
           <label className="">Name:</label>
           <input
             type="text"
@@ -242,9 +247,21 @@ export default function CreateRecipe() {
           <input
             type="file"
             name="profilePic"
-            value={input.profilePic}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => uploadImage(e)}
+            className={File()}
           />
+          {loading ? (
+            ((input.profilePic = image),
+            (
+              <img
+                className="w-10 h-10"
+                src={image}
+                style={{ widht: "100px" }}
+              />
+            ))
+          ) : (
+            <img src={demo} className="w-10 h-10" />
+          )}
           <label className="">Working Hours:</label>
           <input
             type="number"
@@ -252,6 +269,7 @@ export default function CreateRecipe() {
             value={input.workingHours}
             onChange={(e) => handleChange(e)}
             placeholder="Between 8 and 16 hours"
+            className={handleClassName(error.name)}
           />
           <label className="">Address:</label>
           <input
@@ -260,17 +278,22 @@ export default function CreateRecipe() {
             value={input.address}
             onChange={(e) => handleChange(e)}
             placeholder="Your address..."
+            className={handleClassName(error.name)}
           />
           <label className="">Environment:</label>
-          <select name="environment">
+          <select name="environment" className={handleClassName(error.name)}>
             <option value="none">Select...</option>
-            {typeEnv.map(env => {
-                return <option value={env}>{env}</option>
+            {typeEnv.map((env) => {
+              return (
+                <option value={env} key={env}>
+                  {env}
+                </option>
+              );
             })}
           </select>
         </div>
         <div>
-          <button type="submit" className="">
+          <button type="submit" className={Primary()}>
             Add User
           </button>
         </div>

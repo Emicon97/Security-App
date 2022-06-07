@@ -5,9 +5,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
+import { useParams } from "react-router-dom";
 
 export default function AddUser() {
   const dispatch = useDispatch();
+  const header = LoginController()
+  const { id } = useParams();
   const typeEnv = [
     "neighbourhood one",
     "neighbourhood two",
@@ -18,7 +21,6 @@ export default function AddUser() {
   const [formSend, setFormSend] = useState(false);
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
-  const header = LoginController()
 
   const uploadImage = async (e) => {
     const files = e.target.files;
@@ -41,7 +43,7 @@ export default function AddUser() {
   };
 
   const handleSubmit = (values, props) => {
-        dispatch(postUser(values, header));
+        dispatch(postUser(values, header, id));
         setFormSend(true);
         props.resetForm();
         setTimeout(() => setFormSend(false), 5000);

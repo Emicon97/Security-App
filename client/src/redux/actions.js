@@ -85,10 +85,10 @@ export function filterByStatusAndPriority(id,status,priority){
   }
 }
 
-export function postUser(post, header){
+export function postUser(post, header, id){
   return async function(dispatch){
-      const user = await axios.post(`${url}/user`, post, header)
-      return user;
+      const user = await axios.post(`${url}/user/${id}`, post, header)
+      return "User created successfully";
   }
 }
 
