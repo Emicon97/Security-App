@@ -84,7 +84,7 @@ export function filterByStatusAndPriority(id,status,priority){
 
 export function postUser(post, header){
   return async function(dispatch){
-      const user = await axios.post("http://localhost:3001/user", post)
+      const user = await axios.post(`http://localhost:3001/user/${post.id}`, post, header)
       return user;
   }
 }
@@ -109,9 +109,9 @@ export function searchEmployees(id, name){
   }
 };
 
-export function getEmployeeById(id){
+export function getEmployeeById(id, header){
   return async function(dispatch){
-    const user = await axios.get(`http://localhost:3001/user/${id}`);
+    const user = await axios.get(`http://localhost:3001/user/${id}`, header);
     return dispatch({
       type:GET_EMPLOYEE_BY_ID,
       payload: user.data
@@ -119,9 +119,9 @@ export function getEmployeeById(id){
   }
 };
 
-export function updateUser(id, post){
+export function updateUser(id, post, header){
   return async function(dispatch){
-    const user = await axios.put(`http://localhost:3001/user/${id}`, post);
+    const user = await axios.put(`http://localhost:3001/user/${id}`, post, header);
     return dispatch({
       type: UPDATE_USER,
       payload: user.data

@@ -27,7 +27,7 @@ function App() {
         {/* Rutas HOME para cada rol */}
         <Route exact path="/boss/:id" element={<Home/>}/>
         <Route exact path="/supervisor/:id" element={<Home/>}/>
-        <Route exact path="/guard/:id" element={<Home/>} />
+        <Route exact path="/watcher/:id" element={<Home/>} />
         
         {/* Rutas para el BOSS */}
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/user/add" element={<AddUser />} />
+        <Route path="/user/add/:id" element={<AddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/login" element={<LoginFake />}/>
 

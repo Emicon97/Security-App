@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
+import LoginController from '../reusable/LoginController'
 
 export default function AddUser() {
     const dispatch = useDispatch()
@@ -11,16 +12,17 @@ export default function AddUser() {
     const [formSend, setFormSend] = useState(false);
     const [image, setImage] = useState('')
     const [loading, setLoading] = useState(false);
+    const [header, setHeader] = useState(LoginController())
+
+    const id = useSelector(state => state.userData[0]._id)
     const uploadImage = async (e) => {
       const files = e.target.files;
       const data = new FormData();
       data.append('file', files[0]);
       data.append('upload_preset', 'magqqp6o');
-      console.log(data)
       setLoading(true);
       const res = await fetch("https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload", { method: "POST", body: data })
       const file = await res.json();
-      console.log(file)
       setImage(file.secure_url);
       setLoading(false)
     };
@@ -42,7 +44,9 @@ export default function AddUser() {
                 address: '',
                 environment: '',
                 telephone: '',
-                workingHours: ''
+                workingHours: '',
+                header: {},
+                id: id
             }}
 
             validate={(val) => {
@@ -73,17 +77,16 @@ export default function AddUser() {
             }}
 
             onSubmit ={(values, {resetForm}) => {
-                dispatch(postUser(values));
-                console.log(values)
+              console.log(values)
+                dispatch(postUser(values, values.header));
                 setFormSend(true);
                 resetForm();
                 setTimeout(() => setFormSend(false), 5000)
             }}
             >
 
-            {( {errors, values} ) => (
+            {( {errors, values}) => (
               <Form className="flex flex-col items-center">
-                {console.log(values)}
                 <div className="flex flex-row items-center justify-between">
                   <div>
                     <label htmlFor="name">
@@ -172,7 +175,9 @@ export default function AddUser() {
                   </div>
                   <ErrorMessage name="file" component={()=>(<small className="text-red-600">{errors.profilePic}</small>)}/>
                 </div>
-                <button className={Primary()} type="submit">Add</button>
+                <button className={Primary()} onClick={() =>{ console.log(values)
+                dispatch(postUser(values, values.header));
+                setFormSend(true);}} type="button">Add</button>
                 {formSend && (<small className="text-green-600">Employee created successfully</small>)}
               </Form>
             )}

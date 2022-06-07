@@ -21,7 +21,7 @@ export default function NavBarSupervisor (userData) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}`}>
                         Asignar Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/add'}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/add/${userData._id}`}>
                         Añadir empleados
                     </Link>
                 </li>
