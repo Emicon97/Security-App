@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { postUser, getEmployees } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
+import swal from 'sweetalert';
 
 export default function AddNewUser() {
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees);
   const header = LoginController();
   const user = useSelector((state) => state.userDetails);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function AddNewUser() {
     address: "",
     environment: "",
   });
-
+  
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -81,10 +81,10 @@ export default function AddNewUser() {
     //Password
     if (
       input.password.lentgh < 8 ||
-      input.password.lentgh > 16 ||
+      input.password.lentgh > 24 ||
       !input.password
     )
-      error.password = "Password must be between 8 and 16 characters";
+      error.password = "Password must be between 8 and 24 characters";
     if (!input.password.match(/[a-z]/g))
       error.password =
         "The password must contain at least one lowercase letter";
@@ -104,6 +104,9 @@ export default function AddNewUser() {
 
     //Address
     if (!input.address) error.address = "This field is mandatory";
+
+    //Environment
+    if(!input.environment) error.environment = "This field is mandatory";
 
     return error;
   }
@@ -133,11 +136,6 @@ export default function AddNewUser() {
   //Function for submit button recipe//
   function handleSubmit(e) {
     e.preventDefault();
-    const userExists = employees.find(
-      (employee) =>
-        `${employee.name.toLowerCase()} ${input.lastName.toLowerCase()}` ===
-        `${input.name.toLowerCase()} ${employee.lastName.toLowerCase()}`
-    );
     if (
       error.name ||
       error.lastName ||
@@ -147,7 +145,7 @@ export default function AddNewUser() {
       error.telephone ||
       error.environment
     )
-      return alert("You have to fill the mandatory fields first");
+      return swal("You have to fill the mandatory fields first");
     if (
       !input.name &&
       !input.lastName &&
@@ -157,26 +155,22 @@ export default function AddNewUser() {
       !input.telephone &&
       !input.environment
     )
-      return alert("You have to fill the mandatory fields first");
-    if (userExists) return alert("it seems this user already exists");
+      return swal("You have to fill the mandatory fields first");
     dispatch(postUser(input, header, user[0]._id));
-    alert("User added successfully");
+    alert("User created successfully");
     setInput({});
     navigate(`/boss/${user[0]._id}`);
   }
 
-  //   useEffect(() => {
-  //     dispatch(getEmployees(id, header));
-  //   }, [dispatch]);
   return (
     <div>
-      {/* <div className="">
-        <Link to={"/recipes"}>
+      <div className="">
+        <Link to={`/boss/${user[0]._id}`}>
           {" "}
-          <button className="">Home</button>{" "}
+          <button className={Primary()}>Dashboard</button>{" "}
         </Link>
-        <h2>Create Your Recipe:</h2>
-      </div> */}
+        <h2>Add new Employee:</h2>
+      </div>
       <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
         <div className="flex-column justify-center">
           <label className="">Name:</label>
@@ -257,13 +251,12 @@ export default function AddNewUser() {
             ((input.profilePic = image),
             (
               <img
-                className="w-10 h-10"
-                src={image}
-                style={{ widht: "100px" }}
+                className="w-12 h-12"
+                src={demo}
               />
             ))
           ) : (
-            <img src={demo} className="w-10 h-10" />
+            <img src={image} className="w-12 h-12" />
           )}
           <label className="">Working Hours:</label>
           <input
@@ -289,7 +282,7 @@ export default function AddNewUser() {
             <option value="none">Select...</option>
             {typeEnv.map((env) => {
               return (
-                <option value={input.environment} key={env}>
+                <option value={input.environment = env} key={env}>
                   {env}
                 </option>
               );
