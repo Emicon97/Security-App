@@ -25,7 +25,7 @@ export default function AddNewUser() {
     address: "",
     environment: "",
   });
-  console.log(input)
+
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -56,7 +56,6 @@ export default function AddNewUser() {
         profilePic: file.secure_url,
       });
   };
-  console.log(image)
 
   function validateInput(input) {
     let error = {};

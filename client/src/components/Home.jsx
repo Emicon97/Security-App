@@ -40,15 +40,6 @@ export default function Home () {
             home = <h1>No estás registrado</h1>;
             break;
     }
-    // if (rolUsuario === "boss") {
-    //     home = <BossProfile/>
-    // } else if (rolUsuario === "supervisor") {
-    //     home = <HomeSupervisor/>
-    // } else if (rolUsuario) {
-    //     home = <GuardProfile/>
-    // } else {
-    //     home = <h1>No estás registrado</h1>
-    // }
 
     return (  
         <div>
