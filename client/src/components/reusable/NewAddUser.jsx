@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
+import swal from 'sweetalert';
 
 export default function AddNewUser() {
   const dispatch = useDispatch();
@@ -79,10 +80,10 @@ export default function AddNewUser() {
     //Password
     if (
       input.password.lentgh < 8 ||
-      input.password.lentgh > 16 ||
+      input.password.lentgh > 24 ||
       !input.password
     )
-      error.password = "Password must be between 8 and 16 characters";
+      error.password = "Password must be between 8 and 24 characters";
     if (!input.password.match(/[a-z]/g))
       error.password =
         "The password must contain at least one lowercase letter";
@@ -143,7 +144,7 @@ export default function AddNewUser() {
       error.telephone ||
       error.environment
     )
-      return alert("You have to fill the mandatory fields first");
+      return swal("You have to fill the mandatory fields first");
     if (
       !input.name &&
       !input.lastName &&
@@ -153,7 +154,7 @@ export default function AddNewUser() {
       !input.telephone &&
       !input.environment
     )
-      return alert("You have to fill the mandatory fields first");
+      return swal("You have to fill the mandatory fields first");
     dispatch(postUser(input, header, user[0]._id));
     alert("User created successfully");
     setInput({});
