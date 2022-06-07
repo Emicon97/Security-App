@@ -51,10 +51,7 @@ export default function Home () {
     // }
 
     return (  
-        <div>
-            {home}
-            <Logout/>
-        </div>      
+        home
     )
 
 }
