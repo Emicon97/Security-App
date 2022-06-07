@@ -17,12 +17,16 @@ import { url } from './url';
 
 export function getUsersById(id, header){
     return async function(dispatch){
+      try{
         const employees = await axios.get(`${url}/user/${id}`, header);
         return dispatch({
           type:GET_USER_ID,
           payload: employees.data
         });
-}
+      }catch(err){
+        window.alert(err.response.data)
+    }
+  }
 }
 
 export function getToDos(){
@@ -154,9 +158,10 @@ export function loginPrueba(value, header){
 export function logout(){
   return async function(dispatch){
     const user =await axios.get(`${url}/logout`);
+    console.log(user.data)
     return dispatch({
       type:LOGOUT,
-      payload: user.data
+      payload: ""
     })
   }
 }
