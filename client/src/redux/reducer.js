@@ -28,6 +28,7 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
+  console.log(state)
   switch (type) {
     case GET_USER:
       return {
