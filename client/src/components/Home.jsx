@@ -14,9 +14,9 @@ export default function Home () {
     const header = LoginController();
     const { id } = useParams();
 
-    useEffect(() => {
-        dispatch(getEmployees(id, header))
-      }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getEmployees(id, header))
+    //   }, [dispatch]);
 
     //variable para saber el path
     let prueba = useLocation()
@@ -27,7 +27,6 @@ export default function Home () {
         case "boss": 
             home = <BossProfile/>;
             break;
-
         case "supervisor": 
             home = <HomeSupervisor/>;
             break;

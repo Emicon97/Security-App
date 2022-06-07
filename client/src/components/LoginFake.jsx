@@ -33,7 +33,7 @@ export default function LoginFake() {
       const id = userData[0]._id;
       switch (userData[1]) {
         case "watcher":
-          return navigate(`/watcher/${id}`);
+          return navigate(`/guard/${id}`);
         case "supervisor":
           return navigate(`/supervisor/${id}`);
         case "boss":
