@@ -8,6 +8,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
+  const token = useSelector((state) => state.token);
+  
   const [input, setInput] = useState({
     dni: "",
     password: "",
@@ -48,7 +50,9 @@ export default function Login() {
   }
 
   useEffect(() => {
-    if (userData[1]) {
+    console.log(userData);
+    console.log(token);
+    if (userData[1] && token) {
       const id = userData[0]._id;
       switch (userData[1]) {
         case "watcher":
@@ -59,7 +63,7 @@ export default function Login() {
           return navigate(`/boss/${id}`);
       }
     }
-  }, [userData]);
+  }, [token]);
 
   return (
     <div className="flex justify-center items-center">

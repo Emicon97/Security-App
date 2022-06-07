@@ -7,7 +7,6 @@ import HomeSupervisor from './supervisor/HomeSupervisor';
 import LoginController from '../components/reusable/LoginController'
 
 import { getEmployees } from '../redux/actions';
-import Logout from './Logout';
 import { logout } from './../redux/actions';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,11 +27,14 @@ export default function Home () {
     function handleClick(){
         dispatch(logout())
     }
+
     useEffect(()=>{
         if(!token.length){
-        navigate('/login')
+        navigate('/login');
         }
     },[token])
+
+
     //variable para saber el path
     let prueba = useLocation()
     //me quedo con el string del rol
