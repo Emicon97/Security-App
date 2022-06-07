@@ -28,6 +28,7 @@ const initialState = {
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
+  console.log(type)
   switch (type) {
     case GET_USER:
       return {
@@ -102,8 +103,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: payload,
         token: payload[2]
       }
-    case LOGOUT:
-      return{
+      case LOGOUT:
+        return{
         ...state,
         token: payload
       }

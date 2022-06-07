@@ -8,16 +8,30 @@ import LoginController from '../components/reusable/LoginController'
 
 import { getEmployees } from '../redux/actions';
 import Logout from './Logout';
+import { logout } from './../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home () {
     const dispatch = useDispatch();
     const header = LoginController();
     const { id } = useParams();
-
+    const token = useSelector(state=>state.token)
+    const navigate = useNavigate()
     useEffect(() => {
-        dispatch(getEmployees(id, header))
+        if(token.length>1){
+            dispatch(getEmployees(id, header))
+        }else{
+            dispatch(getEmployees(id,{headers:{'auth-token':""}}))
+        }
       }, [dispatch]);
-
+    function handleClick(){
+        dispatch(logout())
+    }
+    useEffect(()=>{
+        if(token.length>1){
+        navigate('/login')
+        }
+    },[token])
     //variable para saber el path
     let prueba = useLocation()
     //me quedo con el string del rol
@@ -53,7 +67,7 @@ export default function Home () {
     return (  
         <div>
             {home}
-            <Logout/>
+            <Logout onClick={()=>handleClick()}/>
         </div>      
     )
 
