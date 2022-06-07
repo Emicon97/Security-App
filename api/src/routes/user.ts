@@ -7,6 +7,19 @@ const router=Router();
 
 //* GET trae los usuarios segun el id desde la Base de Datos
 //http://localhost:3001/user/:id   //*id por params
+// router.get('/:id', async(req,res) => {
+//     try{
+//         let { id } = req.params;
+//         let dataUser = await getUserById(id);
+//         res.json(dataUser);
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             res.status(404).json(error.message);
+//         } else {
+//             console.log('Unexpected Error', error);
+//         }
+//     }
+// })
 router.get('/:id', TokenValidation, async(req,res) => {
     try{
         let { id } = req.params;
@@ -24,6 +37,20 @@ router.get('/:id', TokenValidation, async(req,res) => {
 //*GET trae de un Boss por id los supervisores que tiene a su cargo
 //* y si el id es de supervisor trae del mismo los watchers a su cargo
 //http://localhost:3001/user/:id?name=name
+// router.get('/employees/:id', async (req, res)=> {
+//     try{
+//         let { id } = req.params;
+//         let { name } = req.query;
+//         let userData = await getUserByHierarchy(id, name);
+//         res.json(userData);
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             res.status(404).json(error.message);
+//         } else {
+//             console.log('Unexpected Error', error);
+//         }
+//     }
+// })
 router.get('/employees/:id', TokenValidation, async (req, res)=> {
     try{
         let { id } = req.params;

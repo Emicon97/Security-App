@@ -5,7 +5,7 @@ const router = Router();
 
 //*Paginado :id User Boss/Supervisor
 //http://localhost:3001/paginated/:id?limit=limit&skip=skip&name=name
-router.get('/:id', TokenValidation, async (req, res) => {
+router.get('/:id', async (req, res) => {
     let { id }:any = req.params;
     let { limit, skip }: any = req.query;
     let { name }:any = req.query;
@@ -16,6 +16,17 @@ router.get('/:id', TokenValidation, async (req, res) => {
         console.log(error)
     }
 })
+// router.get('/:id', async (req, res) => {
+//     let { id }:any = req.params;
+//     let { limit, skip }: any = req.query;
+//     let { name }:any = req.query;
+//     try{
+//         let response = await getEmployeesPaginatedManager(id, limit, skip, name)
+//         res.json(response)
+//     }catch(error){
+//         console.log(error)
+//     }
+// })
 
 //*Paginado de :tareas User Supervisor/watcher
 //http://localhost:3001/paginated/:id?limit=limit&skip=skip&name=name
