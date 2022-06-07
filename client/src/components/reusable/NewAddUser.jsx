@@ -3,12 +3,15 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { postUser, getEmployees } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
+import { useForm } from "react-hook-form";
 
 export default function CreateRecipe() {
   const dispatch = useDispatch();
   const employees = useSelector((state) => state.employees);
   const { id } = useParams();
   const header = LoginController();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
 
   const [input, setInput] = useState({
     name: "",
@@ -18,14 +21,46 @@ export default function CreateRecipe() {
     email: "",
     telephone: 0,
     profilePic: "",
+    workingHours: 0,
+    address: "",
+    environment: "",
   });
 
   const [error, setError] = useState({});
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const typeEnv = [
+    "neighbourhood one",
+    "neighbourhood two",
+    "neighbourhood three",
+    "neighbourhood four",
+    "neighbourhood five",
+  ];
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "magqqp6o");
+    setLoading(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
+      { method: "POST", body: data }
+    );
+    const file = await res.json();
+    setImage(file.secure_url);
+    setLoading(false);
+  };
 
   function validateInput(input) {
     let error = {};
     const regex = /^[a-zA-Z ]+$/;
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    //Working Hours
+    if (input.workingHours < 0 || input.workingHours > 24)
+      error.workingHours = "Working hours must be between 0 and 24";
 
     //Name and LastName
     if (!input.name || !regex.test(input.name))
@@ -62,8 +97,16 @@ export default function CreateRecipe() {
     if (!input.email || !regexEmail.test(input.email))
       error.email = "Enter a valid email";
 
+    //Address
+    if (!input.address) error.address = "This field is mandatory";
+
     return error;
   }
+
+  const viewPassword = () => {
+    var x = document.getElementById("password");
+    x.type === "password" ? (x.type = "text") : (x.type = "password");
+  };
 
   function handleChange(e) {
     setInput({
@@ -83,7 +126,7 @@ export default function CreateRecipe() {
     else return "hola";
   }
   //Function for submit button recipe//
-  function handleSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
     const userExists = employees.find(
       (employee) =>
@@ -126,7 +169,7 @@ export default function CreateRecipe() {
         </Link>
         <h2>Create Your Recipe:</h2>
       </div> */}
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
         <div className="">
           <label className="">Name:</label>
           <input
@@ -136,6 +179,7 @@ export default function CreateRecipe() {
             onChange={(e) => handleChange(e)}
             placeholder="Your Name..."
             className={handleClassName(error.name)}
+            required
           />
           {error.name && <p className="">{error.name}</p>}
           <label className="">LastName:</label>
@@ -146,6 +190,7 @@ export default function CreateRecipe() {
             onChange={(e) => handleChange(e)}
             placeholder="Your LastName..."
             className={handleClassName(error.lastName)}
+            required
           />
           {error.lastName && <p className="">{error.lastName}</p>}
           <label className="">DNI:</label>
@@ -156,27 +201,30 @@ export default function CreateRecipe() {
             onChange={(e) => handleChange(e)}
             placeholder="Your identification number"
             className={handleClassName(error.dni)}
+            required
           />
           {error.dni && <p className="">{error.dni}</p>}
           <label className="">E-mail:</label>
           <input
-            type="text"
+            type="email"
             name="email"
             value={input.email}
             onChange={(e) => handleChange(e)}
             placeholder="Your email..."
             className={handleClassName(error.email)}
+            required
           />
           {error.email && <p className="">{error.email}</p>}
 
           <label className="">Phone Number: </label>
           <input
-            type="number"
+            type="tel"
             name="telephone"
             value={input.telephone}
             onChange={(e) => handleChange(e)}
             placeholder="Your phone number..."
             className={handleClassName(error.telephone)}
+            required
           />
           {error.telephone && <p className="">{error.telephone}</p>}
           <label className="">Password:</label>
@@ -187,10 +235,39 @@ export default function CreateRecipe() {
             onChange={(e) => handleChange(e)}
             placeholder="Your password..."
             className={handleClassName(error.password)}
+            required
           />
-          {error.password && (
-            <p className="">{error.password}</p>
-          )}
+          {error.password && <p className="">{error.password}</p>}
+          <label className="">Profile Picture:</label>
+          <input
+            type="file"
+            name="profilePic"
+            value={input.profilePic}
+            onChange={(e) => handleChange(e)}
+          />
+          <label className="">Working Hours:</label>
+          <input
+            type="number"
+            name="workingHours"
+            value={input.workingHours}
+            onChange={(e) => handleChange(e)}
+            placeholder="Between 8 and 16 hours"
+          />
+          <label className="">Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={input.address}
+            onChange={(e) => handleChange(e)}
+            placeholder="Your address..."
+          />
+          <label className="">Environment:</label>
+          <select name="environment">
+            <option value="none">Select...</option>
+            {typeEnv.map(env => {
+                return <option value={env}>{env}</option>
+            })}
+          </select>
         </div>
         <div>
           <button type="submit" className="">

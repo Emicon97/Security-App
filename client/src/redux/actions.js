@@ -12,9 +12,11 @@ import {
   GET_USERS_PAGINATE,
 } from "./ActionTypes";
 
+import { url } from './url';
+
 export function getUsersById(id, header){
     return async function(dispatch){
-        const employees = await axios.get(`http://localhost:3001/user/${id}`, header);
+        const employees = await axios.get(`${url}/user/${id}`, header);
         return dispatch({
           type:GET_USER_ID,
           payload: employees.data
@@ -24,7 +26,7 @@ export function getUsersById(id, header){
 
 export function getToDos(){
   return async function(dispatch){
-      const todos = await axios.get(`https://centinel.herokuapp.com/todos`);
+      const todos = await axios.get(`${url}/todos`);
     return dispatch({
       type:GET_TODOS,
       payload: todos.data
@@ -34,7 +36,7 @@ export function getToDos(){
 
 export function getToDosById(id){
   return async function(dispatch){
-      const todos = await axios.get(`https://centinel.herokuapp.com/todos/${id}`);
+      const todos = await axios.get(`${url}/todos/${id}`);
     return dispatch({
       type: GET_TODOS_ID,
       payload: todos.data
@@ -44,7 +46,7 @@ export function getToDosById(id){
 
 export function updateStatus(id,status){
   return async function(dispatch){
-    const state = await axios.put(`https://centinel.herokuapp.com/todos/${id}`, status)
+    const state = await axios.put(`${url}/todos/${id}`, status)
     return dispatch({
       type: UPDATE_TASK_STATUS,
       payload: state.data
@@ -54,7 +56,7 @@ export function updateStatus(id,status){
 
 export function filterByPriority(id,priority){
   return async function(dispatch){
-    const state = await axios.get(`https://centinel.herokuapp.com/todos/${id}/?priority=${priority}`)
+    const state = await axios.get(`${url}/todos/${id}/?priority=${priority}`)
     return dispatch({
       type: GET_TODOS_ID,
       payload: state.data
@@ -64,7 +66,7 @@ export function filterByPriority(id,priority){
 
 export function filterByStatus(id, status){
   return async function(dispatch){
-    const state = await axios.get(`https://centinel.herokuapp.com/todos/${id}/${status}`);
+    const state = await axios.get(`${url}/todos/${id}/${status}`);
     return dispatch({
       type: GET_TODOS_ID,
       payload: state.data
@@ -74,7 +76,7 @@ export function filterByStatus(id, status){
 
 export function filterByStatusAndPriority(id,status,priority){
   return async function(dispatch){
-    const state = await axios.get(`https://centinel.herokuapp.com/todos/${id}/${status}/?priority=${priority}`)
+    const state = await axios.get(`${url}/todos/${id}/${status}/?priority=${priority}`)
     return dispatch({
       type: GET_TODOS_ID,
       payload: state.data
@@ -84,14 +86,14 @@ export function filterByStatusAndPriority(id,status,priority){
 
 export function postUser(post, header){
   return async function(dispatch){
-      const user = await axios.post("https://centinel.herokuapp.com/user", post, header)
+      const user = await axios.post(`${url}/user`, post, header)
       return user;
   }
 }
 
 export function getEmployees(id, header){
   return async function(dispatch){
-    const users = await axios.get(`https://centinel.herokuapp.com/user/employees/${id}`,header)
+    const users = await axios.get(`${url}/user/employees/${id}`,header)
     return dispatch({
       type: GET_EMPLOYEES,
       payload: users.data
@@ -101,7 +103,7 @@ export function getEmployees(id, header){
 
 export function searchEmployees(id, name){
   return async function(dispatch){
-    const users = await axios.get(`https://centinel.herokuapp.com/user/employees/${id}?name=${name}`);
+    const users = await axios.get(`${url}/user/employees/${id}?name=${name}`);
     return dispatch({
       type:GET_EMPLOYEES,
       payload: users.data
@@ -111,7 +113,7 @@ export function searchEmployees(id, name){
 
 export function getEmployeeById(id){
   return async function(dispatch){
-    const user = await axios.get(`https://centinel.herokuapp.com/user/${id}`);
+    const user = await axios.get(`${url}/user/${id}`);
     return dispatch({
       type:GET_EMPLOYEE_BY_ID,
       payload: user.data
@@ -121,7 +123,7 @@ export function getEmployeeById(id){
 
 export function updateUser(id, post){
   return async function(dispatch){
-    const user = await axios.put(`https://centinel.herokuapp.com/user/${id}`, post);
+    const user = await axios.put(`${url}/user/${id}`, post);
     return dispatch({
       type: UPDATE_USER,
       payload: user.data
@@ -131,7 +133,7 @@ export function updateUser(id, post){
 
 export function deleteUser(id, header){
   return async function(dispatch){
-    const user = await axios.delete(`https://centinel.herokuapp.com/user/${id}`, header);
+    const user = await axios.delete(`${url}/user/${id}`, header);
     return dispatch({
       type: DELETE_USER,
       payload: user.data
@@ -140,25 +142,37 @@ export function deleteUser(id, header){
 }
 export function loginPrueba(value, header){
   return async function(dispatch){
-    const user = await axios.post(`https://centinel.herokuapp.com/login`, value, header);
+    const user = await axios.post(`${url}/login`, value);
     return dispatch({
       type: LOGIN_PRUEBA,
       payload: user.data
     })
   }
 }
-export function getUsersPaginate(id, limit, skip, name = "", header) {
+export function getUsersPaginate(id, limit, skip, name, header) {
   return async function(dispatch){
-    const users = await axios.get(`http://localhost:3001/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`, header);
+    const users = await axios.get(`${url}/paginated/${id}?limit=${limit}&skip=${skip}&name=${name}`, header);
     return dispatch({
       type: GET_USERS_PAGINATE,
-      payload: users.data.supervisor,
+      payload: users.data
     })
   }
 }
+
+export function getUsersPaginateAll(id,limit,skip,header){
+  return async function(dispatch){
+    const users = await axios.get(`${url}/paginated/${id}?limit=${limit}&skip=${skip}`, header);
+    return dispatch({
+      type: GET_USERS_PAGINATE,
+      payload: users.data
+    })
+  }
+}
+
+
 export function headerTest(id, header){
   return async function(dispatch){
-    const users = await axios.get(`https://centinel.herokuapp.com/user/employees/${id}`, header)
+    const users = await axios.get(`${url}/user/employees/${id}`, header)
     return dispatch({
       type: GET_EMPLOYEES,
       payload: users.data

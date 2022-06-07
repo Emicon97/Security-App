@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 async function main(){
-    await dbConnection()
+    const db = await dbConnection()
     app.listen(app.get('port'), () => {
         console.log(`server on port`, app.get('port'))
     })

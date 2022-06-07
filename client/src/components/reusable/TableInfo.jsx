@@ -1,12 +1,13 @@
 import React, { useDeferredValue, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getEmployees, searchEmployees, deleteUser, getUsersPaginate } from "../../redux/actions";
+import { getEmployees, searchEmployees, deleteUser, getUsersPaginate, getUsersPaginateAll } from "../../redux/actions";
 import "../styles/TableInfo.css";
 import { Tertiary, Input  } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditUser from "../supervisor/EditUser";
-import LoginController from "./LoginController";
+import LoginController from '../reusable/LoginController';
+
 
 
 export default function TableInfo(props) {
@@ -16,6 +17,10 @@ export default function TableInfo(props) {
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees)
   const header = LoginController()
+
+  //toma el id del usuario actual
+  const id = useSelector((state) => state.userData[0]._id)
+
 
   //====================================
   //============== STATES ==============
@@ -42,12 +47,12 @@ export default function TableInfo(props) {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getUsersPaginate(props.id, limit, skip, nameEmployee, header))
+    dispatch(getUsersPaginate(id, limit, skip, nameEmployee, header))
     setNameEmployee("");
   };
   const handleAllButton = (e) => {  //function para resetear la busqueda
     e.preventDefault();
-    dispatch(getUsersPaginate(props.id, limit, skip, header))
+    dispatch(getUsersPaginateAll(id, limit, skip, header))
     setNameEmployee("");
   };
   const handleCheckbox = (e) => {
@@ -73,7 +78,7 @@ export default function TableInfo(props) {
 
   //Each time you click the edit button, the function will be called
   useEffect(() => {
-    dispatch(getUsersPaginate(props.id, limit, skip, header))
+     dispatch( getUsersPaginateAll(id, limit, skip, header))
       let pages = []
       for(let i = 0; i < Math.ceil(usersNum/limit); i++) {
         pages.push(i + 1)
