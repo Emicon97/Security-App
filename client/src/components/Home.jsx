@@ -65,14 +65,7 @@ export default function Home () {
     // }
 
     return (  
-<<<<<<< HEAD
-        <div>
-            {home}
-            <Logout onClick={()=>handleClick()}/>
-        </div>      
-=======
         home
->>>>>>> 6b2509a8e2d089e07574278cfcc05bd6772b4705
     )
 
 }
