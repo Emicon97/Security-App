@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { headerTest, loginPrueba } from "../redux/actions";
 
@@ -24,9 +24,11 @@ export default function Logout() {
 
   return (
     <div className="flex justify-center items-center">
-            <button className={`${Primary()} mt-6 font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
-              Log out
-            </button>
+            <Link to={'/login'}>
+                <button className={`${Primary()} mt-6 font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
+                    Log out
+                </button>
+            </Link>
     </div>
   );
 }
