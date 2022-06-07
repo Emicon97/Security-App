@@ -10,6 +10,7 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
+  LOGOUT
 } from "./ActionTypes";
 
 import { url } from './url';
@@ -145,6 +146,16 @@ export function loginPrueba(value, header){
     const user = await axios.post(`${url}/login`, value);
     return dispatch({
       type: LOGIN_PRUEBA,
+      payload: user.data
+    })
+  }
+}
+
+export function logout(){
+  return async function(dispatch){
+    const user =await axios.get(`${url}/logout`);
+    return dispatch({
+      type:LOGOUT,
       payload: user.data
     })
   }

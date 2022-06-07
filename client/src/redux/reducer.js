@@ -10,6 +10,7 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
+  LOGOUT,
 } from "./ActionTypes";
 
 const initialState = {
@@ -100,6 +101,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userData: payload,
         token: payload[2]
+      }
+    case LOGOUT:
+      return{
+        ...state,
+        token: payload
       }
     default:
       return { ...state };
