@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { postUser, getEmployees } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
@@ -11,6 +11,7 @@ export default function AddNewUser() {
   const employees = useSelector((state) => state.employees);
   const header = LoginController();
   const user = useSelector((state) => state.userDetails);
+  const navigate = useNavigate();
 
   const [image, setImage] = useState("");
   const [input, setInput] = useState({
@@ -21,7 +22,7 @@ export default function AddNewUser() {
     email: "",
     telephone: 0,
     profilePic: "",
-    workingHours: 0,
+    workingHours: "",
     address: "",
     environment: "",
   });
@@ -143,7 +144,8 @@ export default function AddNewUser() {
       error.dni ||
       error.password ||
       error.email ||
-      error.telephone
+      error.telephone ||
+      error.environment
     )
       return alert("You have to fill the mandatory fields first");
     if (
@@ -152,13 +154,15 @@ export default function AddNewUser() {
       !input.dni &&
       !input.email &&
       !input.password &&
-      !input.telephone
+      !input.telephone &&
+      !input.environment
     )
       return alert("You have to fill the mandatory fields first");
     if (userExists) return alert("it seems this user already exists");
     dispatch(postUser(input, header, user[0]._id));
+    alert("User added successfully");
     setInput({});
-    //history.push("/recipes");
+    navigate(`/boss/${user[0]._id}`);
   }
 
   //   useEffect(() => {
@@ -263,11 +267,11 @@ export default function AddNewUser() {
           )}
           <label className="">Working Hours:</label>
           <input
-            type="number"
+            type="text"
             name="workingHours"
             value={input.workingHours}
             onChange={(e) => handleChange(e)}
-            placeholder="Between 8 and 16 hours"
+            placeholder="Example: 8:00-17:00"
             className={handleClassName(error.name)}
           />
           <label className="">Address:</label>
@@ -279,12 +283,13 @@ export default function AddNewUser() {
             placeholder="Your address..."
             className={handleClassName(error.name)}
           />
+          {/* Chequear el environment */}
           <label className="">Environment:</label>
-          <select name="environment" className={handleClassName(error.name)}>
+          <select name="environment" className={handleClassName(error.name)} onChange={(e) => handleChange(e)}>
             <option value="none">Select...</option>
             {typeEnv.map((env) => {
               return (
-                <option value={env} key={env}>
+                <option value={input.environment} key={env}>
                   {env}
                 </option>
               );

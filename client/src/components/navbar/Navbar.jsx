@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import AuthenticationButton from "../authentication/AuthenticationBtn"
 import NavBarBoss from "./NavBarBoss";
-
+import Logout from "../Logout";
 import { useDispatch, useSelector } from 'react-redux'
 import NavBarSupervisor from "./NavBarSupervisor";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function NavBar() {
 
@@ -40,20 +40,22 @@ export default function NavBar() {
       // NavBar = <NavBarBoss userData={user[0]}/>;
       break;
   }
-
+  let URLREDIRECT = "";
+  useEffect(() => {
+    if (user.length) {
+      URLREDIRECT = `/${pathPrueba}/${user[0]._id}`;
+    };
+  }, [user])
 
   return (
     <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5 dark:bg-gray-800">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <a
-          href="https://security-app-puce.vercel.app/home"
-          className="flex items-center"
-        >
+        <Link to={``}>
           <img src={logo} className="mr-3 h-6 sm:h-9" alt="Centinel Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Centinel
           </span>
-        </a>
+        </Link>
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
@@ -90,7 +92,7 @@ export default function NavBar() {
         <div className="hidden w-full md:block md:w-auto" id="mobile-menu">
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-12 md:mt-1 md:text-sm md:font-medium">
             {NavBar}
-            <li><AuthenticationButton /></li>
+            <li><Logout /></li>
           </ul>
         </div>
       </div>
