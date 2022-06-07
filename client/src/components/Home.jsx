@@ -7,16 +7,33 @@ import HomeSupervisor from './supervisor/HomeSupervisor';
 import LoginController from '../components/reusable/LoginController'
 
 import { getEmployees } from '../redux/actions';
-import Logout from './Logout';
+import { logout } from './../redux/actions';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home () {
     const dispatch = useDispatch();
     const header = LoginController();
     const { id } = useParams();
-
+    const token = useSelector(state=>state.token)
+    const navigate = useNavigate()
     useEffect(() => {
-        dispatch(getEmployees(id, header))
+        if(token.length>1){
+            dispatch(getEmployees(id, header))
+        }else{
+            dispatch(getEmployees(id,{headers:{'auth-token':""}}))
+        }
       }, [dispatch]);
+
+    function handleClick(){
+        dispatch(logout())
+    }
+
+    useEffect(()=>{
+        if(!token.length){
+        navigate('/login');
+        }
+    },[token])
+
 
     //variable para saber el path
     let prueba = useLocation()
@@ -27,7 +44,6 @@ export default function Home () {
         case "boss": 
             home = <BossProfile/>;
             break;
-
         case "supervisor": 
             home = <HomeSupervisor/>;
             break;
@@ -40,15 +56,6 @@ export default function Home () {
             home = <h1>No estás registrado</h1>;
             break;
     }
-    // if (rolUsuario === "boss") {
-    //     home = <BossProfile/>
-    // } else if (rolUsuario === "supervisor") {
-    //     home = <HomeSupervisor/>
-    // } else if (rolUsuario) {
-    //     home = <GuardProfile/>
-    // } else {
-    //     home = <h1>No estás registrado</h1>
-    // }
 
     return (  
         home
