@@ -26,6 +26,7 @@ export default function AddNewUser() {
     address: "",
     environment: "",
   });
+  
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 

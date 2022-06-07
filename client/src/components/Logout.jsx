@@ -14,18 +14,12 @@ export default function Logout() {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(logout());
-    navigate('/login')
   }
-
-  // const redirector = (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  // };
-
+  
   return (
     <div className="flex justify-center items-center">
             <Link to={'/login'}>
-                <button className={`${Primary()} mt-6 font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
+                <button className={`${Primary()} mt-6 font-extrabold text-lg`} onClick={(e)=>{handleSubmit(e)}}>
                     Log out
                 </button>
             </Link>
