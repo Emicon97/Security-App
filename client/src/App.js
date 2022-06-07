@@ -11,15 +11,20 @@ import LandingPage from "./components/Landing.jsx";
 import TableInfo from './components/reusable/TableInfo';
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
+import { useSelector } from "react-redux";
 
 function App() {
 
+  let token = useSelector(state => state.token)
+  
+
   return (
     <>
-      <NavBar />
+      <NavBar isRendered={!!token.length}/>
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
         <Route exact path="/" element={<Login/>}/>
+        {/* <Route path="/" element={<NavBar />}/> */}
         
         {/* Rutas HOME para cada rol */}
         <Route exact path="/boss/:id" element={<Home/>}/>
