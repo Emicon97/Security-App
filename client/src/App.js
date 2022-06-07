@@ -9,6 +9,7 @@ import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Home from "./components/Home";
 import LandingPage from "./components/Landing.jsx";
 import TableInfo from './components/reusable/TableInfo';
+import NewAddUser from "./components/reusable/NewAddUser";
 
 function App() {
 //objeto que simula datos del usuario logeado
@@ -36,7 +37,7 @@ function App() {
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/user/add" element={<AddUser />} />
+        <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/login" element={<LoginFake />}/>
 
