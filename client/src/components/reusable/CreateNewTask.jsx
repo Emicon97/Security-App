@@ -29,7 +29,6 @@ const AddTaskToUser = ({ id }) => {
     }
     return error;
   }
-  console.log(error);
 
   function handleChange(e) {
     setTask({
@@ -43,7 +42,6 @@ const AddTaskToUser = ({ id }) => {
       })
     );
   }
-  console.log(task);
 
   const handleSubmit = (e) => {
     e.preventDefault();
