@@ -22,7 +22,7 @@ const initialState = {
   todosId: [],
   todos: [],
   todoUpdate: {},
-  userData:{},
+  userData: [],
   usersPaginate: [],
   token: ''
 };
@@ -66,11 +66,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         watcherDetail: payload,
         todoUpdate: payload,
       };
-    case GET_EMPLOYEES:
-      return {
-        ...state,
-        employees: payload,
-      };
     case UPDATE_USER:
       return {
         ...state,
@@ -80,17 +75,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
       };
-    // case LOGIN_PRUEBA:
-    //   return {
-    //     ...state,
-    //     userData: payload,
-    //   };
     case GET_USERS_PAGINATE:
-      let employees;
+      let employees = [];
       if(state.userData[1] === "supervisor"){
-        employees = payload[0].watcher
+        employees = payload.watcher
       }else if (state.userData[1] === "boss"){
-        employees = payload[0].supervisor
+        employees = payload.supervisor
       }
       return {
         ...state,
@@ -102,8 +92,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: payload,
         token: payload[2]
       }
-    case LOGOUT:
-      return{
+      case LOGOUT:
+        return{
         ...state,
         token: payload
       }

@@ -1,34 +1,23 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
-import { headerTest, loginPrueba } from "../redux/actions";
+import { Primary } from "./styles/Buttons";
 
-import { Input, Primary } from "./styles/Buttons";
 import { logout } from './../redux/actions';
 
 export default function Logout() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  const handleRedirectLogOut = (e) => {
     dispatch(logout());
-    navigate('/login')
   }
-
-  // const redirector = (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginPrueba({ dni: input.dni, password: input.password }));
-  // };
-
+  
   return (
     <div className="flex justify-center items-center">
-            <Link to={'/login'}>
-                <button className={`${Primary()} font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
+            {/* <Link to={'/'}> */}
+                <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
                     Log out
                 </button>
-            </Link>
+            {/* </Link> */}
     </div>
   );
 }

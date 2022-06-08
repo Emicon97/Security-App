@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom'
 
 
-export default function NavBarSupervisor (userData) {
+export default function NavBarSupervisor ({userData}) {
 
     return (
         <>
@@ -21,9 +21,9 @@ export default function NavBarSupervisor (userData) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}`}>
                         Asignar Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/add'}>
+                    {/* <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/add'}>
                         Añadir empleados
-                    </Link>
+                    </Link> */}
                 </li>
                 : null
             }
