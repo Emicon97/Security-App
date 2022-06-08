@@ -88,8 +88,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       case LOGOUT:
         return{
-        state:initialState,
-        token: payload
+          supervisorDetail: {},
+          watcherDetail: {},
+          employees: [],
+          users: [],
+          userDetails: {},
+          todosId: [],
+          todos: [],
+          todoUpdate: {},
+          userData: [],
+          usersPaginate: [],
+          token: ''
       }
     default:
       return { ...state };
