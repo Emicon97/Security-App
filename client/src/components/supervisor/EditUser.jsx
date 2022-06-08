@@ -1,7 +1,6 @@
 import React, { useState , useEffect } from "react";
 import { useDispatch} from "react-redux";
 import { updateUser } from "../../redux/actions";
-import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
 import { getEmployeeById } from "../../redux/actions";
