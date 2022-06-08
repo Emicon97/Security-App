@@ -125,7 +125,9 @@ export default function TableInfo(props) {
           <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
               {
                 watchers.length ? watchers.map((employee, i) => (
+          
                   <div className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]" key={employee + i}>
+                    {console.log(employee._id)}
                     <div className="w-48 h-full flex justify-center items-center">
                       <input type="checkbox" className="checkbox" />
                     </div>

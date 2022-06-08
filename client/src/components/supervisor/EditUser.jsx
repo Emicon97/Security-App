@@ -242,7 +242,8 @@ export default function EditUser({ user, hierarchy}) {
       values.email === "" &&
       values.environment === "" &&
       values.telephone === "" &&
-      values.workingHours === ""
+      values.workingHours === "" &&
+      values.address === ""
     ){
       return;
     }
@@ -386,7 +387,7 @@ export default function EditUser({ user, hierarchy}) {
                     value={values.password}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder={user.email}
+                    placeholder="Password"
                   />
                 </div>
         <div>
