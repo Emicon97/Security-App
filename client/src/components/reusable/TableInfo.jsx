@@ -5,7 +5,7 @@ import { getEmployees, searchEmployees, deleteUser, getUsersPaginate, getUsersPa
 import "../styles/TableInfo.css";
 import { Tertiary, Input  } from "../styles/Buttons";
 import Modal from "./Modal";
-import EditUser from "../supervisor/EditUser";
+import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from '../reusable/LoginController';
 
 
@@ -21,6 +21,10 @@ export default function TableInfo(props) {
   //toma el id del usuario actual
   const id = useSelector((state) => state.userData[0]._id)
 
+  //toma la hierarchy del usuario
+  const hierarchy = useSelector((state) => state.userData[1])
+
+
 
   //====================================
   //============== STATES ==============
@@ -32,7 +36,6 @@ export default function TableInfo(props) {
   const [skip, setSkip] = useState(0);  //empleado inicial por pagina
   const [pagesNum, setPagesNum] = useState([]); //array de paginas totales 
   const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
-  
   //====================================
   //====================================
   
@@ -55,6 +58,7 @@ export default function TableInfo(props) {
     dispatch(getUsersPaginateAll(id, limit, skip, header))
     setNameEmployee("");
   };
+
   const handleCheckbox = (e) => {
     if (e.target.checked) {
       document
@@ -125,6 +129,7 @@ export default function TableInfo(props) {
           <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
               {
                 watchers.length ? watchers.map((employee, i) => (
+          
                   <div className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]" key={employee + i}>
                     <div className="w-48 h-full flex justify-center items-center">
                       <input type="checkbox" className="checkbox" />
@@ -164,7 +169,7 @@ export default function TableInfo(props) {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditUser user={editUser}></EditUser>
+        <EditEmployees user={editUser} hierarchy={hierarchy} handleAllButton={handleAllButton} ></EditEmployees>
       </Modal>
     </>
   );
