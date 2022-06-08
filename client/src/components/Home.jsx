@@ -40,6 +40,7 @@ export default function Home () {
     //me quedo con el string del rol
     let rolUsuario = prueba.pathname.split("/")[1];
     let home;
+    console.log(rolUsuario)
     switch (rolUsuario) {
         case "boss": 
             home = <BossProfile/>;
@@ -48,7 +49,7 @@ export default function Home () {
             home = <HomeSupervisor/>;
             break;
 
-        case "watcher": 
+        case "guard": 
             home = <GuardProfile/>;
             break;
 
