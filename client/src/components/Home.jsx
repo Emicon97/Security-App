@@ -17,16 +17,8 @@ export default function Home () {
     const token = useSelector(state=>state.token)
     const navigate = useNavigate()
     useEffect(() => {
-        if(token.length>1){
             dispatch(getEmployees(id, header))
-        }else{
-            dispatch(getEmployees(id,{headers:{'auth-token':""}}))
-        }
       }, [dispatch]);
-
-    function handleClick(){
-        dispatch(logout())
-    }
 
     useEffect(()=>{
         if(!token.length){
