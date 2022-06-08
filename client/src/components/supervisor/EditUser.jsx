@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState , useEffect } from "react";
+import { useDispatch} from "react-redux";
 import { updateUser } from "../../redux/actions";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
+import { getEmployeeById } from "../../redux/actions";
 
 export default function EditUser({ user, hierarchy}) {
   const dispatch = useDispatch();
@@ -65,6 +66,10 @@ export default function EditUser({ user, hierarchy}) {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    dispatch(getEmployeeById(user._id));
+  }, [dispatch]);
 
   //Funcion que se ejecuta cuando el usuario coloca el foco en un input
   const handleBlur = (e) => {

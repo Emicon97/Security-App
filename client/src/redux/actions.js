@@ -171,6 +171,7 @@ export function updateUser(id, post, header){
   return async function(dispatch){
     try{
       const user = await axios.put(`${url}/user/${id}`, post, header);
+      console.log(user.data, "desde actions Borrar este console.log!!!")
       return dispatch({
         type: UPDATE_USER,
         payload: user.data
