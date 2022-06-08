@@ -14,3 +14,4 @@ export const DELETE_USER = "DELETE_USER";
 export const LOGIN_PRUEBA = "LOGIN_PRUEBA";
 export const GET_USERS_PAGINATE = "GET_USERS_PAGINATE";
 export const LOGOUT = "LOGOUT";
+export const ADD_TASK_TO_USER = "ADD_TASK_TO_USER";
