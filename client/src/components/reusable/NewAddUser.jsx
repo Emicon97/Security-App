@@ -145,7 +145,7 @@ export default function AddNewUser() {
       error.telephone ||
       error.environment
     )
-      return swal( "Wait!", "You have to fill the mandatory fields first", "error" );
+      return swal( "Wait!", "Some fields are wrong", "error" );
     if (
       !input.name &&
       !input.lastName &&

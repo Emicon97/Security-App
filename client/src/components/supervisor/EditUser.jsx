@@ -32,7 +32,7 @@ export default function EditUser({ user }) {
   };
 
   useEffect(() => {
-    dispatch(getEmployeeById());
+    dispatch(getEmployeeById(user._id));
   }, [dispatch]);
 
   return (
