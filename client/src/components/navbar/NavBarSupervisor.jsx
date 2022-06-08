@@ -27,9 +27,6 @@ export default function NavBarSupervisor ({userData}) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/tasks'}>
                         Ver Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/prueba/supervisor/${userData._id}`}>
-                        PRUEBA
-                    </Link>
                 </li>
                 : null
             }
