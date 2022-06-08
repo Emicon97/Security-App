@@ -12,6 +12,7 @@ import {
   GET_USERS_PAGINATE,
   LOGOUT,
   ADD_TASK_TO_USER,
+  DESTROY,
 } from "./ActionTypes";
 
 import swal from "sweetalert";
@@ -263,4 +264,12 @@ export function getUsersPaginateAll(id,limit,skip,header){
       window.alert(err.response.data)
     }
   }
+}
+
+export function destroyData() {
+  return function (dispatch) {
+    return dispatch({
+      type: DESTROY
+    });
+  };
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { headerTest, loginPrueba } from "../redux/actions";
+import { loginPrueba } from "../redux/actions";
 import { Input, Primary } from "./styles/Buttons";
 
 export default function Login() {
