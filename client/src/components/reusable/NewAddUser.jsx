@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 export default function AddNewUser() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function AddNewUser() {
     address: "",
     environment: "",
   });
-  
+
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -53,9 +53,9 @@ export default function AddNewUser() {
     setImage(await file.secure_url);
     setLoading(false);
     setInput({
-        ...input,
-        profilePic: file.secure_url,
-      });
+      ...input,
+      profilePic: file.secure_url,
+    });
   };
 
   function validateInput(input) {
@@ -106,7 +106,7 @@ export default function AddNewUser() {
     if (!input.address) error.address = "This field is mandatory";
 
     //Environment
-    if(!input.environment) error.environment = "This field is mandatory";
+    if (!input.environment) error.environment = "This field is mandatory";
 
     return error;
   }
@@ -145,7 +145,7 @@ export default function AddNewUser() {
       error.telephone ||
       error.environment
     )
-      return swal("You have to fill the mandatory fields first");
+      return swal( "Wait!", "You have to fill the mandatory fields first", "error" );
     if (
       !input.name &&
       !input.lastName &&
@@ -155,7 +155,7 @@ export default function AddNewUser() {
       !input.telephone &&
       !input.environment
     )
-      return swal("You have to fill the mandatory fields first");
+      return swal( "Wait!", "You have to fill the mandatory fields first", "error" );
     dispatch(postUser(input, header, user[0]._id));
     alert("User created successfully");
     setInput({});
@@ -247,14 +247,10 @@ export default function AddNewUser() {
             onChange={(e) => uploadImage(e)}
             className={File()}
           />
+          <img className="w-12 h-12" src={demo} />
           {loading ? (
             ((input.profilePic = image),
-            (
-              <img
-                className="w-12 h-12"
-                src={demo}
-              />
-            ))
+            (<img className="w-12 h-12" src={demo} />))
           ) : (
             <img src={image} className="w-12 h-12" />
           )}
@@ -278,11 +274,15 @@ export default function AddNewUser() {
           />
           {/* Chequear el environment */}
           <label className="">Environment:</label>
-          <select name="environment" className={handleClassName(error.name)} onChange={(e) => handleChange(e)}>
+          <select
+            name="environment"
+            className={handleClassName(error.name)}
+            onChange={(e) => handleChange(e)}
+          >
             <option value="none">Select...</option>
             {typeEnv.map((env) => {
               return (
-                <option value={input.environment = env} key={env}>
+                <option value={(input.environment = env)} key={env}>
                   {env}
                 </option>
               );
