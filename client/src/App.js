@@ -39,7 +39,7 @@ function App() {
         {/* Rutas HOME para cada rol */}
         <Route exact path="/boss/:id" element={<Home/>}/>
         <Route exact path="/supervisor/:id" element={<Home/>}/>
-        <Route exact path="/watcher/:id" element={<Home/>} />
+        <Route exact path="/guard/:id" element={<Home/>} />
         
         {/* Rutas para el BOSS */}
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />

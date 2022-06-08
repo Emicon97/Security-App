@@ -47,7 +47,7 @@ const AddTaskToUser = ({ id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addTaskToUser(id));
+    dispatch(addTaskToUser(task, header));
     navigate("/");
   };
 
@@ -83,10 +83,10 @@ const AddTaskToUser = ({ id }) => {
           onChange={(e) => handleChange(e)}
         >
           <option value="">Select...</option>
-          <option value="Urgent">Urgent</option>
-          <option value="High">High</option>
-          <option value="Regular">Regular</option>
-          <option value="Low">Low</option>
+          <option value="urgent">Urgent</option>
+          <option value="high">High</option>
+          <option value="regular">Regular</option>
+          <option value="low">Low</option>
         </select>
         {error.priority && <p className="">{error.priority}</p>}
         <button type="submit" className={Primary()}>
