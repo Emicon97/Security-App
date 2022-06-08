@@ -94,7 +94,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       case LOGOUT:
         return{
-        ...state,
+        state:initialState,
         token: payload
       }
     default:
