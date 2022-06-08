@@ -105,7 +105,7 @@ export default function BossProfile() {
               </Link> */}
         </div>
       ) : (
-        <div class="lds-dual-ring"></div>
+        <div classname="lds-dual-ring"></div>
       )}
     </>
   );
