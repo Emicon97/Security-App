@@ -6,6 +6,9 @@ module.exports = {
     extend: {
       inset: {
         '30%': '30%',
+      },
+      spacing: {
+        '23px': '23px',
       }
     },
   },

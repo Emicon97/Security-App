@@ -300,9 +300,30 @@ export default function EditUser({ user, hierarchy}) {
       noValidate
       onSubmit={handleSubmit}
     >
-      {hierarchy === "supervisor" ? (
+      {hierarchy === "boss" || hierarchy === "supervisor" || hierarchy === "watcher" ? (
         <div>
-          {/**environment  */}
+          {/*Direccion y Email */}
+          <div className="flex flex-row items-center justify-between">
+            <div>
+              <label htmlFor="address">
+                Address:{" "}
+                {errors.address && (
+                  <small className="text-red-600">{errors.address}</small>
+                )}
+              </label>
+              <input
+                className={Input()}
+                type="text"
+                id="address"
+                name="address"
+                value={values.address}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={user.address}
+              />
+            </div>
+               
+            {/* *environment 
           <div className="flex flex-row items-center justify-between">
             <div>
               <label htmlFor="environment">
@@ -327,28 +348,8 @@ export default function EditUser({ user, hierarchy}) {
               </select>
             </div>
 
-          </div>
-          {/*Direccion y Email */}
-          <div className="flex flex-row items-center justify-between">
+          </div> */}
             <div>
-              <label htmlFor="address">
-                Address:{" "}
-                {errors.address && (
-                  <small className="text-red-600">{errors.address}</small>
-                )}
-              </label>
-              <input
-                className={Input()}
-                type="text"
-                id="address"
-                name="address"
-                value={values.address}
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder={user.address}
-              />
-            </div>
-            {/* <div>
        <label htmlFor="email">
          Email:{" "}
         {errors.email && <small className="text-red-600">{errors.email}</small>}
@@ -363,10 +364,26 @@ export default function EditUser({ user, hierarchy}) {
          onChange={handleChange}
          placeholder={user.email}
        />
-     </div> */}
+     </div>
           </div>
           {/**telefono y workinHours */}        
           <div className="flex flex-row items-center justify-between">
+          <div>
+                  <label htmlFor="password">
+                    Password:{" "}
+                    {errors.password && <small className="text-red-600">{errors.password}</small>}
+                  </label>
+                  <input
+                    className={Input()}
+                    type="text"
+                    id="password"
+                    name="password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder={user.email}
+                  />
+                </div>
         <div>
           <label htmlFor="telephone">
             Telephone:{" "}
@@ -385,24 +402,7 @@ export default function EditUser({ user, hierarchy}) {
             placeholder={user.telephone}
           />
         </div>
-        <div>
-          <label htmlFor="workingHours">
-            Working Hours:{" "}
-            {errors.workingHours && (
-              <small className="text-red-600">{errors.workingHours}</small>
-            )}
-          </label>
-          <input
-            className={Input()}
-            type="text"
-            id="workingHours"
-            name="workingHours"
-            value={values.workingHours}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder={user.workingHours}
-          />
-        </div>
+       
           </div>
           {/**ProfilePic */}
           <div className="m-3 w-96">
@@ -435,14 +435,28 @@ export default function EditUser({ user, hierarchy}) {
           )}
         </div>
         </div>
-      ) : hierarchy === "boss" ? (<div>
-        <h1>HOLA</h1>
-      </div>): hierarchy === "watcher" ? (<div>
+      ): null}
 
-      </div>): null}
-
-     
-      <div className="flex flex-row items-center justify-between"></div>
+      <div className="flex flex-row items-center justify-between">
+         {/* <div>
+          <label htmlFor="workingHours">
+            Working Hours:{" "}
+            {errors.workingHours && (
+              <small className="text-red-600">{errors.workingHours}</small>
+            )}
+          </label>
+          <input
+            className={Input()}
+            type="text"
+            id="workingHours"
+            name="workingHours"
+            value={values.workingHours}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            placeholder={user.workingHours}
+          />
+        </div> */}
+      </div>
       
       <div className="flex gap-4">
         <button type="submit" className={Primary()}>

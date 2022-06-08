@@ -117,7 +117,7 @@ export function filterByStatusAndPriority(id,status,priority, header){
 export function postUser(post, header, id){
   return async function(dispatch){
       try{
-        const user = await axios.post(`${url}/user/${id}`, post, header)
+        await axios.post(`${url}/user/${id}`, post, header)
         return "User created successfully";
       }catch(err){
         window.alert(err.response.data)
