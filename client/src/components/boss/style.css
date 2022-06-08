@@ -120,3 +120,31 @@
     border: 1px solid rgb(216, 216, 216);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.13);
 } */
+
+
+    /* LOADER */
+.lds-dual-ring {
+    display: inline-block;
+    width: 10rem;
+    height: 10rem;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 10rem;
+    height: 10rem;
+    margin: .5rem;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-dual-ring 1.6s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
