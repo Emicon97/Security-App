@@ -4,7 +4,6 @@ import Modal from "./Modal";
 import { getUsersById } from "../../redux/actions";
 import { useParams } from "react-router-dom";
 import { Primary } from "../styles/Buttons";
-import see from "../../assets/see.png";
 import EditUser from "../supervisor/EditUser";
 
 export default function UserProfile() {

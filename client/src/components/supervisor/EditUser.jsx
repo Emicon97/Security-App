@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getEmployeeById, updateUser, deleteUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 
 export default function EditUser({ user }) {
@@ -292,7 +291,7 @@ export default function EditUser({ user }) {
               ) : (
                 // if the user does not have a profile pic, show the default one
                 <img
-                  src={user.profilePic ? user.profilePic : demo}
+                  src={user.profilePic ? user.profilePic : null}
                   className="w-10 h-10"
                 />
               )}
