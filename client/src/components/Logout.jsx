@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux";
-import { Primary } from "./styles/Buttons";
-import { logout } from './../redux/actions';
+import { useDispatch } from 'react-redux';
 
+import { Primary } from "./styles/Buttons";
+
+import { logout } from './../redux/actions';
 
 export default function Logout() {
   const dispatch = useDispatch();
