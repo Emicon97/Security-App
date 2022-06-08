@@ -11,6 +11,7 @@ import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
+import Tasks from "./components/reusable/Tasks";
 
 function App() {
   let navigate = useNavigate();
@@ -44,6 +45,7 @@ function App() {
         {/* Rutas GENERALES */}
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
+        <Route path="/user/tasks" element={<Tasks />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>

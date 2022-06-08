@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
 import AuthenticationButton from "../authentication/AuthenticationBtn"
-import NavBarBoss from "./NavBarBoss";
 import Logout from "../Logout";
 import { useDispatch, useSelector } from 'react-redux'
+import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
+
 import { Link, useLocation } from "react-router-dom";
+import NavBarWatcher from "./NavBarWatcher";
+import { getUsersById } from "../../redux/actions";
 
 export default function NavBar({isRendered}) {
 
@@ -16,9 +19,10 @@ export default function NavBar({isRendered}) {
   let [state, setState] = useState("");
   let prueba = useLocation()
   let pathPrueba = prueba.pathname.split("/")[1]
+  // let dispatch = useDispatch();
 
   useEffect(() => {
-    if(pathPrueba === "boss" || pathPrueba === "gaurd" || pathPrueba === "supervisor") {
+    if(pathPrueba === "boss" || pathPrueba === "guard" || pathPrueba === "supervisor") {
       setState(pathPrueba);
     }
   }, [pathPrueba])
@@ -30,21 +34,19 @@ export default function NavBar({isRendered}) {
   // useEffect(() => {
     switch (state) {
       case "boss":
-        console.log("entra boss")
         NavBar = <NavBarBoss userData={user[0]}/>;
         break;
         
-        case "supervisor":
-          console.log("super")
+      case "supervisor":
         NavBar = <NavBarSupervisor userData={user[0]}/>;
         break;
   
       default:
-        console.log("entra")
-        NavBar = null;
+        NavBar = <NavBarWatcher userData={user[0]}/>;
         break;
     }
   // }, [user])
+
   let URLREDIRECT = "";
   useEffect(() => {
     if (user.length) {
@@ -52,13 +54,17 @@ export default function NavBar({isRendered}) {
     };
   }, [user])
 
+  // useEffect(() => {
+  //   dispatch(getUsersById())
+  // }, [dispatch])
+
   return (
     <>
       {
         isRendered ?          
-        <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5 dark:bg-gray-800">
+        <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5">
           <div className="container flex flex-wrap justify-between items-center mx-auto">
-            <Link to={URLREDIRECT}>
+            <Link to={URLREDIRECT} className="flex">
               <img src={logo} className="mr-3 h-6 sm:h-9" alt="Centinel Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap">
                 Centinel
