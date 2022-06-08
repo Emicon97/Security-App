@@ -212,7 +212,6 @@ export function logout(){
   return async function(dispatch){
     try{
       const user =await axios.get(`${url}/logout`);
-      console.log(user.data)
       return dispatch({
         type:LOGOUT,
         payload: ""

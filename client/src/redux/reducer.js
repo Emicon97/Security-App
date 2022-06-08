@@ -76,15 +76,9 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
       };
     case GET_USERS_PAGINATE:
-      let employees = [];
-      if(state.userData[1] === "supervisor"){
-        employees = payload.watcher
-      }else if (state.userData[1] === "boss"){
-        employees = payload.supervisor
-      }
       return {
         ...state,
-        usersPaginate: employees,
+        usersPaginate: payload,
       };
     case LOGIN_PRUEBA:
       return {
@@ -94,8 +88,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       }
       case LOGOUT:
         return{
-        ...state,
-        token: payload
+          supervisorDetail: {},
+          watcherDetail: {},
+          employees: [],
+          users: [],
+          userDetails: {},
+          todosId: [],
+          todos: [],
+          todoUpdate: {},
+          userData: [],
+          usersPaginate: [],
+          token: ''
       }
     default:
       return { ...state };
