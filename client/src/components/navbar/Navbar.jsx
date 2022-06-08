@@ -31,22 +31,22 @@ export default function NavBar({isRendered}) {
   let user = useSelector(state => state.userDetails)
   let NavBar
   
-  // useEffect(() => {
-    switch (state) {
-      case "boss":
-        NavBar = <NavBarBoss userData={user[0]}/>;
-        break;
-        
-      case "supervisor":
-        NavBar = <NavBarSupervisor userData={user[0]}/>;
-        break;
-  
-      default:
-        NavBar = <NavBarWatcher userData={user[0]}/>;
-        break;
+    if (user.length) {
+      switch (state) {
+        case "boss":
+          NavBar = <NavBarBoss userData={user[0]}/>;
+          break;
+          
+        case "supervisor":
+          NavBar = <NavBarSupervisor userData={user[0]}/>;
+          break;
+    
+        default:
+          NavBar = <NavBarWatcher userData={user[0]}/>;
+          break;
+      }
     }
-  // }, [user])
-
+  
   let URLREDIRECT = "";
   useEffect(() => {
     if (user.length) {
