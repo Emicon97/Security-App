@@ -25,7 +25,7 @@ export default function Logout() {
   return (
     <div className="flex justify-center items-center">
             <Link to={'/login'}>
-                <button className={`${Primary()} mt-6 font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
+                <button className={`${Primary()} font-extrabold text-lg`} onSubmit={(e)=>{handleSubmit(e)}}>
                     Log out
                 </button>
             </Link>
