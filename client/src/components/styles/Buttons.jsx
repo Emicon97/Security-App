@@ -1,6 +1,6 @@
 export const Primary = (props) => `
     flex flex-row justify-evenly items-center
-    h-10 w-28
+    h-10 w-${props === 'Login' ? 96 : 28}
     text-white font-semibold
     rounded-md
     bg-[#0243EC]
