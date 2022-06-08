@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import Home from "./components/Home";
@@ -13,13 +13,18 @@ import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 
+import { destroyData } from "./redux/actions";
+
 function App() {
   let navigate = useNavigate();
   let token = useSelector(state => state.token);
+
+  const dispatch = useDispatch();
   
   useEffect(()=>{
     if(!token.length){
       navigate('/login');
+      dispatch(destroyData());
     }
   },[token]);
 

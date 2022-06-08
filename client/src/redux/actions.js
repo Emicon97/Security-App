@@ -10,7 +10,8 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
-  LOGOUT
+  LOGOUT,
+  DESTROY
 } from "./ActionTypes";
 
 import { url } from './url';
@@ -247,4 +248,12 @@ export function getUsersPaginateAll(id,limit,skip,header){
       window.alert(err.response.data)
     }
   }
+}
+
+export function destroyData() {
+  return function (dispatch) {
+    return dispatch({
+      type: DESTROY
+    });
+  };
 }
