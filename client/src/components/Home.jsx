@@ -5,22 +5,6 @@ import GuardProfile from './guard/GuardProfile';
 import HomeSupervisor from './supervisor/HomeSupervisor';
 
 export default function Home () {
-
-    const dispatch = useDispatch();
-    const header = LoginController();
-    const { id } = useParams();
-    const token = useSelector(state=>state.token)
-    const navigate = useNavigate()
-    useEffect(() => {
-            dispatch(getEmployees(id, header))
-      }, [dispatch]);
-
-    useEffect(()=>{
-        if(!token.length){
-        navigate('/login');
-        }
-    },[token])
-
     //variable para saber el path
     let role = useLocation()
     //me quedo con el string del rol
