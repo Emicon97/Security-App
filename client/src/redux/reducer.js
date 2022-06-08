@@ -11,6 +11,7 @@ import {
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
   LOGOUT,
+  DESTROY
 } from "./ActionTypes";
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   watcherDetail: {},
   employees: [],
   users: [],
-  userDetails: {},
+  userDetails: [],
   todosId: [],
   todos: [],
   todoUpdate: {},
@@ -87,19 +88,24 @@ const rootReducer = (state = initialState, { type, payload }) => {
         token: payload[2]
       }
       case LOGOUT:
-        return{
-          supervisorDetail: {},
-          watcherDetail: {},
-          employees: [],
-          users: [],
-          userDetails: {},
-          todosId: [],
-          todos: [],
-          todoUpdate: {},
-          userData: [],
-          usersPaginate: [],
+        return {
+          ...state,
           token: ''
-      }
+        }
+        case DESTROY:
+          return {
+            ...state,
+            supervisorDetail: {},
+            watcherDetail: {},
+            employees: [],
+            users: [],
+            userDetails: {},
+            todosId: [],
+            todos: [],
+            todoUpdate: {},
+            userData: [],
+            usersPaginate: [],
+        }
     default:
       return { ...state };
   };
