@@ -43,7 +43,6 @@ export default function EditUser({ user, hierarchy}) {
   
   //Funcion para subir una imagen a cloudinary y retornar una url
   const uploadImage = async (e) => {
-    console.log(e.target.files)
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);

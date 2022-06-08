@@ -182,6 +182,16 @@ export function updateUser(id, post, header){
   }
 }
 
+export function updateEmployees(id, post, header){
+  return async function(){
+    try{
+      await axios.put(`${url}/user/${id}`, post, header);
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
 export function deleteUser(id, header){
   return async function(dispatch){
     try{
