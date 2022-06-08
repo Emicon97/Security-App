@@ -11,6 +11,7 @@ export default function UserProfile() {
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   const user = useSelector((state) => state.userDetails[0]);
+  const hierarchy = useSelector((state) => state.userDetails[1]);
   const { id } = useParams();
 
 
@@ -63,7 +64,7 @@ export default function UserProfile() {
         />
       </Modal>
       <Modal active={activeEdit} toggle={toggleEdit}>
-        <EditUser user={user}></EditUser>
+        <EditUser user={user} hierarchy={hierarchy}></EditUser>
       </Modal>
     </>
   );

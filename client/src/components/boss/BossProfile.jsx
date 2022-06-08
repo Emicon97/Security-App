@@ -63,11 +63,11 @@ export default function BossProfile() {
                   </button>
                 </div>
                 <div className="contain-profile--info">
-                  <div className="button-edit">
+                  {/* <div className="button-edit">
                     <button className={Primary()} onClick={toggleEdit}>
                       Edit
                     </button>
-                  </div>
+                  </div> */}
                   <div className="info">
                     <p>{user ? user.name : "undefined"}</p>
                     <p>{user ? user.lastName : "undefined"}</p>
@@ -96,16 +96,16 @@ export default function BossProfile() {
                 alt="Foto de perfil"
               />
             </Modal>
-            <Modal active={activeEdit} toggle={toggleEdit}>
+            {/* <Modal active={activeEdit} toggle={toggleEdit}>
               <EditUser user={user} id={id}></EditUser>
-            </Modal>
+            </Modal> */}
           </div>
           {/* <Link to="/home/add">
                 <button style={{backgroundColor: "blue"}}>Add User</button>
               </Link> */}
         </div>
       ) : (
-        <div class="lds-dual-ring"></div>
+        <div className="lds-dual-ring"></div>
       )}
     </>
   );

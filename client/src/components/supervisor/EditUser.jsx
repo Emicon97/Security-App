@@ -1,163 +1,342 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getEmployeeById, updateUser, deleteUser } from "../../redux/actions";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, { useState , useEffect } from "react";
+import { useDispatch} from "react-redux";
+import { updateUser } from "../../redux/actions";
 import { Primary } from "../styles/Buttons";
+import LoginController from "../reusable/LoginController";
+import { getEmployeeById } from "../../redux/actions";
 
-export default function EditUser({ user }) {
+export default function EditUser({ user, hierarchy}) {
   const dispatch = useDispatch();
   const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
   const [formSend, setFormSend] = useState(false);
-  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
+  const header = LoginController();
+
+  //Estados locales donde manejaremos cada uno de los datos para actualizar un usuario
+  const [values, setValues] = useState({
+    name: "",
+    lastName: "",
+    password: "",
+    dni: "",
+    profilePic: "",
+    email: "",
+    address: "",
+    environment: "",
+    telephone: "",
+    workingHours: "",
+  });
+
+  //Estados donde manejaremos los errores
+  const [errors, setErrors] = useState({
+    name: "",
+    lastName: "",
+    password: "",
+    dni: "",
+    profilePic: "",
+    email: "",
+    address: "",
+    environment: "",
+    telephone: "",
+    workingHours: "",
+  });
+  
+  //Funcion para subir una imagen a cloudinary y retornar una url
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "magqqp6o");
+    data.append("upload_preset", "a4bkl9ib");
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
+      "https://api.cloudinary.com/v1_1/securityapp/image/upload",
       { method: "POST", body: data }
     );
     const file = await res.json();
-    setImage(file.secure_url);
+    setValues({ ...values, profilePic: file.secure_url });
     setLoading(false);
   };
 
-  const viewPassword = () => {
-    var x = document.getElementById("password");
-    x.type === "password" ? (x.type = "text") : (x.type = "password");
+  //Funcion que se ejecuta al cambiar el valor de cada input
+  const handleChange = (e) => {
+    e.preventDefault();
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
   };
 
   useEffect(() => {
     dispatch(getEmployeeById(user._id));
   }, [dispatch]);
 
+  //Funcion que se ejecuta cuando el usuario coloca el foco en un input
+  const handleBlur = (e) => {
+    //Validacion de nombre
+    if (e.target.name === "name") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(e.target.value)) {
+        setErrors({
+          ...errors,
+          [e.target.name]: "Only letters and spaces are accepted *",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+
+    //Validacion de lastName
+    if (e.target.name === "lastName") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } else if (!/^[a-zA-Z ]*$/.test(e.target.value)) {
+        setErrors({
+          ...errors,
+          [e.target.name]: "Only letters and spaces are accepted *",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+
+    //Validacion de password
+    if (e.target.name === "password") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } else if (
+        !/^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/.test(
+          e.target.value
+        )
+      ) {
+        setErrors({
+          ...errors,
+          [e.target.name]:
+            "The password must have at least 1 uppercase, 1 lowercase, 1 digit, 1 special character plus a length of at least 10.",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+
+    //Validacion de environment
+    if (e.target.name === "environment") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } 
+    }
+
+    //Validacion de profilePic
+    if (e.target.name === "profilePic") {
+      if(e.target.value === ""){
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(e.target.value)) {
+        setErrors({
+          ...errors,
+          [e.target.name]: "You have to enter a valid url",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+
+    //Validación de email
+    if(e.target.name === "email"){
+      if(e.target.value === ""){
+        setErrors({
+          ...errors,
+          [e.target.name] : ""
+        })
+      } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)
+      ) {
+        setErrors({
+          ...errors,
+         [e.target.name] :"The email can only contain letters, numbers, periods, hyphens and underscores."
+        })
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+    //Validación de dni
+    if (e.target.name === "dni") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } else if (!/^[0-9]{8}$/.test(e.target.value)) {
+        setErrors({
+          ...errors,
+          [e.target.name]: "The ID must have 8 digits",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+
+    //Validación de telephone
+    if (e.target.name === "telephone") {
+      if (e.target.value === "") {
+        setErrors({
+          ...errors,
+          [e.target.name]: "",
+        });
+      } else if (isNaN(Number(e.target.value))){
+        setErrors({
+          ...errors,
+          [e.target.name]: "You can only enter numbers *",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+  }
+  };
+
+  //Funcion para enviar el formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //Validar si hay algun cambio para actualizar
+    if(
+      values.name === "" &&
+      values.lastName === "" &&
+      values.password === "" &&
+      values.dni === "" &&
+      values.profilePic === "" &&
+      values.email === "" &&
+      values.environment === "" &&
+      values.telephone === "" &&
+      values.workingHours === "" &&
+      values.address === ""
+    ){
+      return;
+    }
+
+    // Validar el formulario si tiene errores o no
+    if(
+      errors.name !== "" ||
+      errors.lastName !== "" ||
+      errors.password !== "" ||
+      errors.dni !== "" ||
+      errors.profilePic !== "" ||
+      errors.email !== "" ||
+      errors.environment !== "" ||
+      errors.telephone !== "" ||
+      errors.workingHours !== ""
+    ){
+      alert("Please correct the errors in the form to continue");
+      return;
+    }
+    //Creo una variable que va a tener el valor de los datos a cambiar
+    let value = {}
+    //Realizo un ciclo sobre mi state values donde le pasare a la variable
+    //value solo los valores distintos a ""
+    for(let i in values){
+      if(values[i] !== ""){
+        value={
+          ...value,
+          [i]: values[i]
+        }
+      }
+    }
+    //Mando los datos por el actions para realizar los cambios
+    dispatch(updateUser(user._id,value, header));
+    //Mensaje de alerta de que todo resulto con exito
+    alert("updates were successful")
+
+    setValues({
+      name: "",
+      lastName: "",
+      password: "",
+      dni: "",
+      profilePic: "",
+      email: "",
+      address: "",
+      environment: "",
+      telephone: "",
+      workingHours: "",
+    })
+  }
+
+  const viewPassword = () => {
+    var x = document.getElementById("password");
+    x.type === "password" ? (x.type = "text") : (x.type = "password");
+  };
+
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        lastName: "",
-        password: "",
-        dni: "",
-        profilePic: "",
-        email: "",
-        address: "",
-        environment: "",
-        telephone: "",
-        workingHours: "",
-      }}
-      validate={(val) => {
-        let errors = {};
-        if (!val.name) {
-          errors.name = "Por favor ingresa un nombre *";
-        } else if (!/^[a-zA-Z ]*$/.test(val.name)) {
-          errors.name = "Solo se aceptan letras y espacios *";
-        }
-
-        if (!val.lastName) {
-          errors.lastName = "Por favor ingresa un apellido *";
-        } else if (!/^[a-zA-Z ]*$/.test(val.lastName)) {
-          errors.lastName = "Solo se aceptan letras y espacios *";
-        }
-
-        if (!val.password) {
-          errors.password = "Por favor ingresa una contraseña *";
-        }
-
-        if (!val.workingHours) {
-          errors.workingHours = "Por favor ingresa las horas de trabajo *";
-        }
-
-        if (!val.environment) {
-          errors.environment = "Por favor ingresa lugar de trabajo *";
-        }
-
-        if (!val.profilePic) {
-          errors.profilePic = "Por favor ingresa una imagen *";
-        }
-
-        if (!val.dni) {
-          errors.dni = "Por favor ingresa un DNI *";
-        } else if (
-          isNaN(Number(val.dni)) ||
-          val.dni.length < 8 ||
-          val.dni.length > 8
-        ) {
-          errors.dni = "El formato debe ser de 8 numeros *";
-        }
-
-        if (!val.address) {
-          errors.address = "Por favor ingresa una direccion *";
-        } else if (!/^[A-Za-z0-9\s]+$/.test(val.address))
-          errors.address = "Solo se aceptan números, letras y espacios *";
-
-        if (!val.telephone) {
-          errors.telephone = "Por favor ingresa un telefono *";
-        } else if (isNaN(Number(val.telephone)))
-          errors.telephone = "Alguno de los valores no es un número *";
-        return errors;
-      }}
-      onSubmit={async (values, { resetForm }) => {
-         dispatch(updateUser(user.id, values));
-         setFormSend(true);
-         resetForm();
-         setTimeout(() => setFormSend(false), 5000);
-      }}
+    <form
+      className="flex flex-col items-center"
+      autoComplete="off"
+      noValidate
+      onSubmit={handleSubmit}
     >
-      {({ errors, values, isSubmitting }) => (
-        <Form className="flex flex-col items-center">
+      {hierarchy === "boss" || hierarchy === "supervisor" || hierarchy === "watcher" ? (
+        <div>
+          {/*Direccion y Email */}
           <div className="flex flex-row items-center justify-between">
             <div>
-              <label htmlFor="name">
-                Fisrt Name:{" "}
-                <ErrorMessage
-                  name="name"
-                  component={() => (
-                    <small className="text-red-600">{errors.name}</small>
-                  )}
-                />
+              <label htmlFor="address">
+                Address:{" "}
+                {errors.address && (
+                  <small className="text-red-600">{errors.address}</small>
+                )}
               </label>
-              <Field
+              <input
                 className={Input()}
                 type="text"
-                id="name"
-                name="name"
-                placeholder={user.name}
+                id="address"
+                name="address"
+                value={values.address}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={user.address}
               />
             </div>
-            <div>
-              <label htmlFor="lastName">
-                Last Name:{" "}
-                <ErrorMessage
-                  name="lastName"
-                  component={() => (
-                    <small className="text-red-600">{errors.lastName}</small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder={user.lastName}
-              />
-            </div>
-          </div>
+               
+            {/* *environment 
           <div className="flex flex-row items-center justify-between">
             <div>
               <label htmlFor="environment">
                 Environment:{" "}
-                <ErrorMessage
-                  name="environment"
-                  component={() => (
-                    <small className="text-red-600">{errors.environment}</small>
-                  )}
-                />
+                {errors.environment && (
+                  <small className="text-red-600">{errors.environment}</small>
+                )}
               </label>
-              <Field className={Input()} name="environment" as="select">
+              <select className={Input()} name="environment">
                 {!values.environment.length ? (
                   <option key="select">Environment...</option>
                 ) : (
@@ -170,155 +349,131 @@ export default function EditUser({ user }) {
                     {e}
                   </option>
                 ))}
-              </Field>
+              </select>
             </div>
+
+          </div> */}
             <div>
-              <label htmlFor="dni">
-                DNI:{" "}
-                <ErrorMessage
-                  name="dni"
-                  component={() => (
-                    <small className="text-red-600">{errors.dni}</small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="number"
-                id="dni"
-                name="dni"
-                placeholder={user.dni}
-              />
-            </div>
+       <label htmlFor="email">
+         Email:{" "}
+        {errors.email && <small className="text-red-600">{errors.email}</small>}
+       </label>
+       <input
+         className={Input()}
+         type="text"
+         id="email"
+         name="email"
+         value={values.email}
+         onBlur={handleBlur}
+         onChange={handleChange}
+         placeholder={user.email}
+       />
+     </div>
           </div>
+          {/**telefono y workinHours */}        
           <div className="flex flex-row items-center justify-between">
-            <div>
-              <label htmlFor="address">
-                Address:{" "}
-                <ErrorMessage
-                  name="address"
-                  component={() => (
-                    <small className="text-red-600">{errors.address}</small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="text"
-                id="address"
-                name="address"
-                placeholder={user.address}
-              />
-            </div>
-            <div>
-              <label htmlFor="email">
-                Email:{" "}
-                <ErrorMessage
-                  name="email"
-                  component={() => (
-                    <small className="text-red-600">{errors.email}</small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="text"
-                id="email"
-                name="email"
-                placeholder={user.email}
-              />
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between">
-            <div>
-              <label htmlFor="telephone">
-                Telephone:{" "}
-                <ErrorMessage
-                  name="telephone"
-                  component={() => (
-                    <small className="text-red-600">{errors.telephone}</small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="number"
-                id="telephone"
-                name="telephone"
-                placeholder={user.telephone}
-              />
-            </div>
-            <div>
-              <label htmlFor="workingHours">
-                Working Hours:{" "}
-                <ErrorMessage
-                  name="workingHours"
-                  component={() => (
-                    <small className="text-red-600">
-                      {errors.workingHours}
-                    </small>
-                  )}
-                />
-              </label>
-              <Field
-                className={Input()}
-                type="text"
-                id="workingHours"
-                name="workingHours"
-                placeholder={user.workingHours}
-              />
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between">
-          </div>
-          <div className="m-3 w-96">
-            <div className="flex flex-row">
-              <Field
-                className={File()}
-                type="file"
-                name="file"
-                onChange={(e) => uploadImage(e)}
-              />
-              {loading ? (
-                ((values.profilePic = image),
-                (
-                  <img
-                    className="w-10 h-10"
-                    src={image}
-                    style={{ widht: "100px" }}
+          <div>
+                  <label htmlFor="password">
+                    Password:{" "}
+                    {errors.password && <small className="text-red-600">{errors.password}</small>}
+                  </label>
+                  <input
+                    className={Input()}
+                    type="text"
+                    id="password"
+                    name="password"
+                    value={values.password}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Password"
                   />
-                ))
-              ) : (
-                // if the user does not have a profile pic, show the default one
-                <img
-                  src={user.profilePic ? user.profilePic : null}
-                  className="w-10 h-10"
-                />
-              )}
-            </div>
-            <ErrorMessage
-              name="file"
-              component={() => (
-                <small className="text-red-600">{errors.profilePic}</small>
-              )}
-            />
+                </div>
+        <div>
+          <label htmlFor="telephone">
+            Telephone:{" "}
+            {errors.telephone && (
+              <small className="text-red-600">{errors.telephone}</small>
+            )}
+          </label>
+          <input
+            className={Input()}
+            type="number"
+            id="telephone"
+            name="telephone"
+            value={values.telephone}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            placeholder={user.telephone}
+          />
+        </div>
+       
           </div>
-          <div className="flex gap-4">
-            <button className={Primary()} type="submit" disabled={isSubmitting}>
-              Edit
-            </button>
-            {/* <button className={ButtonDelete()} type="submit" disabled={isSubmitting}>
+          {/**ProfilePic */}
+          <div className="m-3 w-96">
+          <div className="flex flex-row">
+            <input
+              className={File()}
+              type="file"
+              name="file"
+              onChange={(e) => uploadImage(e)}
+            />
+            {loading ? (
+              (values.profilePic,
+              (
+                <img
+                  className="w-10 h-10"
+                  src={values.profilePic}
+                  style={{ widht: "100px" }}
+                />
+              ))
+            ) : (
+              // if the user does not have a profile pic, show the default one
+              <img
+                src={user.profilePic ? user.profilePic : demo}
+                className="w-10 h-10"
+              />
+            )}
+          </div>
+          {errors.profilePic && (
+            <small className="text-red-600">{errors.profilePic}</small>
+          )}
+        </div>
+        </div>
+      ): null}
+
+      <div className="flex flex-row items-center justify-between">
+         {/* <div>
+          <label htmlFor="workingHours">
+            Working Hours:{" "}
+            {errors.workingHours && (
+              <small className="text-red-600">{errors.workingHours}</small>
+            )}
+          </label>
+          <input
+            className={Input()}
+            type="text"
+            id="workingHours"
+            name="workingHours"
+            value={values.workingHours}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            placeholder={user.workingHours}
+          />
+        </div> */}
+      </div>
+      
+      <div className="flex gap-4">
+        <button type="submit" className={Primary()}>
+          Edit
+        </button>
+        {/* <button className={ButtonDelete()} type="submit" disabled={isSubmitting}>
               Delete
             </button> */}
-          </div>
-          {formSend && (
-            <small className="text-green-600">
-              Employee edited successfully
-            </small>
-          )}
-        </Form>
+      </div>
+      {formSend && (
+        <small className="text-green-600">Employee edited successfully</small>
       )}
-    </Formik>
+    </form>
   );
 }
 

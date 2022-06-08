@@ -10,7 +10,8 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
-  LOGOUT
+  LOGOUT,
+  DESTROY
 } from "./ActionTypes";
 
 import { url } from './url';
@@ -29,10 +30,10 @@ export function getUsersById(id, header){
   }
 }
 
-export function getToDos(){
+export function getToDos(header){
   return async function(dispatch){
     try{
-      const todos = await axios.get(`${url}/todos`);
+      const todos = await axios.get(`${url}/todos`,header);
       return dispatch({
         type:GET_TODOS,
         payload: todos.data
@@ -43,11 +44,11 @@ export function getToDos(){
   }
 }
 
-export function getToDosById(id){
+export function getToDosById(id, header){
   return async function(dispatch){
     try{
 
-      const todos = await axios.get(`${url}/todos/${id}`);
+      const todos = await axios.get(`${url}/todos/${id}`, header);
       return dispatch({
         type: GET_TODOS_ID,
         payload: todos.data
@@ -58,10 +59,10 @@ export function getToDosById(id){
   }
 }
 
-export function updateStatus(id,status){
+export function updateStatus(id,status, header){
   return async function(dispatch){
     try{
-      const state = await axios.put(`${url}/todos/${id}`, status)
+      const state = await axios.put(`${url}/todos/${id}`, status, header)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -72,10 +73,10 @@ export function updateStatus(id,status){
   }
 }
 
-export function filterByPriority(id,priority){
+export function filterByPriority(id,priority, header){
   return async function(dispatch){
     try{
-      const state = await axios.get(`${url}/todos/${id}/?priority=${priority}`)
+      const state = await axios.get(`${url}/todos/${id}/?priority=${priority}`, header)
       return dispatch({
         type: GET_TODOS_ID,
         payload: state.data
@@ -86,9 +87,9 @@ export function filterByPriority(id,priority){
   }
 }
 
-export function filterByStatus(id, status){
+export function filterByStatus(id, status, header){
   return async function(dispatch){
-    const state = await axios.get(`${url}/todos/${id}/${status}`);
+    const state = await axios.get(`${url}/todos/${id}/${status}`, header);
     try{
       return dispatch({
         type: GET_TODOS_ID,
@@ -100,10 +101,10 @@ export function filterByStatus(id, status){
   }
 }
 
-export function filterByStatusAndPriority(id,status,priority){
+export function filterByStatusAndPriority(id,status,priority, header){
   return async function(dispatch){
     try{
-      const state = await axios.get(`${url}/todos/${id}/${status}/?priority=${priority}`)
+      const state = await axios.get(`${url}/todos/${id}/${status}/?priority=${priority}`, header)
       return dispatch({
         type: GET_TODOS_ID,
         payload: state.data
@@ -139,10 +140,10 @@ export function getEmployees(id, header){
   }
 }
 
-export function searchEmployees(id, name){
+export function searchEmployees(id, name, header){
   return async function(dispatch){
     try{
-      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`);
+      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`, header);
       return dispatch({
         type:GET_EMPLOYEES,
         payload: users.data
@@ -153,10 +154,10 @@ export function searchEmployees(id, name){
   }
 };
 
-export function getEmployeeById(id){
+export function getEmployeeById(id, header){
   return async function(dispatch){
     try{
-      const user = await axios.get(`${url}/user/${id}`);
+      const user = await axios.get(`${url}/user/${id}`, header);
       return dispatch({
         type:GET_EMPLOYEE_BY_ID,
         payload: user.data
@@ -167,16 +168,26 @@ export function getEmployeeById(id){
   }
 };
 
-export function updateUser(id, post){
+export function updateUser(id, post, header){
   return async function(dispatch){
     try{
-      const user = await axios.put(`${url}/user/${id}`, post);
+      const user = await axios.put(`${url}/user/${id}`, post, header);
       return dispatch({
         type: UPDATE_USER,
         payload: user.data
       });
     }catch(err){
       window.alert(err.response.data)
+    }
+  }
+}
+
+export function updateEmployees(id, post, header){
+  return async function(){
+    try{
+      await axios.put(`${url}/user/${id}`, post, header);
+    }catch(error){
+      window.alert(error.response.data)
     }
   }
 }
@@ -194,7 +205,7 @@ export function deleteUser(id, header){
     }
   }
 }
-export function loginPrueba(value, header){
+export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
@@ -214,7 +225,7 @@ export function logout(){
       const user =await axios.get(`${url}/logout`);
       return dispatch({
         type:LOGOUT,
-        payload: ""
+        payload: user.data
       })
     }catch(err){
       window.alert(err.response.data)
@@ -247,4 +258,12 @@ export function getUsersPaginateAll(id,limit,skip,header){
       window.alert(err.response.data)
     }
   }
+}
+
+export function destroyData() {
+  return function (dispatch) {
+    return dispatch({
+      type: DESTROY
+    });
+  };
 }
