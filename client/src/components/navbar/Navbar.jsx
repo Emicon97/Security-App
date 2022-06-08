@@ -56,7 +56,7 @@ export default function NavBar({isRendered}) {
     <>
       {
         isRendered ?          
-        <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5 dark:bg-gray-800">
+        <nav className="bg-white mb-5 shadow px-2 sm:px-4 py-2.5">
           <div className="container flex flex-wrap justify-between items-center mx-auto">
             <Link to={URLREDIRECT}>
               <img src={logo} className="mr-3 h-6 sm:h-9" alt="Centinel Logo" />
