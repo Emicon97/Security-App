@@ -27,19 +27,24 @@ export default function NavBar({isRendered}) {
   let user = useSelector(state => state.userDetails)
   let NavBar
   
-  switch (state) {
-    case "boss":
-      NavBar = <NavBarBoss userData={user[0]}/>;
-      break;
-      
-      case "supervisor":
-      NavBar = <NavBarSupervisor userData={user[0]}/>;
-      break;
-
-    default:
-      // NavBar = <NavBarBoss userData={user[0]}/>;
-      break;
-  }
+  // useEffect(() => {
+    switch (state) {
+      case "boss":
+        console.log("entra boss")
+        NavBar = <NavBarBoss userData={user[0]}/>;
+        break;
+        
+        case "supervisor":
+          console.log("super")
+        NavBar = <NavBarSupervisor userData={user[0]}/>;
+        break;
+  
+      default:
+        console.log("entra")
+        NavBar = null;
+        break;
+    }
+  // }, [user])
   let URLREDIRECT = "";
   useEffect(() => {
     if (user.length) {
