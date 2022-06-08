@@ -1,22 +1,27 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import NavBar from "./components/navbar/Navbar";
-import AddUser from "./components/boss/AddUser";
-import EditState from './components/reusable/EditState';
-import UserProfile from "./components/reusable/Profile";
-import Login from "./components/Login";
-import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
 import Home from "./components/Home";
-import LandingPage from "./components/Landing.jsx";
-import TableInfo from './components/reusable/TableInfo';
+import NavBar from "./components/navbar/Navbar";
+import Login from "./components/Login";
+import UserProfile from "./components/reusable/Profile";
+import EditState from './components/reusable/EditState';
+import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
+
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
-import { useSelector } from "react-redux";
+import Tasks from "./components/reusable/Tasks";
 
 function App() {
-
-  let token = useSelector(state => state.token)
+  let navigate = useNavigate();
+  let token = useSelector(state => state.token);
   
+  useEffect(()=>{
+    if(!token.length){
+      navigate('/login');
+    }
+  },[token]);
 
   return (
     <>
@@ -40,6 +45,7 @@ function App() {
         {/* Rutas GENERALES */}
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
+        <Route path="/user/tasks" element={<Tasks />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>

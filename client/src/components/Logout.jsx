@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux";
-import { Primary } from "./styles/Buttons";
-import { logout } from './../redux/actions';
+import { useDispatch } from 'react-redux';
 
+import { Primary } from "./styles/Buttons";
+
+import { logout } from './../redux/actions';
 
 export default function Logout() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ export default function Logout() {
   return (
     <div className="flex justify-center items-center">
             {/* <Link to={'/'}> */}
-                <button className={`${Primary()} mt-6 font-extrabold text-lg`} onClick={handleRedirectLogOut}>
+                <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
                     Log out
                 </button>
             {/* </Link> */}
