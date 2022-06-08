@@ -90,7 +90,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       case LOGOUT:
         return {
           ...state,
-          token: ''
+          token: payload
         }
         case DESTROY:
           return {

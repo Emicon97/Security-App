@@ -8,8 +8,11 @@ module.exports = {
         '30%': '30%',
       },
       spacing: {
+        '19px': '19px',
         '23px': '23px',
-      }
+        '420px': '420px',
+        '400px': '400px',
+      },
     },
   },
   plugins: [],

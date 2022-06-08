@@ -225,7 +225,7 @@ export function logout(){
       const user =await axios.get(`${url}/logout`);
       return dispatch({
         type:LOGOUT,
-        payload: ""
+        payload: user.data
       })
     }catch(err){
       window.alert(err.response.data)
