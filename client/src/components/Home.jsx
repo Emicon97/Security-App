@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import BossProfile from './boss/BossProfile';
 import GuardProfile from './guard/GuardProfile';
 import HomeSupervisor from './supervisor/HomeSupervisor';
-import GuardHome from "./reusable/CreateNewTask";
 
 export default function Home () {
     //variable para saber el path
@@ -21,7 +20,7 @@ export default function Home () {
             break;
 
         case "guard": 
-            home = <GuardHome/>;
+            home = <HomeSupervisor/>;
             break;
 
         default: 

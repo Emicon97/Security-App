@@ -12,6 +12,7 @@ import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
+import CreateNewTask from "./components/reusable/CreateNewTask";
 
 import { destroyData } from "./redux/actions";
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/user/tasks/" element={<Tasks />} />
+        <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>

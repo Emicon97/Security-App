@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input, File } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-const AddTaskToUser = ({ id }) => {
+const AddTaskToUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
   const header = LoginController();
   const [task, setTask] = useState({
     name: "",
     description: "",
     priority: "",
+    id: id,
   });
   const [error, setError] = useState({});
 
