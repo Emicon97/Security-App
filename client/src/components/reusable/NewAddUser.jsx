@@ -158,7 +158,11 @@ export default function AddNewUser() {
     dispatch(postUser(input, header, user[0]._id));
     alert("User created successfully");
     setInput({});
-    navigate(`/boss/${user[0]._id}`);
+    if(user[1] === "supervisor"){
+      navigate(`/supervisor/${user[0]._id}`)
+    } else {
+      navigate(`/boss/${user[0]._id}`);
+    }
   }
 
   return (

@@ -1,6 +1,17 @@
 import Tasks from "../reusable/Tasks";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
+import LoginController from "../reusable/LoginController";
+import { getUsersById } from "../../redux/actions";
 
 export default function GuardProfile () {
+  let { id } = useParams();
+  let dispatch = useDispatch();
+  let header = LoginController();
+  useEffect(()=>{
+    dispatch(getUsersById(id, header))
+  },[])
   return (
     // <Tasks/>
     <div>ESTO ES DE PRUEBAAAAA, SERIA EL HOME DEL WATCHER</div>
@@ -12,6 +23,7 @@ export default function GuardProfile () {
 // import { Link, useParams } from "react-router-dom";
 
 // import {
+//   getUsersById,
 //   getToDosById,
 //   filterByPriority,
 //   filterByStatus,
@@ -20,6 +32,7 @@ export default function GuardProfile () {
 // import Modal from "../reusable/Modal";
 // // import "./styles.css";
 // import { Tertiary, Input } from '../styles/Buttons'
+// import LoginController from "../reusable/LoginController";
 
 // export default function GuardProfile() {
 
@@ -54,7 +67,7 @@ export default function GuardProfile () {
 //   const updatedTask = useSelector((state) => state.todosId);
 //   const dispatch = useDispatch();
 //   const { id } = useParams();
-  
+//   const header = LoginController()
 //   const [active, setActive] = useState(false);
 //   const [currentPriority, setCurrentPriority] = useState("all");
 //   const [currentStatus, setCurrentStatus] = useState("all");
@@ -66,13 +79,15 @@ export default function GuardProfile () {
 
 
 //   useEffect(() => {
-//     dispatch(getToDosById(id));
+//     dispatch(getUsersById(id, header))
+//     dispatch(getToDosById(id, header));
 //     // eslint-disable-next-line
 //   }, [dispatch]);
 
 //   useEffect(() => {
 //     // eslint-disable-next-line
 //   }, [updatedTask]);
+  
 
 //   const priorityManager = (e) => {
 //     let priority = e.target.value;

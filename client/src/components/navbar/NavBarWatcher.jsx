@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default function NavBarWatcher ({userData}) {
 
@@ -14,7 +14,7 @@ export default function NavBarWatcher ({userData}) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}/profile`}>
                         Perfil
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/tasks'}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/tasks/${userData._id}`}>
                         Ver Tareas
                     </Link>
                 </li>

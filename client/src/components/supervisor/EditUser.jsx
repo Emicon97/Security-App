@@ -326,33 +326,6 @@ export default function EditUser({ user, hierarchy}) {
                 placeholder={user.address}
               />
             </div>
-               
-            {/* *environment 
-          <div className="flex flex-row items-center justify-between">
-            <div>
-              <label htmlFor="environment">
-                Environment:{" "}
-                {errors.environment && (
-                  <small className="text-red-600">{errors.environment}</small>
-                )}
-              </label>
-              <select className={Input()} name="environment">
-                {!values.environment.length ? (
-                  <option key="select">Environment...</option>
-                ) : (
-                  <option key="select" disabled>
-                    Environment...
-                  </option>
-                )}
-                {typeEnv?.map((e) => (
-                  <option key={e} value={e}>
-                    {e}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-          </div> */}
             <div>
        <label htmlFor="email">
          Email:{" "}
@@ -369,8 +342,7 @@ export default function EditUser({ user, hierarchy}) {
          placeholder={user.email}
        />
      </div>
-          </div>
-          {/**telefono y workinHours */}        
+          </div>       
           <div className="flex flex-row items-center justify-between">
           <div>
                   <label htmlFor="password">
@@ -408,7 +380,6 @@ export default function EditUser({ user, hierarchy}) {
         </div>
        
           </div>
-          {/**ProfilePic */}
           <div className="m-3 w-96">
           <div className="flex flex-row">
             <input
@@ -427,9 +398,8 @@ export default function EditUser({ user, hierarchy}) {
                 />
               ))
             ) : (
-              // if the user does not have a profile pic, show the default one
               <img
-                src={user.profilePic ? user.profilePic : demo}
+                src={user.profilePic ? user.profilePic : null}
                 className="w-10 h-10"
               />
             )}
@@ -442,33 +412,12 @@ export default function EditUser({ user, hierarchy}) {
       ): null}
 
       <div className="flex flex-row items-center justify-between">
-         {/* <div>
-          <label htmlFor="workingHours">
-            Working Hours:{" "}
-            {errors.workingHours && (
-              <small className="text-red-600">{errors.workingHours}</small>
-            )}
-          </label>
-          <input
-            className={Input()}
-            type="text"
-            id="workingHours"
-            name="workingHours"
-            value={values.workingHours}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder={user.workingHours}
-          />
-        </div> */}
       </div>
       
       <div className="flex gap-4">
         <button type="submit" className={Primary()}>
           Edit
         </button>
-        {/* <button className={ButtonDelete()} type="submit" disabled={isSubmitting}>
-              Delete
-            </button> */}
       </div>
       {formSend && (
         <small className="text-green-600">Employee edited successfully</small>
