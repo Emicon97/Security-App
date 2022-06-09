@@ -11,11 +11,13 @@ import {
 import Modal from "../reusable/Modal";
 // import "./styles.css";
 import { Tertiary, Input } from '../styles/Buttons'
+import LoginController from "./LoginController";
 
 export default function Tasks() {
 
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  const header = LoginController()
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -57,13 +59,13 @@ export default function Tasks() {
 
 
   useEffect(() => {
-    dispatch(getToDosById(id));
+    dispatch(getToDosById(id, header));
     // eslint-disable-next-line
   }, [dispatch]);
 
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [updatedTask]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line
+  // }, [updatedTask]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;

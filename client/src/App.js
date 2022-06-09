@@ -52,7 +52,7 @@ function App() {
         {/* Rutas GENERALES */}
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
-        <Route path="/user/tasks/" element={<Tasks />} />
+        <Route path="/user/tasks/:id" element={<Tasks />} />
         <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
 
         {/* ROUTE PRUEBA */}

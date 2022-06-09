@@ -117,18 +117,20 @@ export default function Login() {
           </div>
           <label className="text-xl font-bold">Password: </label>
           <div className="flex flex-col relative mb-5">
-          <input
-            type="password"
-            value={input.password}
-            className={Input()}
-            placeholder="Your password..."
-            name="password"
-            onChange={(e) => {
-              handleChange(e);
-            }}
-            autoComplete="off"
-          />
-          <small className="text-red-600 ml-3 absolute top-12">{!validate ? errors.password : null}</small>
+            <input
+              type="password"
+              value={input.password}
+              className={Input()}
+              placeholder="Your password..."
+              name="password"
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              autoComplete="off"
+            />
+            <small className="text-red-600 ml-3 absolute top-12">
+              {!validate ? errors.password : null}
+            </small>
           </div>
           <button
             type="submit"
@@ -138,6 +140,6 @@ export default function Login() {
           </button>
         </form>
       </div>
-        </div>
+    </div>
   );
 }
