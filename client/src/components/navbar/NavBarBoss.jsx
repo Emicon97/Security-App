@@ -5,8 +5,6 @@ import { getUsersById } from '../../redux/actions'
 
 export default function NavBarBoss ({userData}) {
 
-
-    
     return (
         <>
             {
