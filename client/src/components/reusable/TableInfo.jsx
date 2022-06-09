@@ -78,15 +78,9 @@ export default function TableInfo(props) {
 
 
   useEffect(()=> {
-    let toFilter = watchers.filter(worker => worker.name.includes(nameEmployee));
-    setFiltered(toFilter);
-    for (let x of filtered) {
-      // if (x.name.includes(nameEmployee)) {
-      //   let toFilter = watchers.filter(() => x);
-      //   setFiltered(toFilter);
-      //   console.log(toFilter.length)
-      //   console.log(filtered.length);
-      // }
+    if (nameEmployee.length) {
+      let toFilter = watchers.filter(worker => worker.name.includes(nameEmployee));
+      setFiltered(toFilter);
     }
   }, [nameEmployee]);
 
