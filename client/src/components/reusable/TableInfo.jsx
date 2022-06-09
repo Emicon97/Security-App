@@ -11,7 +11,7 @@ import {
 import "../styles/TableInfo.css";
 import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
-// import EditEmployees from "../supervisor/EditEmployees";
+import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
 
 
@@ -19,6 +19,8 @@ export default function TableInfo(props) {
   const dispatch = useDispatch();
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
+  const hierarchy = useSelector((state) => state.userDetails[1])
+
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees);
   const header = LoginController();
@@ -26,8 +28,6 @@ export default function TableInfo(props) {
   //toma el id del usuario actual
   const id = useSelector((state) => state.userData[0]._id);
 
-  //toma la hierarchy del usuario
-  const hierarchy = useSelector((state) => state.userData[1]);
 
   //====================================
   //============== STATES ==============
@@ -224,13 +224,9 @@ export default function TableInfo(props) {
           </div>
         </div>
       </div>
-      {/* <Modal active={active} toggle={toggle}>
-        <EditEmployees
-          user={editUser}
-          hierarchy={hierarchy}
-          handleAllButton={handleAllButton}
-        ></EditEmployees>
-      </Modal> */}
+      <Modal active={active} toggle={toggle}>
+        <EditEmployees user={editUser} hierarchy={hierarchy} handleAllButton={handleAllButton}></EditEmployees>
+      </Modal>
     </>
   );
 }
