@@ -9,12 +9,12 @@ export default function Login() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
   const token = useSelector((state) => state.token);
-  
   const [input, setInput] = useState({
     dni: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [validate, setValidate] = useState(true)
 
   const validations = (input) => {
     let error = {};
@@ -37,16 +37,23 @@ export default function Login() {
       setErrors(error);
       return newInput
     });
+    setValidate(true)
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if(!errors.dni && !errors.password) {
-      dispatch(loginPrueba(input));
-      setInput({ dni: "", password: "" });
-    // } else {
-    //   alert("Contraseña y/o DNI incorrectos")
-    // }
+    if(!errors.dni && !errors.password) {
+    dispatch(loginPrueba(input));
+    setInput({ dni: "", password: "" });
+    } else {
+      if(errors.dni || errors.password) {
+        console.log("false")
+        setValidate(false)
+      } else {
+        console.log("true")
+        setValidate(true)
+      }
+    }
   }
 
   useEffect(() => {
@@ -89,7 +96,7 @@ export default function Login() {
                 }}
                 autoComplete="off"
               />
-              <h4>{errors.dni}</h4>
+              <h4>{!validate ? errors.dni : null}</h4>
             </label>
             <label className="text-xl font-bold">
               Password:{" "}
@@ -104,7 +111,7 @@ export default function Login() {
                 }}
                 autoComplete="off"
               />              
-              <h4>{errors.password}</h4>
+              <h4>{!validate ? errors.password : null}</h4>
             </label>
             <button type="submit" className={`${Primary()} mt-6 font-extrabold text-lg`}>
               Log in
