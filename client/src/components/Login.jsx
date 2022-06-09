@@ -16,7 +16,7 @@ export default function Login() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [validate, setValidate] = useState(true)
+  const [validate, setValidate] = useState(true);
 
   const validations = (input) => {
     let error = {};
@@ -24,7 +24,7 @@ export default function Login() {
     if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
       error.password = "Debe contener 8 caracteres, una minúscula, una mayúscula y un número";
       //Hay que resumirlo muuucho mas jijiji;
-    };
+    }
     return error;
   };
 
@@ -34,35 +34,36 @@ export default function Login() {
   // };
 
   function handleChange(event) {
-    console.log("entra", errors)
-    setInput(input => {
+    setInput((input) => {
       let newInput = {
         ...input,
         [event.target.name]: event.target.value,
       };
       const error = validations(newInput);
       setErrors(error);
-      return newInput
+      return newInput;
     });
-    setValidate(true)
+    setValidate(true);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(!errors.dni && !errors.password) {
-    dispatch(loginPrueba(input));
-    setInput({ dni: "", password: "" });
+    if (!errors.dni && !errors.password) {
+      dispatch(loginPrueba(input));
+      setInput({ dni: "", password: "" });
     } else {
-      if(errors.dni || errors.password) {
-        setValidate(false)
+      if (errors.dni || errors.password) {
+        console.log("false");
+        setValidate(false);
       } else {
-        setValidate(true)
+        console.log("true");
+        setValidate(true);
       }
     }
   }
 
   useEffect(() => {
-    if(userData[1] && token) {
+    if (userData[1] && token) {
       const id = userData[0]._id;
       switch (userData[1]) {
         case "watcher":
@@ -71,8 +72,8 @@ export default function Login() {
           return navigate(`/supervisor/${id}`);
         case "boss":
           return navigate(`/boss/${id}`);
-      };
-    };
+      }
+    }
   }, [token]);
 
  
