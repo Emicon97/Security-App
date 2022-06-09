@@ -17,7 +17,6 @@ import HomePrueba from "./components/Prueba/HomePrueba";
 
 
 import { destroyData } from "./redux/actions";
-import HomePrueba from "./components/Prueba/HomePrueba";
 
 function App() {
   let navigate = useNavigate();

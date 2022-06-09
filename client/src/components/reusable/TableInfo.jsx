@@ -11,9 +11,8 @@ import {
 import "../styles/TableInfo.css";
 import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
-import EditEmployees from "../supervisor/EditEmployees";
+// import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
-import EditUser from "../supervisor/EditUser";
 
 
 export default function TableInfo(props) {
@@ -225,13 +224,13 @@ export default function TableInfo(props) {
           </div>
         </div>
       </div>
-      <Modal active={active} toggle={toggle}>
+      {/* <Modal active={active} toggle={toggle}>
         <EditEmployees
           user={editUser}
           hierarchy={hierarchy}
           handleAllButton={handleAllButton}
         ></EditEmployees>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
