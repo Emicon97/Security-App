@@ -12,7 +12,9 @@ import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
+import CreateNewTask from "./components/reusable/CreateNewTask";
 import HomePrueba from "./components/Prueba/HomePrueba";
+
 
 import { destroyData } from "./redux/actions";
 
@@ -43,7 +45,7 @@ function App() {
         <Route exact path="/supervisor/:id" element={<Home/>}/>
         <Route exact path="/guard/:id" element={<Home/>} />
         
-        {/* Rutas para el BOSS */}
+        {/* Ruta para ver empleados */}
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
@@ -53,6 +55,12 @@ function App() {
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/user/tasks/:id" element={<Tasks />} />
+        <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
+
+        {/* ROUTE PRUEBA */}
+        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
+
+
 
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>

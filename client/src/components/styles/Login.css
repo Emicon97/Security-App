@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;800&display=swap');
+
+.login-screen {
+    font-family: "Convergence", sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    background-color: #060b23;
+    overflow: hidden;
+}
+.form {
+    width: 400px;
+    /* height: 350px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 19px;
+    backdrop-filter: blur(8px);
+    background-color: rgba(0,191,255, 0.104);
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+    border: 2px rgba(255,255,255,0.4) solid;
+    border-bottom: 2px rgba(40,40,40,0.35) solid;
+    border-right: 2px rgba(40,40,40,0.35) solid;
+    font-family: 'Nunito', sans-serif;
+
+}
+.form-input-container {
+    width: 80%;
+    height: 50px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.form__input {
+    width: 100%;
+    border: 2px solid #e1e5ee;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    color: white;
+    outline: none;
+    padding: 10px;
+    background: none;
+}
+.form__input:hover {
+    border-color: #adffff;
+}
+.form__input:focus {
+    border-color: #18ffff;
+}
+.form__label {
+    width: 150px;
+    position: relative;
+    left: 1rem;
+    bottom: 2.5rem;
+    padding: 0 0.5rem;
+    color: white;
+    cursor: text;
+    transition: all ease 500ms ;
+    font-weight: 800;
+}
+.form__input:focus ~ .form__label, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+    bottom: 4.4rem;
+    left: 0rem;
+    font-size: 0.8rem;
+}
+.errors-input {
+    width: 80%;
+    margin-top: 20px;
+    /* background-color: red; */
+}
+.errors-input .errors {
+    height: 40px;
+    font-size: 15px;
+    color: #ff0000;
+    font-weight: 400;
+}
+
+.form button {
+    background-color: #0023c4;
+    padding: 5px 19px;
+    border-radius: 0.5rem;
+    margin: 20px;
+    color: white;
+    font-weight: 500;
+}

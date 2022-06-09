@@ -11,7 +11,7 @@ import {
 import Modal from "../reusable/Modal";
 // import "./styles.css";
 import { Tertiary, Input } from '../styles/Buttons'
-import LoginController from './LoginController';
+import LoginController from "./LoginController";
 
 export default function Tasks() {
 
@@ -62,9 +62,9 @@ export default function Tasks() {
     // eslint-disable-next-line
   }, [dispatch]);
 
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [updatedTask]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line
+  // }, [updatedTask]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;

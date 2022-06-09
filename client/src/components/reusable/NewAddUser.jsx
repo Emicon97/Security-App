@@ -57,7 +57,7 @@ export default function AddNewUser() {
       profilePic: file.secure_url,
     });
   };
-
+  
   function validateInput(input) {
     let error = {};
     const regex = /^[a-zA-Z ]+$/;
@@ -145,7 +145,6 @@ export default function AddNewUser() {
       error.telephone ||
       error.environment
     )
-      return swal( "Wait!", "Some fields are wrong", "error" );
     if (
       !input.name &&
       !input.lastName &&
@@ -155,7 +154,11 @@ export default function AddNewUser() {
       !input.telephone &&
       !input.environment
     )
-      return swal( "Wait!", "You have to fill the mandatory fields first", "error" );
+      return swal(
+        "Wait!",
+        "You have to fill the mandatory fields first",
+        "error"
+      );
     dispatch(postUser(input, header, user[0]._id));
     alert("User created successfully");
     setInput({});

@@ -11,9 +11,11 @@ import {
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
   LOGOUT,
-  DESTROY
+  ADD_TASK_TO_USER,
+  DESTROY,
 } from "./ActionTypes";
 
+import swal from "sweetalert";
 import { url } from './url';
 
 export function getUsersById(id, header){
@@ -33,7 +35,7 @@ export function getUsersById(id, header){
 export function getToDos(header){
   return async function(dispatch){
     try{
-      const todos = await axios.get(`${url}/todos`,header);
+      const todos = await axios.get(`${url}/todos`, header);
       return dispatch({
         type:GET_TODOS,
         payload: todos.data
@@ -58,6 +60,21 @@ export function getToDosById(id, header){
     }
   }
 }
+
+export function addTaskToUser(body, header){
+  return async function(dispatch){
+    try{
+      const todos = await axios.post(`${url}/todos/`, body, header);
+      return dispatch({
+        type: ADD_TASK_TO_USER,
+        payload: todos.data
+      });
+    }catch(err){
+      swal(err.response.data)
+    }
+  }
+}
+
 
 export function updateStatus(id,status, header){
   return async function(dispatch){
