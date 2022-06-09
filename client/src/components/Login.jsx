@@ -10,8 +10,12 @@ export default function Login() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
   const token = useSelector((state) => state.token);
-  const [input, setInput] = useState({ dni: "", password: "" });
+  const [input, setInput] = useState({
+    dni: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
+  const [validate, setValidate] = useState(true)
 
   const validations = (input) => {
     let error = {};
@@ -34,22 +38,27 @@ export default function Login() {
         ...input,
         [event.target.name]: event.target.value,
       };
-      const error = validations(newInput);
-      setErrors(error);
+      // const error = validations(newInput);
+      // setErrors(error);
       return newInput
     });
-  };
+    setValidate(true)
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if(!errors.dni && !errors.password) {
+    if(!errors.dni && !errors.password) {
     dispatch(loginPrueba(input));
     setInput({ dni: "", password: "" });
-    // } else {
-    //   alert("Contraseña y/o DNI incorrectos")
-    // }
-  };
-  
+    } else {
+      if(errors.dni || errors.password) {
+        setValidate(false)
+      } else {
+        setValidate(true)
+      }
+    }
+  }
+
   useEffect(() => {
     if(userData[1] && token) {
       const id = userData[0]._id;

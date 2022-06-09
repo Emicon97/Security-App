@@ -185,7 +185,7 @@ export function updateUser(id, post, header){
 export function updateEmployees(id, post, header){
   return async function(){
     try{
-      await axios.put(`${url}/user/${id}`, post, header);
+      await axios.put(`${url}/user/${id}`, post, header)
     }catch(error){
       window.alert(error.response.data)
     }

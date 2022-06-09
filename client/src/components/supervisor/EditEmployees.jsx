@@ -167,31 +167,31 @@ const Input = (props) => `
     sm:text-sm
 `;
 
-const File = (props) => `
-    block w-full text-sm text-slate-500
-    file:mr-4 file:py-2 file:px-4
-    file:rounded-full file:border-0
-    file:text-sm file:font-semibold
-    file:bg-blue-50 file:text-blue-700
-    hover:file:bg-blue-100
-`;
+// const File = (props) => `
+//     block w-full text-sm text-slate-500
+//     file:mr-4 file:py-2 file:px-4
+//     file:rounded-full file:border-0
+//     file:text-sm file:font-semibold
+//     file:bg-blue-50 file:text-blue-700
+//     hover:file:bg-blue-100
+// `;
 
-const Button = (props) => `
-    font-bold text-white
-    bg-blue-500
-    w-32 h-10 p-0 m-0
-    border-2 border-blue-500
-    hover:border-blue-600 hover:bg-blue-600
-    active:border-blue-700 active:bg-blue-700
-    rounded-3xl
-`;
+// const Button = (props) => `
+//     font-bold text-white
+//     bg-blue-500
+//     w-32 h-10 p-0 m-0
+//     border-2 border-blue-500
+//     hover:border-blue-600 hover:bg-blue-600
+//     active:border-blue-700 active:bg-blue-700
+//     rounded-3xl
+// `;
 
-const ButtonDelete = (props) => `
-    flex flex-row justify-evenly items-center
-    h-10 w-28
-    text-white font-semibold
-    rounded-md
-    bg-red-600
-    hover:bg-red-700
-    active:bg-red-800 active:ring-4 active:ring-red-200
-`;
+// const ButtonDelete = (props) => `
+//     flex flex-row justify-evenly items-center
+//     h-10 w-28
+//     text-white font-semibold
+//     rounded-md
+//     bg-red-600
+//     hover:bg-red-700
+//     active:bg-red-800 active:ring-4 active:ring-red-200
+// `;

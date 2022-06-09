@@ -58,7 +58,8 @@ export default function NavBar({isRendered}) {
   // useEffect(() => {
   //   dispatch(getUsersById())
   // }, [dispatch])
-
+  //PARA QUE el navbar desaparezca en la ruta prueba
+  if(useLocation().pathname.split("/")[1] === "prueba") isRendered = false
   return (
     <>
       {

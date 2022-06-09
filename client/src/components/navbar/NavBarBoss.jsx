@@ -19,7 +19,7 @@ export default function NavBarBoss ({userData}) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}`}>
                         Empleados
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/add`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={'/user/add'}>
                         Añadir empleados
                     </Link>
                 </li>

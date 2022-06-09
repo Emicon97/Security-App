@@ -12,6 +12,7 @@ import TableInfoWithAddUser from "./components/reusable/TableWithAddUser";
 import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
+import HomePrueba from "./components/Prueba/HomePrueba";
 
 import { destroyData } from "./redux/actions";
 
@@ -26,6 +27,7 @@ function App() {
       navigate('/login');
       dispatch(destroyData());
     }
+    // eslint-disable-next-line
   },[token]);
 
   return (
@@ -51,6 +53,11 @@ function App() {
         <Route path="/user/add" element={<NewAddUser />} />
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/user/tasks/:id" element={<Tasks />} />
+
+        {/* ROUTE PRUEBA */}
+        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
+
+
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
