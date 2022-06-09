@@ -15,15 +15,20 @@ export default function Login() {
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [validate, setValidate] = useState(true)
+  const [validate, setValidate] = useState(true);
 
   const validations = (input) => {
     let error = {};
-    if(!/^[0-9]*$/.test(input.dni)) error.dni = "Wrong DNI or wrong character";
-    if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
-      error.password = "Must contain 8 characters, one lowercase, one uppercase and one number";
+    if (!/^[0-9]*$/.test(input.dni)) error.dni = "Wrong DNI or wrong character";
+    if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+        input.password
+      )
+    ) {
+      error.password =
+        "Must contain 8 characters, one lowercase, one uppercase and one number";
       //Hay que resumirlo muuucho mas jijiji;
-    };
+    }
     return error;
   };
 
@@ -33,36 +38,36 @@ export default function Login() {
   };
 
   function handleChange(event) {
-    setInput(input => {
+    setInput((input) => {
       let newInput = {
         ...input,
         [event.target.name]: event.target.value,
       };
       const error = validations(newInput);
       setErrors(error);
-      return newInput
+      return newInput;
     });
-    setValidate(true)
+    setValidate(true);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if(!errors.dni && !errors.password) {
-    dispatch(loginPrueba(input));
-    setInput({ dni: "", password: "" });
+    if (!errors.dni && !errors.password) {
+      dispatch(loginPrueba(input));
+      setInput({ dni: "", password: "" });
     } else {
-      if(errors.dni || errors.password) {
-        console.log("false")
-        setValidate(false)
+      if (errors.dni || errors.password) {
+        console.log("false");
+        setValidate(false);
       } else {
-        console.log("true")
-        setValidate(true)
+        console.log("true");
+        setValidate(true);
       }
     }
   }
 
   useEffect(() => {
-    if(userData[1] && token) {
+    if (userData[1] && token) {
       const id = userData[0]._id;
       switch (userData[1]) {
         case "watcher":
@@ -71,65 +76,68 @@ export default function Login() {
           return navigate(`/supervisor/${id}`);
         case "boss":
           return navigate(`/boss/${id}`);
-      };
-    };
+      }
+    }
   }, [token]);
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <img src={logo} alt="Centinel logo" className="w-[400px] h-[400px] mr-12 mt-24" />
-      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col items-center">
-        <div className="flex flex-col relative mb-5">
-          <input type="text" value={input.dni} placeholder="DNI" className={`${Input()} mb-0 placeholder:not-italic`} name="dni" onChange={(e) => handleChange(e)} autoComplete="off"/>
-          {
-            errors.dni ? 
-            <small className="text-red-600 ml-3 absolute top-12">{errors.dni}</small> : 
-            <small className="invisible ml-3 absolute top-12">Wrong DNI or wrong character</small>
-          }
-        </div>
-        <div className="flex justify-center">
-          <form
-            onSubmit={(e) => {
-              handleSubmit(e);
+      <img
+        src={logo}
+        alt="Centinel logo"
+        className="w-[400px] h-[400px] mr-12 mt-24"
+      />
+      <div className="flex justify-center">
+        <form
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+          className="flex flex-col items-center"
+        >
+          <label className="text-xl font-bold">DNI:</label>
+          <div className="flex flex-col relative mb-5">
+            <input
+              type="text"
+              value={input.dni}
+              placeholder="DNI"
+              className={`${Input()} mb-0 placeholder:not-italic`}
+              name="dni"
+              onChange={(e) => handleChange(e)}
+              autoComplete="off"
+            />
+            {errors.dni ? (
+              <small className="text-red-600 ml-3 absolute top-12">
+                {errors.dni}
+              </small>
+            ) : (
+              <small className="invisible ml-3 absolute top-12">
+                Wrong DNI or wrong character
+              </small>
+            )}
+          </div>
+          <label className="text-xl font-bold">Password: </label>
+          <div className="flex flex-col relative mb-5">
+          <input
+            type="password"
+            value={input.password}
+            className={Input()}
+            placeholder="Your password..."
+            name="password"
+            onChange={(e) => {
+              handleChange(e);
             }}
+            autoComplete="off"
+          />
+          <small className="text-red-600 ml-3 absolute top-12">{!validate ? errors.password : null}</small>
+          </div>
+          <button
+            type="submit"
+            className={`${Primary("Login")} mt-2 py-2 pl-3 pr-3 m-2.5`}
           >
-            <label className="text-xl font-bold">
-              DNI:
-              <input
-                type="text"
-                value={input.dni}
-                placeholder="Example: 1234567..."
-                className={Input()}
-                name="dni"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                autoComplete="off"
-              />
-              <h4>{!validate ? errors.dni : null}</h4>
-            </label>
-            <label className="text-xl font-bold">
-              Password:{" "}
-              <input
-                type="password"
-                value={input.password}
-                className={Input()}
-                placeholder="Your password..."
-                name="password"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                autoComplete="off"
-              />              
-              <h4>{!validate ? errors.password : null}</h4>
-            </label>
-            <button type="submit" className={`${Primary()} mt-6 font-extrabold text-lg`}>
-              Log in
-            </button>
-          </form>
+            Log in
+          </button>
+        </form>
+      </div>
         </div>
-        <button type="submit" className={`${Primary('Login')} mt-2 py-2 pl-3 pr-3 m-2.5`}>Log in</button>
-      </form>
-    </div>
   );
-};
+}
