@@ -76,7 +76,6 @@ export default function TableInfo(props) {
     }
   };
   function reply_click(id) {
-    console.log(id)
     setEditUser(watchers.find((employee) => employee._id === id));
   }
   const nextPage = (event) => {
