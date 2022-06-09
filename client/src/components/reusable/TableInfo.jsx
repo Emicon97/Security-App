@@ -39,6 +39,7 @@ export default function TableInfo(props) {
   const [skip, setSkip] = useState(0); //empleado inicial por pagina
   const [pagesNum, setPagesNum] = useState([]); //array de paginas totales
   const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
+  const [filtered, setFiltered] = useState([]);
   
   //====================================
   //====================================
@@ -46,38 +47,8 @@ export default function TableInfo(props) {
   //total de empleados para calcular el total de paginas
   let usersNum = employees.length;
 
-  const toggle = () => {
-    setActive(!active);
-  };
-  const handleSearch = (event) => {
-    //funcion para actualizar el estado con el valor del input search
-    setNameEmployee(event.target.value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(getUsersPaginate(id, limit, skip, nameEmployee, header));
-    setNameEmployee("");
-  };
-  const handleAllButton = (e) => {
-    //function para resetear la busqueda
-    e.preventDefault();
-    dispatch(getUsersPaginateAll(id, limit, skip, header));
-    setNameEmployee("");
-  };
-  const handleCheckbox = (e) => {
-    if (e.target.checked) {
-      document
-        .querySelectorAll(".checkbox")
-        .forEach((checkbox) => (checkbox.checked = true));
-    } else {
-      document
-        .querySelectorAll(".checkbox")
-        .forEach((checkbox) => (checkbox.checked = false));
-    }
-  };
-  function reply_click(id) {
-    setEditUser(watchers.find((employee) => employee._id === id));
-  }
+  //====================================
+  // Pages and limit ===================
   const nextPage = (event) => {
     //cambiar de pagina
     setSkip(event.target.textContent * limit - limit);
@@ -86,7 +57,6 @@ export default function TableInfo(props) {
     //cambiar el limite por pagina
     setLimit(event.target.value);
   };
-
   //Each time you click the edit button, the function will be called
   useEffect(() => {
     dispatch(getUsersPaginateAll(id, limit, skip, header));
@@ -96,7 +66,73 @@ export default function TableInfo(props) {
     }
     setPagesNum(pages);
   }, [dispatch, limit, skip]);
+  //====================================
+  //====================================
 
+  //====================================
+  // Search ============================
+  useEffect(() => {
+    setFiltered(watchers);
+    console.log('heey')
+  }, [watchers])
+
+
+  useEffect(()=> {
+    let toFilter = watchers.filter(worker => worker.name.includes(nameEmployee));
+    setFiltered(toFilter);
+    for (let x of filtered) {
+      // if (x.name.includes(nameEmployee)) {
+      //   let toFilter = watchers.filter(() => x);
+      //   setFiltered(toFilter);
+      //   console.log(toFilter.length)
+      //   console.log(filtered.length);
+      // }
+    }
+  }, [nameEmployee]);
+
+
+
+  const handleSearch = (event) => {
+    //funcion para actualizar el estado con el valor del input search
+    setNameEmployee(event.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // ======================== BORRARRRRRR SIGUIENTE LÍNEA ====================== \\
+    // dispatch(getUsersPaginate(id, limit, skip, nameEmployee, header));
+    setNameEmployee("");
+  };
+  const allButton = (e) => {
+    //function para resetear la busqueda
+    e.preventDefault();
+    dispatch(getUsersPaginateAll(id, limit, skip, header));
+    setNameEmployee("");
+  };
+  //====================================
+  //====================================
+
+  //====================================
+  // Form ==============================
+  const toggle = () => {
+    setActive(!active);
+  };
+  function reply_click(id) {
+    setEditUser(watchers.find((employee) => employee._id === id));
+  }
+  // ===================================
+  //====================================
+  
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      document
+      .querySelectorAll(".checkbox")
+      .forEach((checkbox) => (checkbox.checked = true));
+    } else {
+      document
+      .querySelectorAll(".checkbox")
+      .forEach((checkbox) => (checkbox.checked = false));
+    }
+  };
   return (
     <>
       <div className="w-screen flex flex-col items-center">
@@ -125,7 +161,7 @@ export default function TableInfo(props) {
             ></input>
           </form>
           <div className="search flex mr-4">
-            <button className={Tertiary} onClick={(e) => handleAllButton(e)}>
+            <button className={Tertiary} onClick={(e) => allButton(e)}>
               All
             </button>
           </div>
@@ -148,8 +184,8 @@ export default function TableInfo(props) {
             </div>
           </div>
           <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
-            {watchers.length
-              ? watchers.map((employee, i) => (
+            {filtered.length
+              ? filtered.map((employee, i) => (
                   <div
                     className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]"
                     key={employee + i}
@@ -165,7 +201,7 @@ export default function TableInfo(props) {
                     </h1>
                     <button
                       onClick={(e) => {
-                        toggle(e);
+                        toggle();
                         reply_click(employee._id);
                       }}
                       className="w-48 h-full flex justify-center items-center"
@@ -225,7 +261,7 @@ export default function TableInfo(props) {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditEmployees user={editUser} hierarchy={hierarchy} handleAllButton={handleAllButton}></EditEmployees>
+        <EditEmployees user={editUser} hierarchy={hierarchy} allButton={allButton}></EditEmployees>
       </Modal>
     </>
   );
