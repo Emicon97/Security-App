@@ -15,6 +15,7 @@ import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
 
 import { destroyData } from "./redux/actions";
+import HomePrueba from "./components/Prueba/HomePrueba";
 
 function App() {
   let navigate = useNavigate();
@@ -53,6 +54,11 @@ function App() {
         <Route exact path="/user/:id/profile" element={<UserProfile />} />
         <Route path="/user/tasks/" element={<Tasks />} />
         <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
+
+        {/* ROUTE PRUEBA */}
+        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
+
+
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>

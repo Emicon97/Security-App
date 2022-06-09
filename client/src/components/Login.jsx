@@ -10,8 +10,12 @@ export default function Login() {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
   const token = useSelector((state) => state.token);
-  const [input, setInput] = useState({ dni: "", password: "" });
+  const [input, setInput] = useState({
+    dni: "",
+    password: "",
+  });
   const [errors, setErrors] = useState({});
+  const [validate, setValidate] = useState(true)
 
   const validations = (input) => {
     let error = {};
@@ -38,17 +42,24 @@ export default function Login() {
       setErrors(error);
       return newInput
     });
-  };
+    setValidate(true)
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if(!errors.dni && !errors.password) {
+    if(!errors.dni && !errors.password) {
     dispatch(loginPrueba(input));
     setInput({ dni: "", password: "" });
-    // } else {
-    //   alert("Contraseña y/o DNI incorrectos")
-    // }
-  };
+    } else {
+      if(errors.dni || errors.password) {
+        console.log("false")
+        setValidate(false)
+      } else {
+        console.log("true")
+        setValidate(true)
+      }
+    }
+  }
 
   useEffect(() => {
     if(userData[1] && token) {
@@ -76,17 +87,46 @@ export default function Login() {
             <small className="invisible ml-3 absolute top-12">Wrong DNI or wrong character</small>
           }
         </div>
-        <div className="flex flex-col relative mb-5">
-          <input type="password" value={input.password} placeholder="Password" className={`${Input()} mb-0 placeholder:not-italic`} name="password" id="password" onChange={(e) => handleChange(e)} autoComplete="off"/>
-          {
-            errors.password ? 
-            <small className="text-red-600 ml-3 absolute top-12 w-420px">{errors.password}</small> : 
-            <small className="invisible ml-3 absolute top-12 w-420px">Must contain 8 characters, one lowercase, one uppercase and one number</small>
-          }
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute top-19px right-5 cursor-pointer" viewBox="0 0 20 20" fill="#0243EC" onClick={viewPassword}>
-            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"/>
-          </svg>
+        <div className="flex justify-center">
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <label className="text-xl font-bold">
+              DNI:
+              <input
+                type="text"
+                value={input.dni}
+                placeholder="Example: 1234567..."
+                className={Input()}
+                name="dni"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+                autoComplete="off"
+              />
+              <h4>{!validate ? errors.dni : null}</h4>
+            </label>
+            <label className="text-xl font-bold">
+              Password:{" "}
+              <input
+                type="password"
+                value={input.password}
+                className={Input()}
+                placeholder="Your password..."
+                name="password"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+                autoComplete="off"
+              />              
+              <h4>{!validate ? errors.password : null}</h4>
+            </label>
+            <button type="submit" className={`${Primary()} mt-6 font-extrabold text-lg`}>
+              Log in
+            </button>
+          </form>
         </div>
         <button type="submit" className={`${Primary('Login')} mt-2 py-2 pl-3 pr-3 m-2.5`}>Log in</button>
       </form>
