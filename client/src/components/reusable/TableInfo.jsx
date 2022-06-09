@@ -71,7 +71,7 @@ export default function TableInfo(props) {
   //====================================
   // Search ============================
   useEffect(() => {
-    dispatch(getEmployees(id));
+    dispatch(getEmployees(id, header));
     setFiltered(watchers);
   }, [watchers])
 
