@@ -13,6 +13,8 @@ import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
+import EditUser from "../supervisor/EditUser";
+
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
@@ -38,6 +40,7 @@ export default function TableInfo(props) {
   const [skip, setSkip] = useState(0); //empleado inicial por pagina
   const [pagesNum, setPagesNum] = useState([]); //array de paginas totales
   const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
+  
   //====================================
   //====================================
 
@@ -62,7 +65,6 @@ export default function TableInfo(props) {
     dispatch(getUsersPaginateAll(id, limit, skip, header));
     setNameEmployee("");
   };
-
   const handleCheckbox = (e) => {
     if (e.target.checked) {
       document

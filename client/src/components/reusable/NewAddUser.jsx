@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { postUser, getEmployees } from "../../redux/actions";
+import { postUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
@@ -61,7 +61,7 @@ export default function AddNewUser() {
   function validateInput(input) {
     let error = {};
     const regex = /^[a-zA-Z ]+$/;
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
     //Working Hours
     if (input.workingHours < 0 || input.workingHours > 24)
@@ -250,12 +250,12 @@ export default function AddNewUser() {
             onChange={(e) => uploadImage(e)}
             className={File()}
           />
-          <img className="w-12 h-12" src={demo} />
+          <img className="w-12 h-12" src={demo} alt="Could not load" />
           {loading ? (
             ((input.profilePic = image),
-            (<img className="w-12 h-12" src={demo} />))
+            (<img className="w-12 h-12" src={demo} alt="Could not load" />))
           ) : (
-            <img src={image} className="w-12 h-12" />
+            <img src={image} className="w-12 h-12" alt="Could not load" />
           )}
           <label className="">Working Hours:</label>
           <input

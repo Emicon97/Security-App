@@ -32,10 +32,10 @@ export function getUsersById(id, header){
   }
 }
 
-export function getToDos(header){
+export function getToDos(){
   return async function(dispatch){
     try{
-      const todos = await axios.get(`${url}/todos`,header);
+      const todos = await axios.get(`${url}/todos`);
       return dispatch({
         type:GET_TODOS,
         payload: todos.data
@@ -46,11 +46,11 @@ export function getToDos(header){
   }
 }
 
-export function getToDosById(id, header){
+export function getToDosById(id){
   return async function(dispatch){
     try{
 
-      const todos = await axios.get(`${url}/todos/${id}`, header);
+      const todos = await axios.get(`${url}/todos/${id}`);
       return dispatch({
         type: GET_TODOS_ID,
         payload: todos.data
@@ -79,7 +79,7 @@ export function addTaskToUser(body, header){
 export function updateStatus(id,status, header){
   return async function(dispatch){
     try{
-      const state = await axios.put(`${url}/todos/${id}`, status, header)
+      const state = await axios.put(`${url}/todos/${id}`, status)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -90,10 +90,10 @@ export function updateStatus(id,status, header){
   }
 }
 
-export function filterByPriority(id,priority, header){
+export function filterByPriority(id,priority){
   return async function(dispatch){
     try{
-      const state = await axios.get(`${url}/todos/${id}/?priority=${priority}`, header)
+      const state = await axios.get(`${url}/todos/${id}/?priority=${priority}`)
       return dispatch({
         type: GET_TODOS_ID,
         payload: state.data
@@ -104,9 +104,9 @@ export function filterByPriority(id,priority, header){
   }
 }
 
-export function filterByStatus(id, status, header){
+export function filterByStatus(id, status){
   return async function(dispatch){
-    const state = await axios.get(`${url}/todos/${id}/${status}`, header);
+    const state = await axios.get(`${url}/todos/${id}/${status}`);
     try{
       return dispatch({
         type: GET_TODOS_ID,
@@ -118,10 +118,10 @@ export function filterByStatus(id, status, header){
   }
 }
 
-export function filterByStatusAndPriority(id,status,priority, header){
+export function filterByStatusAndPriority(id,status,priority){
   return async function(dispatch){
     try{
-      const state = await axios.get(`${url}/todos/${id}/${status}/?priority=${priority}`, header)
+      const state = await axios.get(`${url}/todos/${id}/${status}/?priority=${priority}`)
       return dispatch({
         type: GET_TODOS_ID,
         payload: state.data
@@ -157,10 +157,10 @@ export function getEmployees(id, header){
   }
 }
 
-export function searchEmployees(id, name, header){
+export function searchEmployees(id, name){
   return async function(dispatch){
     try{
-      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`, header);
+      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`);
       return dispatch({
         type:GET_EMPLOYEES,
         payload: users.data
@@ -171,10 +171,10 @@ export function searchEmployees(id, name, header){
   }
 };
 
-export function getEmployeeById(id, header){
+export function getEmployeeById(id){
   return async function(dispatch){
     try{
-      const user = await axios.get(`${url}/user/${id}`, header);
+      const user = await axios.get(`${url}/user/${id}`);
       return dispatch({
         type:GET_EMPLOYEE_BY_ID,
         payload: user.data
@@ -185,26 +185,16 @@ export function getEmployeeById(id, header){
   }
 };
 
-export function updateUser(id, post, header){
+export function updateUser(id, post){
   return async function(dispatch){
     try{
-      const user = await axios.put(`${url}/user/${id}`, post, header);
+      const user = await axios.put(`${url}/user/${id}`, post);
       return dispatch({
         type: UPDATE_USER,
         payload: user.data
       });
     }catch(err){
       window.alert(err.response.data)
-    }
-  }
-}
-
-export function updateEmployees(id, post, header){
-  return async function(){
-    try{
-      await axios.put(`${url}/user/${id}`, post, header);
-    }catch(error){
-      window.alert(error.response.data)
     }
   }
 }
@@ -222,7 +212,7 @@ export function deleteUser(id, header){
     }
   }
 }
-export function loginPrueba(value){
+export function loginPrueba(value, header){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
