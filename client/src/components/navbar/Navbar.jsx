@@ -12,6 +12,7 @@ import { getUsersById } from "../../redux/actions";
 
 export default function NavBar({isRendered}) {
 
+
 //====================================================
 //  DATOS DE PRUEBA PARA SIMULAR ROL
 //====================================================
@@ -29,8 +30,8 @@ export default function NavBar({isRendered}) {
 //====================================================
 
   let user = useSelector(state => state.userDetails)
-  let NavBar
   
+  let NavBar
     if (user.length) {
       switch (state) {
         case "boss":
@@ -40,10 +41,10 @@ export default function NavBar({isRendered}) {
         case "supervisor":
           NavBar = <NavBarSupervisor userData={user[0]}/>;
           break;
-    
-        default:
+        case "guard":
           NavBar = <NavBarWatcher userData={user[0]}/>;
           break;
+        default:
       }
     }
   
