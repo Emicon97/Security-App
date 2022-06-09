@@ -20,7 +20,7 @@ export default function Home () {
             break;
 
         case "guard": 
-            home = <HomeSupervisor/>;
+            home = <GuardProfile/>;
             break;
 
         default: 
