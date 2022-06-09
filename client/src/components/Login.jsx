@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginPrueba } from "../redux/actions";
 import { Input, Primary } from "./styles/Buttons";
 import logo from "../assets/logo.png";
+import './styles/Login.css'
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -19,20 +20,21 @@ export default function Login() {
 
   const validations = (input) => {
     let error = {};
-    if(!/^[0-9]*$/.test(input.dni)) error.dni = "Wrong DNI or wrong character";
+    if(!/^[0-9]*$/.test(input.dni)) error.dni = "DNI incorrecto o carácter incorrecto";
     if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
-      error.password = "Must contain 8 characters, one lowercase, one uppercase and one number";
+      error.password = "Debe contener 8 caracteres, una minúscula, una mayúscula y un número";
       //Hay que resumirlo muuucho mas jijiji;
     };
     return error;
   };
 
-  const viewPassword = () => {
-    var x = document.getElementById("password");
-    x.type === "password" ? (x.type = "text") : (x.type = "password");
-  };
+  // const viewPassword = () => {
+  //   var x = document.getElementById("password");
+  //   x.type === "password" ? (x.type = "text") : (x.type = "password");
+  // };
 
   function handleChange(event) {
+    console.log("entra", errors)
     setInput(input => {
       let newInput = {
         ...input,
@@ -73,61 +75,66 @@ export default function Login() {
     };
   }, [token]);
 
+ 
+
+
+
+
+
+
+
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <img src={logo} alt="Centinel logo" className="w-[400px] h-[400px] mr-12 mt-24" />
-      <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col items-center">
-        <div className="flex flex-col relative mb-5">
-          <input type="text" value={input.dni} placeholder="DNI" className={`${Input()} mb-0 placeholder:not-italic`} name="dni" onChange={(e) => handleChange(e)} autoComplete="off"/>
-          {
-            errors.dni ? 
-            <small className="text-red-600 ml-3 absolute top-12">{errors.dni}</small> : 
-            <small className="invisible ml-3 absolute top-12">Wrong DNI or wrong character</small>
-          }
+    <div className="login-screen">
+
+      <form 
+        className="form"
+        onSubmit={handleSubmit}
+      >
+        
+        <div className="form-input-container">
+          <input 
+            type="text"
+            name="dni"
+            id="dni" 
+            className="form__input" 
+            autoComplete="off" 
+            placeholder=" "
+            value={input.dni}
+            onChange={(e) => {
+              handleChange(e);
+            }} 
+          />
+          <label htmlFor="dni" className="form__label">DNI</label>
         </div>
-        <div className="flex justify-center">
-          <form
-            onSubmit={(e) => {
-              handleSubmit(e);
+        
+        <div className="form-input-container">
+          <input 
+            type="text"
+            name="password"
+            id="password" 
+            className="form__input" 
+            autoComplete="off" 
+            placeholder=" "
+            value={input.password}
+            onChange={(e) => {
+              handleChange(e);
             }}
-          >
-            <label className="text-xl font-bold">
-              DNI:
-              <input
-                type="text"
-                value={input.dni}
-                placeholder="Example: 1234567..."
-                className={Input()}
-                name="dni"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                autoComplete="off"
-              />
-              <h4>{!validate ? errors.dni : null}</h4>
-            </label>
-            <label className="text-xl font-bold">
-              Password:{" "}
-              <input
-                type="password"
-                value={input.password}
-                className={Input()}
-                placeholder="Your password..."
-                name="password"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-                autoComplete="off"
-              />              
-              <h4>{!validate ? errors.password : null}</h4>
-            </label>
-            <button type="submit" className={`${Primary()} mt-6 font-extrabold text-lg`}>
-              Log in
-            </button>
-          </form>
+          />
+          <label htmlFor="password" className="form__label">Password</label>
         </div>
-        <button type="submit" className={`${Primary('Login')} mt-2 py-2 pl-3 pr-3 m-2.5`}>Log in</button>
+          
+        <div className="errors-input">
+          <h4 className="errors" style={{display: !validate && errors.dni ? "block" : "none"}}>
+            {!validate ? errors.dni : null}
+          </h4>
+          <h4 className="errors" style={{display: !validate && errors.password ? "block" : "none"}}>
+            {!validate ? errors.password : null}
+          </h4>
+        </div>
+        <button type="submit">Login</button>
+
       </form>
+
     </div>
   );
 };
