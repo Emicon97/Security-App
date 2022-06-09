@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import { updateUser } from "../../redux/actions";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
+import LoginController from "../reusable/LoginController";
+import { getEmployeeById } from "../../redux/actions";
 
 export default function EditUser({ user, hierarchy }) {
   const dispatch = useDispatch();
   const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
   const [formSend, setFormSend] = useState(false);
-  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const header = LoginController();
 
@@ -45,21 +46,25 @@ export default function EditUser({ user, hierarchy }) {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "magqqp6o");
+    data.append("upload_preset", "a4bkl9ib");
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/henrysecurityapp/image/upload",
+      "https://api.cloudinary.com/v1_1/securityapp/image/upload",
       { method: "POST", body: data }
     );
     const file = await res.json();
-    setImage(file.secure_url);
+    setValues({ ...values, profilePic: file.secure_url });
     setLoading(false);
   };
 
-  // const viewPassword = () => {
-  //   var x = document.getElementById("password");
-  //   x.type === "password" ? (x.type = "text") : (x.type = "password");
-  // };
+  //Funcion que se ejecuta al cambiar el valor de cada input
+  const handleChange = (e) => {
+    e.preventDefault();
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   useEffect(() => {
     dispatch(getEmployeeById(user._id, header));
@@ -290,7 +295,13 @@ export default function EditUser({ user, hierarchy }) {
     });
   };
 
-    return( <form
+  const viewPassword = () => {
+    var x = document.getElementById("password");
+    x.type === "password" ? (x.type = "text") : (x.type = "password");
+  };
+
+  return (
+    <form
       className="flex flex-col items-center"
       autoComplete="off"
       noValidate
@@ -303,21 +314,21 @@ export default function EditUser({ user, hierarchy }) {
           {/*Direccion y Email */}
           <div className="flex flex-row items-center justify-between">
             <div>
-              <label htmlFor="name">
-                Fisrt Name:{" "}
-                <ErrorMessage
-                  name="name"
-                  component={() => (
-                    <small className="text-red-600">{errors.name}</small>
-                  )}
-                />
+              <label htmlFor="address">
+                Address:{" "}
+                {errors.address && (
+                  <small className="text-red-600">{errors.address}</small>
+                )}
               </label>
-              <Field
+              <input
                 className={Input()}
                 type="text"
-                id="name"
-                name="name"
-                placeholder={user.name}
+                id="address"
+                name="address"
+                value={values.address}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={user.address}
               />
             </div>
 
@@ -379,6 +390,7 @@ export default function EditUser({ user, hierarchy }) {
               />
             </div>
           </div>
+          {/**ProfilePic */}
           <div className="m-3 w-96">
             <div className="flex flex-row">
               <input
