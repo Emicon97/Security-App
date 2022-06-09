@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getEmployeeById, updateUser, deleteUser } from "../../redux/actions";
+import { getEmployeeById, updateUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
@@ -26,13 +26,14 @@ export default function EditUser({ user }) {
     setLoading(false);
   };
 
-  const viewPassword = () => {
-    var x = document.getElementById("password");
-    x.type === "password" ? (x.type = "text") : (x.type = "password");
-  };
+  // const viewPassword = () => {
+  //   var x = document.getElementById("password");
+  //   x.type === "password" ? (x.type = "text") : (x.type = "password");
+  // };
 
   useEffect(() => {
     dispatch(getEmployeeById(user._id));
+    // eslint-disable-next-line
   }, [dispatch]);
 
   return (
@@ -287,6 +288,7 @@ export default function EditUser({ user }) {
                     className="w-10 h-10"
                     src={image}
                     style={{ widht: "100px" }}
+                    alt="Profile."
                   />
                 ))
               ) : (
@@ -294,6 +296,7 @@ export default function EditUser({ user }) {
                 <img
                   src={user.profilePic ? user.profilePic : demo}
                   className="w-10 h-10"
+                  alt="Profile."
                 />
               )}
             </div>
@@ -342,22 +345,22 @@ const File = (props) => `
     hover:file:bg-blue-100
 `;
 
-const Button = (props) => `
-    font-bold text-white
-    bg-blue-500
-    w-32 h-10 p-0 m-0
-    border-2 border-blue-500
-    hover:border-blue-600 hover:bg-blue-600
-    active:border-blue-700 active:bg-blue-700
-    rounded-3xl
-`;
+// const Button = (props) => `
+//     font-bold text-white
+//     bg-blue-500
+//     w-32 h-10 p-0 m-0
+//     border-2 border-blue-500
+//     hover:border-blue-600 hover:bg-blue-600
+//     active:border-blue-700 active:bg-blue-700
+//     rounded-3xl
+// `;
 
-const ButtonDelete = (props) => `
-    flex flex-row justify-evenly items-center
-    h-10 w-28
-    text-white font-semibold
-    rounded-md
-    bg-red-600
-    hover:bg-red-700
-    active:bg-red-800 active:ring-4 active:ring-red-200
-`;
+// const ButtonDelete = (props) => `
+//     flex flex-row justify-evenly items-center
+//     h-10 w-28
+//     text-white font-semibold
+//     rounded-md
+//     bg-red-600
+//     hover:bg-red-700
+//     active:bg-red-800 active:ring-4 active:ring-red-200
+// `;

@@ -27,6 +27,7 @@ function App() {
       navigate('/login');
       dispatch(destroyData());
     }
+    // eslint-disable-next-line
   },[token]);
 
   return (
