@@ -75,8 +75,9 @@ export default function TableInfo(props) {
         .forEach((checkbox) => (checkbox.checked = false));
     }
   };
-  function reply_click(e) {
-    setEditUser(watchers.find((employee) => employee._id === e.target.id));
+  function reply_click(id) {
+    console.log(id)
+    setEditUser(watchers.find((employee) => employee._id === id));
   }
   const nextPage = (event) => {
     //cambiar de pagina
@@ -166,7 +167,7 @@ export default function TableInfo(props) {
                     <button
                       onClick={(e) => {
                         toggle(e);
-                        reply_click(e);
+                        reply_click(employee._id);
                       }}
                       className="w-48 h-full flex justify-center items-center"
                     >
