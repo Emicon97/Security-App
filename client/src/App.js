@@ -45,7 +45,7 @@ function App() {
         <Route exact path="/supervisor/:id" element={<Home/>}/>
         <Route exact path="/guard/:id" element={<Home/>} />
         
-        {/* Rutas para el BOSS */}
+        {/* Ruta para ver empleados */}
         <Route path="/user/:id" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
