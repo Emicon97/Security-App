@@ -3,9 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   getEmployees,
-  searchEmployees,
-  deleteUser,
-  getUsersPaginate,
   getUsersPaginateAll,
 } from "../../redux/actions";
 import "../styles/TableInfo.css";
@@ -19,7 +16,7 @@ export default function TableInfo(props) {
   const dispatch = useDispatch();
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
-  const hierarchy = useSelector((state) => state.userDetails[1])
+  const hierarchy = useSelector((state) => state.userDetails[1]);
 
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees);
@@ -40,6 +37,7 @@ export default function TableInfo(props) {
   const [pagesNum, setPagesNum] = useState([]); //array de paginas totales
   const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
   const [filtered, setFiltered] = useState([]);
+  const [freeze, setFreeze] = useState(true) //revisa si el vaciamiento del searchbar fue forzado.
   
   //====================================
   //====================================
@@ -56,6 +54,7 @@ export default function TableInfo(props) {
   const handleLimit = (event) => {
     //cambiar el limite por pagina
     setLimit(event.target.value);
+    setNameEmployee("");
   };
   //Each time you click the edit button, the function will be called
   useEffect(() => {
@@ -72,34 +71,33 @@ export default function TableInfo(props) {
   //====================================
   // Search ============================
   useEffect(() => {
+    dispatch(getEmployees(id));
     setFiltered(watchers);
-    console.log('heey')
   }, [watchers])
 
-
   useEffect(()=> {
-    if (nameEmployee.length) {
-      let toFilter = watchers.filter(worker => worker.name.includes(nameEmployee));
+    if (!freeze && nameEmployee.length) {
+      let toFilter = employees.filter(worker => worker.name.includes(nameEmployee));
       setFiltered(toFilter);
+    } else if (!freeze && !nameEmployee.length) {
+      setFiltered(watchers);
     }
   }, [nameEmployee]);
 
-
-
   const handleSearch = (event) => {
     //funcion para actualizar el estado con el valor del input search
+    setFreeze(false);
     setNameEmployee(event.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ======================== BORRARRRRRR SIGUIENTE LÍNEA ====================== \\
-    // dispatch(getUsersPaginate(id, limit, skip, nameEmployee, header));
+    setFreeze(true);
     setNameEmployee("");
   };
   const allButton = (e) => {
     //function para resetear la busqueda
     e.preventDefault();
-    dispatch(getUsersPaginateAll(id, limit, skip, header));
+    setFiltered(watchers);
     setNameEmployee("");
   };
   //====================================
