@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-
+import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
   filterByPriority,
@@ -9,9 +9,12 @@ import {
   filterByStatusAndPriority,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
-// import "./styles.css";
 import { Tertiary, Input } from '../styles/Buttons'
 import LoginController from "./LoginController";
+
+//animations
+import aos from "aos";
+import 'aos/dist/aos.css'
 
 export default function Tasks() {
 
@@ -60,6 +63,7 @@ export default function Tasks() {
   useEffect(() => {
     dispatch(getToDosById(id, header));
     // eslint-disable-next-line
+    aos.init({duration: 700})
   }, [dispatch]);
 
   // useEffect(() => {
@@ -101,10 +105,14 @@ export default function Tasks() {
   };
 
   return (
-    <div>
-      <div className="h-full flex flex-col justify-center items-center">
-        <div className="w-10/12 flex justify-around items-center mb-2">
-          <h1 className="text-2xl text-[#0243EC] font-semibold">Things to do</h1>
+    <div className="screen-tasks-container">
+
+      {/* SCREEN */}
+      <div className="h-full flex flex-col justify-center items-center screen-tasks">
+
+        {/* HEAD */}
+        <div className="head-tasks w-10/12 flex justify-around items-center mb-2">
+          <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
           <div className="flex items-center">
             {
               todosDone.length ? 
@@ -152,10 +160,14 @@ export default function Tasks() {
             <button className={Tertiary}>Edit</button>
           </Link>
         </div>
+
+
+        {/* TODOS */}
         {
           ToDos?.map((todo, i) => (
-            <div key={i} 
-              className={`
+            <div key={i}
+              data-aos="zoom-in"
+              className={`todo-tasks
               ${todo.priority === 'urgent' ? 
               'bg-[#FFE5E8] hover:bg-[#ffd5da]' : 
               todo.priority === 'high' ? 
@@ -164,6 +176,7 @@ export default function Tasks() {
               'bg-[#ebffe5] hover:bg-[#d4ffc7]' : 
               'bg-[#E8F1FF] hover:bg-[#cfe2ff]'}
               flex w-10/12 rounded-2xl mb-2`}
+              onClick={toggle}
             >
               <div className="w-full m-2.5 flex flex-col relative">
                 <div className="w-auto flex items-center">
@@ -199,11 +212,16 @@ export default function Tasks() {
                     rounded-full`}>
                   </p>
                 </span>
+
               </div>
             </div>
           ))
         }
+
+
       </div>
+
+
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
           <label>Your comment:</label>
@@ -218,13 +236,15 @@ export default function Tasks() {
             onChange={uploadImage}
           ></input>
           {loading ? (
-            <p>...Loading</p>
+            <p className="loading">...Loading</p>
           ) : (
-            <img
-              src={image}
-              alt="Nothing has been uploaded."
-              style={style.img}
-            />
+            image 
+            ? <img
+                className="img-cloud"
+                src={image}
+                alt="Nothing has been uploaded."
+                style={style.img}
+            /> : null
           )}
           <button className={Button()}>Send</button>
         </div>
