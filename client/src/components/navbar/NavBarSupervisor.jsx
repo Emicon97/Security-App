@@ -9,25 +9,25 @@ export default function NavBarSupervisor ({userData}) {
             {
                 userData
                 ? <li className="flex items-center gap-2.5">
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/${userData}`}>
                         Dashboard
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/profile/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/profile/${userData}`}>
                         Perfil
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/employees/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/employees/${userData}`}>
                         Empleados
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/createTask/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/createTask/${userData}`}>
                         Asignar Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/add/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/add/${userData}`}>
                         Añadir empleados
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/tasks/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/supervisor/tasks/${userData}`}>
                         Ver Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/prueba/supervisor/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/prueba/supervisor/${userData}`}>
                         PRUEBA
                     </Link>
                 </li>

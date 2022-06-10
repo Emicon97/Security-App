@@ -1,20 +1,20 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 
-export default function NavBarWatcher ({userData}) {
+export default function NavBarWatcher (props) {
 
     return (
         <>
             {
-                userData
+                props
                 ? <li className="flex items-center gap-2.5">
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/${props}`}>
                         Dashboard
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/profile/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/profile/${props}`}>
                         Perfil
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/tasks/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/tasks/${props}`}>
                         Ver Tareas
                     </Link>
                 </li>

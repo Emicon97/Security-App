@@ -11,11 +11,7 @@ export default function Logout() {
 
   const handleRedirectLogOut = (e) => {
     localStorage.removeItem('auth-token');
-    // const token = localStorage.getItem('auth-token');
-    // if(!token){
-    //     navigate('/login');
-    //     return;
-    // }
+    navigate('/');
   }
   
   return (

@@ -22,6 +22,7 @@ function App() {
   let navigate = useNavigate();
   const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
+  
   useEffect(()=>{
     if(!token){
       navigate('/login');
@@ -33,7 +34,7 @@ function App() {
 
   return (
     <>
-      <NavBar isRendered={!!token}/>
+      <NavBar isRendered={token}/>
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
         <Route exact path="/" element={<Login/>}/>
@@ -51,7 +52,7 @@ function App() {
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/:user/add" element={<NewAddUser />} />
+        <Route path="/:user/add/:id" element={<NewAddUser />} />
         <Route exact path="/:user/profile/:id" element={<UserProfile />} />
         <Route path="/:user/tasks/:id" element={<Tasks />} />
         <Route exact path="/:user/createTask/:id" element={<CreateNewTask />} />
