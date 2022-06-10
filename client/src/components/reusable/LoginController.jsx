@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
+
 
 function LoginController(){
- const header = useSelector(state => state.token)
+    const header = localStorage.getItem('auth-token')
 return(
     {headers:{'auth-token':header}}
 )}

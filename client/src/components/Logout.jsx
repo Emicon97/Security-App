@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Primary } from "./styles/Buttons";
 
-import { logout } from './../redux/actions';
-
 export default function Logout() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRedirectLogOut = (e) => {
-    dispatch(logout());
+    localStorage.removeItem('auth-token');
+    navigate('/login');
   }
   
   return (

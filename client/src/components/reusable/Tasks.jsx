@@ -11,6 +11,7 @@ import {
 import Modal from "../reusable/Modal";
 // import "./styles.css";
 import { Tertiary, Input } from '../styles/Buttons'
+import LoginController from "./LoginController";
 
 export default function Tasks() {
 
@@ -45,7 +46,7 @@ export default function Tasks() {
   const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
   const { id } = useParams();
-  
+  const header = LoginController();
   const [active, setActive] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
   const [currentStatus, setCurrentStatus] = useState("all");
@@ -57,24 +58,24 @@ export default function Tasks() {
 
 
   useEffect(() => {
-    dispatch(getToDosById(id));
+    dispatch(getToDosById(id, header));
     // eslint-disable-next-line
   }, [dispatch]);
 
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [updatedTask]);
+  // useEffect(() => {
+  //   // eslint-disable-next-line
+  // }, [updatedTask]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;
     if (priority === "all" && currentStatus !== "all") {
-      dispatch(filterByStatus(id, currentStatus));
+      dispatch(filterByStatus(id, currentStatus, header));
     } else if (priority !== "all" && currentStatus !== "all") {
-      dispatch(filterByStatusAndPriority(id, currentStatus, priority));
+      dispatch(filterByStatusAndPriority(id, currentStatus, priority, header));
     } else if (priority !== "all" && currentStatus === "all") {
-      dispatch(filterByPriority(id, priority));
+      dispatch(filterByPriority(id, priority, header));
     } else {
-      dispatch(getToDosById(id));
+      dispatch(getToDosById(id, header));
     }
     setCurrentPriority(priority);
   };
@@ -88,13 +89,13 @@ export default function Tasks() {
   const statusManager = (e) => {
     let status = e.target.value;
     if (currentPriority === "all" && status !== "all") {
-      dispatch(filterByStatus(id, status));
+      dispatch(filterByStatus(id, status, header));
     } else if (currentPriority !== "all" && status !== "all") {
-      dispatch(filterByStatusAndPriority(id, status, currentPriority));
+      dispatch(filterByStatusAndPriority(id, status, currentPriority, header));
     } else if (currentPriority !== "all" && status === "all") {
-      dispatch(filterByPriority(id, currentPriority));
+      dispatch(filterByPriority(id, currentPriority, header));
     } else {
-      dispatch(getToDosById(id));
+      dispatch(getToDosById(id, header));
     }
     setCurrentStatus(status);
   };

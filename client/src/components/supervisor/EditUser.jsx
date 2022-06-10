@@ -1,11 +1,12 @@
-import React, { useState , useEffect } from "react";
-import { useDispatch} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../redux/actions";
+import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
 import { getEmployeeById } from "../../redux/actions";
 
-export default function EditUser({ user, hierarchy}) {
+export default function EditUser({ user, hierarchy }) {
   const dispatch = useDispatch();
   const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
   const [formSend, setFormSend] = useState(false);
@@ -39,7 +40,7 @@ export default function EditUser({ user, hierarchy}) {
     telephone: "",
     workingHours: "",
   });
-  
+
   //Funcion para subir una imagen a cloudinary y retornar una url
   const uploadImage = async (e) => {
     const files = e.target.files;
@@ -66,7 +67,7 @@ export default function EditUser({ user, hierarchy}) {
   };
 
   useEffect(() => {
-    dispatch(getEmployeeById(user._id));
+    dispatch(getEmployeeById(user._id, header));
   }, [dispatch]);
 
   //Funcion que se ejecuta cuando el usuario coloca el foco en un input
@@ -86,8 +87,8 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
 
@@ -106,8 +107,8 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
 
@@ -131,8 +132,8 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
 
@@ -143,16 +144,16 @@ export default function EditUser({ user, hierarchy}) {
           ...errors,
           [e.target.name]: "",
         });
-      } 
+      }
     }
 
     //Validacion de profilePic
     if (e.target.name === "profilePic") {
-      if(e.target.value === ""){
+      if (e.target.value === "") {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(e.target.value)) {
         setErrors({
           ...errors,
@@ -161,29 +162,31 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
 
     //Validación de email
-    if(e.target.name === "email"){
-      if(e.target.value === ""){
+    if (e.target.name === "email") {
+      if (e.target.value === "") {
         setErrors({
           ...errors,
-          [e.target.name] : ""
-        })
-      } else if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)
+          [e.target.name]: "",
+        });
+      } else if (
+        !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)
       ) {
         setErrors({
           ...errors,
-         [e.target.name] :"The email can only contain letters, numbers, periods, hyphens and underscores."
-        })
+          [e.target.name]:
+            "The email can only contain letters, numbers, periods, hyphens and underscores.",
+        });
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
     //Validación de dni
@@ -201,8 +204,8 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
     }
 
@@ -213,7 +216,7 @@ export default function EditUser({ user, hierarchy}) {
           ...errors,
           [e.target.name]: "",
         });
-      } else if (isNaN(Number(e.target.value))){
+      } else if (isNaN(Number(e.target.value))) {
         setErrors({
           ...errors,
           [e.target.name]: "You can only enter numbers *",
@@ -221,17 +224,17 @@ export default function EditUser({ user, hierarchy}) {
       } else {
         setErrors({
           ...errors,
-          [e.target.name]: ""
-        })
+          [e.target.name]: "",
+        });
       }
-  }
+    }
   };
 
   //Funcion para enviar el formulario
   const handleSubmit = (e) => {
     e.preventDefault();
     //Validar si hay algun cambio para actualizar
-    if(
+    if (
       values.name === "" &&
       values.lastName === "" &&
       values.password === "" &&
@@ -242,12 +245,12 @@ export default function EditUser({ user, hierarchy}) {
       values.telephone === "" &&
       values.workingHours === "" &&
       values.address === ""
-    ){
+    ) {
       return;
     }
 
     // Validar el formulario si tiene errores o no
-    if(
+    if (
       errors.name !== "" ||
       errors.lastName !== "" ||
       errors.password !== "" ||
@@ -257,26 +260,26 @@ export default function EditUser({ user, hierarchy}) {
       errors.environment !== "" ||
       errors.telephone !== "" ||
       errors.workingHours !== ""
-    ){
+    ) {
       alert("Please correct the errors in the form to continue");
       return;
     }
     //Creo una variable que va a tener el valor de los datos a cambiar
-    let value = {}
+    let value = {};
     //Realizo un ciclo sobre mi state values donde le pasare a la variable
     //value solo los valores distintos a ""
-    for(let i in values){
-      if(values[i] !== ""){
-        value={
+    for (let i in values) {
+      if (values[i] !== "") {
+        value = {
           ...value,
-          [i]: values[i]
-        }
+          [i]: values[i],
+        };
       }
     }
     //Mando los datos por el actions para realizar los cambios
-    dispatch(updateUser(user._id,value, header));
+    dispatch(updateUser(user._id, value, header));
     //Mensaje de alerta de que todo resulto con exito
-    alert("updates were successful")
+    alert("updates were successful");
 
     setValues({
       name: "",
@@ -289,8 +292,8 @@ export default function EditUser({ user, hierarchy}) {
       environment: "",
       telephone: "",
       workingHours: "",
-    })
-  }
+    });
+  };
 
   const viewPassword = () => {
     var x = document.getElementById("password");
@@ -304,7 +307,9 @@ export default function EditUser({ user, hierarchy}) {
       noValidate
       onSubmit={handleSubmit}
     >
-      {hierarchy === "boss" || hierarchy === "supervisor" || hierarchy === "watcher" ? (
+      {hierarchy === "boss" ||
+      hierarchy === "supervisor" ||
+      hierarchy === "watcher" ? (
         <div>
           {/*Direccion y Email */}
           <div className="flex flex-row items-center justify-between">
@@ -326,149 +331,102 @@ export default function EditUser({ user, hierarchy}) {
                 placeholder={user.address}
               />
             </div>
-               
-            {/* *environment 
-          <div className="flex flex-row items-center justify-between">
+
             <div>
-              <label htmlFor="environment">
-                Environment:{" "}
-                {errors.environment && (
-                  <small className="text-red-600">{errors.environment}</small>
+              <label htmlFor="email">
+                Email:{" "}
+                {errors.email && (
+                  <small className="text-red-600">{errors.email}</small>
                 )}
               </label>
-              <select className={Input()} name="environment">
-                {!values.environment.length ? (
-                  <option key="select">Environment...</option>
-                ) : (
-                  <option key="select" disabled>
-                    Environment...
-                  </option>
-                )}
-                {typeEnv?.map((e) => (
-                  <option key={e} value={e}>
-                    {e}
-                  </option>
-                ))}
-              </select>
+              <input
+                className={Input()}
+                type="text"
+                id="email"
+                name="email"
+                value={values.email}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={user.email}
+              />
             </div>
-
-          </div> */}
-            <div>
-       <label htmlFor="email">
-         Email:{" "}
-        {errors.email && <small className="text-red-600">{errors.email}</small>}
-       </label>
-       <input
-         className={Input()}
-         type="text"
-         id="email"
-         name="email"
-         value={values.email}
-         onBlur={handleBlur}
-         onChange={handleChange}
-         placeholder={user.email}
-       />
-     </div>
           </div>
-          {/**telefono y workinHours */}        
+          {/**telefono y workinHours */}
           <div className="flex flex-row items-center justify-between">
-          <div>
-                  <label htmlFor="password">
-                    Password:{" "}
-                    {errors.password && <small className="text-red-600">{errors.password}</small>}
-                  </label>
-                  <input
-                    className={Input()}
-                    type="text"
-                    id="password"
-                    name="password"
-                    value={values.password}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Password"
-                  />
-                </div>
-        <div>
-          <label htmlFor="telephone">
-            Telephone:{" "}
-            {errors.telephone && (
-              <small className="text-red-600">{errors.telephone}</small>
-            )}
-          </label>
-          <input
-            className={Input()}
-            type="number"
-            id="telephone"
-            name="telephone"
-            value={values.telephone}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder={user.telephone}
-          />
-        </div>
-       
+            <div>
+              <label htmlFor="password">
+                Password:{" "}
+                {errors.password && (
+                  <small className="text-red-600">{errors.password}</small>
+                )}
+              </label>
+              <input
+                className={Input()}
+                type="text"
+                id="password"
+                name="password"
+                value={values.password}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Password"
+              />
+            </div>
+            <div>
+              <label htmlFor="telephone">
+                Telephone:{" "}
+                {errors.telephone && (
+                  <small className="text-red-600">{errors.telephone}</small>
+                )}
+              </label>
+              <input
+                className={Input()}
+                type="number"
+                id="telephone"
+                name="telephone"
+                value={values.telephone}
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder={user.telephone}
+              />
+            </div>
           </div>
           {/**ProfilePic */}
           <div className="m-3 w-96">
-          <div className="flex flex-row">
-            <input
-              className={File()}
-              type="file"
-              name="file"
-              onChange={(e) => uploadImage(e)}
-            />
-            {loading ? (
-              (values.profilePic,
-              (
-                <img
-                  className="w-10 h-10"
-                  src={values.profilePic}
-                  style={{ widht: "100px" }}
-                />
-              ))
-            ) : (
-              // if the user does not have a profile pic, show the default one
-              <img
-                src={user.profilePic ? user.profilePic : demo}
-                className="w-10 h-10"
+            <div className="flex flex-row">
+              <input
+                className={File()}
+                type="file"
+                name="file"
+                onChange={(e) => uploadImage(e)}
               />
+              {loading ? (
+                (values.profilePic,
+                (
+                  <img
+                    className="w-10 h-10"
+                    src={values.profilePic}
+                    style={{ widht: "100px" }}
+                  />
+                ))
+              ) : (
+                // if the user does not have a profile pic, show the default one
+                <img
+                  src={user.profilePic ? user.profilePic : demo}
+                  className="w-10 h-10"
+                />
+              )}
+            </div>
+            {errors.profilePic && (
+              <small className="text-red-600">{errors.profilePic}</small>
             )}
           </div>
-          {errors.profilePic && (
-            <small className="text-red-600">{errors.profilePic}</small>
-          )}
         </div>
-        </div>
-      ): null}
+      ) : null}
 
-      <div className="flex flex-row items-center justify-between">
-         {/* <div>
-          <label htmlFor="workingHours">
-            Working Hours:{" "}
-            {errors.workingHours && (
-              <small className="text-red-600">{errors.workingHours}</small>
-            )}
-          </label>
-          <input
-            className={Input()}
-            type="text"
-            id="workingHours"
-            name="workingHours"
-            value={values.workingHours}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            placeholder={user.workingHours}
-          />
-        </div> */}
-      </div>
-      
       <div className="flex gap-4">
         <button type="submit" className={Primary()}>
           Edit
         </button>
-        {/* <button className={ButtonDelete()} type="submit" disabled={isSubmitting}>
-              Delete
-            </button> */}
       </div>
       {formSend && (
         <small className="text-green-600">Employee edited successfully</small>
@@ -496,22 +454,22 @@ const File = (props) => `
     hover:file:bg-blue-100
 `;
 
-const Button = (props) => `
-    font-bold text-white
-    bg-blue-500
-    w-32 h-10 p-0 m-0
-    border-2 border-blue-500
-    hover:border-blue-600 hover:bg-blue-600
-    active:border-blue-700 active:bg-blue-700
-    rounded-3xl
-`;
+// const Button = (props) => `
+//     font-bold text-white
+//     bg-blue-500
+//     w-32 h-10 p-0 m-0
+//     border-2 border-blue-500
+//     hover:border-blue-600 hover:bg-blue-600
+//     active:border-blue-700 active:bg-blue-700
+//     rounded-3xl
+// `;
 
-const ButtonDelete = (props) => `
-    flex flex-row justify-evenly items-center
-    h-10 w-28
-    text-white font-semibold
-    rounded-md
-    bg-red-600
-    hover:bg-red-700
-    active:bg-red-800 active:ring-4 active:ring-red-200
-`;
+// const ButtonDelete = (props) => `
+//     flex flex-row justify-evenly items-center
+//     h-10 w-28
+//     text-white font-semibold
+//     rounded-md
+//     bg-red-600
+//     hover:bg-red-700
+//     active:bg-red-800 active:ring-4 active:ring-red-200
+// `;

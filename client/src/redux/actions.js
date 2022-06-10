@@ -11,10 +11,12 @@ import {
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
   LOGOUT,
-  DESTROY
+  ADD_TASK_TO_USER,
+  DESTROY,
 } from "./ActionTypes";
-
+import swal from "sweetalert";
 import { url } from './url';
+import { SaveToken } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -33,7 +35,7 @@ export function getUsersById(id, header){
 export function getToDos(header){
   return async function(dispatch){
     try{
-      const todos = await axios.get(`${url}/todos`,header);
+      const todos = await axios.get(`${url}/todos`, header);
       return dispatch({
         type:GET_TODOS,
         payload: todos.data
@@ -58,6 +60,21 @@ export function getToDosById(id, header){
     }
   }
 }
+
+export function addTaskToUser(body, header){
+  return async function(dispatch){
+    try{
+      const todos = await axios.post(`${url}/todos/`, body, header);
+      return dispatch({
+        type: ADD_TASK_TO_USER,
+        payload: todos.data
+      });
+    }catch(err){
+      swal(err.response.data)
+    }
+  }
+}
+
 
 export function updateStatus(id,status, header){
   return async function(dispatch){
@@ -129,13 +146,13 @@ export function postUser(post, header, id){
 export function getEmployees(id, header){
   return async function(dispatch){
     try{
-      const users = await axios.get(`${url}/user/employees/${id}`,header)
+      const users = await axios.get(`${url}/user/employees/${id}`, header)
       return dispatch({
         type: GET_EMPLOYEES,
         payload: users.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err)
     }
   }
 }
@@ -185,7 +202,7 @@ export function updateUser(id, post, header){
 export function updateEmployees(id, post, header){
   return async function(){
     try{
-      await axios.put(`${url}/user/${id}`, post, header);
+      await axios.put(`${url}/user/${id}`, post, header)
     }catch(error){
       window.alert(error.response.data)
     }
@@ -209,6 +226,7 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
+      SaveToken(user.data[2])
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
@@ -220,18 +238,9 @@ export function loginPrueba(value){
 }
 
 export function logout(){
-  return async function(dispatch){
-    try{
-      const user =await axios.get(`${url}/logout`);
-      return dispatch({
-        type:LOGOUT,
-        payload: user.data
-      })
-    }catch(err){
-      window.alert(err.response.data)
-    }
-  }
+  localStorage.removeItem('auth-token');
 }
+
 export function getUsersPaginate(id, limit, skip, name, header) {
   return async function(dispatch){
     try{

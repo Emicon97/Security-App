@@ -1,62 +1,53 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import AuthenticationButton from "../authentication/AuthenticationBtn"
-import Logout from "../Logout";
-import { useDispatch, useSelector } from 'react-redux'
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
 
 import { Link, useLocation } from "react-router-dom";
+
+import LoginController from "../reusable/LoginController";
+import Logout from "../Logout";
 import NavBarWatcher from "./NavBarWatcher";
-import { getUsersById } from "../../redux/actions";
 
 export default function NavBar({isRendered}) {
+
 
 //====================================================
 //  DATOS DE PRUEBA PARA SIMULAR ROL
 //====================================================
 // creo un estado para guardar el string del path que tiene el rol;  
-  let [state, setState] = useState("");
-  let prueba = useLocation()
-  let pathPrueba = prueba.pathname.split("/")[1]
+  const [state, setState] = useState("");
+  const prueba = useLocation();
+  const role = prueba.pathname.split("/")[1];
+  const id = prueba.pathname.split("/")[2];
+  const header = LoginController();
   // let dispatch = useDispatch();
 
   useEffect(() => {
-    if(pathPrueba === "boss" || pathPrueba === "guard" || pathPrueba === "supervisor") {
-      setState(pathPrueba);
+    if(role === "boss" || role === "guard" || role === "supervisor") {
+      setState(role);
     }
-  }, [pathPrueba])
+  }, [role])
 //====================================================
-
-  let user = useSelector(state => state.userDetails)
+  
   let NavBar
-  
-    if (user.length) {
-      switch (state) {
-        case "boss":
-          NavBar = <NavBarBoss userData={user[0]}/>;
-          break;
-          
-        case "supervisor":
-          NavBar = <NavBarSupervisor userData={user[0]}/>;
-          break;
-    
-        default:
-          NavBar = <NavBarWatcher userData={user[0]}/>;
-          break;
-      }
+  if(id) {
+    switch (state) {
+      case "boss":
+        NavBar = <NavBarBoss userData={id}/>;
+        break;
+      case "supervisor":
+        NavBar = <NavBarSupervisor userData={id}/>;
+        break;
+      case "guard":
+        NavBar = <NavBarWatcher userData={id}/>;
+        break;
+      default:
+        isRendered = false
     }
-  
-  let URLREDIRECT = "";
-  useEffect(() => {
-    if (user.length) {
-      URLREDIRECT = `/${pathPrueba}/${user[0]._id}`;
-    };
-  }, [user])
+  }
 
-  // useEffect(() => {
-  //   dispatch(getUsersById())
-  // }, [dispatch])
+  const URLREDIRECT = `/${role}/${id}`;
 
   return (
     <>
