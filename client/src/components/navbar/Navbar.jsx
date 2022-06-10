@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import AuthenticationButton from "../authentication/AuthenticationBtn"
 import Logout from "../Logout";
 import { useDispatch, useSelector } from 'react-redux'
 import NavBarBoss from "./NavBarBoss";
