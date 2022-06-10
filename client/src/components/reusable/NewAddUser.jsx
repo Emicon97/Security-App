@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { postUser } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
@@ -10,8 +10,10 @@ import swal from "sweetalert";
 export default function AddNewUser() {
   const dispatch = useDispatch();
   const header = LoginController();
-  const user = useSelector((state) => state.userDetails);
   const navigate = useNavigate();
+  const user = useLocation();
+  const role = user.pathname.split('/')[1];
+  const id = user.pathname.split('/')[2];
 
   const [image, setImage] = useState("");
   const [input, setInput] = useState({
@@ -159,20 +161,20 @@ export default function AddNewUser() {
         "You have to fill the mandatory fields first",
         "error"
       );
-    dispatch(postUser(input, header, user[0]._id));
+    dispatch(postUser(input, header, id));
     alert("User created successfully");
     setInput({});
-    if(user[1] === "supervisor"){
-      navigate(`/supervisor/${user[0]._id}`)
+    if(role === "supervisor"){
+      navigate(`/supervisor/${id}`)
     } else {
-      navigate(`/boss/${user[0]._id}`);
+      navigate(`/boss/${id}`);
     }
   }
 
   return (
     <div>
       <div className="">
-        <Link to={`/boss/${user[0]._id}`}>
+        <Link to={`/boss/${id}`}>
           {" "}
           <button className={Primary()}>Dashboard</button>{" "}
         </Link>

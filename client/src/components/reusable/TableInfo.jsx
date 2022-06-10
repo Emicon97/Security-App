@@ -1,11 +1,8 @@
-import React, { useDeferredValue, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getEmployees,
-  searchEmployees,
-  deleteUser,
-  getUsersPaginate,
   getUsersPaginateAll,
 } from "../../redux/actions";
 import "../styles/TableInfo.css";
@@ -13,21 +10,25 @@ import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
+import { useParams } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
+  const location = useLocation()
+  let user = location.pathname.split("/")[1]
+
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
-  const hierarchy = useSelector((state) => state.userDetails[1])
+  const hierarchy = useSelector((state) => state.userDetails[1]);
 
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees);
   const header = LoginController();
 
   //toma el id del usuario actual
-  const id = useSelector((state) => state.userData[0]._id);
-
+  const { id } = useParams();
 
   //====================================
   //============== STATES ==============
@@ -39,6 +40,8 @@ export default function TableInfo(props) {
   const [skip, setSkip] = useState(0); //empleado inicial por pagina
   const [pagesNum, setPagesNum] = useState([]); //array de paginas totales
   const [nameEmployee, setNameEmployee] = useState(""); //guardo los datos del input
+  const [filtered, setFiltered] = useState([]);
+  const [freeze, setFreeze] = useState(true) //revisa si el vaciamiento del searchbar fue forzado.
   
   //====================================
   //====================================
@@ -46,38 +49,8 @@ export default function TableInfo(props) {
   //total de empleados para calcular el total de paginas
   let usersNum = employees.length;
 
-  const toggle = () => {
-    setActive(!active);
-  };
-  const handleSearch = (event) => {
-    //funcion para actualizar el estado con el valor del input search
-    setNameEmployee(event.target.value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(getUsersPaginate(id, limit, skip, nameEmployee, header));
-    setNameEmployee("");
-  };
-  const handleAllButton = (e) => {
-    //function para resetear la busqueda
-    e.preventDefault();
-    dispatch(getUsersPaginateAll(id, limit, skip, header));
-    setNameEmployee("");
-  };
-  const handleCheckbox = (e) => {
-    if (e.target.checked) {
-      document
-        .querySelectorAll(".checkbox")
-        .forEach((checkbox) => (checkbox.checked = true));
-    } else {
-      document
-        .querySelectorAll(".checkbox")
-        .forEach((checkbox) => (checkbox.checked = false));
-    }
-  };
-  function reply_click(e) {
-    setEditUser(watchers.find((employee) => employee._id === e.target.id));
-  }
+  //====================================
+  // Pages and limit ===================
   const nextPage = (event) => {
     //cambiar de pagina
     setSkip(event.target.textContent * limit - limit);
@@ -85,8 +58,8 @@ export default function TableInfo(props) {
   const handleLimit = (event) => {
     //cambiar el limite por pagina
     setLimit(event.target.value);
+    setNameEmployee("");
   };
-
   //Each time you click the edit button, the function will be called
   useEffect(() => {
     dispatch(getUsersPaginateAll(id, limit, skip, header));
@@ -96,7 +69,66 @@ export default function TableInfo(props) {
     }
     setPagesNum(pages);
   }, [dispatch, limit, skip]);
+  //====================================
+  //====================================
 
+  //====================================
+  // Search ============================
+  useEffect(() => {
+    dispatch(getEmployees(id, header));
+    setFiltered(watchers);
+  }, [watchers])
+
+  useEffect(()=> {
+    if (!freeze && nameEmployee.length) {
+      let toFilter = employees.filter(worker => worker.name.includes(nameEmployee));
+      setFiltered(toFilter);
+    } else if (!freeze && !nameEmployee.length) {
+      setFiltered(watchers);
+    }
+  }, [nameEmployee]);
+
+  const handleSearch = (event) => {
+    //funcion para actualizar el estado con el valor del input search
+    setFreeze(false);
+    setNameEmployee(event.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFreeze(true);
+    setNameEmployee("");
+  };
+  const allButton = (e) => {
+    //function para resetear la busqueda
+    e.preventDefault();
+    setFiltered(watchers);
+    setNameEmployee("");
+  };
+  //====================================
+  //====================================
+
+  //====================================
+  // Form ==============================
+  const toggle = () => {
+    setActive(!active);
+  };
+  function reply_click(id) {
+    setEditUser(watchers.find((employee) => employee._id === id));
+  }
+  // ===================================
+  //====================================
+  
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      document
+      .querySelectorAll(".checkbox")
+      .forEach((checkbox) => (checkbox.checked = true));
+    } else {
+      document
+      .querySelectorAll(".checkbox")
+      .forEach((checkbox) => (checkbox.checked = false));
+    }
+  };
   return (
     <>
       <div className="w-screen flex flex-col items-center">
@@ -125,7 +157,7 @@ export default function TableInfo(props) {
             ></input>
           </form>
           <div className="search flex mr-4">
-            <button className={Tertiary} onClick={(e) => handleAllButton(e)}>
+            <button className={Tertiary} onClick={(e) => allButton(e)}>
               All
             </button>
           </div>
@@ -148,8 +180,8 @@ export default function TableInfo(props) {
             </div>
           </div>
           <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
-            {watchers.length
-              ? watchers.map((employee, i) => (
+            {filtered.length
+              ? filtered.map((employee, i) => (
                   <div
                     className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]"
                     key={employee + i}
@@ -165,8 +197,8 @@ export default function TableInfo(props) {
                     </h1>
                     <button
                       onClick={(e) => {
-                        toggle(e);
-                        reply_click(e);
+                        toggle();
+                        reply_click(employee._id);
                       }}
                       className="w-48 h-full flex justify-center items-center"
                     >
@@ -182,7 +214,7 @@ export default function TableInfo(props) {
                     </button>
                     <Link to={{
                       state: `${employee._id}`,
-                      pathname: `/user/createTask/${employee._id}`,
+                      pathname: `/${user}/${employee._id}/createTask`,
                     }}>
                       <button id={employee._id}>➕</button>
                     </Link>
@@ -225,7 +257,7 @@ export default function TableInfo(props) {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditEmployees user={editUser} hierarchy={hierarchy} handleAllButton={handleAllButton}></EditEmployees>
+        <EditEmployees user={editUser} hierarchy={hierarchy} allButton={allButton}></EditEmployees>
       </Modal>
     </>
   );

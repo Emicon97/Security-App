@@ -14,9 +14,9 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
 } from "./ActionTypes";
-
 import swal from "sweetalert";
 import { url } from './url';
+import { SaveToken } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -146,13 +146,13 @@ export function postUser(post, header, id){
 export function getEmployees(id, header){
   return async function(dispatch){
     try{
-      const users = await axios.get(`${url}/user/employees/${id}`,header)
+      const users = await axios.get(`${url}/user/employees/${id}`, header)
       return dispatch({
         type: GET_EMPLOYEES,
         payload: users.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err)
     }
   }
 }
@@ -226,6 +226,7 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
+      SaveToken(user.data[2])
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
@@ -237,18 +238,9 @@ export function loginPrueba(value){
 }
 
 export function logout(){
-  return async function(dispatch){
-    try{
-      const user =await axios.get(`${url}/logout`);
-      return dispatch({
-        type:LOGOUT,
-        payload: user.data
-      })
-    }catch(err){
-      window.alert(err.response.data)
-    }
-  }
+  localStorage.removeItem('auth-token');
 }
+
 export function getUsersPaginate(id, limit, skip, name, header) {
   return async function(dispatch){
     try{

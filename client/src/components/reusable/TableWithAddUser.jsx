@@ -7,7 +7,7 @@ export default function HomeBoss() {
     return (
         <div className='flex flex-col items-center justify-center'>
             <TableInfo />
-            <Link to="/user/add">
+            <Link to="/boss/add">
                 <button className={`mx-auto my-5 ${Primary()}`}>Add User</button>
             </Link>
         </div>

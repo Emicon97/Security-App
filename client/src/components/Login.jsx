@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { loginPrueba } from "../redux/actions";
 import { Input, Primary } from "./styles/Buttons";
 import logo from "../assets/logo.png";
+import eyeOpen from '../assets/eye_visible.png'
+import eyeClose from '../assets/eye_slash_visible.png'
 import './styles/Login.css'
+
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -17,6 +20,7 @@ export default function Login() {
   });
   const [errors, setErrors] = useState({});
   const [validate, setValidate] = useState(true);
+  const [formIsCorrect, setFormIsCorrect] = useState(false)
 
   const validations = (input) => {
     let error = {};
@@ -28,10 +32,19 @@ export default function Login() {
     return error;
   };
 
-  // const viewPassword = () => {
-  //   var x = document.getElementById("password");
-  //   x.type === "password" ? (x.type = "text") : (x.type = "password");
-  // };
+  const viewPassword = (event) => {
+    let x = document.getElementById("password");
+    let btn = document.getElementsByClassName("eye")
+    if (x.type === "password") {
+      x.type = "text"
+      btn[0].style.display = "none"
+      btn[1].style.display = "block";
+    } else {
+      x.type = "password";
+      btn[0].style.display = "block"
+      btn[1].style.display = "none";
+    }
+  };
 
   function handleChange(event) {
     setInput((input) => {
@@ -49,14 +62,13 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!errors.dni && !errors.password) {
+      setFormIsCorrect(true)
       dispatch(loginPrueba(input));
       setInput({ dni: "", password: "" });
     } else {
       if (errors.dni || errors.password) {
-        console.log("false");
         setValidate(false);
       } else {
-        console.log("true");
         setValidate(true);
       }
     }
@@ -76,16 +88,10 @@ export default function Login() {
     }
   }, [token]);
 
- 
 
-
-
-
-
-
-
-  return (
+  return  (
     <div className="login-screen">
+
 
       <form 
         className="form"
@@ -94,7 +100,7 @@ export default function Login() {
         
         <div className="form-input-container">
           <input 
-            type="text"
+            type="number"
             name="dni"
             id="dni" 
             className="form__input" 
@@ -107,21 +113,27 @@ export default function Login() {
           />
           <label htmlFor="dni" className="form__label">DNI</label>
         </div>
-        
-        <div className="form-input-container">
-          <input 
-            type="text"
-            name="password"
-            id="password" 
-            className="form__input" 
-            autoComplete="off" 
-            placeholder=" "
-            value={input.password}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <label htmlFor="password" className="form__label">Password</label>
+        <div className="input-password-container">
+          <div className="form-password-container">
+            <input 
+              type="password"
+              name="password"
+              id="password" 
+              className="form__input password__input" 
+              autoComplete="off" 
+              placeholder=" "
+              value={input.password}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <label htmlFor="password" className="form__label form__label__password">Password</label>
+          </div>
+          <div className="eye-icon">
+            <img className="eye" src={eyeOpen} alt="" onClick={viewPassword}/>
+            <img className="eye" src={eyeClose} alt="" onClick={viewPassword}/>
+          </div>
+
         </div>
           
         <div className="errors-input">
@@ -137,5 +149,5 @@ export default function Login() {
       </form>
 
     </div>
-  );
+  )
 };

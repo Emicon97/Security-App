@@ -2,23 +2,22 @@
 
 .login-screen {
     font-family: "Convergence", sans-serif;
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1.2rem;
-    background-color: #060b23;
+    background-color: #f0f0f0;
     overflow: hidden;
 }
 .form {
     width: 400px;
-    /* height: 350px; */
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 19px;
-    backdrop-filter: blur(8px);
-    background-color: rgba(0,191,255, 0.104);
+    background-color: white;
     box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
     border: 2px rgba(255,255,255,0.4) solid;
     border-bottom: 2px rgba(40,40,40,0.35) solid;
@@ -33,22 +32,38 @@
     display: flex;
     flex-direction: column;
 }
+.input-password-container {
+    width: 80%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+#password {
+    width: 100%;
+}
 .form__input {
     width: 100%;
     border: 2px solid #e1e5ee;
     border-radius: 0.5rem;
     font-family: inherit;
     font-size: inherit;
-    color: white;
+    font-weight: 500;
+    color: #0023c4;
     outline: none;
     padding: 10px;
     background: none;
 }
+.password__input {
+    width: 87%;
+    border-radius: 0.5rem;
+    padding-right: 40px;
+}
 .form__input:hover {
-    border-color: #adffff;
+    border-color: #0023c4;
 }
 .form__input:focus {
-    border-color: #18ffff;
+    border-color: #0023c4;
 }
 .form__label {
     width: 150px;
@@ -56,16 +71,38 @@
     left: 1rem;
     bottom: 2.5rem;
     padding: 0 0.5rem;
-    color: white;
+    color: #0023c4;
     cursor: text;
     transition: all ease 500ms ;
     font-weight: 800;
+    display: inline-block;
+}
+.eye-icon {
+    width: 15%;
+    height: 52.78px;
+    position: relative;
+    right: -86%;
+    bottom: 143%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.eye-icon img {
+    cursor: pointer;
+}
+.eye-icon img:nth-child(2) {
+    display: none;
 }
 .form__input:focus ~ .form__label, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
     bottom: 4.4rem;
     left: 0rem;
     font-size: 0.8rem;
 }
+
+.form__input:focus ~ .form__label__password, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label__password {
+    bottom: 4.9rem;
+} 
+
 .errors-input {
     width: 80%;
     margin-top: 20px;
@@ -86,3 +123,22 @@
     color: white;
     font-weight: 500;
 }
+
+.login-screen .logo-centinel {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 15px 0 0 15px;
+
+    -webkit-border-bottom-right-radius: 100px;
+    -moz-border-radius-bottomright: 100px;
+    border-bottom-right-radius: 50%;
+}
+.login-screen .logo-centinel img {
+    width: 80%;
+}
+
+
