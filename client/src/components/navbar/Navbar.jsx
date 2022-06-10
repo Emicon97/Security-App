@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import Logout from "../Logout";
-import { useDispatch, useSelector } from 'react-redux'
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
 
 import { Link, useLocation } from "react-router-dom";
+
+import LoginController from "../reusable/LoginController";
+import Logout from "../Logout";
 import NavBarWatcher from "./NavBarWatcher";
-import { getUsersById } from "../../redux/actions";
 
 export default function NavBar({isRendered}) {
 
@@ -16,17 +16,18 @@ export default function NavBar({isRendered}) {
 //  DATOS DE PRUEBA PARA SIMULAR ROL
 //====================================================
 // creo un estado para guardar el string del path que tiene el rol;  
-  let [state, setState] = useState("");
-  let prueba = useLocation()
-  let pathPrueba = prueba.pathname.split("/")[1]
-  let id = prueba.pathname.split("/")[2]
+  const [state, setState] = useState("");
+  const prueba = useLocation();
+  const role = prueba.pathname.split("/")[1];
+  const id = prueba.pathname.split("/")[2];
+  const header = LoginController();
   // let dispatch = useDispatch();
 
   useEffect(() => {
-    if(pathPrueba === "boss" || pathPrueba === "guard" || pathPrueba === "supervisor") {
-      setState(pathPrueba);
+    if(role === "boss" || role === "guard" || role === "supervisor") {
+      setState(role);
     }
-  }, [pathPrueba])
+  }, [role])
 //====================================================
   
   let NavBar
@@ -42,21 +43,12 @@ export default function NavBar({isRendered}) {
         NavBar = <NavBarWatcher userData={id}/>;
         break;
       default:
+        isRendered = false
     }
   }
-  //NO FUNCA, NO FUNNCIONAAAAAAAAA//
-  let URLREDIRECT = ""
-  useEffect(() => {
-    if (id) {
-      URLREDIRECT = `/${pathPrueba}/${id}`;
-    };
-  }, [id])
 
-  // useEffect(() => {
-  //   dispatch(getUsersById())
-  // }, [dispatch])
-  //PARA QUE el navbar desaparezca en la ruta prueba
-  if(useLocation().pathname.split("/")[1] === "prueba") isRendered = false
+  const URLREDIRECT = `/${role}/${id}`;
+
   return (
     <>
       {

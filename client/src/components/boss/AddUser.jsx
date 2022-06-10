@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 export default function AddUser() {
   const dispatch = useDispatch();
-  const header = LoginController()
+  const header = LoginController();
   const { id } = useParams();
   const typeEnv = [
     "neighbourhood one",
