@@ -67,10 +67,8 @@ export default function Login() {
       setInput({ dni: "", password: "" });
     } else {
       if (errors.dni || errors.password) {
-        console.log("false");
         setValidate(false);
       } else {
-        console.log("true");
         setValidate(true);
       }
     }

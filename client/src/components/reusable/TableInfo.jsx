@@ -21,12 +21,10 @@ export default function TableInfo(props) {
 
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
-  console.log(watchers)
   const hierarchy = useSelector((state) => state.userDetails[1]);
 
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees);
-  console.log(employees)
   const header = LoginController();
 
   //toma el id del usuario actual
