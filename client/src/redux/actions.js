@@ -14,9 +14,9 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
 } from "./ActionTypes";
-
 import swal from "sweetalert";
 import { url } from './url';
+import { SaveToken } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -226,6 +226,7 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
+      SaveToken(user.data[2])
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
@@ -240,6 +241,7 @@ export function logout(){
   return async function(dispatch){
     try{
       const user =await axios.get(`${url}/logout`);
+      localStorage.removeItem('auth-token')
       return dispatch({
         type:LOGOUT,
         payload: user.data

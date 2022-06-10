@@ -17,24 +17,31 @@ import HomePrueba from "./components/Prueba/HomePrueba";
 
 
 import { destroyData } from "./redux/actions";
+import { AutoAuhtentication } from "./redux/LocalStorage";
 
 function App() {
   let navigate = useNavigate();
-  let token = useSelector(state => state.token);
-
+  const header = localStorage.getItem('auth-token')
   const dispatch = useDispatch();
-  
   useEffect(()=>{
-    if(!token.length){
-      navigate('/login');
-      dispatch(destroyData());
+    console.log(typeof header)
+    if(!header){
+      //dispatch(AutoAuhtentication())
+      //dispatch(destroyData());
     }
     // eslint-disable-next-line
-  },[token]);
+  },[header]);
+  // useEffect(()=>{
+  //   if(!token.length){
+  //     navigate('/login');
+  //     dispatch(destroyData());
+  //   }
+  //   // eslint-disable-next-line
+  // },[token]);
 
   return (
     <>
-      <NavBar isRendered={!!token.length}/>
+      <NavBar isRendered={!!header}/>
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
         <Route exact path="/" element={<Login/>}/>
