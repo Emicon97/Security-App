@@ -17,31 +17,23 @@ import HomePrueba from "./components/Prueba/HomePrueba";
 
 
 import { destroyData } from "./redux/actions";
-import { AutoAuhtentication } from "./redux/LocalStorage";
 
 function App() {
   let navigate = useNavigate();
-  const header = localStorage.getItem('auth-token')
+  const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
   useEffect(()=>{
-    console.log(typeof header)
-    if(!header){
-      //dispatch(AutoAuhtentication())
-      //dispatch(destroyData());
+    if(!token){
+      navigate('/login');
+      dispatch(destroyData());
+      return;
     }
     // eslint-disable-next-line
-  },[header]);
-  // useEffect(()=>{
-  //   if(!token.length){
-  //     navigate('/login');
-  //     dispatch(destroyData());
-  //   }
-  //   // eslint-disable-next-line
-  // },[token]);
+  },[token]);
 
   return (
     <>
-      <NavBar isRendered={!!header}/>
+      <NavBar isRendered={!!token}/>
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
         <Route exact path="/" element={<Login/>}/>
@@ -53,26 +45,22 @@ function App() {
         <Route exact path="/guard/:id" element={<Home/>} />
         
         {/* Ruta para ver empleados */}
-        <Route path="/user/:id" element={<TableInfoWithAddUser />} />
+        <Route path="/:user/employees/:id" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/user/add" element={<NewAddUser />} />
-        <Route exact path="/user/:id/profile" element={<UserProfile />} />
-        <Route path="/user/tasks/:id" element={<Tasks />} />
-        <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
+        <Route path="/:user/add" element={<NewAddUser />} />
+        <Route exact path="/:user/profile/:id" element={<UserProfile />} />
+        <Route path="/:user/tasks/:id" element={<Tasks />} />
+        <Route exact path="/:user/createTask/:id" element={<CreateNewTask />} />
 
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
 
-
-
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
-
-
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>

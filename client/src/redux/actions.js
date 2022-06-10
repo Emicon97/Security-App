@@ -238,18 +238,18 @@ export function loginPrueba(value){
 }
 
 export function logout(){
-  return async function(dispatch){
-    try{
-      const user =await axios.get(`${url}/logout`);
-      localStorage.removeItem('auth-token')
-      return dispatch({
-        type:LOGOUT,
-        payload: user.data
-      })
-    }catch(err){
-      window.alert(err.response.data)
-    }
-  }
+  localStorage.removeItem('auth-token');
+  // return async function(dispatch){
+  //   try{
+  //     // const user =await axios.get(`${url}/logout`);
+  //     // return dispatch({
+  //     //   type:LOGOUT,
+  //     //   payload: user.data
+  //     // })
+  //   }catch(err){
+  //     window.alert(err.response.data)
+  //   }
+  // }
 }
 export function getUsersPaginate(id, limit, skip, name, header) {
   return async function(dispatch){

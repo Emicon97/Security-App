@@ -11,10 +11,10 @@ export default function NavBarWatcher ({userData}) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/${userData._id}`}>
                         Dashboard
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/${userData._id}/profile`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/profile/${userData._id}`}>
                         Perfil
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/user/tasks/${userData._id}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/guard/tasks/${userData._id}`}>
                         Ver Tareas
                     </Link>
                 </li>

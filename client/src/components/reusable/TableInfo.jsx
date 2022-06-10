@@ -10,6 +10,7 @@ import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
+import { useParams } from "react-router-dom";
 
 
 export default function TableInfo(props) {
@@ -23,8 +24,7 @@ export default function TableInfo(props) {
   const header = LoginController();
 
   //toma el id del usuario actual
-  const id = useSelector((state) => state.userData[0]._id);
-
+  const { id } = useParams();
 
   //====================================
   //============== STATES ==============
