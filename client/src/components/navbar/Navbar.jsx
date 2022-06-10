@@ -201,7 +201,7 @@ export default function NavBar({isRendered}) {
                     <ul className={`${show ? '' : 'translate-x-[97%]'} ease-in-out transition duration-700`}>
                       <li className='flex flex-col gap-1'>
                         {NavBar}
-                        <a className={`flex w-full my-2 mt-52 ${NavBar = <NavBarWatcher userData={id} show={show} /> ? 'ml-3' : ''}`}>
+                        <a className={`flex w-full my-2 mt-52 ${role === 'guard' ? 'ml-3' : ''}`}>
                           <button onClick={handleRedirectLogOut} className="flex focus:text-[#0023c4] hover:text-[#0023c4] cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#ff5cf4]">
                             <button onClick={handleRedirectLogOut} className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
