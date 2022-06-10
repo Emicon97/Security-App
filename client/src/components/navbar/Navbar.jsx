@@ -31,7 +31,6 @@ export default function NavBar({isRendered}) {
   
   let NavBar
   if(id) {
-    console.log(id)
     switch (state) {
       case "boss":
         NavBar = <NavBarBoss userData={id}/>;
@@ -45,8 +44,8 @@ export default function NavBar({isRendered}) {
       default:
     }
   }
-
-  let URLREDIRECT = "";
+  //NO FUNCA, NO FUNNCIONAAAAAAAAA//
+  let URLREDIRECT = ""
   useEffect(() => {
     if (id) {
       URLREDIRECT = `/${pathPrueba}/${id}`;

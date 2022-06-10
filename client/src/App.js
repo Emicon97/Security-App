@@ -46,16 +46,16 @@ function App() {
         <Route exact path="/guard/:id" element={<Home/>} />
         
         {/* Ruta para ver empleados */}
-        <Route path="/:user/employees/:id" element={<TableInfoWithAddUser />} />
+        <Route path="/:user/:id/employees" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/:user/add/:id" element={<NewAddUser />} />
-        <Route exact path="/:user/profile/:id" element={<UserProfile />} />
-        <Route path="/:user/tasks/:id" element={<Tasks />} />
-        <Route exact path="/:user/createTask/:id" element={<CreateNewTask />} />
+        <Route path="/:user/:id/add" element={<NewAddUser />} />
+        <Route exact path="/:user/:id/profile" element={<UserProfile />} />
+        <Route path="/:user/:id/tasks" element={<Tasks />} />
+        <Route exact path="/:user/:id/createTask" element={<CreateNewTask />} />
 
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>

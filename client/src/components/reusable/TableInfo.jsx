@@ -21,10 +21,12 @@ export default function TableInfo(props) {
 
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
+  console.log(watchers)
   const hierarchy = useSelector((state) => state.userDetails[1]);
 
   //total de empleados para calcular el total de paginas
   const employees = useSelector((state) => state.employees);
+  console.log(employees)
   const header = LoginController();
 
   //toma el id del usuario actual
@@ -214,7 +216,7 @@ export default function TableInfo(props) {
                     </button>
                     <Link to={{
                       state: `${employee._id}`,
-                      pathname: `/${user}/createTask/${employee._id}`,
+                      pathname: `/${user}/${employee._id}/createTask`,
                     }}>
                       <button id={employee._id}>➕</button>
                     </Link>
