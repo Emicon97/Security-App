@@ -3,30 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { getUsersById } from '../../redux/actions'
 
-export default function NavBarBoss (props) {
+export default function NavBarBoss ({userData}) {
     
     return (
         <>
             {
-                props 
+                userData 
                 ? <li className='flex items-center'>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${props}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}`}>
                         Dashboard
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/profile/${props}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/profile`}>
                         Perfil
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss//employees/${props}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/employees`}>
                         Empleados
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/createTask/${props}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/createTask`}>
                         Asignar Tareas
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/add/${props}`}>
+                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/add`}>
                         Añadir empleados
-                    </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/tasks/${props}`}>
-                        Ver Tareas
                     </Link>
                 </li>
                 : null

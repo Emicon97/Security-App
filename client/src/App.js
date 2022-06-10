@@ -25,7 +25,7 @@ function App() {
   
   useEffect(()=>{
     if(!token){
-      navigate('/login');
+      navigate('/');
       dispatch(destroyData());
       return;
     }
