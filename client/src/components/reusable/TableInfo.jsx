@@ -10,10 +10,15 @@ import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
+import { useParams } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
+  const location = useLocation()
+  let user = location.pathname.split("/")[1]
+
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   const hierarchy = useSelector((state) => state.userDetails[1]);
@@ -23,8 +28,7 @@ export default function TableInfo(props) {
   const header = LoginController();
 
   //toma el id del usuario actual
-  const id = useSelector((state) => state.userData[0]._id);
-
+  const { id } = useParams();
 
   //====================================
   //============== STATES ==============
@@ -210,7 +214,7 @@ export default function TableInfo(props) {
                     </button>
                     <Link to={{
                       state: `${employee._id}`,
-                      pathname: `/user/createTask/${employee._id}`,
+                      pathname: `/${user}/${employee._id}/createTask`,
                     }}>
                       <button id={employee._id}>➕</button>
                     </Link>

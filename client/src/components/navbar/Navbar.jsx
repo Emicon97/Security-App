@@ -19,6 +19,7 @@ export default function NavBar({isRendered}) {
   let [state, setState] = useState("");
   let prueba = useLocation()
   let pathPrueba = prueba.pathname.split("/")[1]
+  let id = prueba.pathname.split("/")[2]
   // let dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,32 +28,29 @@ export default function NavBar({isRendered}) {
     }
   }, [pathPrueba])
 //====================================================
-
-  let user = useSelector(state => state.userDetails)
   
   let NavBar
-    if (user.length) {
-      switch (state) {
-        case "boss":
-          NavBar = <NavBarBoss userData={user[0]}/>;
-          break;
-          
-        case "supervisor":
-          NavBar = <NavBarSupervisor userData={user[0]}/>;
-          break;
-        case "guard":
-          NavBar = <NavBarWatcher userData={user[0]}/>;
-          break;
-        default:
-      }
+  if(id) {
+    switch (state) {
+      case "boss":
+        NavBar = <NavBarBoss userData={id}/>;
+        break;
+      case "supervisor":
+        NavBar = <NavBarSupervisor userData={id}/>;
+        break;
+      case "guard":
+        NavBar = <NavBarWatcher userData={id}/>;
+        break;
+      default:
     }
-  
-  let URLREDIRECT = "";
+  }
+  //NO FUNCA, NO FUNNCIONAAAAAAAAA//
+  let URLREDIRECT = ""
   useEffect(() => {
-    if (user.length) {
-      URLREDIRECT = `/${pathPrueba}/${user[0]._id}`;
+    if (id) {
+      URLREDIRECT = `/${pathPrueba}/${id}`;
     };
-  }, [user])
+  }, [id])
 
   // useEffect(() => {
   //   dispatch(getUsersById())

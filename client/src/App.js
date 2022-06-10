@@ -20,21 +20,21 @@ import { destroyData } from "./redux/actions";
 
 function App() {
   let navigate = useNavigate();
-  let token = useSelector(state => state.token);
-
+  const token = localStorage.getItem('auth-token');
   const dispatch = useDispatch();
   
   useEffect(()=>{
-    if(!token.length){
-      navigate('/login');
+    if(!token){
+      navigate('/');
       dispatch(destroyData());
+      return;
     }
     // eslint-disable-next-line
   },[token]);
 
   return (
     <>
-      <NavBar isRendered={!!token.length}/>
+      <NavBar isRendered={token}/>
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
         <Route exact path="/" element={<Login/>}/>
@@ -46,26 +46,22 @@ function App() {
         <Route exact path="/guard/:id" element={<Home/>} />
         
         {/* Ruta para ver empleados */}
-        <Route path="/user/:id" element={<TableInfoWithAddUser />} />
+        <Route path="/:user/:id/employees" element={<TableInfoWithAddUser />} />
 
         {/* Rutas para el SUPERVISOR */}
         <Route path="/editState/:id" element={<EditState />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/user/add" element={<NewAddUser />} />
-        <Route exact path="/user/:id/profile" element={<UserProfile />} />
-        <Route path="/user/tasks/:id" element={<Tasks />} />
-        <Route exact path="/user/createTask/:id" element={<CreateNewTask />} />
+        <Route path="/:user/:id/add" element={<NewAddUser />} />
+        <Route exact path="/:user/:id/profile" element={<UserProfile />} />
+        <Route path="/:user/:id/tasks" element={<Tasks />} />
+        <Route exact path="/:user/:id/createTask" element={<CreateNewTask />} />
 
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
 
-
-
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
-
-
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
