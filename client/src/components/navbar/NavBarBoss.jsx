@@ -19,9 +19,6 @@ export default function NavBarBoss ({userData}) {
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/employees`}>
                         Empleados
                     </Link>
-                    <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/createTask`}>
-                        Asignar Tareas
-                    </Link>
                     <Link className="p-2.5 hover:text-[#0243EC] focus:text-[#0243EC]" to={`/boss/${userData}/add`}>
                         Añadir empleados
                     </Link>
