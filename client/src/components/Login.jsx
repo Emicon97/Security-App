@@ -86,6 +86,11 @@ export default function Login() {
           return navigate(`/boss/${id}`);
       }
     }
+    // if(token){
+    //   const user = localStorage.getItem('user');
+    //   const id = localStorage.getItem('id');
+    //        return navigate(`/${user}/${id}`);
+    //   }
   }, [token]);
 
 

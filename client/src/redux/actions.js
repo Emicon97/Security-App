@@ -16,7 +16,7 @@ import {
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
-import { SaveToken } from './LocalStorage';
+import { SaveToken, SaveId, SaveUser } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -27,7 +27,7 @@ export function getUsersById(id, header){
           payload: employees.data
         });
       }catch(err){
-        window.alert(err.response.data)
+        console.log(err.response.data)
     }
   }
 }
@@ -41,7 +41,7 @@ export function getToDos(header){
         payload: todos.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -56,7 +56,7 @@ export function getToDosById(id, header){
         payload: todos.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -85,7 +85,7 @@ export function updateStatus(id,status, header){
         payload: state.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -99,7 +99,7 @@ export function filterByPriority(id,priority, header){
         payload: state.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -113,7 +113,7 @@ export function filterByStatus(id, status, header){
         payload: state.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -127,7 +127,7 @@ export function filterByStatusAndPriority(id,status,priority, header){
         payload: state.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -138,7 +138,7 @@ export function postUser(post, header, id){
         await axios.post(`${url}/user/${id}`, post, header)
         return "User created successfully";
       }catch(err){
-        window.alert(err.response.data)
+        console.log(err.response.data)
       }
   }
 }
@@ -166,7 +166,7 @@ export function searchEmployees(id, name, header){
         payload: users.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 };
@@ -180,7 +180,7 @@ export function getEmployeeById(id, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 };
@@ -194,7 +194,7 @@ export function updateUser(id, post, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -204,7 +204,7 @@ export function updateEmployees(id, post, header){
     try{
       await axios.put(`${url}/user/${id}`, post, header)
     }catch(error){
-      window.alert(error.response.data)
+      console.log(error.response.data)
     }
   }
 }
@@ -218,7 +218,7 @@ export function deleteUser(id, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -227,12 +227,14 @@ export function loginPrueba(value){
     try{
       const user = await axios.post(`${url}/login`, value);
       SaveToken(user.data[2])
+      SaveId(user.data[0]._id)
+      SaveUser(user.data[1])
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -250,7 +252,7 @@ export function getUsersPaginate(id, limit, skip, name, header) {
         payload: users.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -264,7 +266,7 @@ export function getUsersPaginateAll(id,limit,skip,header){
         payload: users.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
