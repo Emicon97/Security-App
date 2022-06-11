@@ -21,7 +21,6 @@ export default function NavBar({isRendered, show, setShow}) {
   // creo un estado para guardar el string del path que tiene el rol;  
   const [state, setState] = useState("");
   const role = localStorage.getItem('user');
-  console.log(role)
   const id = localStorage.getItem('id');
 
   useEffect(() => {
