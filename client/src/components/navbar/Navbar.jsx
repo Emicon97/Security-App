@@ -10,9 +10,7 @@ import NavBarWatcher from "./NavBarWatcher";
 import logo from "../../assets/logo.png";
 import { Input } from "../styles/Buttons";
 
-export default function NavBar({isRendered}) {
-  const [show, setShow] = useState(true);
-
+export default function NavBar({isRendered, show, setShow}) {
   const navigate = useNavigate();
   const handleRedirectLogOut = (e) => {
     localStorage.removeItem('auth-token');

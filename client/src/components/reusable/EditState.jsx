@@ -12,7 +12,7 @@ import Modal from "./Modal";
 import { container } from '../styles/EditState';
 import { Primary } from '../styles/Buttons'
 
-export default function EditState() {
+export default function EditState({show}) {
   const ToDos = useSelector((state) => state.todosId);
   const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ export default function EditState() {
   };
 
   return (
-    <div className={container}>
+    <div className={`${container} fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
       <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
           <button className={`${Primary()} ml-3`}>

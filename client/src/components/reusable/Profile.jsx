@@ -8,7 +8,7 @@ import see from "../../assets/see.png";
 import EditUser from "../supervisor/EditUser";
 import LoginController from "./LoginController";
 
-export default function UserProfile() {
+export default function UserProfile({show}) {
   const dispatch = useDispatch();
   const header = LoginController();
   const [activePic, setActivePic] = useState(false);
@@ -31,7 +31,7 @@ export default function UserProfile() {
 
   return (
     <>
-      <div className="h-4/5 flex justify-center items-center">
+      <div className={`h-4/5 flex justify-center items-center fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
         <div className="flex flex-col items-center m-4">
           <img
             src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"

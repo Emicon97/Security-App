@@ -6,7 +6,7 @@ import LoginController from './reusable/LoginController';
 import ViewTasksHome from './reusable/ViewTasksHome';
 // import './styles/Home.css'
 
-export default function Home() {
+export default function Home({show}) {
     //variable para saber el path
     let role = useLocation()
     //me quedo con el string del rol
@@ -17,23 +17,23 @@ export default function Home() {
 
     switch (rolUsuario) {
         case "boss":
-            home = <BossProfile />;
+            home = <BossProfile show={show} />;
             break;
         case "supervisor":
-            home = <HomeSupervisor />;
+            home = <HomeSupervisor show={show} />;
             break;
 
         case "guard":
-            home = <GuardProfile />;
+            home = <GuardProfile show={show} />;
             break;
 
         default:
             home = <h1>No estás registrado</h1>;
             break;
     }
-
-    return (
-        <ViewTasksHome id={id} header={header} />
-    )
+    return home;
+    // return (
+    //     <ViewTasksHome id={id} header={header} />
+    // )
 
 }
