@@ -1,0 +1,102 @@
+#cards-employees-screen {
+    width: 80%;
+    /* height: 100vh; */
+    background-color: red;
+
+
+
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.13) inset;
+    -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.13) inset;
+    -moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.13) inset;
+    border-radius: 30px;
+    padding-bottom: 40px;
+    margin-bottom: 60px;
+
+
+
+
+}
+#cards-employees-screen h3{
+    font-weight: 800;
+    color: #0023c4;
+    font-size: 35px;
+    padding: 27px 0px 27px 30px;
+}
+#cards-employees-screen h3 span{
+    color: #ff61f6;
+
+
+}
+#cards-employees-screen .screen-cards{
+    font-weight: 500;
+    display: grid;
+    width: 95%;
+    margin: auto;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(
+            270px,
+            1fr
+        )
+    );
+    gap: 17px;
+
+}
+#cards-employees-screen .screen-cards .card-employees {
+    min-width: 270px;
+    height: 250px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0px 9px 26px -1px rgba(0,0,0,0.205);
+    -webkit-box-shadow: 0px 9px 26px -1px rgba(0,0,0,0.205);
+    -moz-box-shadow: 0px 9px 26px -1px rgba(0, 0, 0, 0.205);
+}
+#cards-employees-screen .screen-cards .card-employees .employees-num-tasks {
+    color: #ff6982;
+    padding: 15px;
+}
+#cards-employees-screen .screen-cards .card-employees .employees-environment {
+    font-size: 20px;
+    color: black;
+    padding: 0px 15px;
+}
+.screen-cards .employees-environment p {
+    font-size: 17px;
+    color: gray;
+}
+.screen-cards .employee-profile {
+    width: 90%;
+    height: 60px;
+    margin: auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    
+    
+}
+.screen-cards .employee-profile .img-profile-employee {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+}
+.screen-cards .employee-profile .img-profile-employee img{
+    min-width: 100%;
+    min-height: 100%;
+}
+.screen-cards .employee-profile .name-employee {
+    width: calc(100% - 60px);
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 10px;
+    color: #0023c4;
+}
+.screen-cards .employee-profile .name-employee span{
+    color: #ff61f6;
+}
