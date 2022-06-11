@@ -1,9 +1,9 @@
 import BossProfile from "./BossProfile";
 
-export default function HomeBoss() {
+export default function HomeBoss({show}) {
 
     return (
-        <BossProfile/>
+        <BossProfile show={show}/>
     )
     
 

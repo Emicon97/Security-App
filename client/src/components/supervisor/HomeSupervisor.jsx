@@ -1,7 +1,7 @@
 import React from "react";
 import  HomeBoss from "../boss/HomeBoss";
-export default function HomeSupervisor () {
+export default function HomeSupervisor ({show}) {
 
-    return <HomeBoss/>
+    return <HomeBoss show={show}/>
 
 }
