@@ -10,15 +10,11 @@ import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
-import { useParams } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
 
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
-  const location = useLocation()
-  let user = location.pathname.split("/")[1]
-
+  const user = localStorage.getItem('user')
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   const hierarchy = useSelector((state) => state.userDetails[1]);
@@ -28,8 +24,7 @@ export default function TableInfo(props) {
   const header = LoginController();
 
   //toma el id del usuario actual
-  const { id } = useParams();
-
+  const id = localStorage.getItem('id')
   //====================================
   //============== STATES ==============
   //====================================
@@ -81,7 +76,22 @@ export default function TableInfo(props) {
 
   useEffect(()=> {
     if (!freeze && nameEmployee.length) {
-      let toFilter = employees.filter(worker => worker.name.includes(nameEmployee));
+      let toFilter = [];
+
+      let names = nameEmployee.trim().split(' ');
+      console.log(names)
+
+      employees.forEach((worker) => {
+        names.forEach(word => {
+          if (word.length) {
+            if (!toFilter.includes(worker) && worker.name.includes(word)) {
+              toFilter.push(worker);
+            } else if (!toFilter.includes(worker) && worker.lastName.includes(word)) {
+              toFilter.push(worker);
+            }
+          }
+        })
+      })
       setFiltered(toFilter);
     } else if (!freeze && !nameEmployee.length) {
       setFiltered(watchers);

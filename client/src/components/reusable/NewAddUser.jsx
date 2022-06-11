@@ -7,7 +7,7 @@ import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
 import swal from "sweetalert";
 
-export default function AddNewUser() {
+export default function AddNewUser({show}) {
   const dispatch = useDispatch();
   const header = LoginController();
   const navigate = useNavigate();
@@ -172,8 +172,8 @@ export default function AddNewUser() {
   }
 
   return (
-    <div>
-      <div className="">
+    <div className={`pl-8 pt-2.5 fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
+      <div>
         <Link to={`/boss/${id}`}>
           {" "}
           <button className={Primary()}>Dashboard</button>{" "}

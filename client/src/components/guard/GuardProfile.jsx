@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import LoginController from "../reusable/LoginController";
 import { getUsersById } from "../../redux/actions";
 
-export default function GuardProfile () {
+export default function GuardProfile ({show}) {
   let { id } = useParams();
   let dispatch = useDispatch();
   let header = LoginController();
@@ -14,7 +14,7 @@ export default function GuardProfile () {
   },[])
   return (
     // <Tasks/>
-    <div>ESTO ES DE PRUEBAAAAA, SERIA EL HOME DEL WATCHER</div>
+    <div className={`fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>ESTO ES DE PRUEBAAAAA, SERIA EL HOME DEL WATCHER</div>
   )
 }
 

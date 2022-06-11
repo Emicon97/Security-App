@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../reusable/Modal";
@@ -9,7 +9,7 @@ import { Primary } from "../styles/Buttons";
 import EditUser from "../supervisor/EditUser";
 import LoginController from "../reusable/LoginController";
 
-export default function BossProfile() {
+export default function BossProfile({show}) {
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   let dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function BossProfile() {
   return (
     <>
       {user ? (
-        <div className="home-boss">
+        <div className={`home-boss fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
           <div className="info-screen">
             <div className="contain-profile">
               <div className="profile">

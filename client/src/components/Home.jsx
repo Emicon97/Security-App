@@ -11,6 +11,7 @@ import ViewProfileHome from './reusable/ViewProfileHome';
 import ViewEmployeesHome from './reusable/ViewEmployeesHome';
 import { getUsersById } from '../redux/actions';
 
+
 export default function Home() {
     let { id } = useParams()
     const header = LoginController()
@@ -44,7 +45,28 @@ export default function Home() {
                 <ViewTasksHome id={id} header={header}/>
             </div>
         )
-
     }
+// export default function Home({show}) {
+//     //variable para saber el path
+//     //me quedo con el string del rol
+//     let rolUsuario = localStorage.getItem('user') 
+//     let home;
+//     switch (rolUsuario) {
+//         case "boss":
+//             home = <BossProfile show={show} />;
+//             break;
+//         case "supervisor":
+//             home = <HomeSupervisor show={show} />;
+//             break;
 
+//         case "guard":
+//             home = <GuardProfile show={show} />;
+//             break;
+        // }
+
+    return home;
+    // return (
+    //     <ViewTasksHome id={id} header={header} />
+    // )
+    
 }
