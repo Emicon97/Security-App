@@ -11,10 +11,12 @@ import ViewProfileHome from './reusable/ViewProfileHome';
 import ViewEmployeesHome from './reusable/ViewEmployeesHome';
 import { getUsersById } from '../redux/actions';
 
-
-export default function Home() {
-    let { id } = useParams()
-    const header = LoginController()
+export default function Home({show}) {
+    //variable para saber el path
+    //me quedo con el string del rol
+    let id = localStorage.getItem('id')
+    let rolUsuario = localStorage.getItem('user') 
+    let header = LoginController();
     
     let user = useSelector(state => state.userDetails)
     let dispatch = useDispatch()
@@ -26,47 +28,123 @@ export default function Home() {
 
     }, [dispatch])
 
+    if (user.length) {
+        if (rolUsuario === "boss") {
+            return (
+                <div id='home'>
+                    <ViewProfileHome user={user[0]}/>
+                    <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
+                </div>
+            )
+        } else if (rolUsuario === "supervisor") {
+            return (
+                <div id='home'>
+                    <ViewProfileHome user={user[0]}/>
+                    <ViewTasksHome id={id} header={header}/>
+                    <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
+                </div>
+            )
+        } else if (rolUsuario === "watcher") {
+    
+            return (
+                <div id="home">
+                    <ViewProfileHome user={user[0]}/>
+                    <ViewTasksHome id={id} header={header}/>
+                </div>
+            )
+        } else {
+            return (
+                <h3>Cargando...</h3>
+            )
+        }
 
-    if (user[1] === "supervisor" || user[1] === "boss") {
-
+    } else {
         return (
-            <div id='home'>
-                <ViewProfileHome user={user[0]}/>
-                <ViewTasksHome id={id} header={header}/>
-                <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
-            </div>
-        )
-
-    } else if (user[1] === "watcher") {
-
-        return (
-            <div id="home">
-                <ViewProfileHome user={user[0]}/>
-                <ViewTasksHome id={id} header={header}/>
-            </div>
+            <h3>Cargando...</h3>
         )
     }
+
+
+
+
+
+
+
+
+
+
+}
+//===================================
+//ASI ESTABA EL COMPONENTE
+//===================================
+
 // export default function Home({show}) {
-//     //variable para saber el path
-//     //me quedo con el string del rol
-//     let rolUsuario = localStorage.getItem('user') 
-//     let home;
-//     switch (rolUsuario) {
-//         case "boss":
-//             home = <BossProfile show={show} />;
-//             break;
-//         case "supervisor":
-//             home = <HomeSupervisor show={show} />;
-//             break;
+    
+    // let rolUsuario = localStorage.getItem('user') 
+    // let home;
+//     let dispatch = useDispatch()
+    
+//      let rolUsuario = localStorage.getItem('user')
 
-//         case "guard":
-//             home = <GuardProfile show={show} />;
-//             break;
-        // }
+    // switch (rolUsuario) {
+    //     case "boss":
+    //         home = <BossProfile show={show} />;
+    //         break;
+    //     case "supervisor":
+    //         home = <HomeSupervisor show={show} />;
+    //         break;
 
-    return home;
+    //     case "guard":
+    //         home = <GuardProfile show={show} />;
+    //         break;
+
+    //     default:
+    //         home = <h1>No estás registrado</h1>;
+    //         break;
+    // }
+    // return home;
     // return (
     //     <ViewTasksHome id={id} header={header} />
     // )
+// }
+
+//===================================
+//EL COMPONENTE QUE HICE YO
+//===================================
+
+// export default function Home() {
+//     let { id } = useParams()
+//     const header = LoginController()
     
-}
+//     let user = useSelector(state => state.userDetails)
+//     let dispatch = useDispatch()
+
+
+//     useEffect(() => {
+
+//         dispatch(getUsersById(id, header))
+
+//     }, [dispatch])
+
+
+//     if (user[1] === "supervisor" || user[1] === "boss") {
+
+//         return (
+//             <div id='home'>
+//                 <ViewProfileHome user={user[0]}/>
+//                 <ViewTasksHome id={id} header={header}/>
+//                 <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
+//             </div>
+//         )
+
+//     } else if (user[1] === "watcher") {
+
+//         return (
+//             <div id="home">
+//                 <ViewProfileHome user={user[0]}/>
+//                 <ViewTasksHome id={id} header={header}/>
+//             </div>
+//         )
+//     }
+    
+// }

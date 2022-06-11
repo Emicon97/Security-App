@@ -72,8 +72,8 @@ export default function ViewTasksHome({ id, header }) {
                     {
                         ToDos.length 
                         ? ToDos.map(task => (
-                            <Link to={`/supervisor/${id}/tasks`}>
-                            <li key={task._id} 
+                            <Link to={`/supervisor/${id}/tasks`} key={task._id}>
+                            <li 
                                 className={task.priority} 
                                 data-aos="zoom-in"
                             >
