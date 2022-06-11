@@ -81,7 +81,22 @@ export default function TableInfo(props) {
 
   useEffect(()=> {
     if (!freeze && nameEmployee.length) {
-      let toFilter = employees.filter(worker => worker.name.includes(nameEmployee));
+      let toFilter = [];
+
+      let names = nameEmployee.trim().split(' ');
+      console.log(names)
+
+      employees.forEach((worker) => {
+        names.forEach(word => {
+          if (word.length) {
+            if (!toFilter.includes(worker) && worker.name.includes(word)) {
+              toFilter.push(worker);
+            } else if (!toFilter.includes(worker) && worker.lastName.includes(word)) {
+              toFilter.push(worker);
+            }
+          }
+        })
+      })
       setFiltered(toFilter);
     } else if (!freeze && !nameEmployee.length) {
       setFiltered(watchers);
