@@ -1,4 +1,3 @@
-import { useLocation, useParams } from 'react-router-dom';
 import BossProfile from './boss/BossProfile';
 import GuardProfile from './guard/GuardProfile';
 import HomeSupervisor from './supervisor/HomeSupervisor';
@@ -8,13 +7,9 @@ import ViewTasksHome from './reusable/ViewTasksHome';
 
 export default function Home({show}) {
     //variable para saber el path
-    let role = useLocation()
     //me quedo con el string del rol
-    let rolUsuario = role.pathname.split("/")[1];
+    let rolUsuario = localStorage.getItem('user') 
     let home;
-    let { id } = useParams()
-    const header = LoginController()
-
     switch (rolUsuario) {
         case "boss":
             home = <BossProfile show={show} />;

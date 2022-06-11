@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import {
   getToDosById,
   getUsersById,
@@ -9,19 +8,18 @@ import {
 import LoginController from "./LoginController";
 import Modal from "./Modal";
 
-export default function SeeInferiorTask(props) {
-  let dispatch = useDispatch();
-  const { id } = useParams();
-  const header = LoginController();
-  const [editTask, setEditTask] = useState({});
-  const [active, setActive] = useState(false);
-  const userTasks = useSelector((state) => state.todosId);
-  const userDetails = useSelector((state) => state.userDetails[0]);
-
-  function reply_click(id) {
-    setEditTask(userTasks.find((task) => task._id === id));
-  }
-
+export default function SeeInferiorTask() {
+    dispatch = useDispatch();
+    const id = localStorage.getItem('id');
+    const header = LoginController();
+    const [editTask, setEditTask] = useState({});
+    const [active, setActive] = useState(false);
+    const userTasks = useSelector((state) => state.todosId);
+    const userDetails = useSelector((state) => state.userDetails[0]);
+  
+    function reply_click(id) {
+      setEditTask(userTasks.find((task) => task._id === id));
+    }
   const toggle = () => {
     setActive(!active);
   };

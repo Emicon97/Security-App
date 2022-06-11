@@ -8,6 +8,8 @@ export default function Logout() {
 
   const handleRedirectLogOut = (e) => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('id');
+    localStorage.removeItem('user');
     navigate('/login');
   }
   
