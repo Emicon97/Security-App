@@ -43,7 +43,6 @@ export default function Tasks() {
   const todosUrgent = todosPriority.filter(f => (f.priority === 'urgent') && (f.status === 'left' || f.status === 'postponed'))
   const todosHigh = todosPriority.filter(f => (f.priority === 'high') && (f.status === 'left' || f.status === 'postponed'))
   const todosRegular = todosPriority.filter(f => (f.priority === 'regular') && (f.status === 'left' || f.status === 'postponed'))
-  console.log(todosUrgent.length)
   const todosStatus = ToDos.map(r => r.status)
   const todosPostponed = todosStatus.filter(r => r === 'postponed')
   const todosLeft = todosStatus.filter(r => r === 'left')
