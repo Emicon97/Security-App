@@ -68,12 +68,6 @@ function App() {
         <Route path="/:user/:id/tasks" element={<Tasks show={show} />} />
         <Route exact path="/:user/:id/createTask" element={<CreateNewTask show={show} />} />
 
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba />}/>
-
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
-
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
       </Routes>
