@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-
+import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
   filterByPriority,
@@ -9,9 +9,12 @@ import {
   filterByStatusAndPriority,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
-// import "./styles.css";
 import { Tertiary, Input } from '../styles/Buttons'
 import LoginController from "./LoginController";
+
+//animations
+import aos from "aos";
+import 'aos/dist/aos.css'
 
 export default function Tasks() {
 
@@ -36,12 +39,13 @@ export default function Tasks() {
   };
 
   const ToDos = useSelector((state) => state.todosId);
-  const todosPriority = ToDos.map(m => m.priority)
-  const todosUrgent = todosPriority.filter(f => f === 'urgent')
-  const todosHigh = todosPriority.filter(f => f === 'high')
-  const todosRegular = todosPriority.filter(f => f === 'regular')
+  const todosPriority = ToDos.map(m => m)
+  const todosUrgent = todosPriority.filter(f => (f.priority === 'urgent') && (f.status === 'left' || f.status === 'postponed'))
+  const todosHigh = todosPriority.filter(f => (f.priority === 'high') && (f.status === 'left' || f.status === 'postponed'))
+  const todosRegular = todosPriority.filter(f => (f.priority === 'regular') && (f.status === 'left' || f.status === 'postponed'))
+  console.log(todosUrgent.length)
   const todosStatus = ToDos.map(r => r.status)
-  const todosDone = todosStatus.filter(r => r === 'done')
+  const todosPostponed = todosStatus.filter(r => r === 'postponed')
   const todosLeft = todosStatus.filter(r => r === 'left')
   const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
@@ -59,12 +63,10 @@ export default function Tasks() {
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
+    aos.init({duration: 700})
     // eslint-disable-next-line
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line
-  // }, [updatedTask]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;
@@ -79,12 +81,6 @@ export default function Tasks() {
     }
     setCurrentPriority(priority);
   };
-
-  // const notificationColor=()=>{
-  //   if(ToDos.filter(f=>f.status==="left")){
-
-  //   }
-  // }
 
   const statusManager = (e) => {
     let status = e.target.value;
@@ -101,17 +97,21 @@ export default function Tasks() {
   };
 
   return (
-    <div>
-      <div className="h-full flex flex-col justify-center items-center">
-        <div className="w-10/12 flex justify-around items-center mb-2">
-          <h1 className="text-2xl text-[#0243EC] font-semibold">Things to do</h1>
+    <div className="screen-tasks-container">
+
+      {/* SCREEN */}
+      <div className="h-full flex flex-col justify-center items-center screen-tasks">
+
+        {/* HEAD */}
+        <div className="head-tasks w-10/12 flex justify-around items-center mb-2">
+          <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
           <div className="flex items-center">
             {
-              todosDone.length ? 
-              <p className="h-4 w-4 bg-green-500 rounded-full"></p> : 
               todosLeft.length ? 
               <p className="h-4 w-4 bg-red-500 rounded-full"></p> : 
-              <p className="h-4 w-4 bg-orange-500 rounded-full"></p> 
+              todosPostponed.length ? 
+              <p className="h-4 w-4 bg-yellow-500 rounded-full"></p> : 
+              <p className="h-4 w-4 bg-green-500 rounded-full"></p>
             }
             <select onChange={(e) => statusManager(e)} className={Input('Select')}>
               <option value="0" hidden>Status</option>
@@ -128,7 +128,7 @@ export default function Tasks() {
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg> :
               todosHigh.length ?
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#FA5C00">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#fadd00">
                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg> :
               todosRegular.length ?
@@ -152,10 +152,14 @@ export default function Tasks() {
             <button className={Tertiary}>Edit</button>
           </Link>
         </div>
+
+
+        {/* TODOS */}
         {
           ToDos?.map((todo, i) => (
-            <div key={i} 
-              className={`
+            <div key={i}
+              data-aos="zoom-in"
+              className={`todo-tasks
               ${todo.priority === 'urgent' ? 
               'bg-[#FFE5E8] hover:bg-[#ffd5da]' : 
               todo.priority === 'high' ? 
@@ -164,6 +168,7 @@ export default function Tasks() {
               'bg-[#ebffe5] hover:bg-[#d4ffc7]' : 
               'bg-[#E8F1FF] hover:bg-[#cfe2ff]'}
               flex w-10/12 rounded-2xl mb-2`}
+              onClick={toggle}
             >
               <div className="w-full m-2.5 flex flex-col relative">
                 <div className="w-auto flex items-center">
@@ -173,7 +178,7 @@ export default function Tasks() {
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />                    
                     </svg> : 
                     todo.priority === 'high' ? 
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#FA5C00">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#fadd00">
                       <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                     </svg> : 
                     todo.priority === 'regular' ? 
@@ -195,15 +200,20 @@ export default function Tasks() {
                     'h-4 w-4 bg-green-500' : 
                     todo.status === 'left' ? 
                     'h-4 w-4 bg-red-500' : 
-                    'h-4 w-4 bg-orange-500'} 
+                    'h-4 w-4 bg-yellow-500'} 
                     rounded-full`}>
                   </p>
                 </span>
+
               </div>
             </div>
           ))
         }
+
+
       </div>
+
+
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
           <label>Your comment:</label>
@@ -218,13 +228,15 @@ export default function Tasks() {
             onChange={uploadImage}
           ></input>
           {loading ? (
-            <p>...Loading</p>
+            <p className="loading">...Loading</p>
           ) : (
-            <img
-              src={image}
-              alt="Nothing has been uploaded."
-              style={style.img}
-            />
+            image 
+            ? <img
+                className="img-cloud"
+                src={image}
+                alt="Nothing has been uploaded."
+                style={style.img}
+            /> : null
           )}
           <button className={Button()}>Send</button>
         </div>
