@@ -1,7 +1,4 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
-import { getUsersById } from '../../redux/actions'
+import { Link } from 'react-router-dom'
 
 export default function NavBarBoss ({userData, show}) {
     return (
@@ -37,16 +34,6 @@ export default function NavBarBoss ({userData, show}) {
                                 </svg>
                             </button>
                             <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Employees</p>
-                        </button>
-                    </Link>
-                    <Link className="flex w-full my-2" to={`/boss/${userData}/createTask`}>
-                        <button className="flex focus:text-black hover:text-black cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#cbcfdd]">
-                            <button className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
-                                    <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clipRule="evenodd" />
-                                </svg>
-                            </button>
-                            <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Assign tasks</p>
                         </button>
                     </Link>
                     <Link className="flex w-full my-2" to={`/boss/${userData}/add`}>

@@ -16,7 +16,7 @@ import LoginController from "./LoginController";
 import aos from "aos";
 import 'aos/dist/aos.css'
 
-export default function Tasks() {
+export default function Tasks({show}) {
 
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
@@ -43,7 +43,6 @@ export default function Tasks() {
   const todosUrgent = todosPriority.filter(f => (f.priority === 'urgent') && (f.status === 'left' || f.status === 'postponed'))
   const todosHigh = todosPriority.filter(f => (f.priority === 'high') && (f.status === 'left' || f.status === 'postponed'))
   const todosRegular = todosPriority.filter(f => (f.priority === 'regular') && (f.status === 'left' || f.status === 'postponed'))
-  console.log(todosUrgent.length)
   const todosStatus = ToDos.map(r => r.status)
   const todosPostponed = todosStatus.filter(r => r === 'postponed')
   const todosLeft = todosStatus.filter(r => r === 'left')
@@ -97,7 +96,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="screen-tasks-container">
+    <div className={`screen-tasks-container fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
 
       {/* SCREEN */}
       <div className="h-full flex flex-col justify-center items-center screen-tasks">

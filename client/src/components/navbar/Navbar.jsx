@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
-import logo from "../../assets/logo.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
-import { Link, useLocation } from "react-router-dom";
 import LoginController from "../reusable/LoginController";
-import { Input } from "../styles/Buttons";
-import { logout } from './../../redux/actions';
 import NavBarWatcher from "./NavBarWatcher";
-import { useNavigate } from 'react-router-dom';
 
-export default function NavBar({isRendered}) {
-  const dispatch = useDispatch();
-  const [show, setShow] = useState(true);
+import logo from "../../assets/logo.png";
+import { Input } from "../styles/Buttons";
 
+export default function NavBar({isRendered, show, setShow}) {
   const navigate = useNavigate();
   const handleRedirectLogOut = (e) => {
     localStorage.removeItem('auth-token');
