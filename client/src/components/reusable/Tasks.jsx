@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
@@ -46,9 +46,8 @@ export default function Tasks({show}) {
   const todosStatus = ToDos.map(r => r.status)
   const todosPostponed = todosStatus.filter(r => r === 'postponed')
   const todosLeft = todosStatus.filter(r => r === 'left')
-  const updatedTask = useSelector((state) => state.todosId);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const id = localStorage.getItem('id');
   const header = LoginController();
   const [active, setActive] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
