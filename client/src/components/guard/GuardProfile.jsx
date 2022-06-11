@@ -14,7 +14,7 @@ export default function GuardProfile ({show}) {
   },[])
   return (
     // <Tasks/>
-    <div className={`fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>ESTO ES DE PRUEBAAAAA, SERIA EL HOME DEL WATCHER</div>
+    <div className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>ESTO ES DE PRUEBAAAAA, SERIA EL HOME DEL WATCHER</div>
   )
 }
 

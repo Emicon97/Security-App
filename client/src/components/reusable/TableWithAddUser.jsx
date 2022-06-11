@@ -5,7 +5,7 @@ import { Primary } from "../styles/Buttons";
 
 export default function HomeBoss({show}) {
     return (
-        <div className={`flex flex-col items-center justify-center fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
+        <div className={`flex flex-col fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
             <TableInfo />
             <Link to="/boss/add">
                 <button className={`mx-auto my-5 ${Primary()}`}>Add User</button>

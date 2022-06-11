@@ -172,7 +172,7 @@ export default function AddNewUser({show}) {
   }
 
   return (
-    <div className={`pl-8 pt-2.5 fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
+    <div className={`pl-8 pt-2.5 fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
       <div>
         <Link to={`/boss/${id}`}>
           {" "}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import './../styles/reusable/Tasks.css'
+// import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
   filterByPriority,
@@ -96,30 +96,14 @@ export default function Tasks({show}) {
   };
 
   return (
-    <div className={`screen-tasks-container fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
+    <div className={`screen-tasks-container fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
 
       {/* SCREEN */}
-      <div className="h-full flex flex-col justify-center items-center screen-tasks">
+      <div className="screen-tasks flex flex-col h-full">
 
         {/* HEAD */}
-        <div className="head-tasks w-10/12 flex justify-around items-center mb-2">
+        <div className="head-tasks flex items-center justify-around w-full">
           <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
-          <div className="flex items-center">
-            {
-              todosLeft.length ? 
-              <p className="h-4 w-4 bg-red-500 rounded-full"></p> : 
-              todosPostponed.length ? 
-              <p className="h-4 w-4 bg-yellow-500 rounded-full"></p> : 
-              <p className="h-4 w-4 bg-green-500 rounded-full"></p>
-            }
-            <select onChange={(e) => statusManager(e)} className={Input('Select')}>
-              <option value="0" hidden>Status</option>
-              <option value="all">All</option>
-              <option value="done">Done</option>
-              <option value="left">Left</option>
-              <option value="postponed">Postponed</option>
-            </select>
-          </div>
           <div className="flex items-center">
             {
               todosUrgent.length ?
@@ -147,6 +131,22 @@ export default function Tasks({show}) {
               <option value="low">Low</option>
             </select>
           </div>
+          <div className="flex items-center">
+            {
+              todosLeft.length ? 
+              <p className="h-4 w-4 bg-red-500 rounded-full"></p> : 
+              todosPostponed.length ? 
+              <p className="h-4 w-4 bg-yellow-500 rounded-full"></p> : 
+              <p className="h-4 w-4 bg-green-500 rounded-full"></p>
+            }
+            <select onChange={(e) => statusManager(e)} className={Input('Select')}>
+              <option value="0" hidden>Status</option>
+              <option value="all">All</option>
+              <option value="done">Done</option>
+              <option value="left">Left</option>
+              <option value="postponed">Postponed</option>
+            </select>
+          </div>
           <Link to={`/EditState/${id}`}>
             <button className={Tertiary}>Edit</button>
           </Link>
@@ -154,6 +154,7 @@ export default function Tasks({show}) {
 
 
         {/* TODOS */}
+        <div className="mx-auto w-[90%] h-full overflow-auto">
         {
           ToDos?.map((todo, i) => (
             <div key={i}
@@ -166,7 +167,7 @@ export default function Tasks({show}) {
               todo.priority === 'regular' ? 
               'bg-[#ebffe5] hover:bg-[#d4ffc7]' : 
               'bg-[#E8F1FF] hover:bg-[#cfe2ff]'}
-              flex w-10/12 rounded-2xl mb-2`}
+              flex w-full rounded-2xl mb-2`}
               onClick={toggle}
             >
               <div className="w-full m-2.5 flex flex-col relative">
@@ -208,7 +209,7 @@ export default function Tasks({show}) {
             </div>
           ))
         }
-
+        </div>
 
       </div>
 
