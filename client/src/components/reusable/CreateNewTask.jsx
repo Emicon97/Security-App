@@ -5,7 +5,7 @@ import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input, File } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-const AddTaskToUser = () => {
+const AddTaskToUser = ({show}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -52,7 +52,7 @@ const AddTaskToUser = () => {
   };
 
   return (
-    <>
+    <div className={`fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
       <h2>Add new Task to: </h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>Title of task:</label>
@@ -93,7 +93,7 @@ const AddTaskToUser = () => {
           Add Task
         </button>
       </form>
-    </>
+    </div>
   );
 };
 
