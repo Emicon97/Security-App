@@ -24,7 +24,7 @@ export default function NavBar({isRendered, show, setShow}) {
   const id = localStorage.getItem('id');
 
   useEffect(() => {
-    if(role === "boss" || role === "guard" || role === "supervisor") {
+    if(role === "boss" || role === "watcher" || role === "supervisor") {
       setState(role);
     }
   }, [role])
@@ -39,7 +39,7 @@ export default function NavBar({isRendered, show, setShow}) {
       case "supervisor":
         NavBar = <NavBarSupervisor userData={id} show={show} />;
         break;
-      case "guard":
+      case "watcher":
         NavBar = <NavBarWatcher userData={id} show={show} />;
         break;
       default:
