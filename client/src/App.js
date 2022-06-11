@@ -14,6 +14,7 @@ import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
 import HomePrueba from "./components/Prueba/HomePrueba";
+import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
 
 
 import { destroyData } from "./redux/actions";
@@ -55,7 +56,8 @@ function App() {
         <Route path="/:user/:id/add" element={<NewAddUser />} />
         <Route exact path="/:user/:id/profile" element={<UserProfile />} />
         <Route path="/:user/:id/tasks" element={<Tasks />} />
-        <Route exact path="/:user/:id/createTask" element={<CreateNewTask />} />
+        <Route path="/:user/:id/createTask" element={<CreateNewTask />} />
+        <Route path="/:user/:id/EditTask" element={<SeeInferiorTask />} />
 
         {/* ROUTE PRUEBA */}
         <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>

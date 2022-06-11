@@ -16,3 +16,4 @@ export const GET_USERS_PAGINATE = "GET_USERS_PAGINATE";
 export const LOGOUT = "LOGOUT";
 export const ADD_TASK_TO_USER = "ADD_TASK_TO_USER";
 export const DESTROY = "DESTROY";
+export const GET_REPORT_TASKS = "GET_REPORT_TASKS";

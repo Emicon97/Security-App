@@ -16,6 +16,7 @@ export default function BossProfile() {
   const header = LoginController();
   let { id } = useParams();
   let user = useSelector((state) => state.userDetails[0]);
+  let hierarchy = useSelector((state) => state.userDetails[1]);
   let supervisors = useSelector((state) => state.employees);
   const togglePic = () => {
     setActivePic(!activePic);
@@ -82,6 +83,7 @@ export default function BossProfile() {
                 <TableEmployees
                   name={"Employees"}
                   employees={supervisors ? supervisors : []}
+                  hierarchy={hierarchy}
                 />
               </div>
             </div>
