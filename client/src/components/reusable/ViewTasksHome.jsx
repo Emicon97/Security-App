@@ -5,10 +5,11 @@ import { getToDosById } from "../../redux/actions";
 
 import aos from "aos";
 import 'aos/dist/aos.css'
-import './../styles/Home.css'
+import './../styles/reusable/ViewTasksHome.css'
+import { Link } from "react-router-dom";
 
 
-export default function ViewTasksHome ({id, header}) {
+export default function ViewTasksHome({ id, header }) {
     let dispatch = useDispatch()
     const ToDos = useSelector((state) => state.todosId);
     const [scrollX, setscrollX] = useState(0);
@@ -42,7 +43,7 @@ export default function ViewTasksHome ({id, header}) {
 
     useEffect(() => {
         dispatch(getToDosById(id, header));
-        aos.init({duration: 700})
+        aos.init({ duration: 700 })
     }, [dispatch]);
 
     useEffect(() => {
@@ -56,63 +57,77 @@ export default function ViewTasksHome ({id, header}) {
         }
         return () => { };
     }, [scrl?.current?.scrollWidth, scrl?.current?.offsetWidth]);
-
+    
+    
     return (
-        <div id='home'>
-            <div className="task-summary">
-                <h3>Tarea<span>s</span></h3>
+        <div className="task-summary">
+            <h3>Tarea<span>s</span></h3>
 
 
 
-                <div className="screen-tasks-horizontal">
+            <div className="screen-tasks-horizontal">
 
 
-                    <ul ref={scrl} onScroll={scrollCheck}>
-                        {ToDos.length ? ToDos.map((d, i) => (
-                            <li key={i} className={d.priority} data-aos="zoom-in">
+                <ul ref={scrl} onScroll={scrollCheck}>
+                    {
+                        ToDos.length 
+                        ? ToDos.map(task => (
+                            <Link to={`/supervisor/${id}/tasks`} key={task._id}>
+                            <li 
+                                className={task.priority} 
+                                data-aos="zoom-in"
+                            >
                                 <div className="head">
-                                    <h6 className={d.priority}>{d.priority}</h6>
-                                    <h6 className={d.status}>{d.status}</h6>
+                                    <h6 className={task.priority}>
+                                        {task.priority}
+                                    </h6>
+                                    <h6 className={task.status}>
+                                        {task.status}
+                                    </h6>
                                 </div>
+
                                 <div className="middle">
-                                    <h4>{d.name}</h4>
-                                    <p>{d.description}</p>
+                                    <h4>{task.name}</h4>
+                                    <p>{task.description}</p>
                                 </div>
                             </li>
-                        )) : null}
-                    </ul>
-
-
-                </div>
-
-                <div className="buttons-tasks">
-                    
-                    <div className="btn">
-
-                        {scrollX !== 0 && (
-                            <button className="prev" onClick={() => slide(-200)}>
-                                prev
-                            </button>
-                        )}
-
-                    </div>
-
-                    <div className="btn">
-
-                        {!scrolEnd && (
-                            <button className="next" onClick={() => slide(+200)}>
-                                next
-                            </button>
-                        )}
-
-                    </div>
-
-                </div>
-
+                                </Link>
+                        )) 
+                        : null
+                    }
+                </ul>
 
 
             </div>
+
+            <div className="buttons-tasks">
+
+                <div className="btn">
+
+                    {scrollX !== 0 && (
+                        <button className="prev" onClick={() => slide(-200)}>
+                            prev
+                        </button>
+                    )}
+
+                </div>
+
+                <div className="btn">
+
+                    {!scrolEnd && (
+                        <button className="next" onClick={() => slide(+200)}>
+                            next
+                        </button>
+                    )}
+
+                </div>
+
+            </div>
+
+
+
         </div>
+
     )
 
 }
