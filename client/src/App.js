@@ -13,7 +13,7 @@ import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
-import HomePrueba from "./components/Prueba/HomePrueba";
+// import HomePrueba from "./components/Prueba/HomePrueba";
 import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
 
 
@@ -64,11 +64,11 @@ function App() {
         <Route path="/editState/:id" element={<EditState show={show} />} />
         
         {/* Rutas GENERALES */}
-        <Route path="/:user/:id/add" element={<NewAddUser />} />
-        <Route exact path="/:user/:id/profile" element={<UserProfile />} />
-        <Route path="/:user/:id/tasks" element={<Tasks />} />
-        <Route path="/:user/:id/createTask" element={<CreateNewTask />} />
-        <Route path="/:user/:id/editTask" element={<SeeInferiorTask />} />
+        <Route path="/:user/:id/add" element={<NewAddUser show={show} />} />
+        <Route exact path="/:user/:id/profile" element={<UserProfile show={show} />} />
+        <Route path="/:user/:id/tasks" element={<Tasks show={show} />} />
+        <Route path="/:user/:id/createTask" element={<CreateNewTask show={show} />} />
+        <Route path="/:user/:id/editTask" element={<SeeInferiorTask show={show} />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
