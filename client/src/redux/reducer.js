@@ -27,7 +27,6 @@ const initialState = {
   userData: [],
   usersPaginate: [],
   token: '',
-  taskReports: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {

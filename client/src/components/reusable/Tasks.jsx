@@ -63,6 +63,7 @@ export default function Tasks({ show }) {
   const id = localStorage.getItem("id");
   const header = LoginController();
   const [active, setActive] = useState(false);
+  const [activeStatus, setActiveStatus] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
   const [currentStatus, setCurrentStatus] = useState("all");
 
@@ -70,12 +71,15 @@ export default function Tasks({ show }) {
     setActive(!active);
     setImage("");
   };
+  const toggleStatus = () => {
+    setActiveStatus(!activeStatus);
+  };
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
     aos.init({ duration: 700 });
     // eslint-disable-next-line
-  }, [dispatch]);
+  }, [dispatch, toDoUpdated]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;
@@ -106,15 +110,23 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
+  const [status, setStatus] = useState("");
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
     setTodoId(id);
-  }
+  };
+
+  const handleSelectStatus = (e) => {
+    const status = e.target.value;
+    console.log(status)
+    setStatus(status);
+  };
 
   const handleUpdateStatus = (e) => {
-    const status = e.target.value;
+    e.preventDefault();
     dispatch(updateStatus(todoId, status, header));
+    console.log("this is todoId", todoId, "this is status", status);
   };
 
   return (
@@ -225,7 +237,7 @@ export default function Tasks({ show }) {
         {/* TODOS */}
         {ToDos?.map((todo, i) => (
           <div
-            onClick={e => toggle(e)}
+            onClick={(e) => toggle(e)}
             id={todo._id}
             key={i}
             data-aos="zoom-in"
@@ -308,7 +320,15 @@ export default function Tasks({ show }) {
               <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
                 {todo.description ? todo.description : "No description"}
               </p>
-              <button id={todo._id} onClick={e => handleBringTodoId(e)}>Edit Task</button>
+              <button
+                id={todo._id}
+                onClick={(e) => {
+                  handleBringTodoId(e);
+                  toggleStatus(e);
+                }}
+              >
+                Edit Task
+              </button>
               <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
                 {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
                 <p
@@ -351,15 +371,22 @@ export default function Tasks({ show }) {
               style={style.img}
             />
           ) : null}
-          <label htmlFor="">Status</label>
-          <select onChange={e => handleUpdateStatus(e)}>
+          <button className={Button()}>Send</button>
+        </div>
+      </Modal>
+      <Modal active={activeStatus} toggle={toggleStatus}>
+        <form onSubmit={(e) => handleUpdateStatus(e)}>
+          <label htmlFor="">Status:</label>
+          <select onChange={e => handleSelectStatus(e)}>
             <option>Select...</option>
             <option value="left">Left</option>
             <option value="done">Done</option>
             <option value="postponed">Postpone</option>
           </select>
-          <button className={Button()}>Send</button>
-        </div>
+          <button type="submit" className={Button()}>
+            Update Status
+          </button>
+        </form>
       </Modal>
     </div>
   );

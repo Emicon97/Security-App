@@ -16,7 +16,6 @@ export default function SeeInferiorTask() {
     const [active, setActive] = useState(false);
     const userTasks = useSelector((state) => state.todosId);
     const userDetails = useSelector((state) => state.userDetails[0]);
-    const reports = useSelector((state) => state.taskReports);
   
     function reply_click(id) {
       setEditTask(userTasks.find((task) => task._id === id));
@@ -52,8 +51,8 @@ export default function SeeInferiorTask() {
       <Modal active={active} toggle={toggle}>
         <div>
           <h1>Reports</h1>
-          {reports.length && reports.map(report => (
-           <p>{console.log(report)}</p> 
+          {userTasks.length && userTasks.map(task => (
+           <p>{console.log(task)}</p> 
           ))}
         </div>
       </Modal>
