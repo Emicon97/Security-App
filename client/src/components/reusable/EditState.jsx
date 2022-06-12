@@ -95,7 +95,7 @@ export default function EditState({show}) {
   };
 
   return (
-    <div className={`${container} fixed top-16 right-0 ${show ? 'w-10/12' : 'w-[94%]'} ease-in-out transition-all duration-700`}>
+    <div className={`${container} fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
       <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
           <button className={`${Primary()} ml-3`}>
