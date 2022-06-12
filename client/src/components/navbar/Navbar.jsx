@@ -55,16 +55,15 @@ export default function NavBar({isRendered, show, setShow}) {
               isRendered ?
               <div>
                   <div className="bg-[#ffffff] h-16 w-screen fixed top-0 flex items-center justify-between shadow shadow-gray-300">
-                      <div className="flex items-center ml-2.5">
+                      <div className="flex items-center ml-[17px]">
                           <Link to={URLREDIRECT} className="flex">
                               <img src={logo} alt="Not found" className="h-14 w-14 ml-1" />
-                              <h2 className="h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2>
+                              {
+                                show ?
+                                <h2 className="h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2> :
+                                <h2 className="opacity-0 h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2>
+                              }
                           </Link>
-                          <div className="ml-2.5">
-                              <form>
-                                  <input type="text" name="searchbar" id="searchbar" className={`${Input()} bg-[#cbcfdd42]`} autoComplete="off" placeholder="Search" />
-                              </form>
-                          </div>
                       </div>
                       <div className="flex items-center">
                           <button aria-label="open" id="open" onClick={()=>setShow(true)} className={`${show ? 'hidden' : ''} h-8 w-8 mr-4`}>
