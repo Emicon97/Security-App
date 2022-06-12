@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { postUser } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
@@ -11,9 +11,9 @@ export default function AddNewUser({show}) {
   const dispatch = useDispatch();
   const header = LoginController();
   const navigate = useNavigate();
-  const user = useLocation();
-  const role = user.pathname.split('/')[1];
-  const id = user.pathname.split('/')[2];
+
+  const role = localStorage.getItem('user');
+  const id = localStorage.getItem('id');
 
   const [image, setImage] = useState("");
   const [input, setInput] = useState({
