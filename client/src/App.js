@@ -13,7 +13,6 @@ import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
-// import HomePrueba from "./components/Prueba/HomePrueba";
 import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
 
 
