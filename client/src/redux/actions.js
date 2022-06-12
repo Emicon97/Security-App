@@ -13,6 +13,7 @@ import {
   LOGOUT,
   ADD_TASK_TO_USER,
   DESTROY,
+  GET_REPORT_TASKS,
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -277,4 +278,18 @@ export function destroyData() {
       type: DESTROY
     });
   };
+}
+
+export function getTaskReports(id, header){
+  return async function(dispatch){
+    try{
+      const reports = await axios.get(`${url}/todos/reports/${id}`, header);
+      return dispatch({
+        type: GET_REPORT_TASKS,
+        payload: reports.data
+      })
+    }catch(err){
+      window.alert(err.response.data)
+    }
+  }
 }

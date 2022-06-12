@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function TableEmployees({ name, employees }) {
+export default function TableEmployees({ name, employees, hierarchy }) {
   let [value, setValue] = useState("");
   let [allEmployees, setAllEmployees] = useState(employees);
 
@@ -42,7 +42,7 @@ export default function TableEmployees({ name, employees }) {
         {allEmployees ? (
           allEmployees.map((employee) => (
             <div key={employee._id}>
-              <Link to={`user/${employee._id}/EditTask`}>
+              <Link to={`/${hierarchy}/${employee._id}/EditTask`}>
                 {employee.name} {employee.lastName}
               </Link>
             </div>
