@@ -119,14 +119,13 @@ export default function Tasks({ show }) {
 
   const handleSelectStatus = (e) => {
     const status = e.target.value;
-    console.log(status)
+    console.log(status);
     setStatus(status);
   };
 
   const handleUpdateStatus = (e) => {
     e.preventDefault();
     dispatch(updateStatus(todoId, status, header));
-    console.log("this is todoId", todoId, "this is status", status);
   };
 
   return (
@@ -237,7 +236,6 @@ export default function Tasks({ show }) {
         {/* TODOS */}
         {ToDos?.map((todo, i) => (
           <div
-            onClick={(e) => toggle(e)}
             id={todo._id}
             key={i}
             data-aos="zoom-in"
@@ -253,7 +251,10 @@ export default function Tasks({ show }) {
               }
               flex w-10/12 rounded-2xl mb-2`}
           >
-            <div className="w-full m-2.5 flex flex-col relative">
+            <div
+              className="w-full m-2.5 flex flex-col relative"
+              onClick={(e) => toggle(e)}
+            >
               <div className="w-auto flex items-center">
                 {todo.priority === "urgent" ? (
                   <svg
@@ -320,15 +321,6 @@ export default function Tasks({ show }) {
               <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
                 {todo.description ? todo.description : "No description"}
               </p>
-              <button
-                id={todo._id}
-                onClick={(e) => {
-                  handleBringTodoId(e);
-                  toggleStatus(e);
-                }}
-              >
-                Edit Task
-              </button>
               <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
                 {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
                 <p
@@ -344,6 +336,16 @@ export default function Tasks({ show }) {
                 ></p>
               </span>
             </div>
+            <button
+              className={Button()}
+              id={todo._id}
+              onClick={(e) => {
+                handleBringTodoId(e);
+                toggleStatus(e);
+              }}
+            >
+              Edit Task
+            </button>
           </div>
         ))}
       </div>
@@ -375,18 +377,16 @@ export default function Tasks({ show }) {
         </div>
       </Modal>
       <Modal active={activeStatus} toggle={toggleStatus}>
-        <form onSubmit={(e) => handleUpdateStatus(e)}>
-          <label htmlFor="">Status:</label>
-          <select onChange={e => handleSelectStatus(e)}>
-            <option>Select...</option>
-            <option value="left">Left</option>
-            <option value="done">Done</option>
-            <option value="postponed">Postpone</option>
-          </select>
-          <button type="submit" className={Button()}>
-            Update Status
-          </button>
-        </form>
+        <label htmlFor="">Status:</label>
+        <select onChange={(e) => handleSelectStatus(e)}>
+          <option>Select...</option>
+          <option value="left">Left</option>
+          <option value="done">Done</option>
+          <option value="postponed">Postpone</option>
+        </select>
+        <button className={Button()} onClick={(e) => handleUpdateStatus(e)}>
+          Update Status
+        </button>
       </Modal>
     </div>
   );
