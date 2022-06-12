@@ -68,13 +68,7 @@ function App() {
         <Route exact path="/:user/:id/profile" element={<UserProfile />} />
         <Route path="/:user/:id/tasks" element={<Tasks />} />
         <Route path="/:user/:id/createTask" element={<CreateNewTask />} />
-        <Route path="/:user/:id/EditTask" element={<SeeInferiorTask />} />
-
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba />}/>
-
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
+        <Route path="/:user/:id/editTask" element={<SeeInferiorTask />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
