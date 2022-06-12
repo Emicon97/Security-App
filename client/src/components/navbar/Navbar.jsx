@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux'
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
-import LoginController from "../reusable/LoginController";
 import NavBarWatcher from "./NavBarWatcher";
 
 import logo from "../../assets/logo.png";
@@ -22,14 +20,11 @@ export default function NavBar({isRendered, show, setShow}) {
   //====================================================
   // creo un estado para guardar el string del path que tiene el rol;  
   const [state, setState] = useState("");
-  const prueba = useLocation();
-  const role = prueba.pathname.split("/")[1];
-  const id = prueba.pathname.split("/")[2];
-  const header = LoginController();
-  // let dispatch = useDispatch();
+  const role = localStorage.getItem('user');
+  const id = localStorage.getItem('id');
 
   useEffect(() => {
-    if(role === "boss" || role === "guard" || role === "supervisor") {
+    if(role === "boss" || role === "watcher" || role === "supervisor") {
       setState(role);
     }
   }, [role])
@@ -44,7 +39,7 @@ export default function NavBar({isRendered, show, setShow}) {
       case "supervisor":
         NavBar = <NavBarSupervisor userData={id} show={show} />;
         break;
-      case "guard":
+      case "watcher":
         NavBar = <NavBarWatcher userData={id} show={show} />;
         break;
       default:

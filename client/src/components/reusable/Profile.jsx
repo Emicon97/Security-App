@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { getUsersById } from "../../redux/actions";
-import { useParams } from "react-router-dom";
 import { Primary } from "../styles/Buttons";
-import see from "../../assets/see.png";
 import EditUser from "../supervisor/EditUser";
 import LoginController from "./LoginController";
 
@@ -16,7 +14,7 @@ export default function UserProfile({show}) {
   const user = useSelector((state) => state.userDetails[0]);
   const hierarchy = useSelector((state) => state.userDetails[1]);
 
-  const { id } = useParams();
+  const id = localStorage.getItem('id');
 
   const togglePic = () => {
     setActivePic(!activePic);

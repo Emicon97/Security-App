@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getToDosById,
   filterByPriority,
@@ -16,7 +16,7 @@ export default function EditState({show}) {
   const ToDos = useSelector((state) => state.todosId);
   const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const id = localStorage.getItem('id');
 
   const [ currentPriority, setCurrentPriority ] = useState("all");
   const [ currentStatus, setCurrentStatus ] = useState("all");

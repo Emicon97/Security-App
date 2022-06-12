@@ -14,7 +14,7 @@ import LoginController from "../reusable/LoginController";
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
-  const user = localStorage.getItem('user')
+  const user = localStorage.getItem('user');
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   const hierarchy = useSelector((state) => state.userDetails[1]);
@@ -79,7 +79,6 @@ export default function TableInfo(props) {
       let toFilter = [];
 
       let names = nameEmployee.trim().split(' ');
-      console.log(names)
 
       employees.forEach((worker) => {
         names.forEach(word => {

@@ -13,7 +13,6 @@ import Redirect from './customHooks/Redirect';
 import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
-import HomePrueba from "./components/Prueba/HomePrueba";
 
 
 import { destroyData } from "./redux/actions";
@@ -67,12 +66,6 @@ function App() {
         <Route exact path="/:user/:id/profile" element={<UserProfile show={show} />} />
         <Route path="/:user/:id/tasks" element={<Tasks show={show} />} />
         <Route exact path="/:user/:id/createTask" element={<CreateNewTask show={show} />} />
-
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba />}/>
-
-        {/* ROUTE PRUEBA */}
-        <Route path="/prueba/supervisor/:id" element={<HomePrueba/>}/>
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
