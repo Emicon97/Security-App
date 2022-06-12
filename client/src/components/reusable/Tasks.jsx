@@ -18,6 +18,7 @@ import aos from "aos";
 import "aos/dist/aos.css";
 
 export default function Tasks({ show }) {
+  //eslint-disable-next-line
   const toDoUpdated = useSelector((state) => state.todoUpdate);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
@@ -104,31 +105,81 @@ export default function Tasks({ show }) {
     setCurrentStatus(status);
   };
 
-  return (
-    <div className={`screen-tasks-container fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
+  const [todoId, setTodoId] = useState("");
 
+  const handleBringTodoId = (e) => {
+    const id = e.target.id;
+    setTodoId(id);
+  }
+
+  const handleUpdateStatus = (e) => {
+    const status = e.target.value;
+    dispatch(updateStatus(todoId, status, header));
+  };
+
+  return (
+    <div
+      className={`screen-tasks-container fixed top-16 right-0 bottom-0 ${
+        show ? "left-[245px]" : "left-[87px]"
+      } ease-in-out transition-all duration-700`}
+    >
       {/* SCREEN */}
       <div className="screen-tasks flex flex-col h-full">
-
         {/* HEAD */}
         <div className="head-tasks flex items-center justify-around w-full">
           <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
           <div className="flex items-center">
-            {
-              todosUrgent.length ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#E8132A">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg> ) : 
-              todosHigh.length ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#fadd00">
-                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg> ) : 
-              todosRegular.length ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="green">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-              </svg> ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#1062FF">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+            {todosUrgent.length ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="#E8132A"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : todosHigh.length ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="#fadd00"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : todosRegular.length ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="green"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="#1062FF"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                  clipRule="evenodd"
+                />
               </svg>
             )}
             <select
@@ -146,15 +197,20 @@ export default function Tasks({ show }) {
             </select>
           </div>
           <div className="flex items-center">
-            {
-              todosLeft.length ? 
-              <p className="h-4 w-4 bg-red-500 rounded-full"></p> : 
-              todosPostponed.length ? 
-              <p className="h-4 w-4 bg-yellow-500 rounded-full"></p> : 
+            {todosLeft.length ? (
+              <p className="h-4 w-4 bg-red-500 rounded-full"></p>
+            ) : todosPostponed.length ? (
+              <p className="h-4 w-4 bg-yellow-500 rounded-full"></p>
+            ) : (
               <p className="h-4 w-4 bg-green-500 rounded-full"></p>
-            }
-            <select onChange={(e) => statusManager(e)} className={Input('Select')}>
-              <option value="0" hidden>Status</option>
+            )}
+            <select
+              onChange={(e) => statusManager(e)}
+              className={Input("Select")}
+            >
+              <option value="0" hidden>
+                Status
+              </option>
               <option value="all">All</option>
               <option value="done">Done</option>
               <option value="left">Left</option>
@@ -169,6 +225,7 @@ export default function Tasks({ show }) {
         {/* TODOS */}
         {ToDos?.map((todo, i) => (
           <div
+            onClick={e => toggle(e)}
             id={todo._id}
             key={i}
             data-aos="zoom-in"
@@ -183,7 +240,6 @@ export default function Tasks({ show }) {
                   : "bg-[#E8F1FF] hover:bg-[#cfe2ff]"
               }
               flex w-10/12 rounded-2xl mb-2`}
-            onClick={toggle}
           >
             <div className="w-full m-2.5 flex flex-col relative">
               <div className="w-auto flex items-center">
@@ -252,6 +308,7 @@ export default function Tasks({ show }) {
               <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
                 {todo.description ? todo.description : "No description"}
               </p>
+              <button id={todo._id} onClick={e => handleBringTodoId(e)}>Edit Task</button>
               <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
                 {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
                 <p
@@ -294,13 +351,12 @@ export default function Tasks({ show }) {
               style={style.img}
             />
           ) : null}
-          <label htmlFor="">Priority</label>
-          <select>
+          <label htmlFor="">Status</label>
+          <select onChange={e => handleUpdateStatus(e)}>
             <option>Select...</option>
-            <option value="urgent">Urgent</option>
-            <option value="high">High</option>
-            <option value="regular">Regular</option>
-            <option value="low">Low</option>
+            <option value="left">Left</option>
+            <option value="done">Done</option>
+            <option value="postponed">Postpone</option>
           </select>
           <button className={Button()}>Send</button>
         </div>
