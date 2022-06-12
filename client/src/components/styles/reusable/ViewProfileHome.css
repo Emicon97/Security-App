@@ -1,61 +1,61 @@
-#profile-home {
+/* #profile-home {
     width: 80%;
     height: 60px;
     margin-bottom: 40px;
     display: flex;
     justify-content: end;
-}
-#profile-home .profile {
+} */
+/* #profile-home .profile { */
     /* width: 100px; */
-    height: 100%;
+    /* height: 100%;
     display: flex;
     align-items: center;
-}
-#profile-home .profile .img {
+} */
+/* #profile-home .profile .img {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    background-color: red;
+    background-color: red; */
     /* display: inline-block; */
     /* text-align: center; */
-    display: flex;
+    /* display: flex;
     align-items: center;
     overflow: hidden;
-}
-#profile-home .profile .img img {
+} */
+/* #profile-home .profile .img img {
     min-width: 100%;
     min-height: 100%;
-}
-#profile-home .profile .name-profile {
+} */
+/* #profile-home .profile .name-profile { */
     /* display: inline-block; */
-    font-size: 17px;
+    /* font-size: 17px;
     font-weight: 800;
     margin-left: 14px;
-}
-#profile-home .profile .name-profile .name {
+} */
+/* #profile-home .profile .name-profile .name {
     color: #2340be;
 }
 #profile-home .profile .name-profile .lastname {
     color: #ff61f6;
     padding-left: 6px
-}
-#profile-home .profile .setting-profile{
+} */
+/* #profile-home .profile .setting-profile{
     width: 10px;
     height: 50%;
-    margin-left: 10px;
+    margin-left: 10px; */
     /* background-color: red; */
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: pointer; */
     /* align-content: space-around; */
     /* align-items: center; */
-}
-#profile-home .profile .setting-profile div{
+/* } */
+/* #profile-home .profile .setting-profile div{
     width: 7px;
     height: 7px;
     background-color: #c7cadd;
     border-radius: 50%;
     display: flex;
-    align-items: center;
+    align-items: center; */
     /* margin-top: 6px; */
-}
+/* } */
