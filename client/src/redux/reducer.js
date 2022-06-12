@@ -11,7 +11,8 @@ import {
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
   LOGOUT,
-  DESTROY
+  DESTROY,
+  GET_REPORT_TASKS,
 } from "./ActionTypes";
 
 const initialState = {
@@ -25,7 +26,8 @@ const initialState = {
   todoUpdate: {},
   userData: [],
   usersPaginate: [],
-  token: ''
+  token: '',
+  taskReports: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -92,6 +94,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
           ...state,
           token: payload
         }
+        case GET_REPORT_TASKS:
+          return {
+            ...state,
+            taskReports: payload
+          }
         case DESTROY:
           return {
             ...state,
