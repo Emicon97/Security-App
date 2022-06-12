@@ -28,7 +28,7 @@ export default function ViewProfileHome({ user }) {
                     <span className="text-[#2340be]">{user.name}</span>
                     <span className="text-[#ff61f6] pl-1">{user.lastName}</span>
                 </h4>
-                <Link to={`/guard/${user._id}/profile`} className='w-7 h-7 bg-[#2340be] rounded-full mx-3'>
+                <Link to={`/guard/${user._id}/profile`} className='w-3 h-3 bg-[#2340be] rounded-full mx-3'>
                 </Link>
             </div>
     

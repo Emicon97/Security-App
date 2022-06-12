@@ -81,7 +81,7 @@ export default function NavBar({isRendered, show, setShow}) {
                   </div>
                   <div className={`${show ? '' : '-translate-x-[64%]'} shadow shadow-gray-300 flex justify-center ease-in-out transition duration-700 fixed top-[65px] bottom-0 left-0 w-[244px] bg-[#ffffff]`}>
                     <ul className={`${show ? '' : 'translate-x-[97%]'} ease-in-out transition duration-700`}>
-                      <li className='flex flex-col gap-1'>
+                      {/* <li className='flex flex-col gap-1'> */}
                         {NavBar}
                         <a className={`flex w-full my-2 mt-52 ${role === 'guard' ? 'ml-3' : ''}`}>
                           <button onClick={handleRedirectLogOut} className="flex focus:text-[#0023c4] hover:text-[#0023c4] cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#ff5cf4]">
@@ -93,7 +93,7 @@ export default function NavBar({isRendered, show, setShow}) {
                             <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Log out</p>
                           </button>
                         </a>
-                      </li>
+                      {/* </li> */}
                     </ul>
                   </div>
                 </div>
