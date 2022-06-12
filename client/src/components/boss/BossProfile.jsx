@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
 import Modal from "../reusable/Modal";
 import TableEmployees from "./tableEmployees";
 import { getEmployees, getUsersById } from "../../redux/actions";
 import "./style.css";
-import { Primary } from "../styles/Buttons";
-import EditUser from "../supervisor/EditUser";
 import LoginController from "../reusable/LoginController";
 
 export default function BossProfile({show}) {
@@ -14,7 +11,7 @@ export default function BossProfile({show}) {
   const [activeEdit, setActiveEdit] = useState(false);
   let dispatch = useDispatch();
   const header = LoginController();
-  let { id } = useParams();
+  const id = localStorage.getItem('id');
   let user = useSelector((state) => state.userDetails[0]);
   let supervisors = useSelector((state) => state.employees);
   const togglePic = () => {
