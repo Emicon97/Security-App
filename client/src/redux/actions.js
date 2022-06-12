@@ -77,7 +77,7 @@ export function addTaskToUser(body, header){
 }
 
 
-export function updateStatus(id,status, header){
+export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
       const state = await axios.put(`${url}/todos/${id}`, status, header)
