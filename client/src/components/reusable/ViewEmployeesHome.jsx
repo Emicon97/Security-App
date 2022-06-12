@@ -19,7 +19,7 @@ export default function ViewEmployeesHome ({employees, id, header}) {
     if(demo.length) {
 
         return (
-            <div id="cards-employees-screen">
+            <div id="cards-employees-screen" className="m-auto mb-6">
                 
                 <h3>Empleado<span>s</span></h3>
 

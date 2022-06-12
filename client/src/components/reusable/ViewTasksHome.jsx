@@ -60,7 +60,7 @@ export default function ViewTasksHome({ id, header }) {
     
     
     return (
-        <div className="task-summary">
+        <div className="task-summary m-auto my-6">
             <h3>Tarea<span>s</span></h3>
 
 

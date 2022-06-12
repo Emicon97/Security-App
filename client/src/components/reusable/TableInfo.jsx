@@ -140,8 +140,8 @@ export default function TableInfo(props) {
   };
   return (
     <>
-      <div className="w-screen flex flex-col items-center">
-        <div className="w-9/12 flex justify-between items-center">
+      <div className="w-[90%] h-full mx-auto">
+        <div className="flex items-center justify-between">
           <div className="flex items-center justify-between w-40 gap-2.5">
             <button>
               <svg
@@ -155,8 +155,8 @@ export default function TableInfo(props) {
             </button>
             <input type="checkbox" onClick={handleCheckbox} />
           </div>
-          <form onSubmit={handleSubmit}>
-            <button type="submit">Search</button>
+          <form onSubmit={handleSubmit} className="flex flex-row items-center">
+            <button className={Tertiary} type="submit">Search</button>
             <input
               type="text"
               placeholder="Search name..."
@@ -171,7 +171,7 @@ export default function TableInfo(props) {
             </button>
           </div>
         </div>
-        <div className="w-9/12">
+        <div>
           <div className="w-full my-2.5">
             <div className="h-10 flex justify-evenly items-center border-2 border-[#0243EC] rounded-full">
               <h1 className="w-48 h-full flex justify-center items-center">
@@ -188,7 +188,7 @@ export default function TableInfo(props) {
               </h1>
             </div>
           </div>
-          <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
+          <div className="w-full h-[284px] overflow-auto border-2 border-[#0243EC] rounded-2xl mb-2.5">
             {filtered.length
               ? filtered.map((employee, i) => (
                   <div
@@ -232,7 +232,7 @@ export default function TableInfo(props) {
               : null}
           </div>
         </div>
-        <div className="w-9/12 h-10 flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <div className="w-52 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
             Show
             <select
@@ -248,8 +248,8 @@ export default function TableInfo(props) {
             </select>
             entries
           </div>
-          <div className="w-96 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
-            <ul className="w-full flex justify-around">
+          <div className="w-auto h-[43px] flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
+            <ul className="w-full flex justify-around mx-4">
               {pagesNum
                 ? pagesNum.map((num) => (
                     <li
