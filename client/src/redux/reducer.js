@@ -27,7 +27,7 @@ const initialState = {
   userData: [],
   usersPaginate: [],
   token: '',
-  reports: [],
+  taskReports: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -97,7 +97,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         case GET_REPORT_TASKS:
           return {
             ...state,
-            reports: payload
+            taskReports: payload
           }
         case DESTROY:
           return {

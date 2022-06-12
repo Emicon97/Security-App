@@ -9,13 +9,14 @@ import LoginController from "./LoginController";
 import Modal from "./Modal";
 
 export default function SeeInferiorTask() {
-    dispatch = useDispatch();
+    const dispatch = useDispatch();
     const id = localStorage.getItem('id');
     const header = LoginController();
     const [editTask, setEditTask] = useState({});
     const [active, setActive] = useState(false);
     const userTasks = useSelector((state) => state.todosId);
     const userDetails = useSelector((state) => state.userDetails[0]);
+    const reports = useSelector((state) => state.taskReports);
   
     function reply_click(id) {
       setEditTask(userTasks.find((task) => task._id === id));
@@ -43,12 +44,19 @@ export default function SeeInferiorTask() {
                 <li key={task._id}>
                   {task.name} {task.priority} {task.status}
                 </li>
-                <button onClick={e => reply_click(task._id)}>See Reports</button>
+                <button onClick={e => {reply_click(task._id); toggle()}}>See Reports</button>
               </div>
             ))}
         </ul>
       </div>
-      <Modal></Modal>
+      <Modal active={active} toggle={toggle}>
+        <div>
+          <h1>Reports</h1>
+          {reports.length && reports.map(report => (
+           <p>{console.log(report)}</p> 
+          ))}
+        </div>
+      </Modal>
     </>
   );
 }
