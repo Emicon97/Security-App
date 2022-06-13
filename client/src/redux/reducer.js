@@ -13,6 +13,7 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+  POST_REPORT_TASKS,
 } from "./ActionTypes";
 
 const initialState = {

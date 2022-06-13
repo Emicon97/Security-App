@@ -8,6 +8,7 @@ import {
   filterByStatus,
   filterByStatusAndPriority,
   updateStatus,
+  postTaskReports,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
 import { Tertiary, Input } from "../styles/Buttons";
@@ -20,8 +21,17 @@ import "aos/dist/aos.css";
 export default function Tasks({ show }) {
   //eslint-disable-next-line
   const toDoUpdated = useSelector((state) => state.todoUpdate);
+  const id = localStorage.getItem("id");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  //esling-disable-next-line
+  const [report, setReport] = useState({
+    title: "",
+    description: "",
+    image: image,
+    sender: id,
+  });
+  console.log(report);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -60,19 +70,14 @@ export default function Tasks({ show }) {
   const todosPostponed = todosStatus.filter((r) => r === "postponed");
   const todosLeft = todosStatus.filter((r) => r === "left");
   const dispatch = useDispatch();
-  const id = localStorage.getItem("id");
   const header = LoginController();
   const [active, setActive] = useState(false);
-  const [activeStatus, setActiveStatus] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
   const [currentStatus, setCurrentStatus] = useState("all");
 
   const toggle = () => {
     setActive(!active);
     setImage("");
-  };
-  const toggleStatus = () => {
-    setActiveStatus(!activeStatus);
   };
 
   useEffect(() => {
@@ -110,22 +115,30 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
-  const [status, setStatus] = useState("");
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
     setTodoId(id);
   };
-
-  const handleSelectStatus = (e) => {
+  const handleUpdateStatusAndReport = (e) => {
+    e.preventDefault()
     const status = e.target.value;
-    console.log(status);
-    setStatus(status);
+    dispatch(updateStatus(todoId, status, header));
+    dispatch(postTaskReports(id, status, image, header));
+    //navigate ?
   };
 
-  const handleUpdateStatus = (e) => {
-    e.preventDefault();
-    dispatch(updateStatus(todoId, status, header));
+  const handleChange = (e) => {
+    setReport({
+      ...report,
+      [e.target.name]: e.target.value,
+    });
+    // setError(
+    //   validateInput({
+    //     ...task,
+    //     [e.target.name]: e.target.value,
+    //   })
+    // );
   };
 
   return (
@@ -251,10 +264,7 @@ export default function Tasks({ show }) {
               }
               flex w-10/12 rounded-2xl mb-2`}
           >
-            <div
-              className="w-full m-2.5 flex flex-col relative"
-              onClick={(e) => toggle(e)}
-            >
+            <div className="w-full m-2.5 flex flex-col relative">
               <div className="w-auto flex items-center">
                 {todo.priority === "urgent" ? (
                   <svg
@@ -339,12 +349,24 @@ export default function Tasks({ show }) {
             <button
               className={Button()}
               id={todo._id}
+              value="postponed"
               onClick={(e) => {
                 handleBringTodoId(e);
-                toggleStatus(e);
+                toggle(e);
               }}
             >
-              Edit Task
+              Postpone
+            </button>
+            <button
+              className={Button()}
+              id={todo._id}
+              value="done"
+              onClick={(e) => {
+                handleBringTodoId(e);
+                toggle(e);
+              }}
+            >
+              Done
             </button>
           </div>
         ))}
@@ -352,41 +374,42 @@ export default function Tasks({ show }) {
 
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
-          <label>Your comment:</label>
-          <textarea
-            className={Input()}
-            placeholder="Comentario sobre la tarea..."
-          ></textarea>
-          <input
-            className={File}
-            type="file"
-            name="file"
-            onChange={uploadImage}
-          ></input>
-          {loading ? (
-            <p className="loading">...Loading</p>
-          ) : image ? (
-            <img
-              className="img-cloud"
-              src={image}
-              alt="Nothing has been uploaded."
-              style={style.img}
-            />
-          ) : null}
-          <button className={Button()}>Send</button>
+          <form onSubmit={e => handleUpdateStatusAndReport(e)}>
+            <label>Subject:</label>
+            <textarea
+              name="title"
+              value={report.title}
+              className={Input()}
+              placeholder="Subject of the report"
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+            <label>Your comment:</label>
+            <textarea
+              name="description"
+              value={report.description}
+              className={Input()}
+              placeholder="Summary of the report..."
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+            <input
+              className={File}
+              type="file"
+              name="file"
+              onChange={uploadImage}
+            ></input>
+            {loading ? (
+              <p className="loading">...Loading</p>
+            ) : image ? (
+              <img
+                className="img-cloud"
+                src={image}
+                alt="Nothing has been uploaded."
+                style={style.img}
+              />
+            ) : null}
+            <button className={Button()}>Send</button>
+          </form>
         </div>
-      </Modal>
-      <Modal active={activeStatus} toggle={toggleStatus}>
-        <label htmlFor="">Status:</label>
-        <select onChange={(e) => handleSelectStatus(e)}>
-          <option>Select...</option>
-          <option value="left">Left</option>
-          <option value="done">Done</option>
-          <option value="postponed">Postpone</option>
-        </select>
-        <button className={Button()} onClick={(e) => handleUpdateStatus(e)}>
-          Update Status
-        </button>
       </Modal>
     </div>
   );

@@ -52,7 +52,8 @@ export default function SeeInferiorTask() {
         <div>
           <h1>Reports</h1>
           {userTasks.length && userTasks.map(task => (
-           <p>{console.log(task)}</p> 
+          //  <p>{console.log(task)}</p> 
+          <div></div>
           ))}
         </div>
       </Modal>
