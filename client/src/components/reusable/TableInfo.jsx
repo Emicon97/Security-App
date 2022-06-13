@@ -237,7 +237,9 @@ export default function TableInfo(props) {
                 pagesNum ?
                 pagesNum.map((num) => (
                   <li key={num} onClick={nextPage} className="w-6 h-6 flex justify-center items-center">
-                    <span title={`Page ${num}`} className="active w-2.5 h-2.5 hover:w-3.5 hover:h-3.5 bg-[#0243EC] rounded-full cursor-pointer text-transparent font-[9px]">{num}</span>
+                    <button title={`Page ${num}`} className="w-2.5 h-2.5 hover:w-3.5 hover:h-3.5 focus:w-3.5 focus:h-3.5 bg-[#0243EC] rounded-full cursor-pointer text-transparent font-[9px]">
+                      {num}{/* <span title={`Page ${num}`} className="w-2.5 h-2.5 hover:w-3.5 hover:h-3.5 bg-[#0243EC] rounded-full cursor-pointer text-transparent font-[9px]">{num}</span> */}
+                    </button>
                   </li>
                 ))
                 : null
