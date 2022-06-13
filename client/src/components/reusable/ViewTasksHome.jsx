@@ -61,7 +61,7 @@ export default function ViewTasksHome({ id, header }) {
     
     return (
         <div className="relative mr-auto my-5 ml-[30px] w-[90%] h-[330px] overflow-visible p-3.5 bg-[#fdced4] rounded-2xl flex flex-col">
-            <div>
+            <div className="flex justify-between">
                 <h1 className="text-3xl font-extrabold font-['nunito'] text-white">Tasks</h1>
                 <div className="flex items-center cursor-pointer">
                     <p className="font-extrabold font-['nunito'] text-[#f7f7f7] hover:text-white">More</p>
