@@ -14,6 +14,7 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
+  POST_REPORT_TASKS,
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -288,6 +289,20 @@ export function getTaskReports(id, header){
       return dispatch({
         type: GET_REPORT_TASKS,
         payload: reports.data
+      })
+    }catch(err){
+      window.alert(err.response.data)
+    }
+  }
+}
+
+export function postTaskReports(id, body, header){
+  return async function(dispatch){
+    try{
+      const report = await axios.post(`${url}/report/${id}`, body, header);
+      return dispatch({
+        type: POST_REPORT_TASKS,
+        payload: report.data
       })
     }catch(err){
       window.alert(err.response.data)

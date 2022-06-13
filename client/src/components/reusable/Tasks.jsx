@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
@@ -8,6 +8,7 @@ import {
   filterByStatus,
   filterByStatusAndPriority,
   updateStatus,
+  postTaskReports,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
 import { Tertiary, Input } from "../styles/Buttons";
@@ -16,12 +17,22 @@ import LoginController from "./LoginController";
 //animations
 import aos from "aos";
 import "aos/dist/aos.css";
+import swal from "sweetalert";
 
 export default function Tasks({ show }) {
+  //No puedo hacer que el boton dispache la action de updateStatus, y si no tiene nada el titulo dispacha la action igual//
   //eslint-disable-next-line
   const toDoUpdated = useSelector((state) => state.todoUpdate);
+  const id = localStorage.getItem("id");
+  const user = localStorage.getItem("user");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
+  const [report, setReport] = useState({
+    title: "",
+    description: "",
+    picture: image,
+    sender: id,
+  });
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -60,7 +71,6 @@ export default function Tasks({ show }) {
   const todosPostponed = todosStatus.filter((r) => r === "postponed");
   const todosLeft = todosStatus.filter((r) => r === "left");
   const dispatch = useDispatch();
-  const id = localStorage.getItem("id");
   const header = LoginController();
   const [active, setActive] = useState(false);
   const [currentPriority, setCurrentPriority] = useState("all");
@@ -75,7 +85,11 @@ export default function Tasks({ show }) {
     dispatch(getToDosById(id, header));
     aos.init({ duration: 700 });
     // eslint-disable-next-line
-  }, [dispatch]);
+  }, [dispatch, toDoUpdated]);
+  useEffect(() => {
+    if (image) setReport({ ...report, picture: image });
+    // eslint-disable-next-line
+  }, [image]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;
@@ -106,15 +120,50 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
+  const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
-    setTodoId(id);
-  }
-
-  const handleUpdateStatus = (e) => {
     const status = e.target.value;
-    dispatch(updateStatus(todoId, status, header));
+    setStatus(status);
+    setTodoId(id);
+  };
+
+  const [error, setError] = useState({});
+  
+  const validateTitle = (input) => {
+    let error = {}
+    if (!input.title) error.title = "Title is required"
+    return error
+  };
+
+
+  const handleUpdateStatusAndReport = (e) => {
+    if (report.title.length > 0) {
+      e.preventDefault();
+      dispatch(updateStatus(todoId, status, header));
+      dispatch(postTaskReports(id, report, header));
+      toggle();
+      swal("Your report has been sent", "", "success");
+      setReport({ ...report, title: "", description: "", picture: "" });
+    } else{
+      e.preventDefault();
+      swal("Please fulfill in the required fields", "", "error");
+    }
+  };
+
+  const handleChange = (e) => {
+    setReport({
+      ...report,
+      [e.target.name]: e.target.value,
+    });
+    setError(
+      validateTitle({
+        ...report,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   return (
@@ -225,7 +274,6 @@ export default function Tasks({ show }) {
         {/* TODOS */}
         {ToDos?.map((todo, i) => (
           <div
-            onClick={e => toggle(e)}
             id={todo._id}
             key={i}
             data-aos="zoom-in"
@@ -308,7 +356,6 @@ export default function Tasks({ show }) {
               <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
                 {todo.description ? todo.description : "No description"}
               </p>
-              <button id={todo._id} onClick={e => handleBringTodoId(e)}>Edit Task</button>
               <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
                 {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
                 <p
@@ -324,41 +371,72 @@ export default function Tasks({ show }) {
                 ></p>
               </span>
             </div>
+            <button
+              className={Button()}
+              id={todo._id}
+              value="postponed"
+              onClick={(e) => {
+                handleBringTodoId(e);
+                toggle(e);
+              }}
+            >
+              Postpone
+            </button>
+            <button
+              className={Button()}
+              id={todo._id}
+              value="done"
+              onClick={(e) => {
+                handleBringTodoId(e);
+                toggle(e);
+              }}
+            >
+              Done
+            </button>
           </div>
         ))}
       </div>
 
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
-          <label>Your comment:</label>
-          <textarea
-            className={Input()}
-            placeholder="Comentario sobre la tarea..."
-          ></textarea>
-          <input
-            className={File}
-            type="file"
-            name="file"
-            onChange={uploadImage}
-          ></input>
-          {loading ? (
-            <p className="loading">...Loading</p>
-          ) : image ? (
-            <img
-              className="img-cloud"
-              src={image}
-              alt="Nothing has been uploaded."
-              style={style.img}
-            />
-          ) : null}
-          <label htmlFor="">Status</label>
-          <select onChange={e => handleUpdateStatus(e)}>
-            <option>Select...</option>
-            <option value="left">Left</option>
-            <option value="done">Done</option>
-            <option value="postponed">Postpone</option>
-          </select>
-          <button className={Button()}>Send</button>
+          <form onSubmit={(e) => handleUpdateStatusAndReport(e)}>
+            <label>Subject:</label>
+            <textarea
+              name="title"
+              value={report.title}
+              className={Input()}
+              placeholder="Subject of the report"
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+            {error && <small className="text-red-500">{error.title}</small>}
+            <label>Your comment:</label>
+            <textarea
+              name="description"
+              value={report.description}
+              className={Input()}
+              placeholder="Summary of the report..."
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+            <input
+              className={File}
+              type="file"
+              name="file"
+              onChange={(e) => uploadImage(e)}
+            ></input>
+            {loading ? (
+              <p className="loading">...Loading</p>
+            ) : image ? (
+              <img
+                className="img-cloud"
+                src={image}
+                alt="Nothing has been uploaded."
+                style={style.img}
+              />
+            ) : null}
+            <button type="submit" className={Button()}>
+              Send{" "}
+            </button>
+          </form>
         </div>
       </Modal>
     </div>
