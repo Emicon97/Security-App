@@ -1,0 +1,35 @@
+#screen-profile {
+    font-family: 'Nunito', 'sans-serif';
+    width: 60%;
+    height: 90%;
+    /* margin: auto; */
+    background-color: blue;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+#screen-profile .img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: red;    
+    text-align: center;
+    overflow: hidden;
+}
+#screen-profile .img img{
+    min-width: 100%;
+    min-height: 100%;
+}
+#screen-profile h3 {
+    font-weight: 800;
+    font-size: 27px;
+}
+#screen-profile h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+#screen-profile h5 {
+    font-weight: 500;
+    font-size: 16px;
+}

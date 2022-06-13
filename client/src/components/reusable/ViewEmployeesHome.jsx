@@ -48,7 +48,6 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                 </div>
                 <div className="employee-profile">
                   <div className="img-profile-employee">
-                    {/* <img src="https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png" alt="" /> */}
                     <img
                       src={employee.profilePic ? employee.profilePic : urlImg}
                       alt=""
