@@ -24,8 +24,8 @@ export default function Login() {
 
   const validations = (input) => {
     let error = {};
-    if(!/^[0-9]*$/.test(input.dni)) error.dni = "DNI incorrecto o carácter incorrecto";
-    if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
+    if (!/^[0-9]*$/.test(input.dni)) error.dni = "DNI incorrecto o carácter incorrecto";
+    if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
       error.password = "Debe contener 8 caracteres, una minúscula, una mayúscula y un número";
       //Hay que resumirlo muuucho mas jijiji;
     }
@@ -86,46 +86,49 @@ export default function Login() {
           return navigate(`/boss/${id}`);
       }
     }
-    // if(token){
-    //   const user = localStorage.getItem('user');
-    //   const id = localStorage.getItem('id');
-    //        return navigate(`/${user}/${id}`);
-    //   }
   }, [token]);
 
 
-  return  (
+  return (
     <div className="login-screen">
+      
+      <div className="wrapp">
+        <div className="text">
+          <h1><span className="blue">C</span>entine<span className="pink">l</span></h1>
+        </div>
+        <div className="logo">
+          <img src={logo} alt="" />
+        </div>
+      </div>
 
-
-      <form 
+      <form
         className="form"
         onSubmit={handleSubmit}
       >
-        
+
         <div className="form-input-container">
-          <input 
+          <input
             type="number"
             name="dni"
-            id="dni" 
-            className="form__input" 
-            autoComplete="off" 
+            id="dni"
+            className="form__input"
+            autoComplete="off"
             placeholder=" "
             value={input.dni}
             onChange={(e) => {
               handleChange(e);
-            }} 
+            }}
           />
           <label htmlFor="dni" className="form__label">DNI</label>
         </div>
         <div className="input-password-container">
           <div className="form-password-container">
-            <input 
+            <input
               type="password"
               name="password"
-              id="password" 
-              className="form__input password__input" 
-              autoComplete="off" 
+              id="password"
+              className="form__input password__input"
+              autoComplete="off"
               placeholder=" "
               value={input.password}
               onChange={(e) => {
@@ -135,17 +138,17 @@ export default function Login() {
             <label htmlFor="password" className="form__label form__label__password">Password</label>
           </div>
           <div className="eye-icon">
-            <img className="eye" src={eyeOpen} alt="" onClick={viewPassword}/>
-            <img className="eye" src={eyeClose} alt="" onClick={viewPassword}/>
+            <img className="eye" src={eyeOpen} alt="" onClick={viewPassword} />
+            <img className="eye" src={eyeClose} alt="" onClick={viewPassword} />
           </div>
 
         </div>
-          
+
         <div className="errors-input">
-          <h4 className="errors" style={{display: !validate && errors.dni ? "block" : "none"}}>
+          <h4 className="errors" style={{ display: !validate && errors.dni ? "block" : "none" }}>
             {!validate ? errors.dni : null}
           </h4>
-          <h4 className="errors" style={{display: !validate && errors.password ? "block" : "none"}}>
+          <h4 className="errors" style={{ display: !validate && errors.password ? "block" : "none" }}>
             {!validate ? errors.password : null}
           </h4>
         </div>

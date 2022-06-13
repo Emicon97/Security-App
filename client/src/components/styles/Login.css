@@ -1,17 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;800&display=swap');
 
 .login-screen {
+    padding-top: 50px;
     font-family: "Convergence", sans-serif;
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex-direction: column;
     font-size: 1.2rem;
     background-color: #f0f0f0;
     overflow: hidden;
 }
 .form {
+    margin-top: 50px;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -142,3 +145,151 @@
 }
 
 
+
+
+
+
+
+
+
+
+.wrapp{
+	width: 300px;
+	height: 100px;
+	margin-left: 170px;
+
+    -webkit-animation: wrapp 400ms 800ms ease-in forwards;
+
+	-moz-animation: wrapp 400ms 800ms ease-in forwards;
+
+	-ms-animation: wrapp 400ms 800ms ease-in forwards;
+
+	animation: wrapp 400ms 800ms ease-in forwards;
+}
+.text{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0px;
+	height: 60px;
+	margin: -30px 0 0 -180px;
+	overflow: hidden;
+	-webkit-animation: text 400ms 800ms linear forwards;
+
+	-moz-animation: text 400ms 800ms linear forwards;
+
+	-ms-animation: text 400ms 800ms linear forwards;
+
+	animation: text 400ms 800ms linear forwards;
+}
+h1{
+	float: left;
+	font-weight: 500;
+	color: #000;
+	padding: 0;
+	margin: 0;
+	width: 220px;
+	height: 60px;
+	font-size: 60px;
+	line-height: 60px;
+}
+.login-screen h1 .blue {
+    color: #0023c4;
+}
+.login-screen h1 .pink {
+    color: #ff5cf4;
+}
+.logo{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 90px;
+	height: 90px;
+	margin: -45px 0 0 -45px;
+	background-color: #fff;
+}
+
+@-webkit-keyframes text {
+    from {
+    	width: 0px;
+    	-webkit-transform: translateX(0px);
+    }
+    60%{
+    	width: 0px;
+    }
+    to {
+    	width: 220px;
+    	-webkit-transform: translateX(240px);
+    }
+}
+@-webkit-keyframes wrapp {
+    from {
+    	-webkit-transform: translateX(0px);
+    }
+    to {
+    	-webkit-transform: translateX(-200px);
+    }
+}
+@-moz-keyframes text {
+    from {
+    	width: 0px;
+    	-moz-transform: translateX(0px);
+    }
+    60%{
+    	width: 0px;
+    }
+    to {
+    	width: 320px;
+    	-moz-transform: translateX(240px);
+    }
+}
+@-moz-keyframes wrapp {
+    from {
+    	-moz-transform: translateX(0px);
+    }
+    to {
+    	-moz-transform: translateX(-200px);
+    }
+}
+@-ms-keyframes text {
+    from {
+    	width: 0px;
+    	-ms-transform: translateX(0px);
+    }
+    60%{
+    	width: 0px;
+    }
+    to {
+    	width: 320px;
+    	-ms-transform: translateX(240px);
+    }
+}
+@-ms-keyframes wrapp {
+    from {
+    	-ms-transform: translateX(0px);
+    }
+    to {
+    	-ms-transform: translateX(-200px);
+    }
+}
+@keyframes text {
+    from {
+    	width: 0px;
+    	transform: translateX(0px);
+    }
+    60%{
+    	width: 0px;
+    }
+    to {
+    	width: 320px;
+    	transform: translateX(240px);
+    }
+}
+@keyframes wrapp {
+    from {
+    	transform: translateX(0px);
+    }
+    to {
+    	transform: translateX(-200px);
+    }
+}
