@@ -31,7 +31,6 @@ export default function Tasks({ show }) {
     image: image,
     sender: id,
   });
-  console.log(report);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
