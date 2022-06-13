@@ -6,7 +6,7 @@ import './../styles/reusable/ViewEmployeesHome.css'
 import aos from "aos";
 import 'aos/dist/aos.css'
 
-export default function ViewEmployeesHome ({employees, id, header}) {
+export default function ViewEmployeesHome({ employees, id, header }) {
     let demo = useSelector(state => state.employees)
     let dispatch = useDispatch()
     let urlImg = "https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png"
@@ -16,20 +16,19 @@ export default function ViewEmployeesHome ({employees, id, header}) {
         aos.init({ duration: 700 })
     }, [dispatch])
 
-    if(demo.length) {
 
-        return (
-            <div id="cards-employees-screen" className="m-auto mb-6">
-                
-                <h3>Empleado<span>s</span></h3>
+    return (
+        <div id="cards-employees-screen" className="m-auto mb-6">
 
-                <div className="screen-cards">
+            <h3>Empleado<span>s</span></h3>
 
-                    {
-                        demo.length 
+            <div className="screen-cards">
+
+                {
+                    demo.length
                         ? demo.map(employee => (
 
-                            <div className="card-employees" key={employee._id} data-aos="flip-left">
+                            <div className="card-employees" key={employee._id} >
                                 <h4 className="employees-num-tasks">{employee.workingHours}</h4>
                                 <div className="employees-environment">
                                     <h4>{employee.environment[0]}</h4>
@@ -37,7 +36,6 @@ export default function ViewEmployeesHome ({employees, id, header}) {
                                 </div>
                                 <div className="employee-profile">
                                     <div className="img-profile-employee">
-                                                {/* <img src="https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png" alt="" /> */}
                                         <img src={employee.profilePic ? employee.profilePic : urlImg} alt="" />
                                     </div>
                                     <h4 className="name-employee">{employee.name} <span>{employee.lastName}</span></h4>
@@ -46,14 +44,11 @@ export default function ViewEmployeesHome ({employees, id, header}) {
 
                         ))
                         : <h3>No tienes empleados</h3>
-                    }
-                </div>
-
-
+                }
             </div>
-        )
-    
-    }
 
+
+        </div>
+    )
 
 }
