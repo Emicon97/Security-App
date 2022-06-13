@@ -6,7 +6,7 @@ import ViewTasksHome from './reusable/ViewTasksHome';
 // import './styles/Home.css'
 import ViewProfileHome from './reusable/ViewProfileHome';
 import ViewEmployeesHome from './reusable/ViewEmployeesHome';
-import { getUsersById } from '../redux/actions';
+import { createEnvironment, getUsersById } from '../redux/actions';
 
 export default function Home({show}) {
     //variable para saber el path
@@ -18,12 +18,17 @@ export default function Home({show}) {
     let user = useSelector(state => state.userDetails)
     let dispatch = useDispatch()
 
+    
 
     useEffect(() => {
 
         dispatch(getUsersById(id, header))
 
     }, [dispatch])
+
+    useEffect(() =>{
+        dispatch(createEnvironment(header))
+    },[])
 
     if (user.length) {
         if (rolUsuario === "boss") {

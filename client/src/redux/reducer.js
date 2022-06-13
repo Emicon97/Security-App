@@ -13,6 +13,7 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+  CREATE_ENVIRONMENT
 } from "./ActionTypes";
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   usersPaginate: [],
   token: '',
   taskReports: [],
+  enviroment: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -112,6 +114,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
             todoUpdate: {},
             userData: [],
             usersPaginate: [],
+        }
+      case CREATE_ENVIRONMENT:
+        console.log('reducer',payload)
+        return{
+          ...state,
+          enviroment: payload
         }
     default:
       return { ...state };

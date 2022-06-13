@@ -33,11 +33,8 @@ export default function AddNewUser({show}) {
   const [loading, setLoading] = useState(false);
 
   const typeEnv = [
-    "neighbourhood one",
-    "neighbourhood two",
-    "neighbourhood three",
-    "neighbourhood four",
-    "neighbourhood five",
+    "school",
+    "barrio fino"
   ];
 
   const uploadImage = async (e) => {
