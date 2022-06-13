@@ -20,7 +20,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
     return (
         <div id="cards-employees-screen" className="m-auto mb-6">
 
-            <h3>Empleado<span>s</span></h3>
+            <h3>Employee<span>s</span></h3>
 
             <div className="screen-cards">
 
@@ -43,7 +43,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                             </div>
 
                         ))
-                        : <h3>No tienes empleados</h3>
+                        : <h3>You have no employees</h3>
                 }
             </div>
 
