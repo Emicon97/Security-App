@@ -283,7 +283,6 @@ export function getTaskReports(id, header){
 }
 
 export function getReports(id, relation, header){
-  console.log(id, relation, header)
   return async function(dispatch){
     try{
       const reports = await axios.get(`${url}/report/${id}?relation=${relation}`, header);
