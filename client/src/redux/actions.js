@@ -17,7 +17,7 @@ import {
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
-import { SaveToken, SaveId, SaveUser } from './LocalStorage';
+import { SaveToken, SaveRefreshToken, SaveId, SaveUser } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -227,9 +227,10 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
-      SaveToken(user.data[2])
-      SaveId(user.data[0]._id)
-      SaveUser(user.data[1])
+      SaveId(user.data[0]._id);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
