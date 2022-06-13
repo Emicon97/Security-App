@@ -1,9 +1,13 @@
-
-
 function LoginController(){
-    const header = localStorage.getItem('auth-token')
+    const token = localStorage.getItem('auth-token');
+    const refreshToken = localStorage.getItem('refresh-token');
+    const id = localStorage.getItem('id');
 return(
-    {headers:{'auth-token':header}}
+    {headers:{ 
+        'auth-token': token,
+        'refresh-token': refreshToken,
+        'id': id
+    }}
 )}
 
 export default LoginController;
