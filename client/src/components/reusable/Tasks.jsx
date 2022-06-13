@@ -137,8 +137,6 @@ export default function Tasks({ show }) {
     if (!input.title) error.title = "Title is required"
     return error
   };
-  console.log("this is error", error)
-  console.log(report.title)
 
 
   const handleUpdateStatusAndReport = (e) => {
