@@ -13,6 +13,7 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+  GET_REPORTS
 } from "./ActionTypes";
 
 const initialState = {
@@ -28,6 +29,7 @@ const initialState = {
   usersPaginate: [],
   token: '',
   taskReports: [],
+  reports: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -89,30 +91,35 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: payload,
         token: payload[2]
       }
-      case LOGOUT:
+    case LOGOUT:
+      return {
+        ...state,
+        token: payload
+      }
+      case GET_REPORT_TASKS:
         return {
           ...state,
-          token: payload
+          taskReports: payload
         }
-        case GET_REPORT_TASKS:
-          return {
-            ...state,
-            taskReports: payload
-          }
-        case DESTROY:
-          return {
-            ...state,
-            supervisorDetail: {},
-            watcherDetail: {},
-            employees: [],
-            users: [],
-            userDetails: {},
-            todosId: [],
-            todos: [],
-            todoUpdate: {},
-            userData: [],
-            usersPaginate: [],
+      case GET_REPORTS:
+        return {
+          ...state,
+          reports: payload
         }
+      case DESTROY:
+        return {
+          ...state,
+          supervisorDetail: {},
+          watcherDetail: {},
+          employees: [],
+          users: [],
+          userDetails: {},
+          todosId: [],
+          todos: [],
+          todoUpdate: {},
+          userData: [],
+          usersPaginate: [],
+      }
     default:
       return { ...state };
   };
