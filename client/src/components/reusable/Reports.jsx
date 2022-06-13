@@ -19,7 +19,6 @@ export default function SentReports () {
    return (
       <>
       { reports.length && reports.map((report) => {
-         {console.log(report.title)}
          <>
          <p></p>
          <h1>{report.title}</h1>
