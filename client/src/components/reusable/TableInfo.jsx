@@ -142,21 +142,22 @@ export default function TableInfo(props) {
     <>
       <div className="w-[90%] h-auto mx-auto font-['nunito'] mt-[15px]">
         <div className="flex items-center justify-between">
+          <div className="search flex mr-4">
+            <button title="Bring back all employees" className={Tertiary} onClick={(e) => allButton(e)}>
+              Refresh
+            </button>
+          </div>
           <form onSubmit={handleSubmit} className="flex flex-row items-center">
-            <button title="Search employee" className={Tertiary} type="submit">Search</button>
+            {/* <button title="Search employee" className={Tertiary} type="submit">Search</button> */}
             <input
               type="text"
-              placeholder="Search name..."
+              placeholder="Search employee..."
+              title="Search employees"
               value={nameEmployee}
               className={Input()}
               onChange={handleSearch}
             ></input>
           </form>
-          <div className="search flex mr-4">
-            <button title="Bring back all employees" className={Tertiary} onClick={(e) => allButton(e)}>
-              All
-            </button>
-          </div>
           <div className="w-[220px] h-full flex items-center justify-center">
             Show
             <select
