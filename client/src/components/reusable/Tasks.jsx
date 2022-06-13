@@ -24,14 +24,13 @@ export default function Tasks({ show }) {
   const id = localStorage.getItem("id");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
-  //esling-disable-next-line
   const [report, setReport] = useState({
     title: "",
     description: "",
-    image: image,
+    //como pindonga copio la url de cloudinary
+    file: "",
     sender: id,
   });
-  console.log(report);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -115,16 +114,20 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
+  const [status, setStatus] = useState("");
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
+    const status = e.target.value;
+    setStatus(status);
     setTodoId(id);
   };
+
   const handleUpdateStatusAndReport = (e) => {
-    e.preventDefault()
-    const status = e.target.value;
+    e.preventDefault();
+    console.log("this is the status", status, "this is the id", todoId);
     dispatch(updateStatus(todoId, status, header));
-    dispatch(postTaskReports(id, status, image, header));
+    // dispatch(postTaskReports(id, report, header));
     //navigate ?
   };
 
@@ -395,7 +398,8 @@ export default function Tasks({ show }) {
               className={File}
               type="file"
               name="file"
-              onChange={uploadImage}
+              onChange={(e) => uploadImage(e)}
+              value={report.file}
             ></input>
             {loading ? (
               <p className="loading">...Loading</p>
@@ -407,7 +411,7 @@ export default function Tasks({ show }) {
                 style={style.img}
               />
             ) : null}
-            <button className={Button()}>Send</button>
+            <input type="submit" className={Button()}/>
           </form>
         </div>
       </Modal>
