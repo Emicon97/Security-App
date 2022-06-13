@@ -285,7 +285,7 @@ export function destroyData() {
 export function getTaskReports(id, header){
   return async function(dispatch){
     try{
-      const reports = await axios.get(`${url}/todos/reports/${id}`, header);
+      const reports = await axios.get(`${url}/report/${id}`, header);
       return dispatch({
         type: GET_REPORT_TASKS,
         payload: reports.data
