@@ -18,3 +18,4 @@ export const ADD_TASK_TO_USER = "ADD_TASK_TO_USER";
 export const DESTROY = "DESTROY";
 export const GET_REPORT_TASKS = "GET_REPORT_TASKS";
 export const GET_REPORTS = "GET_REPORTS";
+export const POST_REPORT_TASKS = "POST_REPORT_TASKS";

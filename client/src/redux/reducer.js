@@ -13,7 +13,11 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+<<<<<<< HEAD
   GET_REPORTS
+=======
+  POST_REPORT_TASKS,
+>>>>>>> 2823f48440ebd671917381d066d99a1edbab0fda
 } from "./ActionTypes";
 
 const initialState = {
@@ -27,9 +31,14 @@ const initialState = {
   todoUpdate: {},
   userData: [],
   usersPaginate: [],
+<<<<<<< HEAD
   token: '',
   taskReports: [],
   reports: []
+=======
+  token: "",
+  taskReports: {},
+>>>>>>> 2823f48440ebd671917381d066d99a1edbab0fda
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -89,6 +98,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userData: payload,
+<<<<<<< HEAD
         token: payload[2]
       }
     case LOGOUT:
@@ -120,9 +130,42 @@ const rootReducer = (state = initialState, { type, payload }) => {
           userData: [],
           usersPaginate: [],
       }
+=======
+        token: payload[2],
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        token: payload,
+      };
+    case GET_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload,
+      };
+    case POST_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload,
+      };
+    case DESTROY:
+      return {
+        ...state,
+        supervisorDetail: {},
+        watcherDetail: {},
+        employees: [],
+        users: [],
+        userDetails: {},
+        todosId: [],
+        todos: [],
+        todoUpdate: {},
+        userData: [],
+        usersPaginate: [],
+      };
+>>>>>>> 2823f48440ebd671917381d066d99a1edbab0fda
     default:
       return { ...state };
-  };
+  }
 };
 
 export default rootReducer;
