@@ -13,11 +13,8 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
-<<<<<<< HEAD
-  GET_REPORTS
-=======
+  GET_REPORTS,
   POST_REPORT_TASKS,
->>>>>>> 2823f48440ebd671917381d066d99a1edbab0fda
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
