@@ -30,7 +30,7 @@ export default function Home({show}) {
             return (
                 <div id='home' className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700 overflow-auto`}>
                     <ViewProfileHome user={user[0]}/>
-                    <ViewEmployeesHome employees={user[0].watcher} id={id} header={header} hierarchy={ user[1]}/>
+                    <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
                 </div>
             )
         } else if (rolUsuario === "supervisor") {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import './../styles/reusable/Tasks.css'
 import {
   getToDosById,
@@ -17,18 +17,20 @@ import LoginController from "./LoginController";
 //animations
 import aos from "aos";
 import "aos/dist/aos.css";
+import swal from "sweetalert";
 
 export default function Tasks({ show }) {
+  //No puedo hacer que el boton dispache la action de updateStatus, y si no tiene nada el titulo dispacha la action igual//
   //eslint-disable-next-line
   const toDoUpdated = useSelector((state) => state.todoUpdate);
   const id = localStorage.getItem("id");
+  const user = localStorage.getItem("user");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const [report, setReport] = useState({
     title: "",
     description: "",
-    //como pindonga copio la url de cloudinary
-    file: "",
+    picture: image,
     sender: id,
   });
   const uploadImage = async (e) => {
@@ -84,6 +86,10 @@ export default function Tasks({ show }) {
     aos.init({ duration: 700 });
     // eslint-disable-next-line
   }, [dispatch, toDoUpdated]);
+  useEffect(() => {
+    if (image) setReport({ ...report, picture: image });
+    // eslint-disable-next-line
+  }, [image]);
 
   const priorityManager = (e) => {
     let priority = e.target.value;
@@ -115,6 +121,7 @@ export default function Tasks({ show }) {
 
   const [todoId, setTodoId] = useState("");
   const [status, setStatus] = useState("");
+  const navigate = useNavigate();
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
@@ -123,12 +130,29 @@ export default function Tasks({ show }) {
     setTodoId(id);
   };
 
+  const [error, setError] = useState({});
+  
+  const validateTitle = (input) => {
+    let error = {}
+    if (!input.title) error.title = "Title is required"
+    return error
+  };
+  console.log("this is error", error)
+  console.log(report.title)
+
+
   const handleUpdateStatusAndReport = (e) => {
-    e.preventDefault();
-    console.log("this is the status", status, "this is the id", todoId);
-    dispatch(updateStatus(todoId, status, header));
-    // dispatch(postTaskReports(id, report, header));
-    //navigate ?
+    if (report.title.length > 0) {
+      e.preventDefault();
+      dispatch(updateStatus(todoId, status, header));
+      dispatch(postTaskReports(id, report, header));
+      toggle();
+      swal("Your report has been sent", "", "success");
+      setReport({ ...report, title: "", description: "", picture: "" });
+    } else{
+      e.preventDefault();
+      swal("Please fulfill in the required fields", "", "error");
+    }
   };
 
   const handleChange = (e) => {
@@ -136,12 +160,12 @@ export default function Tasks({ show }) {
       ...report,
       [e.target.name]: e.target.value,
     });
-    // setError(
-    //   validateInput({
-    //     ...task,
-    //     [e.target.name]: e.target.value,
-    //   })
-    // );
+    setError(
+      validateTitle({
+        ...report,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   return (
@@ -377,7 +401,7 @@ export default function Tasks({ show }) {
 
       <Modal active={active} toggle={toggle}>
         <div style={style.modal}>
-          <form onSubmit={e => handleUpdateStatusAndReport(e)}>
+          <form onSubmit={(e) => handleUpdateStatusAndReport(e)}>
             <label>Subject:</label>
             <textarea
               name="title"
@@ -386,6 +410,7 @@ export default function Tasks({ show }) {
               placeholder="Subject of the report"
               onChange={(e) => handleChange(e)}
             ></textarea>
+            {error && <small className="text-red-500">{error.title}</small>}
             <label>Your comment:</label>
             <textarea
               name="description"
@@ -399,7 +424,6 @@ export default function Tasks({ show }) {
               type="file"
               name="file"
               onChange={(e) => uploadImage(e)}
-              value={report.file}
             ></input>
             {loading ? (
               <p className="loading">...Loading</p>
@@ -411,7 +435,9 @@ export default function Tasks({ show }) {
                 style={style.img}
               />
             ) : null}
-            <input type="submit" className={Button()}/>
+            <button type="submit" className={Button()}>
+              Send{" "}
+            </button>
           </form>
         </div>
       </Modal>

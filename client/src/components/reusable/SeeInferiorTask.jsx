@@ -9,17 +9,18 @@ import LoginController from "./LoginController";
 import Modal from "./Modal";
 
 export default function SeeInferiorTask() {
-    const dispatch = useDispatch();
-    const id = localStorage.getItem('id');
-    const header = LoginController();
-    const [editTask, setEditTask] = useState({});
-    const [active, setActive] = useState(false);
-    const userTasks = useSelector((state) => state.todosId);
-    const userDetails = useSelector((state) => state.userDetails[0]);
-  
-    function reply_click(id) {
-      setEditTask(userTasks.find((task) => task._id === id));
-    }
+  const dispatch = useDispatch();
+  const id = localStorage.getItem("id");
+  const header = LoginController();
+  const [editTask, setEditTask] = useState({});
+  const [active, setActive] = useState(false);
+  const userTasks = useSelector((state) => state.todosId);
+  const userDetails = useSelector((state) => state.userDetails[0]);
+
+  function reply_click(id) {
+    setEditTask(userTasks.find((task) => task._id === id));
+  }
+  console.log(editTask)
   const toggle = () => {
     setActive(!active);
   };
@@ -27,7 +28,7 @@ export default function SeeInferiorTask() {
   useEffect(() => {
     dispatch(getToDosById(id, header));
     dispatch(getUsersById(id, header));
-    if(editTask._id) dispatch(getTaskReports(editTask._id, header));
+    if (editTask._id) dispatch(getTaskReports(editTask._id, header));
   }, []);
 
   return (
@@ -43,7 +44,14 @@ export default function SeeInferiorTask() {
                 <li key={task._id}>
                   {task.name} {task.priority} {task.status}
                 </li>
-                <button onClick={e => {reply_click(task._id); toggle()}}>See Reports</button>
+                <button
+                  onClick={(e) => {
+                    reply_click(task._id);
+                    toggle();
+                  }}
+                >
+                  See Reports
+                </button>
               </div>
             ))}
         </ul>
@@ -51,10 +59,11 @@ export default function SeeInferiorTask() {
       <Modal active={active} toggle={toggle}>
         <div>
           <h1>Reports</h1>
-          {userTasks.length && userTasks.map(task => (
-          //  <p>{console.log(task)}</p> 
-          <div></div>
-          ))}
+          <ul>
+          {userTasks.length && (
+            userTasks.map((task) => <p>{task.report}</p>)
+          )}
+          </ul>
         </div>
       </Modal>
     </>

@@ -299,7 +299,7 @@ export function getTaskReports(id, header){
 export function postTaskReports(id, body, header){
   return async function(dispatch){
     try{
-      const report = await axios.post(`${url}/report/${id}`, header, body);
+      const report = await axios.post(`${url}/report/${id}`, body, header);
       return dispatch({
         type: POST_REPORT_TASKS,
         payload: report.data

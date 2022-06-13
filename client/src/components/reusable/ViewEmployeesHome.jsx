@@ -11,7 +11,7 @@ import aos from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 
-export default function ViewEmployeesHome({ employees, id, header, hierarchy }) {
+export default function ViewEmployeesHome({ employees, id, header }) {
   let demo = useSelector((state) => state.employees);
   let dispatch = useDispatch();
   let urlImg =
@@ -21,6 +21,7 @@ export default function ViewEmployeesHome({ employees, id, header, hierarchy }) 
     dispatch(getEmployees(id, header));
     aos.init({ duration: 700 });
   }, [dispatch]);
+  let hierarchy = localStorage.getItem("user");
 
   if (demo.length) {
     return (

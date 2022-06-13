@@ -139,15 +139,6 @@ export default function AddNewUser({show}) {
   function handleSubmit(e) {
     e.preventDefault();
     if (
-      error.name ||
-      error.lastName ||
-      error.dni ||
-      error.password ||
-      error.email ||
-      error.telephone ||
-      error.environment
-    )
-    if (
       !input.name &&
       !input.lastName &&
       !input.dni &&
@@ -162,7 +153,7 @@ export default function AddNewUser({show}) {
         "error"
       );
     dispatch(postUser(input, header, id));
-    alert("User created successfully");
+    swal("User created successfully", "", "success");
     setInput({});
     if(role === "supervisor"){
       navigate(`/supervisor/${id}`)
