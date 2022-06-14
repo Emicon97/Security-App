@@ -16,6 +16,7 @@ import {
   CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  RESET_REPORT
 } from "./ActionTypes";
 
 const initialState = {
@@ -133,6 +134,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         return{
           ...state,
           enviroment: payload
+        }
+      case RESET_REPORT:
+        return{
+          ...state,
+          reports: [],
+          taskReports: []
         }
     default:
       return { ...state };

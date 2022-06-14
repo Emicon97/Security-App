@@ -16,6 +16,7 @@ import {
   CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  RESET_REPORT
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -322,5 +323,12 @@ export function postTaskReports(id, body, header){
     }catch(err){
       window.alert(err.response.data)
     }
+  }
+}
+export function resetReport(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_REPORT
+    })
   }
 }

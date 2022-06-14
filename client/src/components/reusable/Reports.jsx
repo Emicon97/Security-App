@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { getReports } from './../../redux/actions';
+import { getReports, resetReport } from './../../redux/actions';
 import LoginController from './LoginController';
 
 export default function SentReports({show}) {
@@ -10,12 +10,14 @@ export default function SentReports({show}) {
    const {relation} = useParams()
    const header = LoginController();
    const id = localStorage.getItem('id');
-
+   
    const reports = useSelector((state) => state.reports);
-
+   
    useEffect(() => {
+      console.log(reports)
       if(relation==='sender'||relation==='receiver'){
          dispatch(getReports(id, relation, header));
+         dispatch(resetReport())
       }
    }, []);
 
@@ -33,11 +35,11 @@ export default function SentReports({show}) {
                         <h2>From You</h2>
                         <h2>To {report.receiver.lastName} {report.receiver.name}</h2>
                      </div>
-                     :relation==='receiver'?
+                     :
                      <div>
                         <h2>From {report.sender.lastName} {report.sender.name}</h2>
                         <h2>To You</h2>
-                     </div>:null
+                     </div>
                   }
                   <img src={report.picture} alt="Report"></img>
                   <h3>{report.description}</h3>
