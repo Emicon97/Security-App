@@ -74,25 +74,16 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     if (errors.dni === ""&& errors.email === "") {
-
       dispatch(verificationUser(input))
-
       if(verification === "Correct compatibility"){
-
         setStatus("")
-
         dispatch(sendRequest(input));
-
         alert("The request was sent correctly check your email")
-
         setInput({ dni: "", email: "" });
-
         }else {
           setStatus(verification)
     } 
-
   }
 }
 

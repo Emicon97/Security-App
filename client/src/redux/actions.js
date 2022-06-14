@@ -16,6 +16,8 @@ import {
   GET_REPORTS,
   POST_REPORT_TASKS,
   TEMP_VERIFICATION,
+  ENVIRONMENTS,
+  ENVIRONMENT_USERS,
   RESET_REPORT
 } from "./ActionTypes";
 import swal from "sweetalert";
@@ -281,7 +283,7 @@ export function getTaskReports(id, header){
         payload: reports.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
@@ -295,7 +297,7 @@ export function getReports(id, relation, header){
         payload: reports.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
@@ -309,22 +311,61 @@ export function postTaskReports(id, body, header){
         payload: report.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
 
+export function createEnvironments(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
 export function sendRequest(values){
   return async function(){
     try{
       await axios.put(`${url}/email`, values);
     }catch(error){
-      window.alert(error.response.data)
+      console.log(error.response.data);
     }
   }
 }
 
+export function getAllEnvironments(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
 
+export function getEnvironmentUsers(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
 export function recoverPassword(value, header){
   return async function(dispatch){
     try{
@@ -337,8 +378,8 @@ export function recoverPassword(value, header){
         type: LOGIN_PRUEBA,
         payload: user.data
       })
-    }catch(error){
-      window.alert(error.response.data)
+    }catch(err){
+      console.log(err.response.data);
     }
   }
 }
