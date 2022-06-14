@@ -16,12 +16,14 @@ export default function SeeInferiorTask() {
   const [active, setActive] = useState(false);
   const userTasks = useSelector((state) => state.todosId);
   const userDetails = useSelector((state) => state.userDetails[0]);
-  const reports = useSelector(state => state.taskReports);
+  const reports = useSelector((state) => state.taskReports);
+  console.log(editTask);
+  console.log(id);
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
   }
-  console.log(reports)
+  console.log(reports);
   const toggle = () => {
     setActive(!active);
   };
@@ -33,7 +35,16 @@ export default function SeeInferiorTask() {
   }, []);
 
   return (
-    <>
+    <div>
+      <div>
+        <img src={userDetails.profilePic} alt="" width="100rem" />
+        <h3>
+          {" "}
+          {userDetails.name} {userDetails.lastName}{" "}
+        </h3>
+        <p>{userDetails.telephone}</p>
+        <p>{userDetails.email}</p>
+      </div>
       <div className="ml-80">
         {userDetails && <h1>You are seeing {userDetails.name} tasks </h1>}
         <ul>
@@ -61,12 +72,35 @@ export default function SeeInferiorTask() {
         <div>
           <h1>Reports of {editTask.name}</h1>
           <ul>
-          {/* {reports && (
-            reports.map((task) => <p>{task.report}</p>)
-          )} */}
+            {reports.length ? (
+              reports.map((report) => (
+                <div>
+                  <p>{report.title}</p>
+                  <p>
+                    {report.description ? (
+                      report.description
+                    ) : (
+                      <small>This report has no description</small>
+                    )}
+                  </p>
+                  <img
+                    src={
+                      report.picture ? (
+                        report.picture
+                      ) : (
+                        <small>This report has no picture</small>
+                      )
+                    }
+                    alt="Report picture"
+                  />
+                </div>
+              ))
+            ) : (
+              <p>This Task has no reports yet</p>
+            )}
           </ul>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
