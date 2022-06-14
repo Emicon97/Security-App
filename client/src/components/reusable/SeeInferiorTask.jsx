@@ -22,10 +22,11 @@ export default function SeeInferiorTask() {
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
   }
-  
+
   const toggle = () => {
     setActive(!active);
   };
+  console.log(editTask)
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
@@ -51,13 +52,13 @@ export default function SeeInferiorTask() {
         </div>
       )}
       <div className="ml-80">
-        {userDetails && <h1>You are seeing {userDetails.name} tasks </h1>}
-        <ul>
+        {userDetails && <h2>You are seeing {userDetails.name} tasks </h2>}
+        <ul className="mt-20">
           {" "}
           <br />
           {userTasks &&
             userTasks.map((task) => (
-              <div key={task._id}>
+              <div key={task._id} >
                 <li key={task._id}>
                   {task.name} {task.priority} {task.status}
                 </li>
@@ -75,7 +76,7 @@ export default function SeeInferiorTask() {
       </div>
       <Modal active={active} toggle={toggle}>
         <div>
-          <h1>Reports of {editTask.name}</h1>
+          <h2>Reports of {editTask.name}</h2>
           <ul>
             {reports.length ? (
               reports.map((report) => (
