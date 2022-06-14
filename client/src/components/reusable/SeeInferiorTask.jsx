@@ -7,6 +7,7 @@ import {
 } from "../../redux/actions";
 import LoginController from "./LoginController";
 import Modal from "./Modal";
+import demo from "../../assets/demo.png";
 
 export default function SeeInferiorTask() {
   const dispatch = useDispatch();
@@ -17,13 +18,11 @@ export default function SeeInferiorTask() {
   const userTasks = useSelector((state) => state.todosId);
   const userDetails = useSelector((state) => state.userDetails[0]);
   const reports = useSelector((state) => state.taskReports);
-  console.log(editTask);
-  console.log(id);
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
   }
-  console.log(reports);
+  
   const toggle = () => {
     setActive(!active);
   };
@@ -36,15 +35,21 @@ export default function SeeInferiorTask() {
 
   return (
     <div>
-      <div>
-        <img src={userDetails.profilePic} alt="" width="100rem" />
-        <h3>
-          {" "}
-          {userDetails.name} {userDetails.lastName}{" "}
-        </h3>
-        <p>{userDetails.telephone}</p>
-        <p>{userDetails.email}</p>
-      </div>
+      {userDetails.profilePic && (
+        <div>
+          <img
+            src={userDetails.profilePic ? userDetails.profilePic : demo}
+            alt=""
+            width="100rem"
+          />
+          <h3>
+            {" "}
+            {userDetails.name} {userDetails.lastName}{" "}
+          </h3>
+          <p>{userDetails.telephone}</p>
+          <p>{userDetails.email}</p>
+        </div>
+      )}
       <div className="ml-80">
         {userDetails && <h1>You are seeing {userDetails.name} tasks </h1>}
         <ul>
