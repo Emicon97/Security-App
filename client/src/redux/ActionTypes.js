@@ -19,4 +19,5 @@ export const DESTROY = "DESTROY";
 export const GET_REPORT_TASKS = "GET_REPORT_TASKS";
 export const GET_REPORTS = "GET_REPORTS";
 export const POST_REPORT_TASKS = "POST_REPORT_TASKS";
+export const RECOVER_PASSWORD = "RECOVER_PASSWORD";
 export const RESET_REPORT = "RESET_REPORT"

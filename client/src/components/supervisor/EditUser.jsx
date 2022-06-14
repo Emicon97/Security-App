@@ -46,10 +46,10 @@ export default function EditUser({ user, hierarchy }) {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "a4bkl9ib");
+    data.append("upload_preset", "ov2fimuw");
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/securityapp/image/upload",
+      "https://api.cloudinary.com/v1_1/centinelapp/image/upload",
       { method: "POST", body: data }
     );
     const file = await res.json();

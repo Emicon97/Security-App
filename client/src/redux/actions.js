@@ -313,6 +313,33 @@ export function postTaskReports(id, body, header){
   }
 }
 
+export function sendRequest(values){
+  return async function(){
+    try{
+      await axios.put(`${url}/email`, values);
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
+
+export function recoverPassword(value, header){
+  return async function(dispatch){
+    try{
+      const user = await axios.put(`${url}/email/recover/${value.id}`,value, header)
+      SaveId(user.data[0]._id);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
+      return dispatch({
+        type: LOGIN_PRUEBA,
+        payload: user.data
+      })
+    }catch(error){
+      window.alert(error.response.data)
+    }
+    
 export function resetReport(){
   return async function(dispatch){
     return dispatch({
