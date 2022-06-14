@@ -14,9 +14,7 @@ import Modal from "../reusable/Modal";
 import { Tertiary, Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-//animations
-import aos from "aos";
-import "aos/dist/aos.css";
+//animationsss";
 import swal from "sweetalert";
 
 export default function Tasks({ show }) {
@@ -83,8 +81,6 @@ export default function Tasks({ show }) {
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
-    aos.init({ duration: 700 });
-    // console.log(toDoUpdated, "useEffect")
     // eslint-disable-next-line
   }, [dispatch, toDoUpdated]);
   useEffect(() => {
@@ -276,7 +272,7 @@ export default function Tasks({ show }) {
         <div className="mx-auto w-[90%] h-full overflow-auto pr-[5px]">
           {ToDos?.map((todo, i) => (
             <>
-              <div className="flex items-center justify-end italic">
+              <div className="flex items-center justify-end italic" key={todo._id}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -340,7 +336,6 @@ export default function Tasks({ show }) {
               <div
                 id={todo._id}
                 key={i}
-                data-aos="zoom-in"
                 className={`todo-tasks
                   ${
                     todo.priority === "urgent"

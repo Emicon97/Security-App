@@ -21,7 +21,6 @@ import { url } from './url';
 import { SaveToken, SaveRefreshToken, SaveId, SaveUser } from './LocalStorage';
 
 export function getUsersById(id, header){
-  console.log(header)
     return async function(dispatch){
       try{
         const employees = await axios.get(`${url}/user/${id}`, header);
