@@ -16,7 +16,8 @@ import {
   GET_REPORTS,
   POST_REPORT_TASKS,
   ENVIRONMENTS,
-  ENVIRONMENT_USERS
+  ENVIRONMENT_USERS,
+  RESET_REPORT
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -83,7 +84,9 @@ export function addTaskToUser(body, header){
 export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
+      console.log(id, status)
       const state = await axios.put(`${url}/todos/${id}`, status, header)
+      console.log("this is state.data", state.data)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -325,6 +328,15 @@ export function createEnvironments(name, header) {
     }
   }
 }
+export function sendRequest(values){
+  return async function(){
+    try{
+      await axios.put(`${url}/email`, values);
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
 
 export function getAllEnvironments(name, header) {
   return async function(dispatch){
@@ -351,5 +363,30 @@ export function getEnvironmentUsers(name, header) {
     }catch(err){
       console.log(err.response.data);
     }
+  }
+}
+export function recoverPassword(value, header){
+  return async function(dispatch){
+    try{
+      const user = await axios.put(`${url}/email/recover/${value.id}`,value, header)
+      SaveId(user.data[0]._id);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
+      return dispatch({
+        type: LOGIN_PRUEBA,
+        payload: user.data
+      })
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
+export function resetReport(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_REPORT
+    })
   }
 }
