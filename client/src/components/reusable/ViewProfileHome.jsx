@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import './../styles/reusable/ViewProfileHome.css'
 
 export default function ViewProfileHome({ user }) {
-
+    let id = localStorage.getItem('id')
+    let rolUsuario = localStorage.getItem('user') 
     // let user = useSelector(state => state.userDetails[0])
     // let dispatch = useDispatch()
 

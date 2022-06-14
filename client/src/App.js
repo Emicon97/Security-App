@@ -28,9 +28,12 @@ function App() {
   const location = useLocation()
   useEffect(()=>{
     if(token){
-      const user = localStorage.getItem('user');
+      let user = localStorage.getItem('user');
       const id = localStorage.getItem('id');
       let view = location.pathname.split("/")[3]
+      if(user==='watcher'){
+        user = 'guard'
+      }
       if(view){
         return navigate(`/${user}/${id}/${view}`);
       }

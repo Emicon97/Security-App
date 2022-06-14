@@ -286,7 +286,7 @@ export function getTaskReports(id, header){
 // export function createEnvironment(header){
 //   return async function(dispatch){
 //     try{
-//       const enviro = await axios.post(`${url}/environment/`, {name:'barrio fino'}, header);
+//       const enviro = await axios.post(`${url}/environment/`,name, header);
 //       return dispatch({
 //         type: CREATE_ENVIRONMENT,
 //         payload: enviro.data
