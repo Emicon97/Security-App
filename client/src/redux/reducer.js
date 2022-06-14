@@ -13,6 +13,7 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+  GET_REPORTS,
   POST_REPORT_TASKS,
 } from "./ActionTypes";
 
@@ -28,7 +29,8 @@ const initialState = {
   userData: [],
   usersPaginate: [],
   token: "",
-  taskReports: {},
+  taskReports: [],
+  reports: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -88,22 +90,27 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         userData: payload,
-        token: payload[2],
-      };
+        token: payload[2]
+      }
     case LOGOUT:
       return {
         ...state,
-        token: payload,
-      };
+        token: payload
+      }
     case GET_REPORT_TASKS:
       return {
         ...state,
-        taskReports: payload,
-      };
+        taskReports: payload
+      }
     case POST_REPORT_TASKS:
       return {
         ...state,
         taskReports: payload,
+      };
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: payload
       };
     case DESTROY:
       return {

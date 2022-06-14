@@ -10,10 +10,10 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
-  LOGOUT,
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
+  GET_REPORTS,
   POST_REPORT_TASKS,
   RECOVER_PASSWORD
 } from "./ActionTypes";
@@ -160,20 +160,6 @@ export function getEmployees(id, header){
   }
 }
 
-export function searchEmployees(id, name, header){
-  return async function(dispatch){
-    try{
-      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`, header);
-      return dispatch({
-        type:GET_EMPLOYEES,
-        payload: users.data
-      });
-    }catch(err){
-      console.log(err.response.data)
-    }
-  }
-};
-
 export function getEmployeeById(id, header){
   return async function(dispatch){
     try{
@@ -286,9 +272,23 @@ export function destroyData() {
 export function getTaskReports(id, header){
   return async function(dispatch){
     try{
-      const reports = await axios.get(`${url}/todos/reports/${id}`, header);
+      const reports = await axios.get(`${url}/report/${id}`, header);
       return dispatch({
         type: GET_REPORT_TASKS,
+        payload: reports.data
+      })
+    }catch(err){
+      window.alert(err.response.data)
+    }
+  }
+}
+
+export function getReports(id, relation, header){
+  return async function(dispatch){
+    try{
+      const reports = await axios.get(`${url}/report/${id}?relation=${relation}`, header);
+      return dispatch({
+        type: GET_REPORTS,
         payload: reports.data
       })
     }catch(err){
