@@ -15,7 +15,8 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
-  TEMP_VERIFICATION
+  TEMP_VERIFICATION,
+  RESET_REPORT
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -82,7 +83,9 @@ export function addTaskToUser(body, header){
 export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
+      console.log(id, status)
       const state = await axios.put(`${url}/todos/${id}`, status, header)
+      console.log("this is state.data", state.data)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -313,7 +316,6 @@ export function postTaskReports(id, body, header){
 
 
 export function sendRequest(values){
-  console.log(values)
   return async function(){
     try{
       await axios.put(`${url}/email`, values);
@@ -354,5 +356,13 @@ export function verificationUser({dni,email}){
     }catch(error){
       window.alert(error.response.data)
     }
+  }
+}
+
+export function resetReport(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_REPORT
+    })
   }
 }
