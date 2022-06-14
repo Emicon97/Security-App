@@ -129,15 +129,12 @@ export default function Tasks({ show }) {
 
   const [error, setError] = useState({});
 
-<<<<<<< HEAD
-=======
   const validateTitle = (input) => {
     let error = {};
     if (!input.title) error.title = "Title is required";
     return error;
   };
 
->>>>>>> 95b0f518b799e3952a62b951cca2d057e752fe46
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length) {
       e.preventDefault();
@@ -276,16 +273,6 @@ export default function Tasks({ show }) {
         <div className="mx-auto w-[90%] h-full overflow-auto pr-[5px]">
           {ToDos?.map((todo, i) => (
             <>
-<<<<<<< HEAD
-              <div className="flex items-center justify-end italic" key={todo._id}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                You wanna
-                {
-                  todo.status === 'left' &&
-                  (
-=======
               {todo.status === "done" ? (
                 <div key={todo._id}></div>
               ) : (
@@ -307,7 +294,6 @@ export default function Tasks({ show }) {
                   </svg>
                   You want to:
                   {(todo.status === "left" && (
->>>>>>> 95b0f518b799e3952a62b951cca2d057e752fe46
                     <>
                       <button
                         title="Set task in posponed"

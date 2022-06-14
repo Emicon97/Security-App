@@ -16,7 +16,6 @@ export default function ViewEmployeesHome({ employees, id, header }) {
   let dispatch = useDispatch();
   let urlImg =
     "https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png";
-
   useEffect(() => {
     dispatch(getEmployees(id, header));
     aos.init({ duration: 700 });
@@ -32,10 +31,11 @@ export default function ViewEmployeesHome({ employees, id, header }) {
       <div className="screen-cards">
         {demo.length ? (
           demo.map((employee) => (
-            <div className="card-employees" key={employee._id}>
+            < div className = "card-employees" key = { employee._id } >
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">
-                <h4>{employee.environment[0]}</h4>
+                { console.log(employee) }
+                <h4>{employee ? employee.environment : null}</h4>
                 <p>
                   No c q puede ir aca, podria ser un vistazo del ultimo reporte
                 </p>
@@ -54,11 +54,11 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                 </Link>
               </div>
             </div>
-          ))
-        ) : (
-          <h3>No tienes empleados</h3>
+      ))
+      ) : (
+      <h3>No tienes empleados</h3>
         )}
-      </div>
     </div>
+    </div >
   );
 }

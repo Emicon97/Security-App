@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: #ffdffd;
+    background-color: #afb0ff46;
     border-radius: 20px;
     border: 1px solid rgb(221, 220, 220);
 
@@ -53,5 +53,5 @@
     margin-top: 5px;
     padding: 5px;
     border-radius: 7px;
-    background-color: #ffd0fd;
+    /* background-color: #b8e9ff88; */
 }
