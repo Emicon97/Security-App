@@ -53,7 +53,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                     alt=""
                   />
                 </div>
-                <Link to={`/${hierarchy}/${employee._id}/EditTask`}>
+                <Link to={`/${hierarchy}/${id}/EditTask/${employee._id}`}>
                   <h4 className="name-employee">
                     {employee.name} <span>{employee.lastName}</span>
                   </h4>
