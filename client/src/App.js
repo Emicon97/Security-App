@@ -17,7 +17,6 @@ import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
 
 import SendRequestEmail from "./components/SendRequestEmail";
 import RecoverPass from './components/RecoverPass';
-
 import { destroyData } from "./redux/actions";
 import { useLocation } from "react-router-dom";
 import SentReports from "./components/reusable/Reports";

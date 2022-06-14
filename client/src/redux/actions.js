@@ -314,7 +314,6 @@ export function postTaskReports(id, body, header){
   }
 }
 
-
 export function sendRequest(values){
   return async function(){
     try{
@@ -359,6 +358,7 @@ export function verificationUser({dni,email}){
   }
 }
 
+    
 export function resetReport(){
   return async function(dispatch){
     return dispatch({
