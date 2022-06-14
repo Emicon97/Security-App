@@ -307,7 +307,7 @@ export function getReports(id, relation, header){
         payload: reports.data
       })
     }catch(error){
-      window.alert(err.response.data)
+      window.alert(error.response.data)
     }
   }
 }
