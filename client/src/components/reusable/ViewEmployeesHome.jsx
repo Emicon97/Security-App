@@ -35,7 +35,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
             <div className="card-employees" key={employee._id}>
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">
-                <h4>{employee.environment[0]}</h4>
+                <h4>{employee.environment}</h4>
                 <p>
                   No c q puede ir aca, podria ser un vistazo del ultimo reporte
                 </p>
