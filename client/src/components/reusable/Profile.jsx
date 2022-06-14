@@ -23,7 +23,6 @@ export default function UserProfile({ show }) {
   const toggleEdit = () => {
     setActiveEdit(!activeEdit);
   };
-
   useEffect(() => {
     dispatch(getUsersById(id, header));
   }, [dispatch]);
@@ -33,23 +32,25 @@ export default function UserProfile({ show }) {
       <div className={`flex justify-center items-center fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
       
         <div id="screen-profile">
-          <div className="img">
-            <img src={user ? user.profilePic : urlImg} alt="" />
+          
+          <button className="edit" onClick={toggleEdit}>Edit</button>
+          
+          <div className="img" onClick={togglePic}>
+            <img src={user.profilePic ? user.profilePic : urlImg} alt="" />          
           </div>
+
           <h3>{`${user.name} ${user.lastName}`}</h3>
           <h4>{user.telephone}</h4>
           <h5>{user.email}</h5>
-
 
         </div>
 
       </div>
 
-      {/* ACA VA LO COMENTADO */}
       <Modal active={activePic} toggle={togglePic}>
         <img
           className="w-80 h-80 rounded-full m-5"
-          src={user ? user.profilePic : urlImg}
+          src={user.profilePic ? user.profilePic : urlImg}
           alt="Foto de perfil"
         />
       </Modal>
@@ -66,49 +67,3 @@ const Image = () => `
   ring-4 ring-[#0243EC]
   m-5
 `;
-
-
-
-{/* <div className={`flex justify-center items-center fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
-            <div className="flex flex-col items-center m-4">
-              <img
-                src={user ? user.profilePic : urlImg}
-                alt="foto de perfil"
-                width="300rem"
-                className={Image()}
-              />
-              <button onClick={togglePic} className={Primary()}>
-                See pic
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                  <path
-                    fillRule="evenodd"
-                    d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="bg-[#EEEDFF] w-2/5 h-64 p-5 m-4 h-60 rounded-3xl">
-              <div className="flex justify-end">
-                <button className={Primary()} onClick={toggleEdit}>
-                  Edit
-                </button>
-              </div>
-              {user && (
-                <div className="h-40 flex flex-col justify-end">
-                  <p className="text-4xl font-semibold">
-                    {user.name} {user.lastName}
-                  </p>
-                  <p className="text-2xl italic font-light">{user.email}</p>
-                  <p>{user.dni}</p>
-                  <p>{user.telephone}</p>
-                </div>
-              )}
-            </div>
-          </div> */}
