@@ -23,7 +23,6 @@ export default function UserProfile({ show }) {
   const toggleEdit = () => {
     setActiveEdit(!activeEdit);
   };
-console.log(user)
   useEffect(() => {
     dispatch(getUsersById(id, header));
   }, [dispatch]);
