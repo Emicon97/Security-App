@@ -74,6 +74,10 @@ export default function Login() {
     }
   }
 
+  function requestEmail(){
+    navigate('/email')
+  }
+
   useEffect(() => {
     if (userData[1] && token) {
       const id = userData[0]._id;
@@ -154,7 +158,7 @@ export default function Login() {
         </div>
         <button type="submit">Login</button>
         {/* Btn para recuperar contraseña */}
-        <button onClick>Did you forget your password?</button>
+        <button onClick={requestEmail}>Did you forget your password?</button>
       </form>
 
     </div>

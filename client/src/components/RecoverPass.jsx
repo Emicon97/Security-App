@@ -1,28 +1,48 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { loginPrueba } from "../redux/actions";
-import './styles/Login.css'
-
+import { useDispatch, useSelector } from "react-redux";
+import { recoverPassword } from "../redux/actions";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./styles/Login.css";
 
 export default function Login() {
   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const userData = useSelector((state) => state.userData);
-//   const token = useSelector((state) => state.token);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const userData = useSelector((state) => state.userData);
+  const token = useSelector((state) => state.token);
   const [input, setInput] = useState({
-    dni: "",
-    email: "",
+    password: "",
+    repeatPassword: "",
+    id: ""
   });
   const [errors, setErrors] = useState({});
   const [validate, setValidate] = useState(true);
-  const [formIsCorrect, setFormIsCorrect] = useState(false)
+
+  useEffect(() => {
+    if (userData[1] && token) {
+      const id = userData[0]._id;
+      switch (userData[1]) {
+        case "watcher":
+          return navigate(`/guard/${id}`);
+        case "supervisor":
+          return navigate(`/supervisor/${id}`);
+        case "boss":
+          return navigate(`/boss/${id}`);
+      }
+    }
+  }, [token]);
 
   const validations = (input) => {
     let error = {};
-    if(!/^[0-9]*$/.test(input.dni)) error.dni = "The ID must have 8 digits";
-    if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(input.email)) {
-      error.email = "The email can only contain letters, numbers, periods, hyphens and underscores.";
-    }
+    if (
+      !/^(?=.{10,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/.test(
+        input.password
+      )
+    )
+      error.password =
+        "The password must have at least 1 uppercase, 1 lowercase, 1 digit, 1 special character plus a length of at least 10.";
+    if (input.repeatPassword !== input.password)
+      error.repeatPassword = "Passwords do not match";
     return error;
   };
 
@@ -41,13 +61,19 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!errors.dni && !errors.email) {
-      setFormIsCorrect(true)
+    if (!errors.password && !errors.repeatPassword) {
       //reemplazar por otra actions
-      dispatch(loginPrueba(input));
-      setInput({ dni: "", email: "" });
+      let user = location.pathname.split('/')
+      let header = {headers:{ 
+            'auth-token': user[4],
+            'refresh-token': user[5],
+            'id': user[3]
+        }}
+      let value = { ...input, id: user[3]}
+      dispatch(recoverPassword(value, header));
+      setInput({ password: "", repeatPassword: "", id: "" });
     } else {
-      if (errors.dni || errors.email) {
+      if (errors.password || errors.repeatPassword) {
         setValidate(false);
       } else {
         setValidate(true);
@@ -55,56 +81,65 @@ export default function Login() {
     }
   }
 
-  return  (
+  return (
     <div className="login-screen">
-      <form 
-        className="form"
-        onSubmit={handleSubmit}
-      >
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form-input-container">
-          <input 
-            type="number"
-            name="dni"
-            id="dni" 
-            className="form__input" 
-            autoComplete="off" 
+          <input
+            type="text"
+            name="password"
+            id="password"
+            className="form__input"
+            autoComplete="off"
             placeholder=" "
-            value={input.dni}
+            value={input.password}
             onChange={(e) => {
               handleChange(e);
-            }} 
+            }}
           />
-          <label htmlFor="dni" className="form__label">DNI</label>
+          <label htmlFor="dni" className="form__label">
+            Password
+          </label>
         </div>
         <div className="input-password-container">
           <div className="form-password-container">
-            <input 
-              type="email"
-              name="email"
-              id="email" 
-              className="form__input password__input" 
-              autoComplete="off" 
+            <input
+              type="text"
+              name="repeatPassword"
+              id="repeatPassword"
+              className="form__input password__input"
+              autoComplete="off"
               placeholder=" "
-              value={input.email}
+              value={input.repeatPassword}
               onChange={(e) => {
                 handleChange(e);
               }}
             />
-            <label htmlFor="email" className="form__label form__label__password">Email</label>
+            <label
+              htmlFor="email"
+              className="form__label form__label__password"
+            >
+              Repeat password
+            </label>
           </div>
         </div>
-          
+
         <div className="errors-input">
-          <h4 className="errors" style={{display: !validate && errors.dni ? "block" : "none"}}>
+          <h4
+            className="errors"
+            style={{ display: !validate && errors.password ? "block" : "none" }}
+          >
             {!validate ? errors.dni : null}
           </h4>
-          <h4 className="errors" style={{display: !validate && errors.email ? "block" : "none"}}>
-            {!validate ? errors.email : null}
+          <h4
+            className="errors"
+            style={{ display: !validate && errors.repeatPassword ? "block" : "none" }}
+          >
+            {!validate ? errors.repeatPassword : null}
           </h4>
         </div>
-        <button type="submit">Send request</button>
+        <button type="submit">Change Password</button>
       </form>
-
     </div>
-  )
-};
+  );
+}

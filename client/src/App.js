@@ -15,6 +15,8 @@ import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
 import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
 
+import SendRequestEmail from "./components/SendRequestEmail";
+import RecoverPass from './components/RecoverPass';
 
 import { destroyData } from "./redux/actions";
 import { useLocation } from 'react-router-dom';
@@ -72,6 +74,8 @@ function App() {
         <Route path="/:user/:id/reports" element={<SentReports show={show} />} />
 
         {/* NOT FOUND */}
+        <Route path="/email" element={<SendRequestEmail/>}/>
+        <Route path="/email/recover/:id/:token/:refresh" element={<RecoverPass/>}/>
         <Route path="*" element={<Redirect/>}/>
       </Routes>
     </>
