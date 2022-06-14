@@ -13,7 +13,9 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
-  CREATE_ENVIRONMENT
+  CREATE_ENVIRONMENT,
+  GET_REPORTS,
+  POST_REPORT_TASKS,
 } from "./ActionTypes";
 
 const initialState = {
@@ -27,9 +29,10 @@ const initialState = {
   todoUpdate: {},
   userData: [],
   usersPaginate: [],
-  token: '',
+  token: "",
   taskReports: [],
-  enviroment: []
+  enviroment: [],
+  reports: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -91,30 +94,40 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: payload,
         token: payload[2]
       }
-      case LOGOUT:
-        return {
-          ...state,
-          token: payload
-        }
-        case GET_REPORT_TASKS:
-          return {
-            ...state,
-            taskReports: payload
-          }
-        case DESTROY:
-          return {
-            ...state,
-            supervisorDetail: {},
-            watcherDetail: {},
-            employees: [],
-            users: [],
-            userDetails: {},
-            todosId: [],
-            todos: [],
-            todoUpdate: {},
-            userData: [],
-            usersPaginate: [],
-        }
+    case LOGOUT:
+      return {
+        ...state,
+        token: payload
+      }
+    case GET_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload
+      }
+    case POST_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload,
+      };
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: payload
+      };
+    case DESTROY:
+      return {
+        ...state,
+        supervisorDetail: {},
+        watcherDetail: {},
+        employees: [],
+        users: [],
+        userDetails: {},
+        todosId: [],
+        todos: [],
+        todoUpdate: {},
+        userData: [],
+        usersPaginate: [],
+      };
       case CREATE_ENVIRONMENT:
         console.log('reducer',payload)
         return{
@@ -123,7 +136,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         }
     default:
       return { ...state };
-  };
+  }
 };
 
 export default rootReducer;

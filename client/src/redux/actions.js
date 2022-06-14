@@ -10,15 +10,16 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
-  LOGOUT,
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
-  CREATE_ENVIRONMENT
+  CREATE_ENVIRONMENT,
+  GET_REPORTS,
+  POST_REPORT_TASKS,
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
-import { SaveToken, SaveId, SaveUser } from './LocalStorage';
+import { SaveToken, SaveRefreshToken, SaveId, SaveUser } from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -159,20 +160,6 @@ export function getEmployees(id, header){
   }
 }
 
-export function searchEmployees(id, name, header){
-  return async function(dispatch){
-    try{
-      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`, header);
-      return dispatch({
-        type:GET_EMPLOYEES,
-        payload: users.data
-      });
-    }catch(err){
-      console.log(err.response.data)
-    }
-  }
-};
-
 export function getEmployeeById(id, header){
   return async function(dispatch){
     try{
@@ -228,9 +215,10 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
-      SaveToken(user.data[2])
-      SaveId(user.data[0]._id)
-      SaveUser(user.data[1])
+      SaveId(user.data[0]._id);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
@@ -302,6 +290,35 @@ export function createEnvironment(header){
       return dispatch({
         type: CREATE_ENVIRONMENT,
         payload: enviro.data
+      })
+      }catch(err){
+        window.alert(err.response.data)
+    }
+  }
+}
+
+export function getReports(id, relation, header){
+  console.log(id, relation, header)
+  return async function(dispatch){
+    try{
+      const reports = await axios.get(`${url}/report/${id}?relation=${relation}`, header);
+      return dispatch({
+        type: GET_REPORTS,
+        payload: reports.data
+      })
+    }catch(error){
+      window.alert(err.response.data)
+    }
+  }
+}
+
+export function postTaskReports(id, body, header){
+  return async function(dispatch){
+    try{
+      const report = await axios.post(`${url}/report/${id}`, body, header);
+      return dispatch({
+        type: POST_REPORT_TASKS,
+        payload: report.data
       })
     }catch(err){
       window.alert(err.response.data)
