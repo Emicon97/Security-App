@@ -131,13 +131,12 @@ export default function Tasks({ show }) {
   };
 
   const [error, setError] = useState({});
-  
-  const validateTitle = (input) => {
-    let error = {}
-    if (!input.title) error.title = "Title is required"
-    return error
-  };
 
+  const validateTitle = (input) => {
+    let error = {};
+    if (!input.title) error.title = "Title is required";
+    return error;
+  };
 
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length > 0) {
@@ -147,7 +146,7 @@ export default function Tasks({ show }) {
       toggle();
       swal("Your report has been sent", "", "success");
       setReport({ ...report, title: "", description: "", picture: "" });
-    } else{
+    } else {
       e.preventDefault();
       swal("Please fulfill in the required fields", "", "error");
     }
@@ -167,12 +166,18 @@ export default function Tasks({ show }) {
   };
 
   return (
-    <div className={`screen-tasks-container font-['nunito'] fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
+    <div
+      className={`screen-tasks-container font-['nunito'] fixed top-16 right-0 bottom-0 ${
+        show ? "left-[245px]" : "left-[87px]"
+      } ease-in-out transition-all duration-700`}
+    >
       {/* SCREEN */}
       <div className="screen-tasks flex flex-col h-full">
         {/* HEAD */}
         <div className="head-tasks flex items-center justify-around w-[90%] m-auto mt-[15px]">
-          <h1 className="text-2xl text-[#0243EC] flex items-center title-tasks">Things to do</h1>
+          <h1 className="text-2xl text-[#0243EC] flex items-center title-tasks">
+            Things to do
+          </h1>
           <div className="flex items-center">
             {todosUrgent.length ? (
               <svg
@@ -271,16 +276,28 @@ export default function Tasks({ show }) {
         <div className="mx-auto w-[90%] h-full overflow-auto pr-[5px]">
           {ToDos?.map((todo, i) => (
             <>
-              <div className="flex items-center justify-end italic">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                You wanna
-                {
-                  todo.status === 'left' &&
-                  (
+              {todo.status === "done" ? (
+                <div></div>
+              ) : (
+                <div className="flex items-center justify-end italic">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 mr-1"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  You want to:
+                  {(todo.status === "left" && (
                     <>
-                      <button title="Set task in posponed" className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                      <button
+                        title="Set task in posponed"
+                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="postponed"
                         onClick={(e) => {
@@ -291,7 +308,9 @@ export default function Tasks({ show }) {
                         Postponed
                       </button>
                       or
-                      <button title="Set task in done" className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                      <button
+                        title="Set task in done"
+                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="done"
                         onClick={(e) => {
@@ -302,36 +321,38 @@ export default function Tasks({ show }) {
                         Done
                       </button>
                     </>
-                  ) ||
-                  todo.status === 'postponed' &&
-                  (
-                    <button title="Set task in done" className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
-                      id={todo._id}
-                      value="done"
-                      onClick={(e) => {
-                        handleBringTodoId(e);
-                        toggle(e);
-                      }}
-                    >
-                      Done
-                    </button>
-                  ) ||
-                  todo.status === 'done' &&
-                  (
-                    <button title="Set task in posponed" className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
-                      id={todo._id}
-                      value="postponed"
-                      onClick={(e) => {
-                        handleBringTodoId(e);
-                        toggle(e);
-                      }}
-                    >
-                      Postponed
-                    </button>
-                  )
-                }
-                the task?
-              </div>
+                  )) ||
+                    (todo.status === "postponed" && (
+                      <button
+                        title="Set task in done"
+                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                        id={todo._id}
+                        value="done"
+                        onClick={(e) => {
+                          handleBringTodoId(e);
+                          toggle(e);
+                        }}
+                      >
+                        Done
+                      </button>
+                    )) ||
+                    (todo.status === "done" && (
+                      <button
+                        title="Set task in posponed"
+                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                        id={todo._id}
+                        value="postponed"
+                        onClick={(e) => {
+                          handleBringTodoId(e);
+                          toggle(e);
+                        }}
+                      >
+                        Postponed
+                      </button>
+                    ))}
+                  the task?
+                </div>
+              )}
               <div
                 id={todo._id}
                 key={i}
