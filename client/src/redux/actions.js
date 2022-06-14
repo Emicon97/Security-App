@@ -339,10 +339,10 @@ export function sendRequest(values){
   }
 }
 
-export function getAllEnvironments(name, header) {
+export function getAllEnvironments(header) {
   return async function(dispatch){
     try{
-      const environment = await axios.post(`${url}/environment`, name, header);
+      const environment = await axios.get(`${url}/environment`, header);
       return dispatch({
         type: ENVIRONMENTS,
         payload: environment.data
@@ -353,12 +353,12 @@ export function getAllEnvironments(name, header) {
   }
 }
 
-export function getEnvironmentUsers(name, header) {
+export function getEnvironmentUsers(id, name, header) {
   return async function(dispatch){
     try{
-      const environment = await axios.post(`${url}/environment`, name, header);
+      const environment = await axios.get(`${url}/environment/${id}`, name, header);
       return dispatch({
-        type: ENVIRONMENTS,
+        type: ENVIRONMENT_USERS,
         payload: environment.data
       })
     }catch(err){
