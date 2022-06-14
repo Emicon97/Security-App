@@ -141,7 +141,7 @@ export default function Tasks({ show }) {
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length > 0) {
       e.preventDefault();
-      dispatch(updateStatus(todoId, status, header));
+      dispatch(updateStatus(todoId, { status: status }, header));
       dispatch(postTaskReports(id, report, header));
       toggle();
       swal("Your report has been sent", "", "success");
@@ -277,9 +277,12 @@ export default function Tasks({ show }) {
           {ToDos?.map((todo, i) => (
             <>
               {todo.status === "done" ? (
-                <div></div>
+                <div key={todo._id}></div>
               ) : (
-                <div className="flex items-center justify-end italic">
+                <div
+                  className="flex items-center justify-end italic"
+                  key={todo._id}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mr-1"

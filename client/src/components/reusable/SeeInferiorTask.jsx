@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getToDosById,
   getUsersById,
   getTaskReports,
+  resetReport,
 } from "../../redux/actions";
 import LoginController from "./LoginController";
 import Modal from "./Modal";
 import demo from "../../assets/demo.png";
 import { useLocation } from "react-router-dom";
+import "../styles/Loader.css"
 
 export default function SeeInferiorTask() {
   const dispatch = useDispatch();
@@ -19,7 +21,8 @@ export default function SeeInferiorTask() {
   const userDetails = useSelector((state) => state.userDetails[0]);
   const userTasks = useSelector((state) => state.todosId);
   const reports = useSelector((state) => state.taskReports);
-  const userId = useLocation().pathname.split("/")[2];
+  const userId = useLocation().pathname.split("/")[4];
+  // console.log("this is userDetails" ,userDetails, "this is userTasks", userTasks, "this is reports", reports)
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
@@ -30,18 +33,23 @@ export default function SeeInferiorTask() {
   };
 
   useEffect(() => {
+    return () => dispatch(resetReport());
+  }, []);
+  
+  useEffect(() => {
     dispatch(getToDosById(userId, header));
     dispatch(getUsersById(userId, header));
-  }, [userId, userDetails, userTasks]);
+  }, []);
+
 
   useEffect(() => {
     if (editTask._id) dispatch(getTaskReports(editTask._id, header));
   }, [editTask]);
   
-  if (userDetails.profilePic) {
+  if (userDetails === undefined) {
     return (
       <div>
-        <div class="lds-spinner">
+        <div className="lds-spinner mt-80 ml-80">
           <div></div>
           <div></div>
           <div></div>
