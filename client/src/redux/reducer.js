@@ -13,7 +13,7 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
-  // CREATE_ENVIRONMENT,
+  CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
 } from "./ActionTypes";
@@ -128,12 +128,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: [],
         usersPaginate: [],
       };
-      // case CREATE_ENVIRONMENT:
-      //   console.log('reducer',payload)
-      //   return{
-      //     ...state,
-      //     enviroment: payload
-      //   }
+      case CREATE_ENVIRONMENT:
+        console.log('reducer',payload)
+        return{
+          ...state,
+          enviroment: payload
+        }
     default:
       return { ...state };
   }

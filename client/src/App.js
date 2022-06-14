@@ -72,7 +72,7 @@ function App() {
         <Route path="/:user/:id/tasks" element={<Tasks show={show} />} />
         <Route path="/:user/:id/createTask" element={<CreateNewTask show={show} />} />
         <Route path="/:user/:id/editTask" element={<SeeInferiorTask show={show} />} />
-        <Route path="/:user/:id/reports" element={<SentReports show={show} />} />
+        <Route path="/:user/:id/reports/:relation" element={<SentReports show={show} />} />
 
         {/* NOT FOUND */}
         <Route path="*" element={<Redirect/>}/>
