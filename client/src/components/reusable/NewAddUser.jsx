@@ -79,8 +79,8 @@ export default function AddNewUser({show}) {
 
     //Password
     if (
-      input.password.lentgh < 8 ||
-      input.password.lentgh > 24 ||
+      input.password.length < 8 ||
+      input.password.length > 24 ||
       !input.password
     )
       error.password = "Password must be between 8 and 24 characters";
@@ -116,6 +116,7 @@ export default function AddNewUser({show}) {
   };
 
   function handleChange(e) {
+    console.log(input)
     setInput({
       ...input,
       [e.target.name]: e.target.value,

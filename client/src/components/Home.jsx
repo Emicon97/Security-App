@@ -26,9 +26,9 @@ export default function Home({show}) {
 
     }, [dispatch])
 
-    useEffect(() =>{
-        dispatch(createEnvironment(header))
-    },[])
+    // useEffect(() =>{
+    //     dispatch(createEnvironment(header))
+    // },[])
 
     if (user.length) {
         if (rolUsuario === "boss") {
