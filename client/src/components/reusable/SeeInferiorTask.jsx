@@ -8,6 +8,7 @@ import {
 import LoginController from "./LoginController";
 import Modal from "./Modal";
 import demo from "../../assets/demo.png";
+import { useLocation } from "react-router-dom";
 
 export default function SeeInferiorTask() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function SeeInferiorTask() {
   const userTasks = useSelector((state) => state.todosId);
   const userDetails = useSelector((state) => state.userDetails[0]);
   const reports = useSelector((state) => state.taskReports);
+  const userId = useLocation().pathname.split("/")[2];
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
@@ -26,13 +28,15 @@ export default function SeeInferiorTask() {
   const toggle = () => {
     setActive(!active);
   };
-  console.log(editTask)
 
   useEffect(() => {
-    dispatch(getToDosById(id, header));
+    dispatch(getToDosById(userId, header));
     dispatch(getUsersById(id, header));
-    if (editTask._id) dispatch(getTaskReports(editTask._id, header));
   }, []);
+
+  useEffect(() => {
+    if (editTask._id) dispatch(getTaskReports(editTask._id, header))
+  }, [editTask]);
 
   return (
     <div>
@@ -52,11 +56,11 @@ export default function SeeInferiorTask() {
         </div>
       )}
       <div className="ml-80">
-        {userDetails && <h2>You are seeing {userDetails.name} tasks </h2>}
+        {userDetails.name && <h2>You are seeing {userDetails.name} tasks </h2>}
         <ul className="mt-20">
           {" "}
           <br />
-          {userTasks &&
+          {userTasks ? (
             userTasks.map((task) => (
               <div key={task._id} >
                 <li key={task._id}>
@@ -71,15 +75,15 @@ export default function SeeInferiorTask() {
                   See Reports
                 </button>
               </div>
-            ))}
+            ))) : ( <h2>This user has no tasks</h2>)}
         </ul>
       </div>
       <Modal active={active} toggle={toggle}>
         <div>
           <h2>Reports of {editTask.name}</h2>
           <ul>
-            {reports.length ? (
-              reports.map((report) => (
+            {reports.report.length ? (
+              reports.report.map((report) => (
                 <div>
                   <p>{report.title}</p>
                   <p>
