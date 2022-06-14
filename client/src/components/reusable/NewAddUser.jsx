@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { postUser } from "../../redux/actions";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
 import swal from "sweetalert";
 
-export default function AddNewUser({show}) {
+export default function AddNewUser({ show }) {
   const dispatch = useDispatch();
   const header = LoginController();
   const navigate = useNavigate();
 
-  const role = localStorage.getItem('user');
-  const id = localStorage.getItem('id');
+  const role = localStorage.getItem("user");
+  const id = localStorage.getItem("id");
 
   const [image, setImage] = useState("");
   const [input, setInput] = useState({
@@ -59,7 +59,7 @@ export default function AddNewUser({show}) {
       profilePic: file.secure_url,
     });
   };
-  
+
   function validateInput(input) {
     let error = {};
     const regex = /^[a-zA-Z ]+$/;
@@ -82,8 +82,8 @@ export default function AddNewUser({show}) {
 
     //Password
     if (
-      input.password.lentgh < 8 ||
-      input.password.lentgh > 24 ||
+      input.password.length < 8 ||
+      input.password.length > 24 ||
       !input.password
     )
       error.password = "Password must be between 8 and 24 characters";
@@ -155,20 +155,33 @@ export default function AddNewUser({show}) {
     dispatch(postUser(input, header, id));
     swal("User created successfully", "", "success");
     setInput({});
-    if(role === "supervisor"){
-      navigate(`/supervisor/${id}`)
+    if (role === "supervisor") {
+      navigate(`/supervisor/${id}`);
     } else {
       navigate(`/boss/${id}`);
     }
   }
 
   return (
-    <div className={`mt-6 fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700 font-['nunito']`}>
-      <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data" className="m-auto w-[70%]">
+    <div
+      className={`mt-6 fixed top-16 right-0 bottom-0 ${
+        show ? "left-[245px]" : "left-[87px]"
+      } ease-in-out transition-all duration-700 font-['nunito']`}
+    >
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        encType="multipart/form-data"
+        className="m-auto w-[70%]"
+      >
         <div className="flex-column justify-center mb-3">
           <div className="flex justify-between">
             <div>
-              <label className="">Name: {error.name && <small className="text-red-500 italic">{error.name}</small>}</label>
+              <label className="">
+                Name:{" "}
+                {error.name && (
+                  <small className="text-red-500 italic">{error.name}</small>
+                )}
+              </label>
               <input
                 type="text"
                 value={input.name}
@@ -180,7 +193,14 @@ export default function AddNewUser({show}) {
               />
             </div>
             <div>
-              <label className="">LastName: {error.lastName && <small className="text-red-500 italic">{error.lastName}</small>}</label>
+              <label className="">
+                LastName:{" "}
+                {error.lastName && (
+                  <small className="text-red-500 italic">
+                    {error.lastName}
+                  </small>
+                )}
+              </label>
               <input
                 type="text"
                 value={input.lastName}
@@ -194,7 +214,12 @@ export default function AddNewUser({show}) {
           </div>
           <div className="flex justify-between">
             <div>
-              <label className="">DNI: {error.dni && <small className="text-red-500 italic">{error.dni}</small>}</label>
+              <label className="">
+                DNI:{" "}
+                {error.dni && (
+                  <small className="text-red-500 italic">{error.dni}</small>
+                )}
+              </label>
               <input
                 type="number"
                 name="dni"
@@ -206,7 +231,12 @@ export default function AddNewUser({show}) {
               />
             </div>
             <div>
-              <label className="">E-mail: {error.email && <small className="text-red-500 italic">{error.email}</small>}</label>
+              <label className="">
+                E-mail:{" "}
+                {error.email && (
+                  <small className="text-red-500 italic">{error.email}</small>
+                )}
+              </label>
               <input
                 type="email"
                 name="email"
@@ -220,7 +250,14 @@ export default function AddNewUser({show}) {
           </div>
           <div className="flex justify-between">
             <div>
-              <label className="">Phone Number: {error.telephone && <small className="text-red-500 italic">{error.telephone}</small>}</label>
+              <label className="">
+                Phone Number:{" "}
+                {error.telephone && (
+                  <small className="text-red-500 italic">
+                    {error.telephone}
+                  </small>
+                )}
+              </label>
               <input
                 type="tel"
                 name="telephone"
@@ -232,7 +269,14 @@ export default function AddNewUser({show}) {
               />
             </div>
             <div>
-              <label className="">Password: {error.password && <small className="text-red-500 italic">{error.password}</small>}</label>
+              <label className="">
+                Password:{" "}
+                {error.password && (
+                  <small className="text-red-500 italic">
+                    {error.password}
+                  </small>
+                )}
+              </label>
               <input
                 type="password"
                 name="password"
@@ -255,13 +299,21 @@ export default function AddNewUser({show}) {
                   className={File()}
                 />
               </div>
-              {
-                !loading ? 
-                <img src={demo} className="w-12 h-12 mr-3" alt="Could not load" /> :
-                <img src={input.profilePic} className="w-12 h-12 mr-3" alt="Could not load" />
-              }
+              {!loading ? (
+                <img
+                  src={demo}
+                  className="w-12 h-12 mr-3"
+                  alt="Could not load"
+                />
+              ) : (
+                <img
+                  src={input.profilePic}
+                  className="w-12 h-12 mr-3"
+                  alt="Could not load"
+                />
+              )}
             </div>
-            <div className={`${show ? 'translate-x-6' : ''}}`}>
+            <div className={`${show ? "translate-x-6" : ""}}`}>
               {/* Chequear el environment */}
               <label className="">Environment:</label>
               <select
@@ -305,7 +357,9 @@ export default function AddNewUser({show}) {
             </div>
           </div>
         </div>
-        <button type="submit" className={`${Primary()} m-auto`}>Add User</button>
+        <button type="submit" className={`${Primary()} m-auto`}>
+          Add User
+        </button>
       </form>
     </div>
   );
