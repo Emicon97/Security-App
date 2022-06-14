@@ -24,6 +24,10 @@ export default function SentReports({show}) {
                <>
                   <p></p>
                   <h1>{report.title}</h1>
+                  <h2>From You</h2>
+                  <h2>To {report.receiver.lastName} {report.receiver.name}</h2>
+                  <img src={report.picture} alt="Report"></img>
+                  <h3>{report.description}</h3>
                </>
             ))
          }
