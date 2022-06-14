@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getReports } from './../../redux/actions';
+import { getAllEnvironments, getReports } from './../../redux/actions';
 import LoginController from './LoginController';
 
 export default function SentReports({show}) {
@@ -14,7 +14,7 @@ export default function SentReports({show}) {
    const reports = useSelector((state) => state.reports);
 
    useEffect(() => {
-      dispatch(getReports(id, 'sender', header));
+      dispatch(getAllEnvironments(header));
    }, []);
 
    return (
