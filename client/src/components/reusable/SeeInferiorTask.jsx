@@ -7,6 +7,7 @@ import {
 } from "../../redux/actions";
 import LoginController from "./LoginController";
 import Modal from "./Modal";
+import demo from "../../assets/demo.png";
 
 export default function SeeInferiorTask() {
   const dispatch = useDispatch();
@@ -16,15 +17,16 @@ export default function SeeInferiorTask() {
   const [active, setActive] = useState(false);
   const userTasks = useSelector((state) => state.todosId);
   const userDetails = useSelector((state) => state.userDetails[0]);
-  const reports = useSelector(state => state.taskReports);
+  const reports = useSelector((state) => state.taskReports);
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
   }
-  console.log(reports)
+
   const toggle = () => {
     setActive(!active);
   };
+  console.log(editTask)
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
@@ -33,15 +35,30 @@ export default function SeeInferiorTask() {
   }, []);
 
   return (
-    <>
+    <div>
+      {userDetails.profilePic && (
+        <div>
+          <img
+            src={userDetails.profilePic ? userDetails.profilePic : demo}
+            alt=""
+            width="100rem"
+          />
+          <h3>
+            {" "}
+            {userDetails.name} {userDetails.lastName}{" "}
+          </h3>
+          <p>{userDetails.telephone}</p>
+          <p>{userDetails.email}</p>
+        </div>
+      )}
       <div className="ml-80">
-        {userDetails && <h1>You are seeing {userDetails.name} tasks </h1>}
-        <ul>
+        {userDetails && <h2>You are seeing {userDetails.name} tasks </h2>}
+        <ul className="mt-20">
           {" "}
           <br />
           {userTasks &&
             userTasks.map((task) => (
-              <div key={task._id}>
+              <div key={task._id} >
                 <li key={task._id}>
                   {task.name} {task.priority} {task.status}
                 </li>
@@ -59,14 +76,37 @@ export default function SeeInferiorTask() {
       </div>
       <Modal active={active} toggle={toggle}>
         <div>
-          <h1>Reports of {editTask.name}</h1>
+          <h2>Reports of {editTask.name}</h2>
           <ul>
-          {/* {reports && (
-            reports.map((task) => <p>{task.report}</p>)
-          )} */}
+            {reports.length ? (
+              reports.map((report) => (
+                <div>
+                  <p>{report.title}</p>
+                  <p>
+                    {report.description ? (
+                      report.description
+                    ) : (
+                      <small>This report has no description</small>
+                    )}
+                  </p>
+                  <img
+                    src={
+                      report.picture ? (
+                        report.picture
+                      ) : (
+                        <small>This report has no picture</small>
+                      )
+                    }
+                    alt="Report picture"
+                  />
+                </div>
+              ))
+            ) : (
+              <p>This Task has no reports yet</p>
+            )}
           </ul>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
