@@ -15,6 +15,7 @@ import {
   DESTROY,
   GET_REPORT_TASKS,
   POST_REPORT_TASKS,
+  RECOVER_PASSWORD
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -306,6 +307,18 @@ export function postTaskReports(id, body, header){
       })
     }catch(err){
       window.alert(err.response.data)
+    }
+  }
+}
+
+
+//action para recuperar contraseña 
+export function recoverPassword(email, dni){
+  return async function(dispatch){
+    try{
+      
+    }catch(error){
+      window.alert(error.response.data)
     }
   }
 }

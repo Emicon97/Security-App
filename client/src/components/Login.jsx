@@ -150,7 +150,8 @@ export default function Login() {
           </h4>
         </div>
         <button type="submit">Login</button>
-
+        {/* Btn para recuperar contraseña */}
+        <button onClick>Did you forget your password?</button>
       </form>
 
     </div>
