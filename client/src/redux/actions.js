@@ -347,7 +347,7 @@ export function getAllEnvironments(name, header) {
         payload: environment.data
       })
     }catch(err){
-      console.log(error.response.data);
+      console.log(err.response.data);
     }
   }
 }
@@ -377,7 +377,7 @@ export function recoverPassword(value, header){
         type: LOGIN_PRUEBA,
         payload: user.data
       })
-    }catch(error){
+    }catch(err){
       console.log(err.response.data);
     }
   }
