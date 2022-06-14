@@ -16,8 +16,8 @@ export default function SeeInferiorTask() {
   const header = LoginController();
   const [editTask, setEditTask] = useState({});
   const [active, setActive] = useState(false);
-  const userTasks = useSelector((state) => state.todosId);
   const userDetails = useSelector((state) => state.userDetails[0]);
+  const userTasks = useSelector((state) => state.todosId);
   const reports = useSelector((state) => state.taskReports);
   const userId = useLocation().pathname.split("/")[2];
 
@@ -31,86 +31,113 @@ export default function SeeInferiorTask() {
 
   useEffect(() => {
     dispatch(getToDosById(userId, header));
-    dispatch(getUsersById(id, header));
-  }, []);
+    dispatch(getUsersById(userId, header));
+  }, [userId, userDetails, userTasks]);
 
   useEffect(() => {
-    if (editTask._id) dispatch(getTaskReports(editTask._id, header))
+    if (editTask._id) dispatch(getTaskReports(editTask._id, header));
   }, [editTask]);
-
-  return (
-    <div>
-      {userDetails.profilePic && (
-        <div>
-          <img
-            src={userDetails.profilePic ? userDetails.profilePic : demo}
-            alt=""
-            width="100rem"
-          />
-          <h3>
-            {" "}
-            {userDetails.name} {userDetails.lastName}{" "}
-          </h3>
-          <p>{userDetails.telephone}</p>
-          <p>{userDetails.email}</p>
+  
+  if (userDetails.profilePic) {
+    return (
+      <div>
+        <div class="lds-spinner">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
-      )}
-      <div className="ml-80">
-        {userDetails.name && <h2>You are seeing {userDetails.name} tasks </h2>}
-        <ul className="mt-20">
-          {" "}
-          <br />
-          {userTasks ? (
-            userTasks.map((task) => (
-              <div key={task._id} >
-                <li key={task._id}>
-                  {task.name} {task.priority} {task.status}
-                </li>
-                <button
-                  onClick={(e) => {
-                    reply_click(task._id);
-                    toggle();
-                  }}
-                >
-                  See Reports
-                </button>
-              </div>
-            ))) : ( <h2>This user has no tasks</h2>)}
-        </ul>
       </div>
-      <Modal active={active} toggle={toggle}>
-        <div>
-          <h2>Reports of {editTask.name}</h2>
-          <ul>
-            {reports.report.length ? (
-              reports.report.map((report) => (
-                <div>
-                  <p>{report.title}</p>
-                  <p>
-                    {report.description ? (
-                      report.description
-                    ) : (
-                      <small>This report has no description</small>
-                    )}
-                  </p>
-                  <img
-                    src={
-                      report.picture ? (
-                        report.picture
-                      ) : (
-                        <small>This report has no picture</small>
-                      )
-                    }
-                    alt="Report picture"
-                  />
+    );
+  } else {
+    return (
+      <div>
+        {userDetails.profilePic && (
+          <div>
+            <img
+              src={userDetails.profilePic ? userDetails.profilePic : demo}
+              alt="Profile picture"
+              width="100rem"
+            />
+            <h3>
+              {" "}
+              {userDetails.name} {userDetails.lastName}{" "}
+            </h3>
+            <p>{userDetails.telephone}</p>
+            <p>{userDetails.email}</p>
+          </div>
+        )}
+        <div className="ml-80">
+          {userDetails.name && (
+            <h2>You are seeing {userDetails.name} tasks </h2>
+          )}
+          <ul className="mt-20">
+            {" "}
+            <br />
+            {userTasks.length ? (
+              userTasks.map((task) => (
+                <div key={task._id}>
+                  <li key={task._id}>
+                    {task.name} {task.priority} {task.status}
+                  </li>
+                  <button
+                    onClick={(e) => {
+                      reply_click(task._id);
+                      toggle();
+                    }}
+                  >
+                    See Reports
+                  </button>
                 </div>
               ))
             ) : (
-              <p>This Task has no reports yet</p>
+              <h2>This user has no tasks</h2>
             )}
           </ul>
         </div>
-      </Modal>
-    </div>
-  );
+        <Modal active={active} toggle={toggle}>
+          <div>
+            <h2>Reports of {editTask.name}</h2>
+            <ul>
+              {console.log(reports)}
+              {reports.report ? (
+                reports.report.map((report) => (
+                  <div key={report._id}>
+                    <p>{report.title}</p>
+                    <p>
+                      {report.description ? (
+                        report.description
+                      ) : (
+                        <small>This report has no description</small>
+                      )}
+                    </p>
+                    <img
+                      src={
+                        report.picture ? (
+                          report.picture
+                        ) : (
+                          <small>This report has no picture</small>
+                        )
+                      }
+                      alt="Report picture"
+                    />
+                  </div>
+                ))
+              ) : (
+                <p>This Task has no reports yet</p>
+              )}
+            </ul>
+          </div>
+        </Modal>
+      </div>
+    );
+  }
 }
