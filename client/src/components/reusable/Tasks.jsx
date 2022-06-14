@@ -172,7 +172,7 @@ export default function Tasks({ show }) {
       <div className="screen-tasks flex flex-col h-full">
         {/* HEAD */}
         <div className="head-tasks flex items-center justify-around w-[90%] m-auto mt-[15px]">
-          <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
+          <h1 className="text-2xl text-[#0243EC] flex items-center title-tasks">Things to do</h1>
           <div className="flex items-center">
             {todosUrgent.length ? (
               <svg
@@ -408,7 +408,7 @@ export default function Tasks({ show }) {
                       {todo.priority.charAt(0).toUpperCase() +
                         todo.priority.slice(1)}
                     </h4>
-                    <h1 className="w-auto ml-1.5 truncate text-base font-medium">
+                    <h1 className="w-auto h-auto ml-1.5 truncate text-base font-semibold">
                       {todo.name.charAt(0).toUpperCase() + todo.name.slice(1)}
                     </h1>
                   </div>
