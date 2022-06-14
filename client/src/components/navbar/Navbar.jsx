@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
 import NavBarWatcher from "./NavBarWatcher";
@@ -48,6 +48,7 @@ export default function NavBar({isRendered, show, setShow}) {
   }
 
   const URLREDIRECT = `/${role}/${id}`;
+  let user = useSelector(state => state.userDetails)
 
     return (
         <>
@@ -66,16 +67,34 @@ export default function NavBar({isRendered, show, setShow}) {
                           </Link>
                       </div>
                       <div className="flex items-center">
-                          <button aria-label="open" id="open" onClick={()=>setShow(true)} className={`${show ? 'hidden' : ''} h-8 w-8 mr-4`}>
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="#0023c4">
-                                  <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                              </svg>
-                          </button>
-                          <button aria-label="close" id="close" onClick={()=>setShow(false)} className={`${show ? '' : 'hidden'} h-8 w-8 mr-4`}>
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="#ff5cf4">
-                                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                              </svg>
-                          </button>
+                        {/* <div className="flex items-center justify-end my-2 mr-2">
+                          <Link to={`/guard/${id}/profile`}>
+                            {
+                                user[0].profilePic ?
+                                <img src={user[0].profilePic} alt="Not found" className="rounded-full w-[35px] h-[35px]" /> :
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-[35px] h-[35px]" fill="none" viewBox="0 0 24 24" stroke="#2340be" strokeWidth={2}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            }
+                          </Link>
+                          <h4 className="text-lg font-extrabold font-['nunito'] ml-2">
+                            <span className={`${show ? 'text-[#ff5cf4]' : 'text-[#0023c4]'}`}>{user[0].name.charAt(0).toUpperCase()}</span><span>{user[0].name.slice(1)}</span>
+                            <span className="pl-1">{user[0].lastName.charAt(0).toUpperCase() + user[0].lastName.slice(1)}</span>
+                          </h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                        </div> */}
+                        <button aria-label="open" id="open" onClick={()=>setShow(true)} className={`${show ? 'hidden' : ''} h-6 w-6 mr-4`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="#0023c4">
+                                <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                            </svg>
+                        </button>
+                        <button aria-label="close" id="close" onClick={()=>setShow(false)} className={`${show ? '' : 'hidden'} h-6 w-6 mr-4`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="#ff5cf4">
+                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                        </button>
                       </div>
                   </div>
                   <div className={`${show ? '' : '-translate-x-[64%]'} shadow shadow-gray-300 flex justify-center ease-in-out transition duration-700 fixed top-[65px] bottom-0 left-0 w-[244px] bg-[#ffffff]`}>

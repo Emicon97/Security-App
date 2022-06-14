@@ -14,7 +14,6 @@ export default function Home({show}) {
     let id = localStorage.getItem('id')
     let rolUsuario = localStorage.getItem('user') 
     let header = LoginController();
-    
     let user = useSelector(state => state.userDetails)
     let dispatch = useDispatch()
 
@@ -34,14 +33,14 @@ export default function Home({show}) {
         if (rolUsuario === "boss") {
             return (
                 <div id='home' className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700 overflow-auto`}>
-                    <ViewProfileHome user={user[0]}/>
+                    <ViewProfileHome user={user[0]} show={show}/>
                     <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
                 </div>
             )
         } else if (rolUsuario === "supervisor") {
             return (
                 <div id='home' className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700 overflow-auto`}>
-                    <ViewProfileHome user={user[0]}/>
+                    <ViewProfileHome user={user[0]} show={show}/>
                     <ViewTasksHome id={id} header={header}/>
                     <ViewEmployeesHome employees={user[0].watcher} id={id} header={header}/>
                 </div>
@@ -50,7 +49,7 @@ export default function Home({show}) {
     
             return (
                 <div id="home" className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700 overflow-auto`}>
-                    <ViewProfileHome user={user[0]}/>
+                    <ViewProfileHome user={user[0]} show={show}/>
                     <ViewTasksHome id={id} header={header}/>
                 </div>
             )
