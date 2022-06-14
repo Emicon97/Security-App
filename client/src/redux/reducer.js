@@ -15,6 +15,7 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  RESET_REPORT
 } from "./ActionTypes";
 
 const initialState = {
@@ -125,7 +126,15 @@ const rootReducer = (state = initialState, { type, payload }) => {
         todoUpdate: {},
         userData: [],
         usersPaginate: [],
+        reports: [],
+        taskReports: [],
       };
+      case RESET_REPORT:
+        return{
+          ...state,
+          reports: [],
+          taskReports: []
+        }
     default:
       return { ...state };
   }
