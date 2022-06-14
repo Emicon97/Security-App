@@ -128,6 +128,8 @@ const rootReducer = (state = initialState, { type, payload }) => {
         todoUpdate: {},
         userData: [],
         usersPaginate: [],
+        reports: [],
+        taskReports: [],
       };
       case CREATE_ENVIRONMENT:
         console.log('reducer',payload)
