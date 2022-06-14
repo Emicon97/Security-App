@@ -14,9 +14,7 @@ import Modal from "../reusable/Modal";
 import { Tertiary, Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-//animations
-import aos from "aos";
-import "aos/dist/aos.css";
+//animationsss";
 import swal from "sweetalert";
 
 export default function Tasks({ show }) {
@@ -83,7 +81,6 @@ export default function Tasks({ show }) {
 
   useEffect(() => {
     dispatch(getToDosById(id, header));
-    aos.init({ duration: 700 });
     // eslint-disable-next-line
   }, [dispatch, toDoUpdated]);
   useEffect(() => {
@@ -120,13 +117,13 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState({ status: "" });
   const navigate = useNavigate();
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
     const status = e.target.value;
-    setStatus(status);
+    setStatus({ status });
     setTodoId(id);
   };
 
@@ -139,7 +136,7 @@ export default function Tasks({ show }) {
   };
 
   const handleUpdateStatusAndReport = (e) => {
-    if (report.title.length > 0) {
+    if (report.title.length) {
       e.preventDefault();
       dispatch(updateStatus(todoId, { status: status }, header));
       dispatch(postTaskReports(id, report, header));
@@ -359,7 +356,6 @@ export default function Tasks({ show }) {
               <div
                 id={todo._id}
                 key={i}
-                data-aos="zoom-in"
                 className={`todo-tasks
                   ${
                     todo.priority === "urgent"
