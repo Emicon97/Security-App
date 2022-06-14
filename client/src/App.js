@@ -28,23 +28,23 @@ function App() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
   const location = useLocation()
-  useEffect(()=>{
-    if(token){
-      const user = localStorage.getItem('user');
-      const id = localStorage.getItem('id');
-      let view = location.pathname.split("/")[3]
-      if(view){
-        return navigate(`/${user}/${id}/${view}`);
-      }
-      return navigate(`/${user}/${id}`);
-    }
-    if(!token){
-      navigate('/');
-      dispatch(destroyData());
-      return;
-    }
-    // eslint-disable-next-line
-  },[token]);
+  // useEffect(()=>{
+  //   if(token){
+  //     const user = localStorage.getItem('user');
+  //     const id = localStorage.getItem('id');
+  //     let view = location.pathname.split("/")[3]
+  //     if(view){
+  //       return navigate(`/${user}/${id}/${view}`);
+  //     }
+  //     return navigate(`/${user}/${id}`);
+  //   }
+  //   if(!token){
+  //     navigate('/');
+  //     dispatch(destroyData());
+  //     return;
+  //   }
+  //   // eslint-disable-next-line
+  // },[token]);
 
   return (
     <>

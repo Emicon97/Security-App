@@ -97,9 +97,10 @@ export default function Login() {
               handleChange(e);
             }}
           />
-          <label htmlFor="dni" className="form__label">
+          <label htmlFor="password" className="form__label">
             Password
           </label>
+          <label htmlFor="password">{errors.password != "" && errors.password}</label>
         </div>
         <div className="input-password-container">
           <div className="form-password-container">
@@ -116,27 +117,13 @@ export default function Login() {
               }}
             />
             <label
-              htmlFor="email"
+              htmlFor="repearpassword"
               className="form__label form__label__password"
             >
               Repeat password
             </label>
+            <label htmlFor="repeatPassword">{errors.repeatPassword != "" && errors.repeatPassword}</label>
           </div>
-        </div>
-
-        <div className="errors-input">
-          <h4
-            className="errors"
-            style={{ display: !validate && errors.password ? "block" : "none" }}
-          >
-            {!validate ? errors.dni : null}
-          </h4>
-          <h4
-            className="errors"
-            style={{ display: !validate && errors.repeatPassword ? "block" : "none" }}
-          >
-            {!validate ? errors.repeatPassword : null}
-          </h4>
         </div>
         <button type="submit">Change Password</button>
       </form>

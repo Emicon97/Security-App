@@ -15,6 +15,7 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  TEMP_VERIFICATION
 } from "./ActionTypes";
 
 const initialState = {
@@ -30,7 +31,8 @@ const initialState = {
   usersPaginate: [],
   token: "",
   taskReports: [],
-  reports: []
+  reports: [],
+  temp: ""
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -126,6 +128,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         userData: [],
         usersPaginate: [],
       };
+     case TEMP_VERIFICATION:
+      return {
+        ...state,
+        temp: payload
+      }
     default:
       return { ...state };
   }

@@ -15,6 +15,7 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  TEMP_VERIFICATION
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -312,6 +313,7 @@ export function postTaskReports(id, body, header){
 
 
 export function sendRequest(values){
+  console.log(values)
   return async function(){
     try{
       await axios.put(`${url}/email`, values);
@@ -332,6 +334,21 @@ export function recoverPassword(value, header){
       SaveRefreshToken(user.data[3]);
       return dispatch({
         type: LOGIN_PRUEBA,
+        payload: user.data
+      })
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
+export function verificationUser({dni,email}){
+  return async function(dispatch){
+    try{
+      console.log(dni, email, "lo que le paso al actions")
+      const user = await axios.get(`${url}/verification/user/${dni}/${email}`)
+      return dispatch({
+        type: TEMP_VERIFICATION,
         payload: user.data
       })
     }catch(error){
