@@ -282,7 +282,7 @@ export function getTaskReports(id, header){
         payload: reports.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
@@ -296,7 +296,7 @@ export function getReports(id, relation, header){
         payload: reports.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
@@ -310,7 +310,7 @@ export function postTaskReports(id, body, header){
         payload: report.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data);
     }
   }
 }
@@ -333,7 +333,7 @@ export function sendRequest(values){
     try{
       await axios.put(`${url}/email`, values);
     }catch(error){
-      window.alert(error.response.data)
+      console.log(error.response.data);
     }
   }
 }
@@ -347,7 +347,7 @@ export function getAllEnvironments(name, header) {
         payload: environment.data
       })
     }catch(err){
-      console.log(err.response.data);
+      console.log(error.response.data);
     }
   }
 }
@@ -378,7 +378,7 @@ export function recoverPassword(value, header){
         payload: user.data
       })
     }catch(error){
-      window.alert(error.response.data)
+      console.log(err.response.data);
     }
   }
 }
