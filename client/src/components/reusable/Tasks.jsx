@@ -167,15 +167,11 @@ export default function Tasks({ show }) {
   };
 
   return (
-    <div
-      className={`screen-tasks-container fixed top-16 right-0 bottom-0 ${
-        show ? "left-[245px]" : "left-[87px]"
-      } ease-in-out transition-all duration-700`}
-    >
+    <div className={`screen-tasks-container font-['nunito'] fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
       {/* SCREEN */}
       <div className="screen-tasks flex flex-col h-full">
         {/* HEAD */}
-        <div className="head-tasks flex items-center justify-around w-full">
+        <div className="head-tasks flex items-center justify-around w-[90%] m-auto mt-[15px]">
           <h1 className="text-2xl text-[#0243EC] title-tasks">Things to do</h1>
           <div className="flex items-center">
             {todosUrgent.length ? (
@@ -266,135 +262,178 @@ export default function Tasks({ show }) {
               <option value="postponed">Postponed</option>
             </select>
           </div>
-          <Link to={`/EditState/${id}`}>
+          {/* <Link to={`/EditState/${id}`}>
             <button className={Tertiary}>Edit</button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* TODOS */}
-        {ToDos?.map((todo, i) => (
-          <div
-            id={todo._id}
-            key={i}
-            data-aos="zoom-in"
-            className={`todo-tasks
-              ${
-                todo.priority === "urgent"
-                  ? "bg-[#FFE5E8] hover:bg-[#ffd5da]"
-                  : todo.priority === "high"
-                  ? "bg-[#FFEFE4] hover:bg-[#ffe2cf]"
-                  : todo.priority === "regular"
-                  ? "bg-[#ebffe5] hover:bg-[#d4ffc7]"
-                  : "bg-[#E8F1FF] hover:bg-[#cfe2ff]"
-              }
-              flex w-10/12 rounded-2xl mb-2`}
-          >
-            <div className="w-full m-2.5 flex flex-col relative">
-              <div className="w-auto flex items-center">
-                {todo.priority === "urgent" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="#E8132A"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : todo.priority === "high" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="#fadd00"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : todo.priority === "regular" ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="green"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="#1062FF"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-                <h4 className="italic ml-1 text-xs mt-0.5">
-                  Priority:{" "}
-                  {todo.priority.charAt(0).toUpperCase() +
-                    todo.priority.slice(1)}
-                </h4>
-                <h1 className="w-auto ml-1.5 truncate text-base font-medium">
-                  {todo.name.charAt(0).toUpperCase() + todo.name.slice(1)}
-                </h1>
+        <div className="mx-auto w-[90%] h-full overflow-auto pr-[5px]">
+          {ToDos?.map((todo, i) => (
+            <>
+              <div className="flex items-center justify-end italic">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                You wanna
+                {
+                  todo.status === 'left' &&
+                  (
+                    <>
+                      <button title="Set task in posponed" className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                        id={todo._id}
+                        value="postponed"
+                        onClick={(e) => {
+                          handleBringTodoId(e);
+                          toggle(e);
+                        }}
+                      >
+                        Postponed
+                      </button>
+                      or
+                      <button title="Set task in done" className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                        id={todo._id}
+                        value="done"
+                        onClick={(e) => {
+                          handleBringTodoId(e);
+                          toggle(e);
+                        }}
+                      >
+                        Done
+                      </button>
+                    </>
+                  ) ||
+                  todo.status === 'postponed' &&
+                  (
+                    <button title="Set task in done" className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                      id={todo._id}
+                      value="done"
+                      onClick={(e) => {
+                        handleBringTodoId(e);
+                        toggle(e);
+                      }}
+                    >
+                      Done
+                    </button>
+                  ) ||
+                  todo.status === 'done' &&
+                  (
+                    <button title="Set task in posponed" className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                      id={todo._id}
+                      value="postponed"
+                      onClick={(e) => {
+                        handleBringTodoId(e);
+                        toggle(e);
+                      }}
+                    >
+                      Postponed
+                    </button>
+                  )
+                }
+                the task?
               </div>
-              <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
-                {todo.description ? todo.description : "No description"}
-              </p>
-              <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
-                {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
-                <p
-                  className={`
-                    ${
-                      todo.status === "done"
-                        ? "h-4 w-4 bg-green-500"
-                        : todo.status === "left"
-                        ? "h-4 w-4 bg-red-500"
-                        : "h-4 w-4 bg-yellow-500"
-                    } 
-                    rounded-full`}
-                ></p>
-              </span>
-            </div>
-            <button
-              className={Button()}
-              id={todo._id}
-              value="postponed"
-              onClick={(e) => {
-                handleBringTodoId(e);
-                toggle(e);
-              }}
-            >
-              Postpone
-            </button>
-            <button
-              className={Button()}
-              id={todo._id}
-              value="done"
-              onClick={(e) => {
-                handleBringTodoId(e);
-                toggle(e);
-              }}
-            >
-              Done
-            </button>
-          </div>
-        ))}
+              <div
+                id={todo._id}
+                key={i}
+                data-aos="zoom-in"
+                className={`todo-tasks
+                  ${
+                    todo.priority === "urgent"
+                      ? "bg-[#FFE5E8] hover:bg-[#ffd5da]"
+                      : todo.priority === "high"
+                      ? "bg-[#FFEFE4] hover:bg-[#ffe2cf]"
+                      : todo.priority === "regular"
+                      ? "bg-[#ebffe5] hover:bg-[#d4ffc7]"
+                      : "bg-[#E8F1FF] hover:bg-[#cfe2ff]"
+                  }
+                  flex w-full rounded-2xl mb-2 m-auto`}
+              >
+                <div className="w-full m-2.5 flex flex-col relative">
+                  <div className="w-auto flex items-center">
+                    {todo.priority === "urgent" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="#E8132A"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : todo.priority === "high" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="#fadd00"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : todo.priority === "regular" ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="green"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="#1062FF"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    )}
+                    <h4 className="italic ml-1 text-xs mt-0.5">
+                      Priority:{" "}
+                      {todo.priority.charAt(0).toUpperCase() +
+                        todo.priority.slice(1)}
+                    </h4>
+                    <h1 className="w-auto ml-1.5 truncate text-base font-medium">
+                      {todo.name.charAt(0).toUpperCase() + todo.name.slice(1)}
+                    </h1>
+                  </div>
+                  <p className="w-auto text-sm mt-1 font-normal ml-23px leading-relaxed">
+                    {todo.description ? todo.description : "No description"}
+                  </p>
+                  <span className="flex items-center gap-1.5 absolute top-0.5 right-0.5 italic">
+                    {todo.status.charAt(0).toUpperCase() + todo.status.slice(1)}
+                    <p
+                      className={`
+                        ${
+                          todo.status === "done"
+                            ? "h-4 w-4 bg-green-500"
+                            : todo.status === "left"
+                            ? "h-4 w-4 bg-red-500"
+                            : "h-4 w-4 bg-yellow-500"
+                        } 
+                        rounded-full`}
+                    ></p>
+                  </span>
+                </div>
+              </div>
+            </>
+          ))}
+        </div>
       </div>
 
       <Modal active={active} toggle={toggle}>
