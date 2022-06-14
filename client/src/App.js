@@ -84,7 +84,7 @@ function App() {
           element={<SeeInferiorTask show={show} />}
         />
         <Route
-          path="/:user/:id/reports"
+          path="/:user/:id/reports/:relation"
           element={<SentReports show={show} />}
         />
 

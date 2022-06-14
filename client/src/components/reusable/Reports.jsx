@@ -42,7 +42,7 @@ export default function SentReports({show}) {
                      </div>
                   }
                   <img src={report.picture} alt="Report"></img>
-                  <h3>{report.description}</h3>
+                  <h3>{!report.description?<h3>none</h3>:report.description}</h3>
                </>
             ))
          }

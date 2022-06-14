@@ -111,6 +111,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         taskReports: payload,
       };
     case GET_REPORTS:
+      console.log('payload reports', payload)
       return {
         ...state,
         reports: payload
