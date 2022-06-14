@@ -82,8 +82,8 @@ export default function AddNewUser({show}) {
 
     //Password
     if (
-      input.password.lentgh < 8 ||
-      input.password.lentgh > 24 ||
+      input.password.split("").lentgh < 8 ||
+      input.password.split("").lentgh > 24 ||
       !input.password
     )
       error.password = "Password must be between 8 and 24 characters";
