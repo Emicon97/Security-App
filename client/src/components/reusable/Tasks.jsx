@@ -135,11 +135,6 @@ export default function Tasks({ show }) {
     return error
   };
 
-  // auth-token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWY5YWQ2NzI1ZWRiYjczN2U4ZTI4ZiIsImlhdCI6MTY1NTIxODM0NywiZXhwIjoxNjU1MjE4NDA3fQ.WuMUIkctpAxuRfS-KTcjz_MGwF4FTiS-C8UnS7cTJO4"
-  // id: "629f9ad6725edbb737e8e28f"
-  // refresh-token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im51ZXZvbWFpbEBudWV2b21haWwuY29tIiwiaWF0IjoxNjU1MjE4MzQ3LCJleHAiOjE2NTUyNDcxNDd9.jtUc9Sefzn5AOwduHTzs_Hl_vXebmXexWF_L3F7imMY"
-
-
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length) {
       e.preventDefault();
