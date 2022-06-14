@@ -13,7 +13,7 @@ export default function UserProfile({ show }) {
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   const user = useSelector((state) => state.userDetails[0]);
-  const hierarchy = useSelector((state) => state.userDetails[1]);
+  const hierarchy = localStorage.getItem('user');
   const urlImg = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
   const id = localStorage.getItem('id');
 
@@ -28,9 +28,8 @@ export default function UserProfile({ show }) {
   }, [dispatch]);
   return (
     <>
-
+    { user && <>
       <div className={`flex justify-center items-center fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
-      
         <div id="screen-profile">
           
           <button className="edit" onClick={toggleEdit}>Edit</button>
@@ -57,6 +56,8 @@ export default function UserProfile({ show }) {
       <Modal active={activeEdit} toggle={toggleEdit}>
         <EditUser user={user} hierarchy={hierarchy}></EditUser>
       </Modal>
+    </>
+    }
     </>
   );
 }
