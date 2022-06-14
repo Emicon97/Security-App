@@ -188,14 +188,14 @@ export default function TableInfo(props) {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
-                    <h1 className="w-96 h-full flex justify-start items-center ml-2 font-medium">
+                    <h2 className="w-96 h-full flex justify-start items-center ml-2 font-medium">
                       {employee.name.charAt(0).toUpperCase() + employee.name.slice(1)} {employee.lastName.charAt(0).toUpperCase() + employee.lastName.slice(1)}
-                    </h1>
+                    </h2>
                   </div>
                   <div className="flex">
-                    <h1 className="w-auto h-full flex justify-center items-center mr-5">
+                    <h2 className="w-auto h-full flex justify-center items-center mr-5">
                       <small className="italic mr-2 mt-0.5">Evironment:</small>{employee.environment}
-                    </h1>
+                    </h2>
                     <button
                       onClick={(e) => {
                         toggle();
