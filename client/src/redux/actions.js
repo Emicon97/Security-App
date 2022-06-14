@@ -15,6 +15,8 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  ENVIRONMENTS,
+  ENVIRONMENT_USERS
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -306,6 +308,48 @@ export function postTaskReports(id, body, header){
       })
     }catch(err){
       window.alert(err.response.data)
+    }
+  }
+}
+
+export function createEnvironments(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function getAllEnvironments(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function getEnvironmentUsers(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
     }
   }
 }
