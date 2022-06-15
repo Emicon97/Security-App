@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert";
 import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input } from "../styles/Buttons";
@@ -9,13 +9,13 @@ import LoginController from "./LoginController";
 const AddTaskToUser = ({ show }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = localStorage.getItem("id");
+  const { employeeId } = useParams();
   const header = LoginController();
   const [task, setTask] = useState({
     name: "",
     description: "",
     priority: "",
-    id: id,
+    id: employeeId,
   });
   const [error, setError] = useState({});
 
