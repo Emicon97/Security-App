@@ -19,7 +19,8 @@ import {
   TEMP_VERIFICATION,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
-  RESET_REPORT
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 
 const initialState = {
@@ -166,6 +167,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           reports: [],
           taskReports: []
         }
+        case RESET_USER:
+          return{
+            ...state,
+            userDetails: [],
+            todosId: [],
+          }
     default:
       return { ...state };
   }

@@ -19,7 +19,8 @@ import {
   TEMP_VERIFICATION,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
-  RESET_REPORT
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -420,6 +421,14 @@ export function resetReport(){
   return async function(dispatch){
     return dispatch({
       type: RESET_REPORT
+    })
+  }
+}
+
+export function resetUser(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_USER
     })
   }
 }
