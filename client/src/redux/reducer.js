@@ -15,10 +15,12 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  TEMP_VERIFICATION,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
   RESET_REPORT,
-  RESET_USER
+  RESET_USER,
+  CREATE_ENVIRONMENT
 } from "./ActionTypes";
 
 const initialState = {
@@ -36,6 +38,7 @@ const initialState = {
   taskReports: [],
   reports: [],
   reports: [],
+  temp: "",
   environments: [],
   environmentUsers: []
 };
@@ -145,6 +148,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         reports: [],
         taskReports: [],
       };
+     case TEMP_VERIFICATION:
+      return {
+        ...state,
+        temp: payload
+      }
+      case CREATE_ENVIRONMENT:
+        console.log('reducer',payload)
+        return{
+          ...state,
+          enviroment: payload
+        }
       case RESET_REPORT:
         return{
           ...state,
