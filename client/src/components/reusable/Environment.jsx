@@ -13,7 +13,7 @@ export default function Environment({show}) {
    const header = LoginController();
    const user = localStorage.getItem('user');
    const id = localStorage.getItem('id');
-
+   console.log(user)
    const environmentUser = useSelector((state) => state.environmentUsers);
    
    const [input, setInput] = useState({name: ""})
@@ -64,7 +64,7 @@ export default function Environment({show}) {
    return (
 
       <div className={`fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
-         { user === 'boss' ?<>
+         { user === 'boss' ? <>
          <form onSubmit={(e)=>handleSubmit(e)}>
             <div>
                <h2>Add New Enviroment</h2>
@@ -73,22 +73,13 @@ export default function Environment({show}) {
                <label htmlFor="">Name:</label><input type="text" name="name" value={input.name} onChange={(e)=>handleChange(e)} />
                {errors.name && <p>{errors.name}</p>}
             </div>
-            {
-               input.name !== "" ?(<button
+            <button
                type="submit"
                  
                className={`${Primary()} m-auto`}
                >
                Add Environment
-            </button>):
-           ( <button
-               type="submit"
-               disabled
-               className={`${Primary()} m-auto`}
-               >
-               Add Environment
-            </button>)
-            }
+            </button>
          </form>
          </>: null}
          <div>
@@ -105,7 +96,7 @@ export default function Environment({show}) {
                environmentUser.length !==0? environmentUser.map(e=> {
                   return (<div>
                         <h3>{e.name}</h3>
-                        {e.supervisor.length ? <p>Supervisores: </p>: null}
+                        {e.supervisor.length && user === 'boss' ? <p>Supervisores: </p>: null}
                     {e.supervisor? e.supervisor.map(e => (<div><p>{e.name} {e.lastName}</p></div>)): null}
                      {e.watcher.length ? <p>Watcher: </p>: null}
                     {e.watcher?e.watcher.map(e => (<div><p>{e.name} {e.lastName}</p></div>)): "nada"}
