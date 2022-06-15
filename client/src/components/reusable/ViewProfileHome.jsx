@@ -14,7 +14,7 @@ export default function ViewProfileHome({ show }) {
 //ashee
     if(id && lastName && name && picture) {
         return (
-            <div className="flex items-center justify-end mb-2 mt-5 mr-5">
+            <div className="flex items-center justify-end m-auto mr-[15px]">
                 <h4 className="text-lg font-extrabold font-['nunito'] ml-2">
                 <span className={`${show ? 'text-[#ff5cf4]' : 'text-[#0023c4]'}`}>{name.charAt(0).toUpperCase()}</span><span>{name.slice(1)}</span>
                 <span className="pl-1">{lastName.charAt(0).toUpperCase() + lastName.slice(1)}</span>
