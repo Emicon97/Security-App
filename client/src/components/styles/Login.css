@@ -147,13 +147,7 @@
 
 
 
-
-
-
-
-
-
-.wrapp{
+.login-screen .wrapp{
 	width: 300px;
 	height: 100px;
 	margin-left: 170px;
@@ -166,7 +160,7 @@
 
 	animation: wrapp 400ms 800ms ease-in forwards;
 }
-.text{
+.login-screen .text{
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -182,7 +176,7 @@
 
 	animation: text 400ms 800ms linear forwards;
 }
-h1{
+.login-screen h1{
 	float: left;
 	font-weight: 500;
 	color: #000;
@@ -199,7 +193,7 @@ h1{
 .login-screen h1 .pink {
     color: #ff5cf4;
 }
-.logo{
+.login-screen .logo{
 	position: absolute;
 	top: 50%;
 	left: 50%;
