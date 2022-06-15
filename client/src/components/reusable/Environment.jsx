@@ -5,7 +5,7 @@ import { getAllEnvironments, createEnvironments, getEnvironmentUsers } from './.
 import LoginController from './LoginController';
 import { useState } from 'react';
 
-import { Primary, Input, File } from "../styles/Buttons";
+import { Primary } from "../styles/Buttons";
 
 export default function Environment({show}) {
    const dispatch = useDispatch();

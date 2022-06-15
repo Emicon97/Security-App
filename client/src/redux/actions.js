@@ -15,6 +15,7 @@ import {
   GET_REPORT_TASKS,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  TEMP_VERIFICATION,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
   RESET_REPORT,
@@ -94,7 +95,6 @@ export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
       const state = await axios.put(`${url}/todos/${id}`, status, header)
-      console.log("this is state.data", state.data)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -148,6 +148,7 @@ export function filterByStatusAndPriority(id,status,priority, header){
 }
 
 export function postUser(post, header, id){
+  console.log("id:",id, "post:",post, "header:",header)
   return async function(dispatch){
       try{
         await axios.post(`${url}/user/${id}`, post, header)
@@ -366,7 +367,6 @@ export function getAllEnvironments(header) {
 
 export function getEnvironmentUsers(id, name, header) {
   return async function(dispatch){
-    console.log(id, name, header)
     try{
       const environment = await axios.get(`${url}/environment/${id}/${name}`, header);
       return dispatch({
@@ -395,6 +395,22 @@ export function recoverPassword(value, header){
     }
   }
 }
+
+export function verificationUser({dni,email}){
+  return async function(dispatch){
+    try{
+      const user = await axios.get(`${url}/verification/user/${dni}/${email}`)
+      return dispatch({
+        type: TEMP_VERIFICATION,
+        payload: user.data
+      })
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
+    
 export function resetReport(){
   return async function(dispatch){
     return dispatch({
