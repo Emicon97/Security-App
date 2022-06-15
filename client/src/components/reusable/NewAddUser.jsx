@@ -319,7 +319,7 @@ export default function AddNewUser({ show }) {
                 className={handleClassName(error.name)}
                 onChange={(e) => handleChange(e)}
               >
-                <option value="none">Select...</option>
+                <option value="none" hidden>Environment...</option>
                 {environment.length &&
                   environment.map((env) => {
                     return (
