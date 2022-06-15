@@ -10,6 +10,18 @@ export function SaveId(idUser){
     localStorage.setItem('id', idUser);
 }
 
+export function SaveUserLastName(lastName) {
+    localStorage.setItem('lastName', lastName);
+}
+
+export function SaveUserName(name) {
+    localStorage.setItem('name', name);
+}
+
+export function SavePicture(picture) {
+    localStorage.setItem('picture', picture);
+}
+
 export function SaveUser(TipeUser){
     localStorage.setItem('user', TipeUser);
 }
