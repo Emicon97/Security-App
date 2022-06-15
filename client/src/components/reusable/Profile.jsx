@@ -26,7 +26,6 @@ export default function UserProfile({ show }) {
   useEffect(() => {
     dispatch(getUsersById(id, header));
   }, [dispatch]);
-  console.log(user)
   return (
     <>
       {user && <>

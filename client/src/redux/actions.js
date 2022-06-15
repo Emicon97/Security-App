@@ -94,7 +94,6 @@ export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
       const state = await axios.put(`${url}/todos/${id}`, status, header)
-      console.log("this is state.data", state.data)
       return dispatch({
         type: UPDATE_TASK_STATUS,
         payload: state.data
@@ -366,7 +365,6 @@ export function getAllEnvironments(header) {
 
 export function getEnvironmentUsers(id, name, header) {
   return async function(dispatch){
-    console.log(id, name, header)
     try{
       const environment = await axios.get(`${url}/environment/${id}/${name}`, header);
       return dispatch({
