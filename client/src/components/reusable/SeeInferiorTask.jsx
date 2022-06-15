@@ -5,16 +5,19 @@ import {
   getUsersById,
   getTaskReports,
   resetReport,
+  resetUser,
 } from "../../redux/actions";
 import LoginController from "./LoginController";
 import Modal from "./Modal";
 import demo from "../../assets/demo.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Loader.css";
 
 export default function SeeInferiorTask({ show }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const id = localStorage.getItem("id");
+  const user = localStorage.getItem("user");
   const header = LoginController();
   const [editTask, setEditTask] = useState({});
   const [active, setActive] = useState(false);
@@ -32,8 +35,16 @@ export default function SeeInferiorTask({ show }) {
     setActive(!active);
   };
 
+  const handleRedirectToAssignTask = (e) => {
+    e.preventDefault();
+    navigate(`/${user}/${id}/createTask/${userId}`);
+  };
+
   useEffect(() => {
     return () => dispatch(resetReport());
+  }, []);
+  useEffect(() => {
+    return () => dispatch(resetUser());
   }, []);
 
   useEffect(() => {
@@ -107,7 +118,10 @@ export default function SeeInferiorTask({ show }) {
               </small>
             </div>
           </div>
-          <div className="flex items-center">
+          <div
+            onClick={(e) => handleRedirectToAssignTask(e)}
+            className="flex items-center cursor-pointer"
+          >
             <button title="Assign task">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -245,19 +259,19 @@ export default function SeeInferiorTask({ show }) {
                   </div>
                 </div>
                 <div className="flex flex-row items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="#cbcfdd"
-                    >
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path
-                        fillRule="evenodd"
-                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="#cbcfdd"
+                  >
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <h1 className="w-full h-auto truncate ml-1 text-base font-semibold text-[#cbcfdd]">
                     {task.name.charAt(0).toUpperCase() + task.name.slice(1)}
                   </h1>
