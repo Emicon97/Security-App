@@ -117,13 +117,13 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
-  const [status, setStatus] = useState( status= "" );
+  const [status, setStatus] = useState( {status:""} );
   const navigate = useNavigate();
 
   const handleBringTodoId = (e) => {
     const id = e.target.id;
     const status = e.target.value;
-    setStatus( status );
+    setStatus({ status });
     setTodoId(id);
   };
 
@@ -138,7 +138,7 @@ export default function Tasks({ show }) {
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length) {
       e.preventDefault();
-      dispatch(updateStatus(todoId, status , header));
+      dispatch(updateStatus(todoId, status, header));
       dispatch(postTaskReports(id, report, header));
       toggle();
       swal("Your report has been sent", "", "success");
