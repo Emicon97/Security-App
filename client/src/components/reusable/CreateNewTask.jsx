@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import swal from "sweetalert";
 import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-const AddTaskToUser = ({show}) => {
+const AddTaskToUser = ({ show }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = localStorage.getItem('id');
+  const { employeeId } = useParams();
   const header = LoginController();
   const [task, setTask] = useState({
     name: "",
     description: "",
     priority: "",
-    id: id,
+    id: employeeId,
   });
   const [error, setError] = useState({});
 
@@ -37,6 +38,9 @@ const AddTaskToUser = ({show}) => {
       ...task,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleError(e) {
     setError(
       validateInput({
         ...task,
@@ -46,17 +50,24 @@ const AddTaskToUser = ({show}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addTaskToUser(task, header));
-    navigate("/");
+    if (error.name || error.description || error.priority){
+      e.preventDefault();
+      swal("Error", "Please fill out all fields", "error");
+    }
+    else {
+      e.preventDefault();
+      dispatch(addTaskToUser(task, header));
+      navigate("/");
+    }
   };
 
   return (
-    <div className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} font-['nunito'] ease-in-out transition-all duration-700 flex flex-col items-center justify-center w-[70%] m-auto`}>
+    <div className={`fixed top-16 right-0 bottom-0 ${
+            show ? 'left-[245px]' : 'left-[87px]'} font-['nunito'] ease-in-out transition-all duration-700 flex flex-col items-center justify-center w-[70%] m-auto`}>
       <h2 className="text-3xl font-extrabold flex w-full"><p className="text-[#0023c4]">A</p>dd new task to<p className="text-[#ff5cf4]">:</p></h2>
       <form onSubmit={(e) => handleSubmit(e)} className="w-full p-3.5 rounded-2xl mb-[10px]">
         <div className="flex">
-          {/* <label>Priority</label> */}
+           <label>Priority</label>
           <div>
             {error.priority && <small className="text-red-500 italic ml-2">{error.priority}</small>}
             <select
@@ -73,7 +84,7 @@ const AddTaskToUser = ({show}) => {
             </select>
           </div>
           <div className="w-[-webkit-fill-available]">
-            {/* <label>Title of task:</label> */}
+             <label>Title of task:</label> 
             {error.name && <small className="text-red-500 italic ml-4">{error.name}</small>}
             <input
               type="text"
@@ -85,7 +96,7 @@ const AddTaskToUser = ({show}) => {
             />
           </div>
         </div>
-        {/* <label>Description</label> */}
+         <label>Description</label> 
         <input
           type="text"
           name="description"
@@ -95,11 +106,14 @@ const AddTaskToUser = ({show}) => {
           onChange={(e) => handleChange(e)}
         />
         {error.description && <small className="text-red-500 italic ml-3">{error.description}</small>}
-        
+        <button
+          type="submit"
+          onClick={(e) => handleError(e)}
+          className={Primary()}
+        >
+          Add Task
+        </button>
       </form>
-      <button type="submit" className={Primary()}>
-        Add Task
-      </button>
     </div>
   );
 };
