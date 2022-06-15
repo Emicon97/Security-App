@@ -59,7 +59,7 @@ export default function SeeInferiorTask({ show }) {
   if (userDetails === undefined) {
     return (
       <div>
-        <div className="lds-spinner mt-80 ml-80">
+        <div className="lds-spinner">
           <div></div>
           <div></div>
           <div></div>

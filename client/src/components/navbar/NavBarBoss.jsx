@@ -46,6 +46,16 @@ export default function NavBarBoss ({userData, show}) {
                             <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Add employees</p>
                         </button>
                     </Link>
+                    <Link className="flex w-full my-2" to={`/boss/${userData}/environment`}>
+                        <button className="flex focus:text-black hover:text-black cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#cbcfdd]">
+                            <button className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
+                                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                                </svg>
+                            </button>
+                            <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Environments</p>
+                        </button>
+                    </Link>
                     <Link className="flex w-full my-2" to={`/boss/${userData}/reports/receiver`}>
                         <button className="flex focus:text-black hover:text-black cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#cbcfdd]">
                             <button className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">

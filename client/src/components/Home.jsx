@@ -7,6 +7,7 @@ import ViewTasksHome from './reusable/ViewTasksHome';
 import ViewProfileHome from './reusable/ViewProfileHome';
 import ViewEmployeesHome from './reusable/ViewEmployeesHome';
 import { createEnvironment, getUsersById } from '../redux/actions';
+import "./styles/Loader.css";
 
 export default function Home({show}) {
     //variable para saber el path
@@ -58,7 +59,22 @@ export default function Home({show}) {
 
     } else {
         return (
-            <h3>Cargando...</h3>
+            <div>
+            <div className="lds-spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
         )
     }
 }
