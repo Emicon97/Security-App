@@ -25,17 +25,17 @@ export default function ViewEmployeesHome({ employees, id, header }) {
   return (
     <div id="cards-employees-screen" className="m-auto mb-6">
       <h3>
-        Empleado<span>s</span>
+        Employee<span>s</span>
       </h3>
 
       <div className="screen-cards">
         {demo.length ? (
           demo.map((employee) => (
+            <Link to={`/${hierarchy}/${id}/EditTask/${employee._id}`}>
             < div className = "card-employees" key = { employee._id } >
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">
-                { console.log(employee) }
-                <h4>{employee ? employee.environment : null}</h4>
+                <h4>{employee.environment}</h4>
                 <p>
                   No c q puede ir aca, podria ser un vistazo del ultimo reporte
                 </p>
@@ -47,13 +47,12 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                     alt=""
                   />
                 </div>
-                <Link to={`/${hierarchy}/${id}/EditTask/${employee._id}`}>
                   <h4 className="name-employee">
                     {employee.name} <span>{employee.lastName}</span>
                   </h4>
-                </Link>
               </div>
             </div>
+            </Link>
       ))
       ) : (
       <h3>No tienes empleados</h3>

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
-import '../styles/reusable/CreateNewTask.css';
 
 const AddTaskToUser = ({ show }) => {
   const dispatch = useDispatch();
@@ -53,9 +52,9 @@ const AddTaskToUser = ({ show }) => {
   };
 
   return (
-    <div id="create-task" className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
+    <div className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
 
-      <h2 className="title">Add new Task to: </h2>
+      <h2>Add new Task to: </h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>Title of task:</label>
         <input
