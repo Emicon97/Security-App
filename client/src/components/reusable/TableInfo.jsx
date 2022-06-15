@@ -5,7 +5,6 @@ import {
   getEmployees,
   getUsersPaginateAll,
 } from "../../redux/actions";
-import "../styles/TableInfo.css";
 import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";

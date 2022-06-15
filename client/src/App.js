@@ -93,7 +93,7 @@ function App() {
         />
         <Route
           path="/:user/:id/environment"
-          element={<Environment/>}
+          element={<Environment show={show}/>}
         />
         {/* NOT FOUND */}
         <Route path="/email" element={<SendRequestEmail/>}/>

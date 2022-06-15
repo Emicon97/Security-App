@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { updateEmployees } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateEmployees, getAllEnvironments } from "../../redux/actions";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
 
 export default function EditEmployees({ user, hierarchy, allButton }) {
   const dispatch = useDispatch();
-  const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
   const [formSend, setFormSend] = useState(false);
   const [loading, setLoading] = useState(false);
   const header = LoginController();
+  const environments = useSelector((state) => state.environments);
 
   //Estados locales donde manejaremos cada uno de los datos para actualizar un usuario
   const [values, setValues] = useState({
@@ -32,9 +32,9 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
     });
   };
 
-//   useEffect(() => {
-//     dispatch(getEmployeeById(user._id));
-//   }, [dispatch]);
+  //   useEffect(() => {
+  //     dispatch(getEmployeeById(user._id));
+  //   }, [dispatch]);
 
   //Funcion que se ejecuta cuando el usuario coloca el foco en un input
   const handleBlur = (e) => {
@@ -47,24 +47,18 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
         });
       }
     }
-}
+  };
 
   //Funcion para enviar el formulario
   const handleSubmit = (e) => {
     e.preventDefault();
     //Validar si hay algun cambio para actualizar
-    if (
-      values.environment === "" &&
-      values.workingHours === "" 
-    ) {
+    if (values.environment === "" && values.workingHours === "") {
       return;
     }
 
     // Validar el formulario si tiene errores o no
-    if (
-      errors.environment !== "" ||
-      errors.workingHours !== ""
-    ) {
+    if (errors.environment !== "" || errors.workingHours !== "") {
       alert("Please correct the errors in the form to continue");
       return;
     }
@@ -84,14 +78,16 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
     dispatch(updateEmployees(user._id, value, header));
     //Mensaje de alerta de que todo resulto con exito
     alert("updates were successful");
-    allButton(e)
+    allButton(e);
     setValues({
       environment: "",
       workingHours: "",
     });
   };
 
- 
+  useEffect(() => {
+    dispatch(getAllEnvironments(header));
+  }, []);
 
   return (
     <form
@@ -112,13 +108,19 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
                   )}
                 </label>
 
-                <select id="select" onChange={handleChange} className={Input()} name="environment">
-                    <option key="select"  >Environment...</option>
-                     {typeEnv?.map((e) => (
-                    <option key={e} value={e}>
-                      {e}
-                    </option>
-                  ))}
+                <select
+                  id="select"
+                  onChange={handleChange}
+                  className={Input()}
+                  name="environment"
+                >
+                  <option key="select">Environment...</option>
+                  {environments.length &&
+                    environments.map((env) => (
+                      <option key={env._id} value={env.name}>
+                        {env.name}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>
@@ -166,32 +168,3 @@ const Input = (props) => `
     focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-1 
     sm:text-sm
 `;
-
-// const File = (props) => `
-//     block w-full text-sm text-slate-500
-//     file:mr-4 file:py-2 file:px-4
-//     file:rounded-full file:border-0
-//     file:text-sm file:font-semibold
-//     file:bg-blue-50 file:text-blue-700
-//     hover:file:bg-blue-100
-// `;
-
-// const Button = (props) => `
-//     font-bold text-white
-//     bg-blue-500
-//     w-32 h-10 p-0 m-0
-//     border-2 border-blue-500
-//     hover:border-blue-600 hover:bg-blue-600
-//     active:border-blue-700 active:bg-blue-700
-//     rounded-3xl
-// `;
-
-// const ButtonDelete = (props) => `
-//     flex flex-row justify-evenly items-center
-//     h-10 w-28
-//     text-white font-semibold
-//     rounded-md
-//     bg-red-600
-//     hover:bg-red-700
-//     active:bg-red-800 active:ring-4 active:ring-red-200
-// `;
