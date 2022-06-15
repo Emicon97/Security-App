@@ -48,9 +48,6 @@ export default function NavBar({isRendered, show, setShow}) {
     }
   }
 
-  const URLREDIRECT = `/${role}/${id}`;
-  let user = useSelector(state => state.userDetails)
-
     return (
         <>
             {
@@ -58,32 +55,14 @@ export default function NavBar({isRendered, show, setShow}) {
               <div>
                   <div className="bg-[#ffffff] h-16 w-screen fixed top-0 flex items-center justify-between shadow shadow-gray-300">
                       <div className="flex items-center ml-[17px]">
-                              <img src={logo} alt="Not found" className="h-14 w-14 ml-1" />
-                              {
-                                show ?
-                                <h2 className="h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2> :
-                                <h2 className="opacity-0 h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2>
-                              }
+                        <img src={logo} alt="Not found" className="h-14 w-14 ml-1" />
+                        {
+                          show ?
+                          <h2 className="h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2> :
+                          <h2 className="opacity-0 h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2>
+                        }
                       </div>
                       <div className="flex items-center">
-                        {/* <div className="flex items-center justify-end my-2 mr-2">
-                          <Link to={`/guard/${id}/profile`}>
-                            {
-                                user[0].profilePic ?
-                                <img src={user[0].profilePic} alt="Not found" className="rounded-full w-[35px] h-[35px]" /> :
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-[35px] h-[35px]" fill="none" viewBox="0 0 24 24" stroke="#2340be" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            }
-                          </Link>
-                          <h4 className="text-lg font-extrabold font-['nunito'] ml-2">
-                            <span className={`${show ? 'text-[#ff5cf4]' : 'text-[#0023c4]'}`}>{user[0].name.charAt(0).toUpperCase()}</span><span>{user[0].name.slice(1)}</span>
-                            <span className="pl-1">{user[0].lastName.charAt(0).toUpperCase() + user[0].lastName.slice(1)}</span>
-                          </h4>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                            </svg>
-                        </div> */}
                         <ViewProfileHome show={show}/>
                         <button aria-label="open" id="open" onClick={()=>setShow(true)} className={`${show ? 'hidden' : ''} h-6 w-6 mr-4`}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="#0023c4">

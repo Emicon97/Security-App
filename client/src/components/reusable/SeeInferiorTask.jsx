@@ -9,7 +9,6 @@ import {
 } from "../../redux/actions";
 import LoginController from "./LoginController";
 import Modal from "./Modal";
-import demo from "../../assets/demo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Loader.css";
 

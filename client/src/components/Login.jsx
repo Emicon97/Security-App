@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginPrueba } from "../redux/actions";
-import { Input, Primary } from "./styles/Buttons";
 import logo from "../assets/logo.png";
 import eyeOpen from "../assets/eye_visible.png";
 import eyeClose from "../assets/eye_slash_visible.png";
 import "./styles/Login.css";
-import swal from "sweetalert";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -20,7 +18,6 @@ export default function Login() {
   });
   const [errors, setErrors] = useState({});
   const [validate, setValidate] = useState(true);
-  const [formIsCorrect, setFormIsCorrect] = useState(false);
 
   const validations = (input) => {
     let error = {};
@@ -67,7 +64,6 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!errors.dni && !errors.password) {
-      setFormIsCorrect(true);
       dispatch(loginPrueba(input));
       setInput({ dni: "", password: "" });
     } else {
@@ -93,8 +89,11 @@ export default function Login() {
           return navigate(`/supervisor/${id}`);
         case "boss":
           return navigate(`/boss/${id}`);
+        default:
+          return navigate('/');
       }
     }
+    // eslint-disable-next-line
   }, [token]);
 
   return (

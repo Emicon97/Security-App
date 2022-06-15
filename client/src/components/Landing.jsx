@@ -1,5 +1,4 @@
 import React from "react";
-//import fondo from "../assets/fondo-dos.jpg"
 import AuthenticationButton from "./authentication/AuthenticationBtn";
 
 export default function LandingPage() {
