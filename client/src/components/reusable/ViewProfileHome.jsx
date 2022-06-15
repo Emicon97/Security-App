@@ -12,7 +12,7 @@ export default function ViewProfileHome({ show }) {
     const picture = localStorage.getItem('picture');
 
 //ashee
-    if(id) {
+    if(id && lastName && name && picture) {
         return (
             <div className="flex items-center justify-end mb-2 mt-5 mr-5">
                 <h4 className="text-lg font-extrabold font-['nunito'] ml-2">

@@ -239,6 +239,7 @@ export function loginPrueba(value){
         payload: user.data
       })
     }catch(err){
+      swal("Warning", "Incorrect User or password", "warning");
       console.log(err.response.data)
     }
   }
