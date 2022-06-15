@@ -64,7 +64,6 @@ const AddTaskToUser = ({ show }) => {
       <h2 className="text-3xl font-extrabold flex w-full"><p className="text-[#0023c4]">A</p>dd new task to<p className="text-[#ff5cf4]">:</p></h2>
       <form onSubmit={(e) => handleSubmit(e)} className="w-full p-3.5 rounded-2xl mb-[10px]">
         <div className="flex">
-           <label>Priority</label>
           <div>
             {error.priority && <small className="text-red-500 italic ml-2">{error.priority}</small>}
             <select
@@ -81,7 +80,6 @@ const AddTaskToUser = ({ show }) => {
             </select>
           </div>
           <div className="w-[-webkit-fill-available]">
-             <label>Title of task:</label> 
             {error.name && <small className="text-red-500 italic ml-4">{error.name}</small>}
             <input
               type="text"
@@ -93,7 +91,6 @@ const AddTaskToUser = ({ show }) => {
             />
           </div>
         </div>
-         <label>Description</label> 
         <input
           type="text"
           name="description"
@@ -105,7 +102,7 @@ const AddTaskToUser = ({ show }) => {
         <button
           type="submit"
           onClick={(e) => handleError(e)}
-          className={Primary()}
+          className={`${Primary()} m-auto mt-[15px]`}
         >
           Add Task
         </button>
