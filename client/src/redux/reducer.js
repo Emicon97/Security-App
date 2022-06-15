@@ -13,7 +13,6 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
-  CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
   ENVIRONMENTS,
@@ -34,7 +33,6 @@ const initialState = {
   usersPaginate: [],
   token: "",
   taskReports: [],
-  enviroment: [],
   reports: [],
   reports: [],
   environments: [],
@@ -147,12 +145,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         reports: [],
         taskReports: [],
       };
-      case CREATE_ENVIRONMENT:
-        console.log('reducer',payload)
-        return{
-          ...state,
-          enviroment: payload
-        }
       case RESET_REPORT:
         return{
           ...state,
