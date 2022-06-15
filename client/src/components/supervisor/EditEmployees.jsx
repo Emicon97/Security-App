@@ -4,7 +4,7 @@ import { updateEmployees } from "../../redux/actions";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
 
-export default function EditEmployees({ user, hierarchy, handleAllButton }) {
+export default function EditEmployees({ user, hierarchy, allButton }) {
   const dispatch = useDispatch();
   const typeEnv = ["uno", "dos", "tres", "cuatro", "cinco"];
   const [formSend, setFormSend] = useState(false);
@@ -84,7 +84,7 @@ export default function EditEmployees({ user, hierarchy, handleAllButton }) {
     dispatch(updateEmployees(user._id, value, header));
     //Mensaje de alerta de que todo resulto con exito
     alert("updates were successful");
-    handleAllButton(e)
+    allButton(e)
     setValues({
       environment: "",
       workingHours: "",

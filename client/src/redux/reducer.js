@@ -13,8 +13,12 @@ import {
   LOGOUT,
   DESTROY,
   GET_REPORT_TASKS,
+  CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
+  ENVIRONMENTS,
+  ENVIRONMENT_USERS,
+  RESET_REPORT
 } from "./ActionTypes";
 
 const initialState = {
@@ -30,7 +34,11 @@ const initialState = {
   usersPaginate: [],
   token: "",
   taskReports: [],
-  reports: []
+  enviroment: [],
+  reports: [],
+  reports: [],
+  environments: [],
+  environmentUsers: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -91,27 +99,38 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userData: payload,
         token: payload[2]
-      }
+      };
     case LOGOUT:
       return {
         ...state,
         token: payload
-      }
+      };
     case GET_REPORT_TASKS:
       return {
         ...state,
         taskReports: payload
-      }
+      };
     case POST_REPORT_TASKS:
       return {
         ...state,
         taskReports: payload,
       };
     case GET_REPORTS:
+      console.log('payload reports', payload)
       return {
         ...state,
         reports: payload
       };
+    case ENVIRONMENTS:
+      return {
+        ...state,
+        environments: payload
+      }
+    case ENVIRONMENT_USERS:
+      return {
+        ...state,
+        environmentUsers: payload
+      }
     case DESTROY:
       return {
         ...state,
@@ -125,7 +144,21 @@ const rootReducer = (state = initialState, { type, payload }) => {
         todoUpdate: {},
         userData: [],
         usersPaginate: [],
+        reports: [],
+        taskReports: [],
       };
+      case CREATE_ENVIRONMENT:
+        console.log('reducer',payload)
+        return{
+          ...state,
+          enviroment: payload
+        }
+      case RESET_REPORT:
+        return{
+          ...state,
+          reports: [],
+          taskReports: []
+        }
     default:
       return { ...state };
   }
