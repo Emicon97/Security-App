@@ -5,7 +5,7 @@ import { getAllEnvironments, createEnvironments, getEnvironmentUsers } from './.
 import LoginController from './LoginController';
 import { useState } from 'react';
 
-import { Primary, Input, File } from "../styles/Buttons";
+import { Primary } from "../styles/Buttons";
 
 export default function Environment({show}) {
    const dispatch = useDispatch();
@@ -13,7 +13,6 @@ export default function Environment({show}) {
    const header = LoginController();
    const user = localStorage.getItem('user');
    const id = localStorage.getItem('id');
-   console.log(user)
    const environmentUser = useSelector((state) => state.environmentUsers);
    
    const [input, setInput] = useState({name: ""})
