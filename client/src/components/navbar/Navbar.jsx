@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
 import NavBarWatcher from "./NavBarWatcher";
+import ViewProfileHome from '../reusable/ViewProfileHome';
 
 import logo from "../../assets/logo.png";
 import { Input } from "../styles/Buttons";
@@ -57,14 +58,12 @@ export default function NavBar({isRendered, show, setShow}) {
               <div>
                   <div className="bg-[#ffffff] h-16 w-screen fixed top-0 flex items-center justify-between shadow shadow-gray-300">
                       <div className="flex items-center ml-[17px]">
-                          <Link to={URLREDIRECT} className="flex">
                               <img src={logo} alt="Not found" className="h-14 w-14 ml-1" />
                               {
                                 show ?
                                 <h2 className="h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2> :
                                 <h2 className="opacity-0 h-auto w-full font-['nunito'] flex items-center text-4xl font-extrabold ml-2 ease-in-out transition duration-700"><span className="text-[#0023c4]">C</span><span>entine</span><span className="text-[#ff5cf4]">l</span></h2>
                               }
-                          </Link>
                       </div>
                       <div className="flex items-center">
                         {/* <div className="flex items-center justify-end my-2 mr-2">
@@ -85,6 +84,7 @@ export default function NavBar({isRendered, show, setShow}) {
                               <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
                         </div> */}
+                        <ViewProfileHome show={show}/>
                         <button aria-label="open" id="open" onClick={()=>setShow(true)} className={`${show ? 'hidden' : ''} h-6 w-6 mr-4`}>
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="#0023c4">
                                 <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
