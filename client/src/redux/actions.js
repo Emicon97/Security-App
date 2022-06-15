@@ -13,7 +13,6 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
-  CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
   ENVIRONMENTS,
@@ -299,20 +298,6 @@ export function getTaskReports(id, header){
   }
 }
 
-export function createEnvironment(name,header){
-  return async function(dispatch){
-    try{
-      const enviro = await axios.post(`${url}/environment/`,name, header);
-      return dispatch({
-        type: CREATE_ENVIRONMENT,
-        payload: enviro.data
-      })
-      }catch(err){
-        window.alert(err.response.data)
-    }
-  }
-}
-
 export function getReports(id, relation, header){
   return async function(dispatch){
     try{
@@ -380,8 +365,9 @@ export function getAllEnvironments(header) {
 
 export function getEnvironmentUsers(id, name, header) {
   return async function(dispatch){
+    console.log(id, name, header)
     try{
-      const environment = await axios.get(`${url}/environment/${id}`, name, header);
+      const environment = await axios.get(`${url}/environment/${id}/${name}`, header);
       return dispatch({
         type: ENVIRONMENT_USERS,
         payload: environment.data
