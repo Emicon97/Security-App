@@ -22,7 +22,7 @@ export default function Home({show}) {
     useEffect(() => {
 
         dispatch(getUsersById(id, header))
-
+        // eslint-disable-next-line
     }, [dispatch])
 
     if (user.length) {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
 import NavBarWatcher from "./NavBarWatcher";
@@ -48,9 +47,6 @@ export default function NavBar({ isRendered, show, setShow }) {
         isRendered = false;
     }
   }
-
-  const URLREDIRECT = `/${role}/${id}`;
-  let user = useSelector((state) => state.userDetails);
 
   return (
     <>
