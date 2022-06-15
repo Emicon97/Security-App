@@ -5,6 +5,12 @@
     width: 80px;
     height: 80px;
   }
+  .lds-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   .lds-spinner div {
     transform-origin: 40px 40px;
     animation: lds-spinner 1.2s linear infinite;
@@ -13,12 +19,12 @@
     content: " ";
     display: block;
     position: absolute;
-    top: 3px;
-    left: 37px;
-    width: 6px;
-    height: 18px;
+    bottom: 1px;
+    left: 28px;
+    width: 9px;
+    height: 35px;
     border-radius: 20%;
-    background: black;
+    background: rgb(0, 0, 0);
   }
   .lds-spinner div:nth-child(1) {
     transform: rotate(0deg);
