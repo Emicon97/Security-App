@@ -1,8 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsersById } from "../../redux/actions";
-import { Link } from "react-router-dom";
-import "./../styles/reusable/ViewProfileHome.css";
+import { Link } from 'react-router-dom'
+import './../styles/reusable/ViewProfileHome.css'
 
 export default function ViewProfileHome({ show }) {
   const id = localStorage.getItem("id");

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NavBarBoss from "./NavBarBoss";
 import NavBarSupervisor from "./NavBarSupervisor";
@@ -7,7 +7,6 @@ import NavBarWatcher from "./NavBarWatcher";
 import ViewProfileHome from "../reusable/ViewProfileHome";
 
 import logo from "../../assets/logo.png";
-import { Input } from "../styles/Buttons";
 
 export default function NavBar({ isRendered, show, setShow }) {
   const navigate = useNavigate();

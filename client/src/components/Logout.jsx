@@ -16,11 +16,9 @@ export default function Logout() {
   
   return (
     <div className="flex justify-center items-center">
-            {/* <Link to={'/'}> */}
-                <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
-                    Log out
-                </button>
-            {/* </Link> */}
+      <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
+          Log out
+      </button>
     </div>
   );
 }

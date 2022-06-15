@@ -11,7 +11,7 @@ import {
   postTaskReports,
 } from "../../redux/actions";
 import Modal from "../reusable/Modal";
-import { Tertiary, Input } from "../styles/Buttons";
+import { Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
 //animationsss";
@@ -22,7 +22,6 @@ export default function Tasks({ show }) {
   //eslint-disable-next-line
   const toDoUpdated = useSelector((state) => state.todoUpdate);
   const id = localStorage.getItem("id");
-  const user = localStorage.getItem("user");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const [report, setReport] = useState({
@@ -264,9 +263,6 @@ export default function Tasks({ show }) {
               <option value="postponed">Postponed</option>
             </select>
           </div>
-          {/* <Link to={`/EditState/${id}`}>
-            <button className={Tertiary}>Edit</button>
-          </Link> */}
         </div>
 
         {/* TODOS */}

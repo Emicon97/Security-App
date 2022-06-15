@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { getUsersById } from "../../redux/actions";
-import { Primary } from "../styles/Buttons";
 import EditUser from "../supervisor/EditUser";
 import LoginController from "./LoginController";
 import './../styles/reusable/Profile.css'
