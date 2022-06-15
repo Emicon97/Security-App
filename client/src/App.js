@@ -21,6 +21,7 @@ import RecoverPass from './components/RecoverPass';
 import { destroyData } from "./redux/actions";
 import { useLocation } from "react-router-dom";
 import SentReports from "./components/reusable/Reports";
+import urlManager from './urlManager';
 
 function App() {
   let navigate = useNavigate();
@@ -28,23 +29,26 @@ function App() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
   const location = useLocation();
-  let recover = location.pathname.split("/")[2];
   useEffect(() => {
     if (token) {
       var user = localStorage.getItem("user");
       const id = localStorage.getItem("id");
       let view = location.pathname.split("/")[3];
       let employeeId = location.pathname.split("/")[4];
-      if (user && user === 'watcher') user = 'guard'; 
-      if (employeeId) {
-        console.log(token, user, id, view)
-        return navigate(`/${user}/${id}/${view}/${employeeId}`);
-      } else if (view) {
-        return navigate(`/${user}/${id}/${view}`);
-      }  else return navigate(`/${user}/${id}`);
-    } else if (!token && recover !== "recover") {
-      navigate("/");
-      dispatch(destroyData());
+      
+      return navigate(urlManager(user, id, view, employeeId));
+    } else if (!token) {
+      let email = location.pathname.split("/")[1];
+      let recover = location.pathname.split("/")[2];
+      if (email !== 'email') {
+        navigate("/");
+        dispatch(destroyData());
+      }
+      if (email === 'email' && recover !== undefined && recover !== 'recover') {
+        navigate("/");
+        dispatch(destroyData());
+      }
+      console.log(recover)
       return;
     }
     // eslint-disable-next-line
