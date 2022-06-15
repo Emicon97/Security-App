@@ -13,9 +13,9 @@ export default function SentReports({show}) {
    const id = localStorage.getItem('id');
    
    const reports = useSelector((state) => state.reports);
+   console.log(reports)
    
    useEffect(() => {
-      console.log(reports)
       if(relation==='sender'||relation==='receiver'){
          dispatch(getReports(id, relation, header));
       }
