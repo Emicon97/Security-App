@@ -14,7 +14,6 @@ export default function Environment({show}) {
    const user = localStorage.getItem('user');
    const id = localStorage.getItem('id');
    const environmentUser = useSelector((state) => state.environmentUsers);
-   console.log(environmentUser);
    
    const [input, setInput] = useState({name: ""})
    const [errors, setErrors] = useState({})
