@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateEmployees, getAllEnvironments } from "../../redux/actions";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
+import swal from "sweetalert";
 
-export default function EditEmployees({ user, hierarchy, allButton }) {
+export default function EditEmployees({ user, hierarchy, allButton, toggle }) {
   const dispatch = useDispatch();
   const [formSend, setFormSend] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,7 +60,7 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
 
     // Validar el formulario si tiene errores o no
     if (errors.environment !== "" || errors.workingHours !== "") {
-      alert("Please correct the errors in the form to continue");
+      swal("Warning" ,"Please correct the errors in the form to continue", "warning");
       return;
     }
     //Creo una variable que va a tener el valor de los datos a cambiar
@@ -77,7 +78,8 @@ export default function EditEmployees({ user, hierarchy, allButton }) {
     //Mando los datos por el actions para realizar los cambios
     dispatch(updateEmployees(user._id, value, header));
     //Mensaje de alerta de que todo resulto con exito
-    alert("updates were successful");
+    swal("Success!" ,"updates were successful", "success");
+    toggle()
     allButton(e);
     setValues({
       environment: "",
