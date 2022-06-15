@@ -142,6 +142,7 @@ export function filterByStatusAndPriority(id,status,priority, header){
 }
 
 export function postUser(post, header, id){
+  console.log("id:",id, "post:",post, "header:",header)
   return async function(dispatch){
       try{
         await axios.post(`${url}/user/${id}`, post, header)

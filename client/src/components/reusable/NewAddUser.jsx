@@ -116,7 +116,6 @@ export default function AddNewUser({ show }) {
   };
 
   function handleChange(e) {
-    console.log(input)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
