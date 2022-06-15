@@ -26,7 +26,8 @@ export default function SentReports({show}) {
       id: 1123341,
       profilePic: "",
    }]
-console.log(reports)
+   console.log(reportsDemo,reportsDemo.length, "jiji")
+   console.log(reports, "reportss")
    if(relation === "sender") {
 
       return (
@@ -36,12 +37,12 @@ console.log(reports)
                <h3 className="title">Your reports</h3>
                {
                   // reports.length ? reports.map(report => (
-                  reportsDemo.length ? reportsDemo.map(report => (
+                  reportsDemo.length ? reportsDemo.map(rep => (
                      
                      <div>
                         <div className="img"></div>
-                        <h4>{report.title}</h4>
-                        <p>{report.description}</p>
+                        <h4>{rep.title}bb</h4>
+                        <p>{rep.description}</p>
 
                      </div>
 
