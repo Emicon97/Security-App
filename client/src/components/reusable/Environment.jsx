@@ -6,6 +6,7 @@ import LoginController from './LoginController';
 import { useState } from 'react';
 
 import { Input } from "../styles/Buttons";
+import swal from "sweetalert";
 
 export default function Environment({show}) {
    const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export default function Environment({show}) {
       if(Object.keys(errors).length === 0){
          dispatch(createEnvironments(input, header))
          setInput({name: ""})
+         swal("Environment created successfully", "", "success")
       }
    }
    function handleChangeEnvironment(e){
@@ -67,7 +69,7 @@ export default function Environment({show}) {
          { 
             user === 'boss' ? 
             <>
-               <form onSubmit={(e)=>handleSubmit(e)} className="w-[60%] m-auto mt-[15px] mb-[15px] rounded-2xl p-[15px] shadow shadow-gray-300">
+               <form onSubmit={(e)=>handleSubmit(e)} className="w-[72%] m-auto mt-[15px] mb-[15px] rounded-2xl p-[15px] shadow shadow-gray-300">
                   <div className="flex flex-row justify-between">
                      <h2 className="font-semibold flex"><p className="text-[#ff5cf4]">A</p>dd New Enviromen<p className="text-[#0023c4]">t</p></h2>
                      <button title="Submit new environment" type="submit" className="h-5 w-5 rounded-full">
@@ -84,18 +86,19 @@ export default function Environment({show}) {
             </> : 
             null
          }
-         <div className={`w-[60%] m-auto font-semibold flex flex-row items-center justify-between ${user !== 'boss' ? 'mt-[20px]' : ''}`}>
-            <label>Select:</label>
+         <div className={`w-[72%] m-auto font-semibold flex flex-row items-center justify-between ${user !== 'boss' ? 'mt-[20px] bg-[#0023c480] rounded-xl' : ''} p-[5px]`}>
+            <label className="text-white">Select an environment:</label>
             <select onChange={handleChangeEnvironment} className={`${Input('Select')} m-0`}>
-               <option value="select">Environment</option>
+               <option value="select" hidden>Environment</option>
                {allEnvironments.length!==0?allEnvironments.map(e => (<option value={e.name}>{e.name.charAt(0).toUpperCase() + e.name.slice(1)}</option>)): null}
+               <option value="select">Clear</option>
             </select>
          </div>
          {
             environmentUser.length !== 0 ? 
             environmentUser.map(e => {
                return (
-                  <div className="w-[60%] m-auto rounded-2xl mt-[15px] p-[15px] shadow shadow-gray-300">
+                  <div className="w-[72%] m-auto rounded-2xl mt-[15px] p-[15px] shadow shadow-gray-300">
                      <h3 className="flex">{e.name.charAt(0).toUpperCase() + e.name.slice(1)}:
                         {
                            user === 'boss' ?
@@ -112,7 +115,7 @@ export default function Environment({show}) {
                                  e.supervisor.map(e => 
                                     (<p className="truncate">{e.name.charAt(0).toUpperCase() + e.name.slice(1)} {e.lastName.charAt(0).toUpperCase() + e.lastName.slice(1)}</p>)
                                  ) :
-                                 <div className="rounded-xl bg-[#fdced4] p-[5px] w-full flex items-center justify-center">You have no supervisors here</div>
+                                 <div className="rounded-xl bg-[#fdced4] p-[5px] w-full flex items-center justify-center">There are not Supervisors in this environment</div>
                               }
                            </div> :
                            null
@@ -126,7 +129,7 @@ export default function Environment({show}) {
                                  )
                               }
                            </div> :
-                           <div className="rounded-xl bg-[#0023c480] p-[5px] w-[48%] flex items-center justify-center">You don't have watchers here</div>
+                           <div className="rounded-xl bg-[#0023c480] p-[5px] w-[48%] flex items-center justify-center">There are not Watchers in this environment</div>
                         }
                      </div>
                   </div>
