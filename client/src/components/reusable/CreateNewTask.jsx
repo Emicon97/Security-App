@@ -24,9 +24,6 @@ const AddTaskToUser = ({ show }) => {
     if (!input.name) {
       error.name = "Name is required";
     }
-    if (!input.description) {
-      error.description = "Description is required";
-    }
     if (!input.priority) {
       error.priority = "Priority is required";
     }
@@ -50,7 +47,7 @@ const AddTaskToUser = ({ show }) => {
   }
 
   const handleSubmit = (e) => {
-    if (error.name || error.description || error.priority){
+    if (error.name || error.priority){
       e.preventDefault();
       swal("Error", "Please fill out all fields", "error");
     }
@@ -105,7 +102,6 @@ const AddTaskToUser = ({ show }) => {
           className={`${Input()} pb-10 w-[98%] my-0`}
           onChange={(e) => handleChange(e)}
         />
-        {error.description && <small className="text-red-500 italic ml-3">{error.description}</small>}
         <button
           type="submit"
           onClick={(e) => handleError(e)}
