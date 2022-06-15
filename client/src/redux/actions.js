@@ -13,6 +13,7 @@ import {
   ADD_TASK_TO_USER,
   DESTROY,
   GET_REPORT_TASKS,
+  CREATE_ENVIRONMENT,
   GET_REPORTS,
   POST_REPORT_TASKS,
   TEMP_VERIFICATION,
@@ -284,6 +285,20 @@ export function getTaskReports(id, header){
       })
     }catch(err){
       console.log(err.response.data);
+    }
+  }
+}
+
+export function createEnvironment(name,header){
+  return async function(dispatch){
+    try{
+      const enviro = await axios.post(`${url}/environment/`,name, header);
+      return dispatch({
+        type: CREATE_ENVIRONMENT,
+        payload: enviro.data
+      })
+      }catch(err){
+        window.alert(err.response.data)
     }
   }
 }

@@ -210,7 +210,7 @@ export default function TableInfo(props) {
                     <Link 
                       to={{
                         state: `${employee._id}`,
-                        pathname: `/${user}/${employee._id}/createTask`,
+                        pathname: `/${user}/${id}/createTask/${employee._id}`,
                       }}
                       title="Add a task"
                       className="mx-2 h-full flex justify-center items-center">
