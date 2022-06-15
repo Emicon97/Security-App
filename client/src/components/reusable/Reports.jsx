@@ -18,7 +18,7 @@ export default function SentReports({show}) {
          dispatch(getReports(id, relation, header));
       }
       return ()=>{dispatch(resetReport())}
-   }, []);
+   }, [relation]);
 
    let reportsDemo = [{
       title: "titulo de prueba",
@@ -42,7 +42,7 @@ console.log(reports)
                         <div className="img"></div>
                         <h4>{report.title}</h4>
                         <p>{report.description}</p>
-                        
+
                      </div>
 
                   )) : <h3 id="title-reports">You have no reports</h3>

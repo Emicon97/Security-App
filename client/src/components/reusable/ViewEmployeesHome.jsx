@@ -37,7 +37,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
       <div className="screen-cards">
         {demo.length ? (
           demo.map((employee) => (
-            <Link to={`/${hierarchy}/${id}/EditTask/${employee._id}`}>
+            <Link to={`/${hierarchy}/${id}/seeTasks/${employee._id}`}>
             < div className = "card-employees" key = { employee._id } >
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">

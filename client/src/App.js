@@ -83,7 +83,7 @@ function App() {
           element={<CreateNewTask show={show} />}
         />
         <Route
-          path="/:user/:id/editTask/:employeeId"
+          path="/:user/:id/seeTasks/:employeeId"
           element={<SeeInferiorTask show={show} />}
         />
         <Route

@@ -18,11 +18,20 @@ import {
   POST_REPORT_TASKS,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
-  RESET_REPORT
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
-import { SaveToken, SaveRefreshToken, SaveId, SaveUser } from './LocalStorage';
+import {
+  SaveToken,
+  SaveRefreshToken,
+  SaveId,
+  SaveUserLastName,
+  SaveUserName,
+  SavePicture,
+  SaveUser
+} from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -85,7 +94,6 @@ export function addTaskToUser(body, header){
 export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
-      console.log(id, status)
       const state = await axios.put(`${url}/todos/${id}`, status, header)
       console.log("this is state.data", state.data)
       return dispatch({
@@ -221,6 +229,9 @@ export function loginPrueba(value){
     try{
       const user = await axios.post(`${url}/login`, value);
       SaveId(user.data[0]._id);
+      SaveUserLastName(user.data[0].lastName);
+      SaveUserName(user.data[0].name);
+      SavePicture(user.data[0].profilePic);
       SaveUser(user.data[1]);
       SaveToken(user.data[2]);
       SaveRefreshToken(user.data[3]);
@@ -401,6 +412,14 @@ export function resetReport(){
   return async function(dispatch){
     return dispatch({
       type: RESET_REPORT
+    })
+  }
+}
+
+export function resetUser(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_USER
     })
   }
 }

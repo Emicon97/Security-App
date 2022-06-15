@@ -18,7 +18,8 @@ import {
   POST_REPORT_TASKS,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
-  RESET_REPORT
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 
 const initialState = {
@@ -116,7 +117,6 @@ const rootReducer = (state = initialState, { type, payload }) => {
         taskReports: payload,
       };
     case GET_REPORTS:
-      console.log('payload reports', payload)
       return {
         ...state,
         reports: payload
@@ -159,6 +159,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
           reports: [],
           taskReports: []
         }
+        case RESET_USER:
+          return{
+            ...state,
+            userDetails: [],
+            todosId: [],
+          }
     default:
       return { ...state };
   }
