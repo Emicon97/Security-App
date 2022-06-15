@@ -58,7 +58,7 @@ export default function NavBarSupervisor ({userData, show}) {
                             <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Tasks</p>
                         </button>
                     </Link>
-                    <Link className="flex w-full my-2" to={`/guard/${userData}/reports/sender`}>
+                    <Link className="flex w-full my-2" to={`/supervisor/${userData}/reports/sender`}>
                         <button className="flex focus:text-black hover:text-black cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#cbcfdd]">
                             <button className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
@@ -69,7 +69,7 @@ export default function NavBarSupervisor ({userData, show}) {
                             <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Your reports</p>
                         </button>
                     </Link>
-                    <Link className="flex w-full my-2" to={`/guard/${userData}/reports/receiver`}>
+                    <Link className="flex w-full my-2" to={`/supervisor/${userData}/reports/receiver`}>
                         <button className="flex focus:text-black hover:text-black cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#cbcfdd]">
                             <button className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
