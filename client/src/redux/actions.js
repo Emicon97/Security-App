@@ -17,7 +17,8 @@ import {
   POST_REPORT_TASKS,
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
-  RESET_REPORT
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
@@ -84,7 +85,6 @@ export function addTaskToUser(body, header){
 export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
-      console.log(id, status)
       const state = await axios.put(`${url}/todos/${id}`, status, header)
       console.log("this is state.data", state.data)
       return dispatch({
@@ -387,6 +387,14 @@ export function resetReport(){
   return async function(dispatch){
     return dispatch({
       type: RESET_REPORT
+    })
+  }
+}
+
+export function resetUser(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_USER
     })
   }
 }

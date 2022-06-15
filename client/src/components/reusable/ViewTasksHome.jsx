@@ -58,17 +58,19 @@ export default function ViewTasksHome({ id, header }) {
         return () => { };
     }, [scrl?.current?.scrollWidth, scrl?.current?.offsetWidth]);
 
+    let hierarchy = localStorage.getItem("user");
+
     return (
         <div className="relative mr-auto my-5 ml-[30px] w-[90%] h-[330px] overflow-visible p-3.5 bg-[#fdced4] rounded-2xl flex flex-col">
-            <div className="flex justify-between">
+            <div className="flex justify-between h-[35px]">
                 <h1 className="text-3xl font-extrabold font-['nunito'] text-white">Tasks</h1>
-                <div className="flex items-center cursor-pointer">
+                <Link className="flex items-center cursor-pointer" to={`/${hierarchy}/${id}/tasks`}>
                     <p title="List of tasks" className="font-extrabold font-['nunito'] text-white">More</p>
                     <svg title="List of tasks" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
                         <path fillRule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
                         <path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
                     </svg>
-                </div>
+                </Link>
             </div>
             <div ref={scrl} onScroll={scrollCheck} className="absolute top-[16%] bottom-2.5 left-2.5 w-[103%] mb-[-5px] overflow-x-hidden overflow-y-hidden flex">
                 {
@@ -86,7 +88,7 @@ export default function ViewTasksHome({ id, header }) {
                             'bg-[#E8F1FF] hover:bg-[#cfe2ff]'}
                             flex h-[250px] w-[199px] rounded-2xl mr-2 cursor-pointer`}
                             >
-                            <div className="h-full w-full m-2.5 flex flex-col relative">
+                            <div className="h-full w-[90%] m-2.5 flex flex-col relative">
                                 <div className="w-full flex items-center">
                                 {
                                     todo.priority === 'urgent' ? 
@@ -126,14 +128,14 @@ export default function ViewTasksHome({ id, header }) {
                     ))
                 }
             </div>
-            <div className="absolute bottom-[5px] left-0 right-0 flex justify-center">
+            <div className="absolute bottom-[3px] left-0 right-0 flex justify-center">
                 <button title="Scroll left" onClick={() => slide(-150)} className="cursor-pointer mr-[50px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="white">
                         <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                 </button>
                 <button title="Scroll right" onClick={() => slide(+150)} className="cursor-pointer ml-[50px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="white">
                         <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                     </svg>
                 </button>

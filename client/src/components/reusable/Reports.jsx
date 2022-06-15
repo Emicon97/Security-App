@@ -8,19 +8,18 @@ import LoginController from './LoginController';
 export default function SentReports({show}) {
    const dispatch = useDispatch();
    const {relation} = useParams()
-   console.log('relation',relation)
+
    const header = LoginController();
    const id = localStorage.getItem('id');
    
    const reports = useSelector((state) => state.reports);
-   console.log(reports)
    
    useEffect(() => {
       if(relation==='sender'||relation==='receiver'){
          dispatch(getReports(id, relation, header));
       }
       return ()=>{dispatch(resetReport())}
-   }, []);
+   }, [relation]);
 
    return (
 
