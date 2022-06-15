@@ -75,8 +75,8 @@ export default function ViewTasksHome({ id, header }) {
             <div ref={scrl} onScroll={scrollCheck} className="absolute top-[16%] bottom-2.5 left-2.5 w-[103%] mb-[-5px] overflow-x-hidden overflow-y-hidden flex">
                 {
                     ToDos?.map((todo, i) => (
-                        <Link to={`/supervisor/${id}/tasks`}>
-                            <div title="Link to see the list of tasks" key={i}
+                        <Link to={`/supervisor/${id}/tasks`} key={i}>
+                            <div title="Link to see the list of tasks" 
                             data-aos="zoom-in"
                             className={`todo-tasks
                             ${todo.priority === 'urgent' ? 
