@@ -1,0 +1,20 @@
+.screen-reports {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    /* background-color: blue; */
+    text-align: center;
+}
+.screen-reports h3 {
+    font-size: 30px;
+    /* color: red; */
+    font-weight: 700;
+}
+#title-reports {
+    font-weight: 700;
+    font-size: 30px;
+    margin: 30px 0px 0px 50px;
+}
+#title-reports::first-letter, .screen-reports .title::first-letter {
+    color: #0023c4;
+}
