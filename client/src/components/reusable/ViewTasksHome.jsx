@@ -88,7 +88,7 @@ export default function ViewTasksHome({ id, header }) {
                             'bg-[#E8F1FF] hover:bg-[#cfe2ff]'}
                             flex h-[250px] w-[199px] rounded-2xl mr-2 cursor-pointer`}
                             >
-                            <div className="h-full w-full m-2.5 flex flex-col relative">
+                            <div className="h-full w-[90%] m-2.5 flex flex-col relative">
                                 <div className="w-full flex items-center">
                                 {
                                     todo.priority === 'urgent' ? 

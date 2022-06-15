@@ -16,7 +16,6 @@ export default function ViewEmployeesHome({ employees, id, header }) {
   let dispatch = useDispatch();
   let urlImg =
     "https://cdn.icon-icons.com/icons2/3066/PNG/512/user_person_profile_avatar_icon_190943.png";
-
   useEffect(() => {
     dispatch(getEmployees(id, header));
     aos.init({ duration: 700 });
@@ -38,7 +37,8 @@ export default function ViewEmployeesHome({ employees, id, header }) {
       <div className="screen-cards">
         {demo.length ? (
           demo.map((employee) => (
-            <div className="card-employees" key={employee._id}>
+            <Link to={`/${hierarchy}/${id}/EditTask/${employee._id}`}>
+            < div className = "card-employees" key = { employee._id } >
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">
                 <h4>{employee.environment}</h4>
@@ -53,18 +53,17 @@ export default function ViewEmployeesHome({ employees, id, header }) {
                     alt=""
                   />
                 </div>
-                <Link to={`/${hierarchy}/${id}/seeTasks/${employee._id}`}>
                   <h4 className="name-employee">
                     {employee.name} <span>{employee.lastName}</span>
                   </h4>
-                </Link>
               </div>
             </div>
-          ))
-        ) : (
-          <h3>No tienes empleados</h3>
+            </Link>
+      ))
+      ) : (
+      <h3>No tienes empleados</h3>
         )}
-      </div>
     </div>
+    </div >
   );
 }
