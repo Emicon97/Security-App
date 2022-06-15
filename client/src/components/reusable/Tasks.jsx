@@ -117,7 +117,7 @@ export default function Tasks({ show }) {
   };
 
   const [todoId, setTodoId] = useState("");
-  const [status, setStatus] = useState({ status: "" });
+  const [status, setStatus] = useState( {status:""} );
   const navigate = useNavigate();
 
   const handleBringTodoId = (e) => {

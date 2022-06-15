@@ -14,6 +14,7 @@ import NewAddUser from "./components/reusable/NewAddUser";
 import Tasks from "./components/reusable/Tasks";
 import CreateNewTask from "./components/reusable/CreateNewTask";
 import SeeInferiorTask from "./components/reusable/SeeInferiorTask";
+import Environment from "./components/reusable/Environment";
 
 import SendRequestEmail from "./components/SendRequestEmail";
 import RecoverPass from './components/RecoverPass';
@@ -90,7 +91,10 @@ function App() {
           path="/:user/:id/reports/:relation"
           element={<SentReports show={show} />}
         />
-
+        <Route
+          path="/:user/:id/environment"
+          element={<Environment/>}
+        />
         {/* NOT FOUND */}
         <Route path="/email" element={<SendRequestEmail/>}/>
         <Route path="/email/recover/:id/:token/:refresh" element={<RecoverPass/>}/>
