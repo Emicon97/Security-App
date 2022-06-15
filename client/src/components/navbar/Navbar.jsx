@@ -98,20 +98,18 @@ export default function NavBar({isRendered, show, setShow}) {
                       </div>
                   </div>
                   <div className={`${show ? '' : '-translate-x-[64%]'} shadow shadow-gray-300 flex justify-center ease-in-out transition duration-700 fixed top-[65px] bottom-0 left-0 w-[244px] bg-[#ffffff]`}>
-                    <ul className={`${show ? '' : 'translate-x-[97%]'} ease-in-out transition duration-700`}>
-                      {/* <li className='flex flex-col gap-1'> */}
-                        {NavBar}
-                        <a className={`flex w-full my-2 mt-52 ${role === 'guard' ? 'ml-3' : ''}`}>
-                          <button onClick={handleRedirectLogOut} className="flex focus:text-[#0023c4] hover:text-[#0023c4] cursor-pointer focus:outline-none font-['nunito'] font-extrabold text-[#ff5cf4]">
-                            <button onClick={handleRedirectLogOut} className="hover:bg-[#0023c436] focus:bg-[#0023c436] rounded-full mr-1">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
-                                <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
-                              </svg>
-                            </button>
-                            <p className={`${show ? '' : 'opacity-0'} ease-in-out transition duration-1000 hover:duration-75`}>Log out</p>
-                          </button>
-                        </a>
-                      {/* </li> */}
+                    <ul className={`${show ? '' : 'translate-x-[97%]'} ease-in-out transition duration-700 flex flex-col justify-between`}>
+                      {NavBar}
+                      <a className={`flex justify-center w-full mb-[30px] mx-auto font-['nunito'] ${show ? '' : '-translate-x-[23%]'} ${role === 'watcher' ? '-translate-x-[5%]' : ''} ease-in-out transition duration-700`}>
+                        <button onClick={handleRedirectLogOut}>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 focus:bg-[#0023c436]" viewBox="0 0 20 20" fill="#0023c4">
+                            <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                        <button onClick={handleRedirectLogOut} className="cursor-pointer font-extrabold ml-1 text-[#ff5df4] hover:text-[#0023c4]">
+                          <p className={`${show ? '' : 'opacity-0 ease-in-out transition duration-1000'}`}>Log out</p>
+                        </button>
+                      </a>
                     </ul>
                   </div>
                 </div>
