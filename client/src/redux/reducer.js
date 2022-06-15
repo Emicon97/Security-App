@@ -19,7 +19,8 @@ import {
   ENVIRONMENTS,
   ENVIRONMENT_USERS,
   RESET_REPORT,
-  RESET_USER
+  RESET_USER,
+  CREATE_ENVIRONMENT
 } from "./ActionTypes";
 
 const initialState = {

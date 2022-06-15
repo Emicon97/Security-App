@@ -28,6 +28,7 @@ function App() {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
   const location = useLocation();
+  let recover = location.pathname.split("/")[2];
   useEffect(() => {
     if (token) {
       var user = localStorage.getItem("user");
@@ -36,12 +37,12 @@ function App() {
       let employeeId = location.pathname.split("/")[4];
       if (user && user === 'watcher') user = 'guard'; 
       if (employeeId) {
+        console.log(token, user, id, view)
         return navigate(`/${user}/${id}/${view}/${employeeId}`);
       } else if (view) {
         return navigate(`/${user}/${id}/${view}`);
       }  else return navigate(`/${user}/${id}`);
-    }
-    if (!token) {
+    } else if (!token && recover !== "recover") {
       navigate("/");
       dispatch(destroyData());
       return;
@@ -54,7 +55,7 @@ function App() {
       <NavBar isRendered={token} show={show} setShow={setShow} />
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
-        <Route exact path="/" element={<Login />} />
+        <Route exact strict path="/" element={<Login />} />
         {/* <Route path="/" element={<NavBar />}/> */}
 
         {/* Rutas HOME para cada rol */}

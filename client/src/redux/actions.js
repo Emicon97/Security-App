@@ -399,7 +399,6 @@ export function recoverPassword(value, header){
 export function verificationUser({dni,email}){
   return async function(dispatch){
     try{
-      console.log(dni, email, "lo que le paso al actions")
       const user = await axios.get(`${url}/verification/user/${dni}/${email}`)
       return dispatch({
         type: TEMP_VERIFICATION,
