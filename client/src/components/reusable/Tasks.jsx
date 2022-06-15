@@ -138,7 +138,7 @@ export default function Tasks({ show }) {
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length) {
       e.preventDefault();
-      dispatch(updateStatus(todoId, { status: status }, header));
+      dispatch(updateStatus(todoId, status, header));
       dispatch(postTaskReports(id, report, header));
       toggle();
       swal("Your report has been sent", "", "success");
