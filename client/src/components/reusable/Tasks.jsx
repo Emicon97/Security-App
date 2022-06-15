@@ -138,7 +138,7 @@ export default function Tasks({ show }) {
   const handleUpdateStatusAndReport = (e) => {
     if (report.title.length) {
       e.preventDefault();
-      dispatch(updateStatus(todoId, { status: status }, header));
+      dispatch(updateStatus(todoId, status, header));
       dispatch(postTaskReports(id, report, header));
       toggle();
       swal("Your report has been sent", "", "success");
@@ -292,12 +292,12 @@ export default function Tasks({ show }) {
                       clipRule="evenodd"
                     />
                   </svg>
-                  You want to:
+                  Do you want you mark this task as:
                   {(todo.status === "left" && (
                     <>
                       <button
                         title="Set task in posponed"
-                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="postponed"
                         onClick={(e) => {
@@ -310,7 +310,7 @@ export default function Tasks({ show }) {
                       or
                       <button
                         title="Set task in done"
-                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="done"
                         onClick={(e) => {
@@ -325,7 +325,7 @@ export default function Tasks({ show }) {
                     (todo.status === "postponed" && (
                       <button
                         title="Set task in done"
-                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
+                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="done"
                         onClick={(e) => {
@@ -339,7 +339,7 @@ export default function Tasks({ show }) {
                     (todo.status === "done" && (
                       <button
                         title="Set task in posponed"
-                        className="border-2 border-transparent hover:border-green-500 rounded-full flex items-center px-2 mx-1"
+                        className="border-2 border-transparent hover:border-yellow-500 rounded-full flex items-center px-2 mx-1"
                         id={todo._id}
                         value="postponed"
                         onClick={(e) => {
@@ -349,8 +349,7 @@ export default function Tasks({ show }) {
                       >
                         Postponed
                       </button>
-                    ))}
-                  the task?
+                    ))} ?
                 </div>
               )}
               <div

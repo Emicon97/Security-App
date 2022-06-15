@@ -29,10 +29,11 @@ function App() {
   const location = useLocation();
   useEffect(() => {
     if (token) {
-      const user = localStorage.getItem("user");
+      var user = localStorage.getItem("user");
       const id = localStorage.getItem("id");
       let view = location.pathname.split("/")[3];
       let employeeId = location.pathname.split("/")[4];
+      if (user && user === 'watcher') user = 'guard'; 
       if (employeeId) {
         return navigate(`/${user}/${id}/${view}/${employeeId}`);
       } else if (view) {
@@ -78,7 +79,7 @@ function App() {
         />
         <Route path="/:user/:id/tasks" element={<Tasks show={show} />} />
         <Route
-          path="/:user/:id/createTask"
+          path="/:user/:id/createTask/:employeeId"
           element={<CreateNewTask show={show} />}
         />
         <Route
@@ -86,7 +87,7 @@ function App() {
           element={<SeeInferiorTask show={show} />}
         />
         <Route
-          path="/:user/:id/reports"
+          path="/:user/:id/reports/:relation"
           element={<SentReports show={show} />}
         />
 

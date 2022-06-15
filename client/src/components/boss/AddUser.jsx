@@ -11,11 +11,8 @@ export default function AddUser() {
   const header = LoginController();
   const id = localStorage.getItem('id');
   const typeEnv = [
-    "neighbourhood one",
-    "neighbourhood two",
-    "neighbourhood three",
-    "neighbourhood four",
-    "neighbourhood five",
+    "school",
+    "barrio fino"
   ];
   const [formSend, setFormSend] = useState(false);
   const [image, setImage] = useState("");
