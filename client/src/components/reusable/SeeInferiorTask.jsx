@@ -25,7 +25,6 @@ export default function SeeInferiorTask({ show }) {
   const userTasks = useSelector((state) => state.todosId);
   const reports = useSelector((state) => state.taskReports);
   const userId = useLocation().pathname.split("/")[4];
-  // console.log("this is userDetails" ,userDetails, "this is userTasks", userTasks, "this is reports", reports)
 
   function reply_click(id) {
     setEditTask(userTasks.find((task) => task._id === id));
@@ -286,7 +285,6 @@ export default function SeeInferiorTask({ show }) {
           <div>
             <h2>Reports of {editTask.name}</h2>
             <ul>
-              {console.log(reports)}
               {reports.report ? (
                 reports.report.map((report) => (
                   <div key={report._id}>
