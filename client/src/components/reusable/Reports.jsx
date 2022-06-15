@@ -20,13 +20,6 @@ export default function SentReports({show}) {
       return ()=>{dispatch(resetReport())}
    }, [relation]);
 
-   let reportsDemo = [{
-      title: "titulo de prueba",
-      description: "description de pruebaaa a a a aaaaa aaaa aaaaaaaa a a",
-      id: 1123341,
-      profilePic: "",
-   }]
-   console.log(reportsDemo,reportsDemo.length, "jiji")
    console.log(reports, "reportss")
    if(relation === "sender") {
 
@@ -36,13 +29,13 @@ export default function SentReports({show}) {
             <div className="screen-reports">
                <h3 className="title">Your reports</h3>
                {
-                  // reports.length ? reports.map(report => (
-                  reportsDemo.length ? reportsDemo.map(rep => (
+                  reports.length ? reports.map(report => (
+                  // reportsDemo.length ? reportsDemo.map(rep => (
                      
                      <div>
                         <div className="img"></div>
-                        <h4>{rep.title}bb</h4>
-                        <p>{rep.description}</p>
+                        <h4>{report.title}</h4>
+                        <p>{report.description}</p>
 
                      </div>
 
