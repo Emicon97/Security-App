@@ -321,13 +321,15 @@ export default function AddNewUser({ show }) {
               >
                 <option value="none">Select...</option>
                 {environment.length &&
-                  environment.map((env) => {
-                    return (
-                      <option value={(input.environment = env.name)} key={env._id}>
-                        {env.name}
-                      </option>
-                    );
-                  })}
+                  environment.map((env) => (
+                    <option
+                      value={env.name}
+                      onChange={(e) => handleChange(e)}
+                      key={env._id}
+                    >
+                      {env.name}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
