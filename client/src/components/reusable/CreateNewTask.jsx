@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 import { addTaskToUser } from "../../redux/actions";
 import { Primary, Input } from "../styles/Buttons";
 import LoginController from "./LoginController";
 
-const AddTaskToUser = ({show}) => {
+const AddTaskToUser = ({ show }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = localStorage.getItem('id');
+  const id = localStorage.getItem("id");
   const header = LoginController();
   const [task, setTask] = useState({
     name: "",
@@ -37,6 +38,9 @@ const AddTaskToUser = ({show}) => {
       ...task,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleError(e) {
     setError(
       validateInput({
         ...task,
@@ -46,13 +50,23 @@ const AddTaskToUser = ({show}) => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(addTaskToUser(task, header));
-    navigate("/");
+    if (error.name || error.description || error.priority){
+      e.preventDefault();
+      swal("Error", "Please fill out all fields", "error");
+    }
+    else {
+      e.preventDefault();
+      dispatch(addTaskToUser(task, header));
+      navigate("/");
+    }
   };
 
   return (
-    <div className={`fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
+    <div
+      className={`fixed top-16 right-0 bottom-0 ${
+        show ? "left-[245px]" : "left-[87px]"
+      } ease-in-out transition-all duration-700`}
+    >
       <h2>Add new Task to: </h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label>Title of task:</label>
@@ -89,7 +103,11 @@ const AddTaskToUser = ({show}) => {
           <option value="low">Low</option>
         </select>
         {error.priority && <p className="">{error.priority}</p>}
-        <button type="submit" className={Primary()}>
+        <button
+          type="submit"
+          onClick={(e) => handleError(e)}
+          className={Primary()}
+        >
           Add Task
         </button>
       </form>
