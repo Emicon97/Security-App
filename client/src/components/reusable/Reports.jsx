@@ -8,6 +8,7 @@ import LoginController from './LoginController';
 export default function SentReports({show}) {
    const dispatch = useDispatch();
    const {relation} = useParams()
+   console.log('relation',relation)
    const header = LoginController();
    const id = localStorage.getItem('id');
    
@@ -17,8 +18,8 @@ export default function SentReports({show}) {
       console.log(reports)
       if(relation==='sender'||relation==='receiver'){
          dispatch(getReports(id, relation, header));
-         dispatch(resetReport())
       }
+      return ()=>{dispatch(resetReport())}
    }, []);
 
    return (

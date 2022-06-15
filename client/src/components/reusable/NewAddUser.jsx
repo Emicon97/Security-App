@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { postUser } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { postUser, getAllEnvironments } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
 import swal from "sweetalert";
+import { useEffect } from "react";
 
 export default function AddNewUser({ show }) {
   const dispatch = useDispatch();
@@ -32,10 +33,7 @@ export default function AddNewUser({ show }) {
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const typeEnv = [
-    "school",
-    "barrio fino"
-  ];
+  const environment = useSelector((state) => state.environments);
 
   const uploadImage = async (e) => {
     const files = e.target.files;
@@ -96,6 +94,8 @@ export default function AddNewUser({ show }) {
     //Telephone
     if (isNaN(input.telephone))
       error.telephone = "The phone number must be a number";
+    if (input.telephone.toString().length < 9)
+      error.telephone = "The phone number must be at least 9 digits";
 
     //Email
     if (!input.email || !regexEmail.test(input.email))
@@ -121,6 +121,9 @@ export default function AddNewUser({ show }) {
       ...input,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleError(e) {
     setError(
       validateInput({
         ...input,
@@ -137,13 +140,13 @@ export default function AddNewUser({ show }) {
   function handleSubmit(e) {
     e.preventDefault();
     if (
-      !input.name &&
-      !input.lastName &&
-      !input.dni &&
-      !input.email &&
-      !input.password &&
-      !input.telephone &&
-      !input.environment
+      error.name ||
+      error.lastName ||
+      error.dni ||
+      error.email ||
+      error.password ||
+      error.telephone ||
+      error.environment
     )
       return swal(
         "Wait!",
@@ -160,6 +163,10 @@ export default function AddNewUser({ show }) {
     }
   }
 
+  useEffect(() => {
+    dispatch(getAllEnvironments(header));
+  }, []);
+
   return (
     <div
       className={`mt-6 fixed top-16 right-0 bottom-0 ${
@@ -175,7 +182,7 @@ export default function AddNewUser({ show }) {
           <div className="flex justify-between">
             <div>
               <label className="">
-                Name:{" "}
+                Name: <span className="text-red-500 italic">*</span>{" "}
                 {error.name && (
                   <small className="text-red-500 italic">{error.name}</small>
                 )}
@@ -187,12 +194,11 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your Name..."
                 className={handleClassName(error.name)}
-                required
               />
             </div>
             <div>
               <label className="">
-                LastName:{" "}
+                LastName: <span className="text-red-500 italic">*</span>{" "}
                 {error.lastName && (
                   <small className="text-red-500 italic">
                     {error.lastName}
@@ -206,14 +212,13 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your LastName..."
                 className={handleClassName(error.lastName)}
-                required
               />
             </div>
           </div>
           <div className="flex justify-between">
             <div>
               <label className="">
-                DNI:{" "}
+                DNI: <span className="text-red-500 italic">*</span>{" "}
                 {error.dni && (
                   <small className="text-red-500 italic">{error.dni}</small>
                 )}
@@ -225,12 +230,11 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your identification number"
                 className={handleClassName(error.dni)}
-                required
               />
             </div>
             <div>
               <label className="">
-                E-mail:{" "}
+                E-mail: <span className="text-red-500 italic">*</span>{" "}
                 {error.email && (
                   <small className="text-red-500 italic">{error.email}</small>
                 )}
@@ -242,14 +246,13 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your email..."
                 className={handleClassName(error.email)}
-                required
               />
             </div>
           </div>
           <div className="flex justify-between">
             <div>
               <label className="">
-                Phone Number:{" "}
+                Phone Number: <span className="text-red-500 italic">*</span>{" "}
                 {error.telephone && (
                   <small className="text-red-500 italic">
                     {error.telephone}
@@ -263,12 +266,11 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your phone number..."
                 className={handleClassName(error.telephone)}
-                required
               />
             </div>
             <div>
               <label className="">
-                Password:{" "}
+                Password: <span className="text-red-500 italic">*</span>{" "}
                 {error.password && (
                   <small className="text-red-500 italic">
                     {error.password}
@@ -282,7 +284,6 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
                 placeholder="Your password..."
                 className={handleClassName(error.password)}
-                required
               />
             </div>
           </div>
@@ -320,13 +321,14 @@ export default function AddNewUser({ show }) {
                 onChange={(e) => handleChange(e)}
               >
                 <option value="none">Select...</option>
-                {typeEnv.map((env) => {
-                  return (
-                    <option value={(input.environment = env)} key={env}>
-                      {env}
-                    </option>
-                  );
-                })}
+                {environment.length &&
+                  environment.map((env) => {
+                    return (
+                      <option value={(input.environment = env)} key={env}>
+                        {env.name}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
           </div>
@@ -355,7 +357,12 @@ export default function AddNewUser({ show }) {
             </div>
           </div>
         </div>
-        <button type="submit" className={`${Primary()} m-auto`}>
+        <small className="text-red-500 italic">(*) Mandatory fields</small>
+        <button
+          type="submit"
+          onClick={(e) => handleError(e)}
+          className={`${Primary()} m-auto`}
+        >
           Add User
         </button>
       </form>
