@@ -67,13 +67,13 @@ export default function SeeInferiorTask({show}) {
     );
   } else {
     return (
-      <div className={`font-['nunito'] fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} overflow-x-hidden ease-in-out transition-all duration-700 overflow-auto font-['nunito']`}>
+      <div className={`font-['nunito'] p-2.5 fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} overflow-x-hidden ease-in-out transition-all duration-700 overflow-auto font-['nunito']`}>
         <div className="w-full h-[50px] rounded-full bg-[#7f91e1] flex justify-between">
           <div className="flex">
             {
               userDetails.profilePic ? 
               <img src={userDetails.profilePic} alt="Profile picture" className="w-[40px] h-[40px] my-auto ml-[12px] mr-[7px] rounded-full" /> :
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#cbcfdd" strokeWidth={2}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-[40px] h-[40px] my-auto ml-[12px] mr-[7px]" fill="none" viewBox="0 0 24 24" stroke="#cbcfdd" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             }
@@ -86,13 +86,22 @@ export default function SeeInferiorTask({show}) {
             </div>
           </div>
           <div className="flex items-center">
+            <button title="Assign task">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+              </svg>
+            </button>
+            <h2 className="flex items-center font-medium text-white h-[40px] my-auto mr-[12px] mr-[7px] italic">Assign task?</h2>
+          </div>
+          <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="white">
               <path fillRule="evenodd" d="M15.707 4.293a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 0zm0 6a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 111.414-1.414L10 14.586l4.293-4.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
             <h2 className="flex items-center font-medium text-white h-[40px] my-auto mr-[12px] mr-[7px]">You're viewing<p className="font-semibold ml-1">{userDetails.name.charAt(0).toUpperCase() + userDetails.name.slice(1)}</p>'s task reports</h2>
           </div>
         </div>
-        <div className="w-full h-auto bg-[#fdced4] mt-[3px] rounded-3xl flex items-center justify-center p-2.5">
+        <div className="w-full h-auto bg-[#fdced4] mt-[5px] rounded-3xl flex items-center justify-center p-2.5 flex flex-wrap gap-[10px]">
           {
             userTasks.length ? 
             (
@@ -142,12 +151,12 @@ export default function SeeInferiorTask({show}) {
                       reply_click(task._id);
                       toggle();
                     }} className="ml-[1px]">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#cbcfdd">
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                         <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                       </svg>
                     </button>
-                    <h1 className="w-full h-auto truncate ml-1 text-base font-semibold">{task.name.charAt(0).toUpperCase() + task.name.slice(1)}</h1>
+                    <h1 className="w-full h-auto truncate ml-1 text-base font-semibold text-[#cbcfdd]">{task.name.charAt(0).toUpperCase() + task.name.slice(1)}</h1>
                   </div>
                 </div>
               ))
