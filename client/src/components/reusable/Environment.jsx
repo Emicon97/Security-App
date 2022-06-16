@@ -10,12 +10,12 @@ import swal from "sweetalert";
 
 export default function Environment({show}) {
    const dispatch = useDispatch();
-   const allEnvironments = useSelector((state)=>state.environments)
+   const allEnvironments = useSelector((state)=>state.environments);
    const header = LoginController();
    const user = localStorage.getItem('user');
    const id = localStorage.getItem('id');
    const environmentUser = useSelector((state) => state.environmentUsers);
-   
+   const environments = allEnvironments.map(r => r.name)
    const [input, setInput] = useState({name: ""})
    const [errors, setErrors] = useState({})
    const [name, setName] = useState("")
@@ -34,6 +34,8 @@ export default function Environment({show}) {
            errors.name = "Name is required"
          } else if(input.name.length < 3){
             errors.name= "Name must contain more than 3 characters" 
+         } else if(environments.includes(input.name.toLocaleLowerCase())) {
+            errors.name = "This environment already exists"
          }
          return errors;
       }
@@ -41,6 +43,7 @@ export default function Environment({show}) {
 
    function handleSubmit(e){
       e.preventDefault()
+      if(allEnvironments.includes(input.name)) return swal("Error", "The name is already exist", "error")
       if(Object.keys(errors).length === 0){
          dispatch(createEnvironments(input, header))
          setInput({name: ""})
@@ -87,7 +90,7 @@ export default function Environment({show}) {
             null
          }
          <div className={`w-[72%] m-auto font-semibold flex flex-row items-center justify-between ${user !== 'boss' ? 'mt-[20px] bg-[#0023c480] rounded-xl' : ''} p-[5px]`}>
-            <label className="text-white">Select an environment:</label>
+            <label className={`${user !== 'boss' ? 'text-white' : ''}`}>Select an environment:</label>
             <select onChange={handleChangeEnvironment} className={`${Input('Select')} m-0`}>
                <option value="select" hidden>Environment</option>
                {allEnvironments.length!==0?allEnvironments.map(e => (<option value={e.name}>{e.name.charAt(0).toUpperCase() + e.name.slice(1)}</option>)): null}
