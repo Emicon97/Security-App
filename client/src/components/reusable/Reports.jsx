@@ -29,7 +29,6 @@ export default function SentReports({ show }) {
       return () => { dispatch(resetReport()) }
    }, [relation]);
 
-
    if (relation === "sender") {
 
       return (
@@ -42,7 +41,7 @@ export default function SentReports({ show }) {
                   {
                      reports.length ? reports.map((report, i) => (
 
-                        <div className="report pink" onClick={event => toggleInfo(event, i)}>
+                        <div key={report._id} className="report pink" onClick={event => toggleInfo(event, i)}>
                            <div className="text-from">
                               <h5 id="pink">to <span>{report.receiver.name}</span> <span>{report.receiver.lastName}</span></h5>
                            </div>

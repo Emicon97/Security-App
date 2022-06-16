@@ -27,38 +27,38 @@ export default function ViewEmployeesHome({ employees, id, header }) {
         <Link className="flex items-center cursor-pointer" to={`/${hierarchy}/${id}/employees`}>
           <p title="List of employees" className="font-extrabold font-['nunito'] text-white">More</p>
           <svg title="List of employees" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
-              <path fillRule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
-              <path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clipRule="evenodd" />
           </svg>
         </Link>
       </div>
       <div className="screen-cards">
         {demo.length ? (
           demo.map((employee) => (
-            <Link to={`/${hierarchy}/${id}/seeTasks/${employee._id}`}>
-            < div className = "card-employees" key = { employee._id } >
-              <h4 className="employees-num-tasks">{employee.workingHours}</h4>
-              <div className="employees-environment">
-              <h4>{employee.environment}</h4>
-              </div>
-              <div className="employee-profile">
-                <div className="img-profile-employee">
-                  <img
-                    src={employee.profilePic ? employee.profilePic : urlImg}
-                    alt=""
-                  />
+            <Link to={`/${hierarchy}/${id}/seeTasks/${employee._id}`} key={employee._id}>
+              < div className="card-employees">
+                <h4 className="employees-num-tasks">{employee.workingHours}</h4>
+                <div className="employees-environment">
+                  <h4>{employee.environment}</h4>
                 </div>
+                <div className="employee-profile">
+                  <div className="img-profile-employee">
+                    <img
+                      src={employee.profilePic ? employee.profilePic : urlImg}
+                      alt=""
+                    />
+                  </div>
                   <h4 className="name-employee">
                     {employee.name} <span>{employee.lastName}</span>
                   </h4>
+                </div>
               </div>
-            </div>
             </Link>
-      ))
-      ) : (
-      <h3>No tienes empleados</h3>
+          ))
+        ) : (
+          <h3>No tienes empleados</h3>
         )}
-    </div>
+      </div>
     </div >
   );
 }
