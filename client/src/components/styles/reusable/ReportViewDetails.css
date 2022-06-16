@@ -1,0 +1,92 @@
+.screen-details-report {
+    /* background-color: red; */
+    width: 70vw;
+    max-width: 900px;
+    height: 70vh;
+    max-height: 500px;
+    display: flex;
+    flex-direction: row;
+}
+.screen-details-report .left {
+    /* max-width: 270px; */
+    height: 100%;
+    height: calc();
+    padding-right: 20px;
+    border-right: 2px solid rgb(214, 216, 219);
+    /* background-color: blue; */
+}
+.screen-details-report .left .img {
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    overflow: hidden;
+    color: red;
+}
+.screen-details-report .left .img img {
+    min-width: 100%;
+    min-height: 100%
+}
+.screen-details-report .left .name-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 20px;
+}
+.screen-details-report .left .name-info h3{
+    text-transform: capitalize;
+    font-size: 23px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.screen-details-report h3 .pink{
+    text-transform: lowercase;
+    color: rgb(255 92 244);
+}
+.screen-details-report .left .name-info h3::first-letter {
+    text-transform: uppercase;
+    color: #0023c4;
+}
+.screen-details-report .left .name-info h4{
+    font-size: 17px;
+    font-weight: 400;
+}
+.screen-details-report .left .name-info h5{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 300;
+}
+.screen-details-report .right {
+    width: 80%;
+    height: auto;
+    /* background-color: blue; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px 20px;
+    text-align: center;
+    
+}
+/* .screen-details-report .right .info {
+    min-height: 60%;
+} */
+.screen-details-report .right .title{
+    font-size: 27px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.screen-details-report .right .title::first-letter {
+    text-transform: uppercase;
+    color: #0023c4;
+}
+.screen-details-report .right .description {
+    font-size: 24px;
+}
+.screen-details-report .right .description::first-letter{
+    font-weight: 500;
+}
+.screen-details-report .right img {
+    margin-top: 30px;
+    max-height: 40%;
+}
