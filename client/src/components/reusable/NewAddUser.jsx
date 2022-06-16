@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { postUser } from "../../redux/actions";
+import { useNavigate, Link } from "react-router-dom";
+import { postUser, getAllEnvironments } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import LoginController from "./LoginController";
 import { Primary, Input, File } from "../styles/Buttons";
 import demo from "../../assets/demo.png";
 import swal from "sweetalert";
+import { useEffect } from "react";
 
-export default function AddNewUser() {
+export default function AddNewUser({ show }) {
   const dispatch = useDispatch();
   const header = LoginController();
   const navigate = useNavigate();
-  const user = useLocation();
-  const role = user.pathname.split('/')[1];
-  const id = user.pathname.split('/')[2];
+
+  const role = localStorage.getItem("user");
+  const id = localStorage.getItem("id");
 
   const [image, setImage] = useState("");
   const [input, setInput] = useState({
@@ -32,13 +33,7 @@ export default function AddNewUser() {
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const typeEnv = [
-    "neighbourhood one",
-    "neighbourhood two",
-    "neighbourhood three",
-    "neighbourhood four",
-    "neighbourhood five",
-  ];
+  const environment = useSelector((state) => state.environments);
 
   const uploadImage = async (e) => {
     const files = e.target.files;
@@ -59,7 +54,7 @@ export default function AddNewUser() {
       profilePic: file.secure_url,
     });
   };
-  
+
   function validateInput(input) {
     let error = {};
     const regex = /^[a-zA-Z ]+$/;
@@ -82,8 +77,8 @@ export default function AddNewUser() {
 
     //Password
     if (
-      input.password.lentgh < 8 ||
-      input.password.lentgh > 24 ||
+      input.password.length < 8 ||
+      input.password.length > 24 ||
       !input.password
     )
       error.password = "Password must be between 8 and 24 characters";
@@ -99,6 +94,8 @@ export default function AddNewUser() {
     //Telephone
     if (isNaN(input.telephone))
       error.telephone = "The phone number must be a number";
+    if (input.telephone.toString().length < 9)
+      error.telephone = "The phone number must be at least 9 digits";
 
     //Email
     if (!input.email || !regexEmail.test(input.email))
@@ -123,6 +120,9 @@ export default function AddNewUser() {
       ...input,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleError(e) {
     setError(
       validateInput({
         ...input,
@@ -142,19 +142,10 @@ export default function AddNewUser() {
       error.name ||
       error.lastName ||
       error.dni ||
-      error.password ||
       error.email ||
+      error.password ||
       error.telephone ||
       error.environment
-    )
-    if (
-      !input.name &&
-      !input.lastName &&
-      !input.dni &&
-      !input.email &&
-      !input.password &&
-      !input.telephone &&
-      !input.environment
     )
       return swal(
         "Wait!",
@@ -162,147 +153,219 @@ export default function AddNewUser() {
         "error"
       );
     dispatch(postUser(input, header, id));
-    alert("User created successfully");
+    swal("User created successfully", "", "success");
     setInput({});
-    if(role === "supervisor"){
-      navigate(`/supervisor/${id}`)
+    if (role === "supervisor") {
+      navigate(`/supervisor/${id}`);
     } else {
       navigate(`/boss/${id}`);
     }
   }
 
-  return (
-    <div>
-      <div className="">
-        <Link to={`/boss/${id}`}>
-          {" "}
-          <button className={Primary()}>Dashboard</button>{" "}
-        </Link>
-        <h2>Add new Employee:</h2>
-      </div>
-      <form onSubmit={(e) => handleSubmit(e)} encType="multipart/form-data">
-        <div className="flex-column justify-center">
-          <label className="">Name:</label>
-          <input
-            type="text"
-            value={input.name}
-            name="name"
-            onChange={(e) => handleChange(e)}
-            placeholder="Your Name..."
-            className={handleClassName(error.name)}
-            required
-          />
-          {error.name && <p className="">{error.name}</p>}
-          <label className="">LastName:</label>
-          <input
-            type="text"
-            value={input.lastName}
-            name="lastName"
-            onChange={(e) => handleChange(e)}
-            placeholder="Your LastName..."
-            className={handleClassName(error.lastName)}
-            required
-          />
-          {error.lastName && <p className="">{error.lastName}</p>}
-          <label className="">DNI:</label>
-          <input
-            type="number"
-            name="dni"
-            value={input.dni}
-            onChange={(e) => handleChange(e)}
-            placeholder="Your identification number"
-            className={handleClassName(error.dni)}
-            required
-          />
-          {error.dni && <p className="">{error.dni}</p>}
-          <label className="">E-mail:</label>
-          <input
-            type="email"
-            name="email"
-            value={input.email}
-            onChange={(e) => handleChange(e)}
-            placeholder="Your email..."
-            className={handleClassName(error.email)}
-            required
-          />
-          {error.email && <p className="">{error.email}</p>}
+  useEffect(() => {
+    dispatch(getAllEnvironments(header));
+  }, []);
 
-          <label className="">Phone Number: </label>
-          <input
-            type="tel"
-            name="telephone"
-            value={input.telephone}
-            onChange={(e) => handleChange(e)}
-            placeholder="Your phone number..."
-            className={handleClassName(error.telephone)}
-            required
-          />
-          {error.telephone && <p className="">{error.telephone}</p>}
-          <label className="">Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={input.password}
-            onChange={(e) => handleChange(e)}
-            placeholder="Your password..."
-            className={handleClassName(error.password)}
-            required
-          />
-          {error.password && <p className="">{error.password}</p>}
-          <label className="">Profile Picture:</label>
-          <input
-            type="file"
-            name="profilePic"
-            onChange={(e) => uploadImage(e)}
-            className={File()}
-          />
-          <img className="w-12 h-12" src={demo} alt="Could not load" />
-          {loading ? (
-            ((input.profilePic = image),
-            (<img className="w-12 h-12" src={demo} alt="Could not load" />))
-          ) : (
-            <img src={image} className="w-12 h-12" alt="Could not load" />
-          )}
-          <label className="">Working Hours:</label>
-          <input
-            type="text"
-            name="workingHours"
-            value={input.workingHours}
-            onChange={(e) => handleChange(e)}
-            placeholder="Example: 8:00-17:00"
-            className={handleClassName(error.name)}
-          />
-          <label className="">Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={input.address}
-            onChange={(e) => handleChange(e)}
-            placeholder="Your address..."
-            className={handleClassName(error.name)}
-          />
-          {/* Chequear el environment */}
-          <label className="">Environment:</label>
-          <select
-            name="environment"
-            className={handleClassName(error.name)}
-            onChange={(e) => handleChange(e)}
-          >
-            <option value="none">Select...</option>
-            {typeEnv.map((env) => {
-              return (
-                <option value={(input.environment = env)} key={env}>
-                  {env}
-                </option>
-              );
-            })}
-          </select>
+  return (
+    <div
+      className={`mt-6 fixed top-16 right-0 bottom-0 ${
+        show ? "left-[245px]" : "left-[87px]"
+      } ease-in-out transition-all duration-700 font-['nunito']`}
+    >
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        encType="multipart/form-data"
+        className="m-auto w-[70%]"
+      >
+        <div className="flex-column justify-center mb-3">
+          <div className="flex justify-between">
+            <div>
+              <label className="">
+                Name: <span className="text-red-500 italic">*</span>{" "}
+                {error.name && (
+                  <small className="text-red-500 italic">{error.name}</small>
+                )}
+              </label>
+              <input
+                type="text"
+                value={input.name}
+                name="name"
+                onChange={(e) => handleChange(e)}
+                placeholder="Your Name..."
+                className={handleClassName(error.name)}
+              />
+            </div>
+            <div>
+              <label className="">
+                LastName: <span className="text-red-500 italic">*</span>{" "}
+                {error.lastName && (
+                  <small className="text-red-500 italic">
+                    {error.lastName}
+                  </small>
+                )}
+              </label>
+              <input
+                type="text"
+                value={input.lastName}
+                name="lastName"
+                onChange={(e) => handleChange(e)}
+                placeholder="Your LastName..."
+                className={handleClassName(error.lastName)}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <label className="">
+                DNI: <span className="text-red-500 italic">*</span>{" "}
+                {error.dni && (
+                  <small className="text-red-500 italic">{error.dni}</small>
+                )}
+              </label>
+              <input
+                type="number"
+                name="dni"
+                value={input.dni}
+                onChange={(e) => handleChange(e)}
+                placeholder="Your identification number"
+                className={handleClassName(error.dni)}
+              />
+            </div>
+            <div>
+              <label className="">
+                E-mail: <span className="text-red-500 italic">*</span>{" "}
+                {error.email && (
+                  <small className="text-red-500 italic">{error.email}</small>
+                )}
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={input.email}
+                onChange={(e) => handleChange(e)}
+                placeholder="Your email..."
+                className={handleClassName(error.email)}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <label className="">
+                Phone Number: <span className="text-red-500 italic">*</span>{" "}
+                {error.telephone && (
+                  <small className="text-red-500 italic">
+                    {error.telephone}
+                  </small>
+                )}
+              </label>
+              <input
+                type="tel"
+                name="telephone"
+                value={input.telephone}
+                onChange={(e) => handleChange(e)}
+                placeholder="Your phone number..."
+                className={handleClassName(error.telephone)}
+              />
+            </div>
+            <div>
+              <label className="">
+                Password: <span className="text-red-500 italic">*</span>{" "}
+                {error.password && (
+                  <small className="text-red-500 italic">
+                    {error.password}
+                  </small>
+                )}
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={input.password}
+                onChange={(e) => handleChange(e)}
+                placeholder="Your password..."
+                className={handleClassName(error.password)}
+              />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div className="flex items-center justify-between w-[404px]">
+              <div className="h-full">
+                <label className="">Profile Picture:</label>
+                <input
+                  type="file"
+                  name="profilePic"
+                  onChange={(e) => uploadImage(e)}
+                  className={File()}
+                />
+              </div>
+              {!loading ? (
+                <img
+                  src={demo}
+                  className="w-12 h-12 mr-3"
+                  alt="Could not load"
+                />
+              ) : (
+                <img
+                  src={input.profilePic}
+                  className="w-12 h-12 mr-3"
+                  alt="Could not load"
+                />
+              )}
+            </div>
+            <div className={`${show ? "translate-x-6" : ""}}`}>
+              {/* Chequear el environment */}
+              <label className="">Environment:</label>
+              <select
+                name="environment"
+                className={handleClassName(error.name)}
+                onChange={(e) => handleChange(e)}
+              >
+                <option value="none" hidden>Environment...</option>
+                {environment.length &&
+                  environment.map((env) => (
+                    <option
+                      value={env.name}
+                      onChange={(e) => handleChange(e)}
+                      key={env._id}
+                    >
+                      {env.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <label className="">Working Hours:</label>
+              <input
+                type="text"
+                name="workingHours"
+                value={input.workingHours}
+                onChange={(e) => handleChange(e)}
+                placeholder="Example: 8:00-17:00"
+                className={handleClassName(error.name)}
+              />
+            </div>
+            <div>
+              <label className="">Address:</label>
+              <input
+                type="text"
+                name="address"
+                value={input.address}
+                onChange={(e) => handleChange(e)}
+                placeholder="Your address..."
+                className={handleClassName(error.name)}
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <button type="submit" className={Primary()}>
-            Add User
-          </button>
-        </div>
+        <small className="text-red-500 italic">(*) Mandatory fields</small>
+        <button
+          type="submit"
+          onClick={(e) => handleError(e)}
+          className={`${Primary()} m-auto`}
+        >
+          Add User
+        </button>
       </form>
     </div>
   );

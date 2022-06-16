@@ -1,0 +1,89 @@
+.screen-reports {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+.screen-reports h3 {
+    font-size: 30px;
+    font-weight: 700;
+}
+.screen-reports .container-reports {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.screen-reports .container-reports .report {
+    margin: 10px 0px;
+    height: 100px;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+.screen-reports .container-reports .report .text-from {
+    height: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-items: start;
+}
+.screen-reports .container-reports .report h5 {
+    width: 200px;
+    margin-right: auto;
+    color: black;
+    margin-right: 100px;
+    padding: 3px;
+    border-radius: 7px;
+    display: inline-block;
+    font-size: 14px;
+}
+.screen-reports .container-reports .report h5 span {
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+.screen-reports .container-reports .report h4 {
+    font-size: 24px;
+    font-weight: 700;
+}
+.screen-reports .container-reports .report p {
+    font-size: 19px;
+    font-weight: 500;
+}
+.screen-reports .container-reports .blue {
+    background-color: rgb(124, 145, 238);
+    color: rgb(74, 67, 143);
+}
+.screen-reports .container-reports .blue:hover {
+    background-color: rgb(145, 163, 245);
+}
+.screen-reports .container-reports .pink {
+    background-color: #fccdd3;
+    color: rgb(173, 108, 155);
+}
+.screen-reports .container-reports .pink:hover {
+    background-color: #fde2e5;
+}
+#pink {
+    
+    background-color: rgb(255, 240, 252);
+}
+#blue {
+    
+    background-color: rgb(244 246 250);
+
+}
+
+
+#title-reports {
+    font-weight: 700;
+    font-size: 30px;
+    margin: 30px 0px 0px 50px;
+}
+#title-reports::first-letter, .screen-reports .title-blue::first-letter {
+    color: #0023c4;
+}
+.screen-reports .title-pink::first-letter {
+    color: #ff5cf4;
+}

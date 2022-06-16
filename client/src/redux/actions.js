@@ -10,13 +10,28 @@ import {
   DELETE_USER,
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
-  LOGOUT,
   ADD_TASK_TO_USER,
   DESTROY,
+  GET_REPORT_TASKS,
+  GET_REPORTS,
+  POST_REPORT_TASKS,
+  TEMP_VERIFICATION,
+  ENVIRONMENTS,
+  ENVIRONMENT_USERS,
+  RESET_REPORT,
+  RESET_USER
 } from "./ActionTypes";
 import swal from "sweetalert";
 import { url } from './url';
-import { SaveToken } from './LocalStorage';
+import {
+  SaveToken,
+  SaveRefreshToken,
+  SaveId,
+  SaveUserLastName,
+  SaveUserName,
+  SavePicture,
+  SaveUser
+} from './LocalStorage';
 
 export function getUsersById(id, header){
     return async function(dispatch){
@@ -27,7 +42,7 @@ export function getUsersById(id, header){
           payload: employees.data
         });
       }catch(err){
-        window.alert(err.response.data)
+        console.log(err.response.data)
     }
   }
 }
@@ -41,7 +56,7 @@ export function getToDos(header){
         payload: todos.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -56,7 +71,7 @@ export function getToDosById(id, header){
         payload: todos.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -76,7 +91,7 @@ export function addTaskToUser(body, header){
 }
 
 
-export function updateStatus(id,status, header){
+export function updateStatus(id, status, header){
   return async function(dispatch){
     try{
       const state = await axios.put(`${url}/todos/${id}`, status, header)
@@ -85,7 +100,7 @@ export function updateStatus(id,status, header){
         payload: state.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -99,7 +114,7 @@ export function filterByPriority(id,priority, header){
         payload: state.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -113,7 +128,7 @@ export function filterByStatus(id, status, header){
         payload: state.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -127,18 +142,19 @@ export function filterByStatusAndPriority(id,status,priority, header){
         payload: state.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
 
 export function postUser(post, header, id){
+  console.log("id:",id, "post:",post, "header:",header)
   return async function(dispatch){
       try{
         await axios.post(`${url}/user/${id}`, post, header)
         return "User created successfully";
       }catch(err){
-        window.alert(err.response.data)
+        console.log(err.response.data)
       }
   }
 }
@@ -157,20 +173,6 @@ export function getEmployees(id, header){
   }
 }
 
-export function searchEmployees(id, name, header){
-  return async function(dispatch){
-    try{
-      const users = await axios.get(`${url}/user/employees/${id}?name=${name}`, header);
-      return dispatch({
-        type:GET_EMPLOYEES,
-        payload: users.data
-      });
-    }catch(err){
-      window.alert(err.response.data)
-    }
-  }
-};
-
 export function getEmployeeById(id, header){
   return async function(dispatch){
     try{
@@ -180,7 +182,7 @@ export function getEmployeeById(id, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 };
@@ -194,7 +196,7 @@ export function updateUser(id, post, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -204,7 +206,7 @@ export function updateEmployees(id, post, header){
     try{
       await axios.put(`${url}/user/${id}`, post, header)
     }catch(error){
-      window.alert(error.response.data)
+      console.log(error.response.data)
     }
   }
 }
@@ -218,7 +220,7 @@ export function deleteUser(id, header){
         payload: user.data
       });
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -226,13 +228,20 @@ export function loginPrueba(value){
   return async function(dispatch){
     try{
       const user = await axios.post(`${url}/login`, value);
-      SaveToken(user.data[2])
+      SaveId(user.data[0]._id);
+      SaveUserLastName(user.data[0].lastName);
+      SaveUserName(user.data[0].name);
+      SavePicture(user.data[0].profilePic);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
       return dispatch({
         type: LOGIN_PRUEBA,
         payload: user.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      swal("Warning", "Incorrect User or password", "warning");
+      console.log(err.response.data)
     }
   }
 }
@@ -250,7 +259,7 @@ export function getUsersPaginate(id, limit, skip, name, header) {
         payload: users.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -264,7 +273,7 @@ export function getUsersPaginateAll(id,limit,skip,header){
         payload: users.data
       })
     }catch(err){
-      window.alert(err.response.data)
+      console.log(err.response.data)
     }
   }
 }
@@ -275,4 +284,145 @@ export function destroyData() {
       type: DESTROY
     });
   };
+}
+
+export function getTaskReports(id, header){
+  return async function(dispatch){
+    try{
+      const reports = await axios.get(`${url}/todos/reports/${id}`, header);
+      return dispatch({
+        type: GET_REPORT_TASKS,
+        payload: reports.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function getReports(id, relation, header){
+  return async function(dispatch){
+    try{
+      const reports = await axios.get(`${url}/report/${id}?relation=${relation}`, header);
+      return dispatch({
+        type: GET_REPORTS,
+        payload: reports.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function postTaskReports(id, body, header){
+  return async function(dispatch){
+    try{
+      const report = await axios.post(`${url}/report/${id}`, body, header);
+      return dispatch({
+        type: POST_REPORT_TASKS,
+        payload: report.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function createEnvironments(name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.post(`${url}/environment`, name, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+export function sendRequest(values){
+  return async function(){
+    try{
+      await axios.put(`${url}/email`, values);
+    }catch(error){
+      console.log(error.response.data);
+    }
+  }
+}
+
+export function getAllEnvironments(header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.get(`${url}/environment`, header);
+      return dispatch({
+        type: ENVIRONMENTS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function getEnvironmentUsers(id, name, header) {
+  return async function(dispatch){
+    try{
+      const environment = await axios.get(`${url}/environment/${id}/${name}`, header);
+      return dispatch({
+        type: ENVIRONMENT_USERS,
+        payload: environment.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+export function recoverPassword(value, header){
+  return async function(dispatch){
+    try{
+      const user = await axios.put(`${url}/email/recover/${value.id}`,value, header)
+      SaveId(user.data[0]._id);
+      SaveUser(user.data[1]);
+      SaveToken(user.data[2]);
+      SaveRefreshToken(user.data[3]);
+      return dispatch({
+        type: LOGIN_PRUEBA,
+        payload: user.data
+      })
+    }catch(err){
+      console.log(err.response.data);
+    }
+  }
+}
+
+export function verificationUser({dni,email}){
+  return async function(dispatch){
+    try{
+      const user = await axios.get(`${url}/verification/user/${dni}/${email}`)
+      return dispatch({
+        type: TEMP_VERIFICATION,
+        payload: user.data
+      })
+    }catch(error){
+      window.alert(error.response.data)
+    }
+  }
+}
+
+    
+export function resetReport(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_REPORT
+    })
+  }
+}
+
+export function resetUser(){
+  return async function(dispatch){
+    return dispatch({
+      type: RESET_USER
+    })
+  }
 }

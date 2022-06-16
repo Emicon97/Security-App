@@ -5,6 +5,7 @@ import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
 import { getEmployeeById } from "../../redux/actions";
+import swal from "sweetalert";
 
 export default function EditUser({ user, hierarchy }) {
   const dispatch = useDispatch();
@@ -46,10 +47,10 @@ export default function EditUser({ user, hierarchy }) {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "a4bkl9ib");
+    data.append("upload_preset", "ov2fimuw");
     setLoading(true);
     const res = await fetch(
-      "https://api.cloudinary.com/v1_1/securityapp/image/upload",
+      "https://api.cloudinary.com/v1_1/centinelapp/image/upload",
       { method: "POST", body: data }
     );
     const file = await res.json();
@@ -261,7 +262,7 @@ export default function EditUser({ user, hierarchy }) {
       errors.telephone !== "" ||
       errors.workingHours !== ""
     ) {
-      alert("Please correct the errors in the form to continue");
+      swal("Wait!" ,"Please correct the errors in the form to continue", "warning");
       return;
     }
     //Creo una variable que va a tener el valor de los datos a cambiar
@@ -279,7 +280,7 @@ export default function EditUser({ user, hierarchy }) {
     //Mando los datos por el actions para realizar los cambios
     dispatch(updateUser(user._id, value, header));
     //Mensaje de alerta de que todo resulto con exito
-    alert("updates were successful");
+    swal("Great!" ,"updates were successful", "success");
 
     setValues({
       name: "",

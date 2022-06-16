@@ -1,0 +1,16 @@
+#home {
+    background-color: #f8f9fb;
+    width: 90%;
+    /* height: 85vh; */
+    margin: auto;
+    margin-left: 8%;
+    padding-top: 7%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /* justify-content: end; */
+    overflow: hidden;
+    justify-content: center;
+    font-family: 'Nunito', 'sans-serif';
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getToDosById,
   filterByPriority,
@@ -12,11 +12,11 @@ import Modal from "./Modal";
 import { container } from '../styles/EditState';
 import { Primary } from '../styles/Buttons'
 
-export default function EditState() {
+export default function EditState({show}) {
   const ToDos = useSelector((state) => state.todosId);
   const updatedTask = useSelector((state) => state.todoUpdate);
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const id = localStorage.getItem('id');
 
   const [ currentPriority, setCurrentPriority ] = useState("all");
   const [ currentStatus, setCurrentStatus ] = useState("all");
@@ -95,7 +95,7 @@ export default function EditState() {
   };
 
   return (
-    <div className={container}>
+    <div className={`${container} fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
       <nav className="flex justify-between text-base gap-3 mr-3 pt-3 text-gray-500">
         <Link to={`/guard/${id}`} className="flex">
           <button className={`${Primary()} ml-3`}>

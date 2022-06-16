@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
 import Modal from "../reusable/Modal";
 import TableEmployees from "./tableEmployees";
 import { getEmployees, getUsersById } from "../../redux/actions";
 import "./style.css";
-import { Primary } from "../styles/Buttons";
-import EditUser from "../supervisor/EditUser";
 import LoginController from "../reusable/LoginController";
 
-export default function BossProfile() {
+export default function BossProfile({show}) {
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   let dispatch = useDispatch();
   const header = LoginController();
-  let { id } = useParams();
+  const id = localStorage.getItem('id');
   let user = useSelector((state) => state.userDetails[0]);
+  let hierarchy = useSelector((state) => state.userDetails[1]);
   let supervisors = useSelector((state) => state.employees);
   const togglePic = () => {
     setActivePic(!activePic);
@@ -31,7 +29,7 @@ export default function BossProfile() {
   return (
     <>
       {user ? (
-        <div className="home-boss">
+        <div className={`home-boss fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
           <div className="info-screen">
             <div className="contain-profile">
               <div className="profile">
@@ -82,6 +80,7 @@ export default function BossProfile() {
                 <TableEmployees
                   name={"Employees"}
                   employees={supervisors ? supervisors : []}
+                  hierarchy={hierarchy}
                 />
               </div>
             </div>

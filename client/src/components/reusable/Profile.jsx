@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { getUsersById } from "../../redux/actions";
-import { useParams } from "react-router-dom";
-import { Primary } from "../styles/Buttons";
-import see from "../../assets/see.png";
 import EditUser from "../supervisor/EditUser";
 import LoginController from "./LoginController";
+import './../styles/reusable/Profile.css'
 
-export default function UserProfile() {
+export default function UserProfile({ show }) {
   const dispatch = useDispatch();
   const header = LoginController();
   const [activePic, setActivePic] = useState(false);
   const [activeEdit, setActiveEdit] = useState(false);
   const user = useSelector((state) => state.userDetails[0]);
-  const hierarchy = useSelector((state) => state.userDetails[1]);
-
-  const { id } = useParams();
+  const hierarchy = localStorage.getItem('user');
+  const urlImg = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+  const id = localStorage.getItem('id');
 
   const togglePic = () => {
     setActivePic(!activePic);
@@ -24,66 +22,41 @@ export default function UserProfile() {
   const toggleEdit = () => {
     setActiveEdit(!activeEdit);
   };
-
   useEffect(() => {
     dispatch(getUsersById(id, header));
   }, [dispatch]);
-
   return (
     <>
-      <div className="h-4/5 flex justify-center items-center">
-        <div className="flex flex-col items-center m-4">
-          <img
-            src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-            alt="foto de perfil"
-            width="300rem"
-            className={Image()}
-          />
-          <button onClick={togglePic} className={Primary()}>
-            See pic
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-              <path
-                fillRule="evenodd"
-                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="bg-[#EEEDFF] w-2/5 h-64 p-5 m-4 h-60 rounded-3xl">
-          <div className="flex justify-end">
-            <button className={Primary()} onClick={toggleEdit}>
-              Edit
+      {user && <>
+        <div className={`flex justify-center items-center fixed top-16 right-0 bottom-0 ${show ? 'left-[245px]' : 'left-[87px]'} ease-in-out transition-all duration-700`}>
+          <div className="w-[400px] h-[450px] relative flex flex-col rounded-2xl bg-[#7f91e1]">
+            <button onClick={toggleEdit} className="absolute top-[10px] right-[10px]" title="Edit">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+              </svg>
             </button>
+            <button onClick={togglePic} className="h-[360px] w-[90%] m-auto mt-[50px] rounded-full" title="See picture">
+              <img src={user.profilePic ? user.profilePic : urlImg} alt="Not found" className="h-full w-full rounded-full" />
+            </button>
+            <h2 className="flex font-semibold text-white text-xl absolute top-[10px] left-[10px]">
+              {user.name.charAt(0).toUpperCase() + user.name.slice(1)} {' '}
+              {user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1)} 
+            </h2>
+            <span className="font-semibold text-white m-auto">{user.email} | {user.telephone}</span>
           </div>
-          {user && (
-            <div className="h-40 flex flex-col justify-end">
-              <p className="text-4xl font-semibold">
-                {user.name} {user.lastName}
-              </p>
-              <p className="text-2xl italic font-light">{user.email}</p>
-              <p>{user.dni}</p>
-              <p>{user.telephone}</p>
-            </div>
-          )}
         </div>
-      </div>
-      <Modal active={activePic} toggle={togglePic}>
-        <img
-          className="w-80 h-80 rounded-full m-5"
-          src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-          alt="Foto de perfil"
-        />
-      </Modal>
-      <Modal active={activeEdit} toggle={toggleEdit}>
-        <EditUser user={user} hierarchy={hierarchy}></EditUser>
-      </Modal>
+        <Modal active={activePic} toggle={togglePic}>
+          <img
+            className="w-80 h-80 rounded-full m-5"
+            src={user.profilePic ? user.profilePic : urlImg}
+            alt="Foto de perfil"
+          />
+        </Modal>
+        <Modal active={activeEdit} toggle={toggleEdit}>
+          <EditUser user={user} hierarchy={hierarchy}></EditUser>
+        </Modal>
+      </>
+      }
     </>
   );
 }

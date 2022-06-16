@@ -8,16 +8,17 @@ export default function Logout() {
 
   const handleRedirectLogOut = (e) => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('refresh-token');
+    localStorage.removeItem('id');
+    localStorage.removeItem('user');
     navigate('/login');
   }
   
   return (
     <div className="flex justify-center items-center">
-            {/* <Link to={'/'}> */}
-                <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
-                    Log out
-                </button>
-            {/* </Link> */}
+      <button className={`${Primary()} font-extrabold text-lg`} onClick={handleRedirectLogOut}>
+          Log out
+      </button>
     </div>
   );
 }

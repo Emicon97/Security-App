@@ -5,20 +5,15 @@ import {
   getEmployees,
   getUsersPaginateAll,
 } from "../../redux/actions";
-import "../styles/TableInfo.css";
 import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
 import LoginController from "../reusable/LoginController";
-import { useParams } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
 
 
 export default function TableInfo(props) {
   const dispatch = useDispatch();
-  const location = useLocation()
-  let user = location.pathname.split("/")[1]
-
+  const user = localStorage.getItem('user');
   //empleados por página
   const watchers = useSelector((state) => state.usersPaginate);
   const hierarchy = useSelector((state) => state.userDetails[1]);
@@ -28,8 +23,7 @@ export default function TableInfo(props) {
   const header = LoginController();
 
   //toma el id del usuario actual
-  const { id } = useParams();
-
+  const id = localStorage.getItem('id')
   //====================================
   //============== STATES ==============
   //====================================
@@ -81,7 +75,21 @@ export default function TableInfo(props) {
 
   useEffect(()=> {
     if (!freeze && nameEmployee.length) {
-      let toFilter = employees.filter(worker => worker.name.includes(nameEmployee));
+      let toFilter = [];
+
+      let names = nameEmployee.trim().split(' ');
+
+      employees.forEach((worker) => {
+        names.forEach(word => {
+          if (word.length) {
+            if (!toFilter.includes(worker) && worker.name.includes(word)) {
+              toFilter.push(worker);
+            } else if (!toFilter.includes(worker) && worker.lastName.includes(word)) {
+              toFilter.push(worker);
+            }
+          }
+        })
+      })
       setFiltered(toFilter);
     } else if (!freeze && !nameEmployee.length) {
       setFiltered(watchers);
@@ -131,100 +139,25 @@ export default function TableInfo(props) {
   };
   return (
     <>
-      <div className="w-screen flex flex-col items-center">
-        <div className="w-9/12 flex justify-between items-center">
-          <div className="flex items-center justify-between w-40 gap-2.5">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
+      <div className="w-[90%] h-auto mx-auto font-['nunito'] mt-[15px]">
+        <div className="flex items-center justify-between">
+          <div className="search flex mr-4">
+            <button title="Bring back all employees" className={Tertiary} onClick={(e) => allButton(e)}>
+              Refresh
             </button>
-            <input type="checkbox" onClick={handleCheckbox} />
           </div>
-          <form onSubmit={handleSubmit}>
-            <button type="submit">Search</button>
+          <form onSubmit={handleSubmit} className="flex flex-row items-center">
+            {/* <button title="Search employee" className={Tertiary} type="submit">Search</button> */}
             <input
               type="text"
-              placeholder="Search name..."
+              placeholder="Search employee..."
+              title="Search employees"
               value={nameEmployee}
               className={Input()}
               onChange={handleSearch}
             ></input>
           </form>
-          <div className="search flex mr-4">
-            <button className={Tertiary} onClick={(e) => allButton(e)}>
-              All
-            </button>
-          </div>
-        </div>
-        <div className="w-9/12">
-          <div className="w-full my-2.5">
-            <div className="h-10 flex justify-evenly items-center border-2 border-[#0243EC] rounded-full">
-              <h1 className="w-48 h-full flex justify-center items-center">
-                Check
-              </h1>
-              <h1 className="w-48 h-full flex justify-center items-center">
-                Name
-              </h1>
-              <h1 className="w-48 h-full flex justify-center items-center">
-                Environment
-              </h1>
-              <h1 className="w-48 h-full flex justify-center items-center">
-                Edit
-              </h1>
-            </div>
-          </div>
-          <div className="w-full border-2 border-[#0243EC] rounded-2xl mb-2.5">
-            {filtered.length
-              ? filtered.map((employee, i) => (
-                  <div
-                    className="h-10 flex justify-evenly items-center hover:bg-[#0243ec85]"
-                    key={employee + i}
-                  >
-                    <div className="w-48 h-full flex justify-center items-center">
-                      <input type="checkbox" className="checkbox" />
-                    </div>
-                    <h1 className="w-48 h-full flex justify-center items-center">
-                      {employee.name} {employee.lastName}
-                    </h1>
-                    <h1 className="w-48 h-full flex justify-center items-center">
-                      {employee.environment}
-                    </h1>
-                    <button
-                      onClick={(e) => {
-                        toggle();
-                        reply_click(employee._id);
-                      }}
-                      className="w-48 h-full flex justify-center items-center"
-                    >
-                      <svg
-                        id={employee._id}
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                      </svg>
-                    </button>
-                    <Link to={{
-                      state: `${employee._id}`,
-                      pathname: `/${user}/${employee._id}/createTask`,
-                    }}>
-                      <button id={employee._id}>➕</button>
-                    </Link>
-                  </div>
-                ))
-              : null}
-          </div>
-        </div>
-        <div className="w-9/12 h-10 flex justify-between items-center">
-          <div className="w-52 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
+          <div className="w-[220px] h-full flex items-center justify-center">
             Show
             <select
               name="n-entries"
@@ -237,27 +170,91 @@ export default function TableInfo(props) {
               <option value="10">10</option>
               <option value="5">5</option>
             </select>
-            entries
+            entries of {" "}
+            {employees.length}
           </div>
-          <div className="w-96 h-full flex items-center justify-center border-2 border-[#0243EC] rounded-2xl">
-            <ul className="w-full flex justify-around">
-              {pagesNum
-                ? pagesNum.map((num) => (
-                    <li
-                      key={num}
-                      onClick={nextPage}
-                      className="w-6 h-6 flex justify-center items-center hover:bg-[#0243EC] hover:text-white hover:rounded-md hover:font-semibold"
-                    >
-                      <span className="active">{num}</span>
-                    </li>
-                  ))
-                : null}
+        </div>
+        <div>
+          <h1 className="w-full my-2.5 text-2xl font-semibold">Employees</h1>
+          <div className="w-full h-[240px] overflow-auto mb-2.5 mt-4">
+            {
+              filtered.length ? 
+              filtered.map((employee, i) => (
+                <div 
+                  title={`${employee.name.charAt(0).toUpperCase() + employee.name.slice(1)} ${employee.lastName.charAt(0).toUpperCase() + employee.lastName.slice(1)}`}
+                  className="h-10 flex justify-between items-center border-b-[1px] border-b-[#0243EC] hover:bg-[#0243ec70] mb-2" key={employee + i}>
+                  <div className="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                    </svg>
+                    <h2 className="w-96 h-full flex justify-start items-center ml-2 font-medium">
+                      {employee.name.charAt(0).toUpperCase() + employee.name.slice(1)} {employee.lastName.charAt(0).toUpperCase() + employee.lastName.slice(1)}
+                    </h2>
+                  </div>
+                  <div className="flex">
+                    <h2 className="w-auto h-full flex justify-center items-center mr-5">
+                      <small className="italic mr-2 mt-0.5">Evironment:</small>{employee.environment}
+                    </h2>
+                    <button
+                      onClick={(e) => {
+                        toggle();
+                        reply_click(employee._id);
+                      }}
+                      title="Edit user"
+                      className="ml-2 h-full flex justify-center items-center">
+                      <svg id={employee._id} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                      </svg>
+                    </button>
+                    <Link 
+                      to={{
+                        state: `${employee._id}`,
+                        pathname: `/${user}/${id}/createTask/${employee._id}`,
+                      }}
+                      title="Add a task"
+                      className="mx-2 h-full flex justify-center items-center">
+                      <button id={employee._id}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              ))
+              : null}
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="w-auto h-[43px] flex items-center justify-center">
+            <button title="Previous page">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#0243EC">
+                <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+            <ul className="w-full flex justify-around mx-4">
+              {
+                pagesNum ?
+                pagesNum.map((num) => (
+                  <li key={num} onClick={nextPage} className="w-6 h-6 flex justify-center items-center">
+                    <button title={`Page ${num}`} className="w-2.5 h-2.5 hover:w-3.5 hover:h-3.5 focus:w-3.5 focus:h-3.5 bg-[#0243EC] rounded-full cursor-pointer text-transparent font-[9px]">
+                      {num}{/* <span title={`Page ${num}`} className="w-2.5 h-2.5 hover:w-3.5 hover:h-3.5 bg-[#0243EC] rounded-full cursor-pointer text-transparent font-[9px]">{num}</span> */}
+                    </button>
+                  </li>
+                ))
+                : null
+              }
             </ul>
+            <button title="Next page">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="#0243EC">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditEmployees user={editUser} hierarchy={hierarchy} allButton={allButton}></EditEmployees>
+        <EditEmployees user={editUser} hierarchy={hierarchy} toggle={toggle} allButton={allButton}></EditEmployees>
       </Modal>
     </>
   );

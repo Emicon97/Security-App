@@ -11,7 +11,16 @@ import {
   LOGIN_PRUEBA,
   GET_USERS_PAGINATE,
   LOGOUT,
-  DESTROY
+  DESTROY,
+  GET_REPORT_TASKS,
+  GET_REPORTS,
+  POST_REPORT_TASKS,
+  TEMP_VERIFICATION,
+  ENVIRONMENTS,
+  ENVIRONMENT_USERS,
+  RESET_REPORT,
+  RESET_USER,
+  CREATE_ENVIRONMENT
 } from "./ActionTypes";
 
 const initialState = {
@@ -25,7 +34,13 @@ const initialState = {
   todoUpdate: {},
   userData: [],
   usersPaginate: [],
-  token: ''
+  token: "",
+  taskReports: [],
+  reports: [],
+  reports: [],
+  temp: "",
+  environments: [],
+  environmentUsers: []
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -86,29 +101,79 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         userData: payload,
         token: payload[2]
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        token: payload
+      };
+    case GET_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload
+      };
+    case POST_REPORT_TASKS:
+      return {
+        ...state,
+        taskReports: payload,
+      };
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: payload
+      };
+    case ENVIRONMENTS:
+      return {
+        ...state,
+        environments: payload
       }
-      case LOGOUT:
-        return {
+    case ENVIRONMENT_USERS:
+      return {
+        ...state,
+        environmentUsers: payload
+      }
+    case DESTROY:
+      return {
+        ...state,
+        supervisorDetail: {},
+        watcherDetail: {},
+        employees: [],
+        users: [],
+        userDetails: {},
+        todosId: [],
+        todos: [],
+        todoUpdate: {},
+        userData: [],
+        usersPaginate: [],
+        reports: [],
+        taskReports: [],
+      };
+     case TEMP_VERIFICATION:
+      return {
+        ...state,
+        temp: payload
+      }
+      case CREATE_ENVIRONMENT:
+        console.log('reducer',payload)
+        return{
           ...state,
-          token: payload
+          enviroment: payload
         }
-        case DESTROY:
-          return {
+      case RESET_REPORT:
+        return{
+          ...state,
+          reports: [],
+          taskReports: []
+        }
+        case RESET_USER:
+          return{
             ...state,
-            supervisorDetail: {},
-            watcherDetail: {},
-            employees: [],
-            users: [],
-            userDetails: {},
+            userDetails: [],
             todosId: [],
-            todos: [],
-            todoUpdate: {},
-            userData: [],
-            usersPaginate: [],
-        }
+          }
     default:
       return { ...state };
-  };
+  }
 };
 
 export default rootReducer;

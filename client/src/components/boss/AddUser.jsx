@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import demo from "../../assets/demo.png";
 import { Primary } from "../styles/Buttons";
 import LoginController from "../reusable/LoginController";
-import { useParams } from "react-router-dom";
 
 export default function AddUser() {
   const dispatch = useDispatch();
   const header = LoginController();
-  const { id } = useParams();
+  const id = localStorage.getItem('id');
   const typeEnv = [
-    "neighbourhood one",
-    "neighbourhood two",
-    "neighbourhood three",
-    "neighbourhood four",
-    "neighbourhood five",
+    "school",
+    "barrio fino"
   ];
   const [formSend, setFormSend] = useState(false);
   const [image, setImage] = useState("");
