@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { getAllEnvironments, createEnvironments, getEnvironmentUsers } from './../../redux/actions';
 import LoginController from './LoginController';
 import { useState } from 'react';
 
 import { Input } from "../styles/Buttons";
 import swal from "sweetalert";
+import '../styles/reusable/Environment.css'
 
 export default function Environment({show}) {
    const dispatch = useDispatch();
@@ -91,9 +91,9 @@ export default function Environment({show}) {
          }
          <div className={`w-[72%] m-auto font-semibold flex flex-row items-center justify-between ${user !== 'boss' ? 'mt-[20px] bg-[#0023c480] rounded-xl' : ''} p-[5px]`}>
             <label className={`${user !== 'boss' ? 'text-white' : ''}`}>Select an environment:</label>
-            <select onChange={handleChangeEnvironment} className={`${Input('Select')} m-0`}>
+            <select onChange={handleChangeEnvironment} className={`${Input('Select')} m-0 string-uppercase`}>
                <option value="select" hidden>Environment</option>
-               {allEnvironments.length!==0?allEnvironments.map(e => (<option value={e.name}>{e.name.charAt(0).toUpperCase() + e.name.slice(1)}</option>)): null}
+               {allEnvironments.length!==0?allEnvironments.map(e => (<option value={e.name}>{e.name}</option>)): null}
                <option value="select">Clear</option>
             </select>
          </div>
@@ -102,7 +102,7 @@ export default function Environment({show}) {
             environmentUser.map(e => {
                return (
                   <div className="w-[72%] m-auto rounded-2xl mt-[15px] p-[15px] shadow shadow-gray-300">
-                     <h3 className="flex">{e.name.charAt(0).toUpperCase() + e.name.slice(1)}:
+                     <h3 className="flex string-uppercase">{e.name}:
                         {
                            user === 'boss' ?
                            <><p className="italic text-[#ffbbc4] font-semibold mx-1 mr-2">Supervisors</p>and<p className="italic text-[#506be1] font-semibold mx-1">Watchers</p></> :
@@ -116,7 +116,7 @@ export default function Environment({show}) {
                               {
                                  e.supervisor.length > 0 ?
                                  e.supervisor.map(e => 
-                                    (<p className="truncate">{e.name.charAt(0).toUpperCase() + e.name.slice(1)} {e.lastName.charAt(0).toUpperCase() + e.lastName.slice(1)}</p>)
+                                    (<p className="truncate string-uppercase">{e.name} {e.lastName}</p>)
                                  ) :
                                  <div className="rounded-xl bg-[#fdced4] p-[5px] w-full flex items-center justify-center">There are not Supervisors in this environment</div>
                               }
@@ -128,7 +128,7 @@ export default function Environment({show}) {
                            <div className="rounded-xl bg-[#0023c480] p-[5px] w-[48%] flex flex-col items-center">
                               {
                                  e.watcher.map(e => 
-                                    (<p className="truncate">{e.name.charAt(0).toUpperCase() + e.name.slice(1)} {e.lastName.charAt(0).toUpperCase() + e.lastName.slice(1)}</p>)
+                                    (<p className="truncate string-uppercase">{e.name} {e.lastName}</p>)
                                  )
                               }
                            </div> :
