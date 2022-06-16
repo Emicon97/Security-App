@@ -98,7 +98,7 @@ export default function Login() {
             type="number"
             name="dni"
             id="dni"
-            className="form__input"
+            className="form-login__input"
             autoComplete="off"
             placeholder=" "
             onBlur={handleBlur}
@@ -107,15 +107,14 @@ export default function Login() {
               handleChange(e);
             }}
           />
-          <label htmlFor="dni" className="form__label">DNI</label>
+          <label htmlFor="dni" className="form-login__label">DNI</label>
         </div>
-        {/* <div className="input-password-container"> */}
           <div className="form-input-container">
             <input
               type="email"
               name="email"
               id="email"
-              className="form__input password"
+              className="form-login__input password"
               autoComplete="off"
               placeholder=" "
               onBlur={handleBlur}
@@ -124,13 +123,10 @@ export default function Login() {
                 handleChange(e);
               }}
             />
-            <label htmlFor="email" className="form__label form__label__password">Email</label>
+            <label htmlFor="email" className="form__label form-login__label__password">Email</label>
           </div>
-        {/* </div> */}
-        <label htmlFor="status">
-          {status !== "" && <small>{status}</small>}
-        </label>
         <div className="errors-input">
+          {status !== "" && <small>{status}</small>}
           {errors.email && (
             <h4 className="text-red-600">{errors.email}</h4>
           )}

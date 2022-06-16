@@ -43,7 +43,7 @@
 #password {
     width: 100%;
 }
-.form__input {
+.form-login__input {
     width: 100%;
     border: 2px solid #e1e5ee;
     border-radius: 0.5rem;
@@ -61,13 +61,13 @@
     padding-right: 40px;
     margin-top: 10px;
 }
-.form__input:hover {
+.form-login__input:hover {
     border-color: #0023c4;
 }
-.form__input:focus {
+.form-login__input:focus {
     border-color: #0023c4;
 }
-.form__label {
+.form-login__label {
     width: 150px;
     position: relative;
     left: 1rem;
@@ -95,14 +95,15 @@
 .eye-icon img:nth-child(2) {
     display: none;
 }
-.form__input:focus ~ .form__label, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+.form-login__input:focus ~ .form-login__label, .form-login__input:not(:placeholder-shown).form-login__input:not(:focus) ~ .form-login__label {
     bottom: 4.4rem;
     left: 0rem;
     font-size: 0.8rem;
 }
 
-.form__input:focus ~ .form__label__password, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label__password {
-    bottom: 4.4rem;
+.form-login__input:focus ~ .form-login__label__password, .form-login__input:not(:placeholder-shown).form-login__input:not(:focus) ~ .form-login__label__password {
+    bottom: 4.9rem;
+    left: 0rem;
 } 
 
 .errors-input {
