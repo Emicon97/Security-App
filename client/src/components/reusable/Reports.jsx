@@ -34,7 +34,7 @@ export default function SentReports({ show }) {
       return (
          <div className={`fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
 
-            <div className="screen-reports">
+            <div className="screen-reports overflow-y-auto overflow-x-hidden">
                <h3 className={`title title-pink`}>Your reports</h3>
                <div className="container-reports">
 
@@ -69,7 +69,7 @@ export default function SentReports({ show }) {
       return (
          <div className={`fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
 
-            <div className="screen-reports">
+            <div className="screen-reports overflow-y-auto overflow-x-hidden">
                <h3 className="title title-blue">Your reports</h3>
                <div className="container-reports">
 
