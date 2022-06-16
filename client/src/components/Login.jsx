@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginPrueba } from "../redux/actions";
-import { Input, Primary } from "./styles/Buttons";
 import logo from "../assets/logo.png";
-import eyeOpen from '../assets/eye_visible.png'
-import eyeClose from '../assets/eye_slash_visible.png'
-import './styles/Login.css'
-
+import eyeOpen from "../assets/eye_visible.png";
+import eyeClose from "../assets/eye_slash_visible.png";
+import "./styles/Login.css";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -20,28 +18,32 @@ export default function Login() {
   });
   const [errors, setErrors] = useState({});
   const [validate, setValidate] = useState(true);
-  const [formIsCorrect, setFormIsCorrect] = useState(false)
 
   const validations = (input) => {
     let error = {};
-    if (!/^[0-9]*$/.test(input.dni)) error.dni = "DNI incorrecto o carácter incorrecto";
-    if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(input.password)) {
-      error.password = "Debe contener 8 caracteres, una minúscula, una mayúscula y un número";
-      //Hay que resumirlo muuucho mas jijiji;
+    if (!/^[0-9]*$/.test(input.dni))
+      error.dni = "Wrong DNI, only numbers are allowed";
+    if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+        input.password
+      )
+    ) {
+      error.password =
+        "Must contain at least one number and one uppercase and lowercase letter, and 8 or more characters";
     }
     return error;
   };
 
   const viewPassword = (event) => {
     let x = document.getElementById("password");
-    let btn = document.getElementsByClassName("eye")
+    let btn = document.getElementsByClassName("eye");
     if (x.type === "password") {
-      x.type = "text"
-      btn[0].style.display = "none"
+      x.type = "text";
+      btn[0].style.display = "none";
       btn[1].style.display = "block";
     } else {
       x.type = "password";
-      btn[0].style.display = "block"
+      btn[0].style.display = "block";
       btn[1].style.display = "none";
     }
   };
@@ -62,7 +64,6 @@ export default function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!errors.dni && !errors.password) {
-      setFormIsCorrect(true)
       dispatch(loginPrueba(input));
       setInput({ dni: "", password: "" });
     } else {
@@ -74,8 +75,8 @@ export default function Login() {
     }
   }
 
-  function requestEmail(){
-    navigate('/email')
+  function requestEmail() {
+    navigate("/email");
   }
 
   useEffect(() => {
@@ -88,28 +89,27 @@ export default function Login() {
           return navigate(`/supervisor/${id}`);
         case "boss":
           return navigate(`/boss/${id}`);
+        default:
+          return navigate('/');
       }
     }
+    // eslint-disable-next-line
   }, [token]);
-
 
   return (
     <div className="login-screen">
-      
       <div className="wrapp">
         <div className="text">
-          <h1><span className="blue">C</span>entine<span className="pink">l</span></h1>
+          <h1>
+            <span className="blue">C</span>entine<span className="pink">l</span>
+          </h1>
         </div>
         <div className="logo">
           <img src={logo} alt="" />
         </div>
       </div>
 
-      <form
-        className="form"
-        onSubmit={handleSubmit}
-      >
-
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form-input-container">
           <input
             type="number"
@@ -123,7 +123,9 @@ export default function Login() {
               handleChange(e);
             }}
           />
-          <label htmlFor="dni" className="form__label">DNI</label>
+          <label htmlFor="dni" className="form__label">
+            DNI
+          </label>
         </div>
         <div className="input-password-container">
           <div className="form-password-container">
@@ -139,20 +141,30 @@ export default function Login() {
                 handleChange(e);
               }}
             />
-            <label htmlFor="password" className="form__label form__label__password">Password</label>
+            <label
+              htmlFor="password"
+              className="form__label form__label__password"
+            >
+              Password
+            </label>
           </div>
           <div className="eye-icon">
             <img className="eye" src={eyeOpen} alt="" onClick={viewPassword} />
             <img className="eye" src={eyeClose} alt="" onClick={viewPassword} />
           </div>
-
         </div>
 
         <div className="errors-input">
-          <h4 className="errors" style={{ display: !validate && errors.dni ? "block" : "none" }}>
+          <h4
+            className="errors"
+            style={{ display: !validate && errors.dni ? "block" : "none" }}
+          >
             {!validate ? errors.dni : null}
           </h4>
-          <h4 className="errors" style={{ display: !validate && errors.password ? "block" : "none" }}>
+          <h4
+            className="errors"
+            style={{ display: !validate && errors.password ? "block" : "none" }}
+          >
             {!validate ? errors.password : null}
           </h4>
         </div>
@@ -160,7 +172,6 @@ export default function Login() {
         {/* Btn para recuperar contraseña */}
         <button onClick={requestEmail}>Did you forget your password?</button>
       </form>
-
     </div>
-  )
-};
+  );
+}

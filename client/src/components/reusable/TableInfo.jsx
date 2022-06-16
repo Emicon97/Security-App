@@ -5,7 +5,6 @@ import {
   getEmployees,
   getUsersPaginateAll,
 } from "../../redux/actions";
-import "../styles/TableInfo.css";
 import { Tertiary, Input } from "../styles/Buttons";
 import Modal from "./Modal";
 import EditEmployees from "../supervisor/EditEmployees";
@@ -255,7 +254,7 @@ export default function TableInfo(props) {
         </div>
       </div>
       <Modal active={active} toggle={toggle}>
-        <EditEmployees user={editUser} hierarchy={hierarchy} allButton={allButton}></EditEmployees>
+        <EditEmployees user={editUser} hierarchy={hierarchy} toggle={toggle} allButton={allButton}></EditEmployees>
       </Modal>
     </>
   );

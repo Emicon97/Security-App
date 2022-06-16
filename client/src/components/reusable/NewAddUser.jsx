@@ -319,15 +319,17 @@ export default function AddNewUser({ show }) {
                 className={handleClassName(error.name)}
                 onChange={(e) => handleChange(e)}
               >
-                <option value="none">Select...</option>
+                <option value="none" hidden>Environment...</option>
                 {environment.length &&
-                  environment.map((env) => {
-                    return (
-                      <option value={(input.environment = env.name)} key={env._id}>
-                        {env.name}
-                      </option>
-                    );
-                  })}
+                  environment.map((env) => (
+                    <option
+                      value={env.name}
+                      onChange={(e) => handleChange(e)}
+                      key={env._id}
+                    >
+                      {env.name}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

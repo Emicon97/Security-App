@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import LoginController from './reusable/LoginController';
 import ViewTasksHome from './reusable/ViewTasksHome';
-// import './styles/Home.css'
-import ViewProfileHome from './reusable/ViewProfileHome';
+
 import ViewEmployeesHome from './reusable/ViewEmployeesHome';
-import { createEnvironment, getUsersById } from '../redux/actions';
+import { getUsersById } from '../redux/actions';
 import "./styles/Loader.css";
 
 export default function Home({show}) {
@@ -23,12 +22,8 @@ export default function Home({show}) {
     useEffect(() => {
 
         dispatch(getUsersById(id, header))
-
+        // eslint-disable-next-line
     }, [dispatch])
-
-    // useEffect(() =>{
-    //     dispatch(createEnvironment(header))
-    // },[])
 
     if (user.length) {
         if (rolUsuario === "boss") {

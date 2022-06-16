@@ -21,6 +21,7 @@ import RecoverPass from './components/RecoverPass';
 import { destroyData } from "./redux/actions";
 import { useLocation } from "react-router-dom";
 import SentReports from "./components/reusable/Reports";
+import urlManager from './urlManager';
 
 function App() {
   let navigate = useNavigate();
@@ -34,16 +35,20 @@ function App() {
       const id = localStorage.getItem("id");
       let view = location.pathname.split("/")[3];
       let employeeId = location.pathname.split("/")[4];
-      if (user && user === 'watcher') user = 'guard'; 
-      if (employeeId) {
-        return navigate(`/${user}/${id}/${view}/${employeeId}`);
-      } else if (view) {
-        return navigate(`/${user}/${id}/${view}`);
-      }  else return navigate(`/${user}/${id}`);
-    }
-    if (!token) {
-      navigate("/");
-      dispatch(destroyData());
+      
+      return navigate(urlManager(user, id, view, employeeId));
+    } else if (!token) {
+      let email = location.pathname.split("/")[1];
+      let recover = location.pathname.split("/")[2];
+      if (email !== 'email') {
+        navigate("/");
+        dispatch(destroyData());
+      }
+      if (email === 'email' && recover !== undefined && recover !== 'recover') {
+        navigate("/");
+        dispatch(destroyData());
+      }
+      console.log(recover)
       return;
     }
     // eslint-disable-next-line
@@ -54,7 +59,7 @@ function App() {
       <NavBar isRendered={token} show={show} setShow={setShow} />
       <Routes>
         {/* <Route exact path="/" element={<LandingPage />} /> */}
-        <Route exact path="/" element={<Login />} />
+        <Route exact strict path="/" element={<Login />} />
         {/* <Route path="/" element={<NavBar />}/> */}
 
         {/* Rutas HOME para cada rol */}
@@ -93,7 +98,7 @@ function App() {
         />
         <Route
           path="/:user/:id/environment"
-          element={<Environment/>}
+          element={<Environment show={show}/>}
         />
         {/* NOT FOUND */}
         <Route path="/email" element={<SendRequestEmail/>}/>

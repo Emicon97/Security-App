@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getEmployeeById,
-  getEmployees,
-  getUsersById,
+  getEmployees
 } from "../../redux/actions";
 import "./../styles/reusable/ViewEmployeesHome.css";
 
@@ -41,10 +39,7 @@ export default function ViewEmployeesHome({ employees, id, header }) {
             < div className = "card-employees" key = { employee._id } >
               <h4 className="employees-num-tasks">{employee.workingHours}</h4>
               <div className="employees-environment">
-                <h4>{employee.environment}</h4>
-                <p>
-                  No c q puede ir aca, podria ser un vistazo del ultimo reporte
-                </p>
+              <h4>{employee.environment}</h4>
               </div>
               <div className="employee-profile">
                 <div className="img-profile-employee">

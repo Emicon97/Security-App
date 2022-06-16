@@ -1,54 +1,91 @@
+import { useEffect } from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { sendRequest } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { sendRequest, verificationUser } from "../redux/actions";
 import './styles/Login.css'
 
 
 export default function Login() {
   const dispatch = useDispatch();
   const [input, setInput] = useState({
+    dni: 0,
+    email: "",
+  });
+  const [errors, setErrors] = useState({
     dni: "",
     email: "",
   });
-  const [errors, setErrors] = useState({});
-  const [validate, setValidate] = useState(true);
+  const [status, setStatus] = useState("");
+  const [validate, setValidate] = useState("");
+  const verification = useSelector(state => state.temp);
 
-  const validations = (input) => {
-    let error = {};
-    if(!/^[0-9]*$/.test(input.dni)) error.dni = "The ID must have 8 digits";
-    if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(input.email)) {
-      error.email = "The email can only contain letters, numbers, periods, hyphens and underscores.";
+    useEffect(()=> {
+      setStatus(verification)
+    },[verification])
+
+  const handleBlur = (e) => {
+      if(e.target.name === "dni"){
+        if(e.target.value === ""){
+          setErrors({
+            ...errors,
+            [e.target.name]: "",
+          });
+        }else if (isNaN(e.target.value)) {
+          setErrors({
+            ...errors,
+            [e.target.name]: "The dni must be a number"
+          })
+      } else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
     }
-    return error;
-  };
+    if(e.target.name === "email"){
+      if(e.target.value === ""){
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }else  if (
+        !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(e.target.value)
+      ){
+        setErrors({
+          ...errors,
+          [e.target.name]: "The email can only contain letters, numbers, periods, hyphens and underscores."
+        })
+      }else {
+        setErrors({
+          ...errors,
+          [e.target.name]: ""
+        })
+      }
+    }
+  }
 
-  function handleChange(event) {
-    setInput((input) => {
-      let newInput = {
-        ...input,
-        [event.target.name]: event.target.value,
-      };
-      const error = validations(newInput);
-      setErrors(error);
-      return newInput;
+  function handleChange(e) {
+     e.preventDefault();
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
     });
-    setValidate(true);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!errors.dni && !errors.email) {
-      //reemplazar por otra actions
-      dispatch(sendRequest(input));
-      setInput({ dni: "", email: "" });
-    } else {
-      if (errors.dni || errors.email) {
-        setValidate(false);
-      } else {
-        setValidate(true);
-      }
-    }
+    if (errors.dni === ""&& errors.email === "") {
+      dispatch(verificationUser(input))
+      if(verification === "Correct compatibility"){
+        setStatus("")
+        dispatch(sendRequest(input));
+        alert("The request was sent correctly check your email")
+        setInput({ dni: "", email: "" });
+        }else {
+          setStatus(verification)
+    } 
   }
+}
 
   return  (
     <div className="login-screen">
@@ -64,6 +101,7 @@ export default function Login() {
             className="form__input" 
             autoComplete="off" 
             placeholder=" "
+            onBlur={handleBlur}
             value={input.dni}
             onChange={(e) => {
               handleChange(e);
@@ -71,6 +109,11 @@ export default function Login() {
           />
           <label htmlFor="dni" className="form__label">DNI</label>
         </div>
+        <label htmlFor="dni">
+                {errors.dni && (
+                  <small className="text-red-600">{errors.dni}</small>
+                )}
+              </label>
         <div className="input-password-container">
           <div className="form-password-container">
             <input 
@@ -80,6 +123,7 @@ export default function Login() {
               className="form__input password__input" 
               autoComplete="off" 
               placeholder=" "
+              onBlur={handleBlur}
               value={input.email}
               onChange={(e) => {
                 handleChange(e);
@@ -87,16 +131,15 @@ export default function Login() {
             />
             <label htmlFor="email" className="form__label form__label__password">Email</label>
           </div>
+          <label htmlFor="email">
+                {errors.email && (
+                  <small className="text-red-600">{errors.email}</small>
+                )}
+              </label>
         </div>
-          
-        <div className="errors-input">
-          <h4 className="errors" style={{display: !validate && errors.dni ? "block" : "none"}}>
-            {!validate ? errors.dni : null}
-          </h4>
-          <h4 className="errors" style={{display: !validate && errors.email ? "block" : "none"}}>
-            {!validate ? errors.email : null}
-          </h4>
-        </div>
+        <label htmlFor="status">
+          {status !== "" && <small>{status}</small>}
+        </label>
         <button type="submit">Send request</button>
       </form>
 
