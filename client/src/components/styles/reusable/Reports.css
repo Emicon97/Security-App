@@ -2,19 +2,14 @@
     width: 90%;
     height: 100%;
     margin: auto;
-    /* background-color: blue; */
     text-align: center;
 }
 .screen-reports h3 {
     font-size: 30px;
-    /* color: red; */
     font-weight: 700;
 }
 .screen-reports .container-reports {
     width: 100%;
-    /* height */
-    /* background-color: red; */
-    /* margin: auto; */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -24,6 +19,7 @@
     height: 100px;
     border-radius: 10px;
     cursor: pointer;
+
 }
 .screen-reports .container-reports .report .text-from {
     height: 10px;
@@ -36,10 +32,8 @@
     width: 200px;
     margin-right: auto;
     color: black;
-    /* text-align: left; */
     margin-right: 100px;
     padding: 3px;
-    /* background-color: #ff93f8; */
     border-radius: 7px;
     display: inline-block;
     font-size: 14px;
@@ -52,13 +46,24 @@
 .screen-reports .container-reports .report h4 {
     font-size: 24px;
     font-weight: 700;
-    color: white;
+}
+.screen-reports .container-reports .report p {
+    font-size: 19px;
+    font-weight: 500;
 }
 .screen-reports .container-reports .blue {
     background-color: rgb(124, 145, 238);
+    color: rgb(74, 67, 143);
+}
+.screen-reports .container-reports .blue:hover {
+    background-color: rgb(145, 163, 245);
 }
 .screen-reports .container-reports .pink {
     background-color: #fccdd3;
+    color: rgb(173, 108, 155);
+}
+.screen-reports .container-reports .pink:hover {
+    background-color: #fde2e5;
 }
 #pink {
     
@@ -76,6 +81,9 @@
     font-size: 30px;
     margin: 30px 0px 0px 50px;
 }
-#title-reports::first-letter, .screen-reports .title::first-letter {
+#title-reports::first-letter, .screen-reports .title-blue::first-letter {
     color: #0023c4;
+}
+.screen-reports .title-pink::first-letter {
+    color: #ff5cf4;
 }

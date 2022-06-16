@@ -35,13 +35,13 @@ export default function SentReports({ show }) {
          <div className={`fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
 
             <div className="screen-reports">
-               <h3 className="title">Your reports</h3>
+               <h3 className={`title title-pink`}>Your reports</h3>
                <div className="container-reports">
 
                   {
                      reports.length ? reports.map((report, i) => (
 
-                        <div key={report._id} className="report pink" onClick={event => toggleInfo(event, i)}>
+                        <div key={report._id} className="report blue" onClick={event => toggleInfo(event, i)}>
                            <div className="text-from">
                               <h5 id="pink">to <span>{report.receiver.name}</span> <span>{report.receiver.lastName}</span></h5>
                            </div>
@@ -70,13 +70,13 @@ export default function SentReports({ show }) {
          <div className={`fixed top-16 right-0 bottom-0 ${show ? "left-[245px]" : "left-[87px]"} ease-in-out transition-all duration-700`}>
 
             <div className="screen-reports">
-               <h3 className="title">Your reports</h3>
+               <h3 className="title title-blue">Your reports</h3>
                <div className="container-reports">
 
                   {
                      reports.length ? reports.map((report, i) => (
 
-                        <div className="report blue" onClick={event => toggleInfo(event, i)}>
+                        <div className="report pink" onClick={event => toggleInfo(event, i)}>
                            <div className="text-from">
                               <h5 id="blue">from <span>{report.sender.name}</span> <span>{report.sender.lastName}</span></h5>
                            </div>

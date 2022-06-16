@@ -73,21 +73,26 @@ export default function ReportViewDetails({ report, relation }) {
                 <div className="info">
                     <h3 className="title">{report.title.slice(0, report.title.length - 1)}<span className="pink">{report.title.slice(-1)}</span></h3>
                     <h4 className="description">{report.description}</h4>
+                    
+                    {
+                        report.picture
+                        ? <div className="img">
+
+                            <img src={report.picture} onClick={event => togglePic(event)} alt="" />
+
+                        </div>
+                        : null
+                    }
                 </div>
 
-                <div className="img">
-
-                    <img src={report.picture ? report.picture : ""} onClick={event => togglePic(event)} alt="" />
-
-                </div>
 
             </div>
 
             <Modal active={activeImg} toggle={togglePic}>
                 {
                     urlImg
-                    ? <img className="w-80 h-80 rounded-full m-5" src={urlImg} alt="" />
-                    : svgProfileUser
+                        ? <img className="w-80 h-80 rounded-full m-5" src={urlImg} alt="" />
+                        : svgProfileUser
                 }
             </Modal>
 

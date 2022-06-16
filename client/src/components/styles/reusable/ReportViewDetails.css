@@ -88,5 +88,6 @@
 }
 .screen-details-report .right img {
     margin-top: 30px;
-    max-height: 40%;
+    max-height: 150px;
+    display: inline-block;
 }
