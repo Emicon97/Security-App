@@ -1,0 +1,127 @@
+.login-screen {
+    padding-top: 50px;
+    font-family: "Convergence", sans-serif;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.2rem;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+.form {
+    margin-top: 50px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 19px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px;
+    border: 2px rgba(255,255,255,0.4) solid;
+    border-bottom: 2px rgba(40,40,40,0.35) solid;
+    border-right: 2px rgba(40,40,40,0.35) solid;
+    font-family: 'Nunito', sans-serif;
+
+}
+.form-input-container {
+    width: 80%;
+    height: 50px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.input-password-container {
+    width: 80%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+#password {
+    width: 100%;
+}
+.form__input {
+    width: 100%;
+    border: 2px solid #e1e5ee;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    color: #0023c4;
+    outline: none;
+    padding: 10px;
+    background: none;
+}
+.password {
+    /* width: 87%; */
+    border-radius: 0.5rem;
+    padding-right: 40px;
+    margin-top: 10px;
+}
+.form__input:hover {
+    border-color: #0023c4;
+}
+.form__input:focus {
+    border-color: #0023c4;
+}
+.form__label {
+    width: 150px;
+    position: relative;
+    left: 1rem;
+    bottom: 2.5rem;
+    padding: 0 0.5rem;
+    color: #0023c4;
+    cursor: text;
+    transition: all ease 500ms ;
+    font-weight: 800;
+    display: inline-block;
+}
+.eye-icon {
+    width: 15%;
+    height: 52.78px;
+    position: relative;
+    right: -86%;
+    bottom: 143%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.eye-icon img {
+    cursor: pointer;
+}
+.eye-icon img:nth-child(2) {
+    display: none;
+}
+.form__input:focus ~ .form__label, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+    bottom: 4.4rem;
+    left: 0rem;
+    font-size: 0.8rem;
+}
+
+.form__input:focus ~ .form__label__password, .form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label__password {
+    bottom: 4.4rem;
+} 
+
+.errors-input {
+    width: 80%;
+    margin-top: 20px;
+    /* background-color: red; */
+}
+.errors-input .errors {
+    height: 40px;
+    font-size: 15px;
+    color: #ff0000;
+    font-weight: 400;
+}
+
+.form button {
+    background-color: #0023c4;
+    padding: 5px 19px;
+    border-radius: 0.5rem;
+    margin: 20px;
+    color: white;
+    font-weight: 500;
+}
