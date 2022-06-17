@@ -172,11 +172,11 @@ export default function Login() {
         {/* Btn para recuperar contraseña */}
         <button onClick={requestEmail}>Did you forget your password?</button>
       </form>
-      <h2>LOG IN WITH THE FOLLOWING DATA:</h2>
+      {/* <h2>LOG IN WITH THE FOLLOWING DATA:</h2>
       <p>DNI:</p>
       <p>37062742</p>
       <p>PASSWORD:</p>
-      <p>MyPassword123</p>
+      <p>MyPassword123</p> */}
     </div>
   );
 }
